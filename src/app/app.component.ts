@@ -11,7 +11,8 @@ import {
 import {
   CommonModule,
   NgOptimizedImage,
-  isPlatformBrowser
+  isPlatformBrowser,
+  Meta
 } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -89,6 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private router: Router,
     private zone: NgZone,
+    private meta: Meta,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -127,9 +129,37 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Re-init hero animations on home
       if (this.isHomePage) {
+        this.updateMetaTags('Home');
         setTimeout(() => this.initHeroAnimations(), 500);
+      } else {
+        this.updateMetaTags(url.split('/')[1]);
       }
     });
+  }
+
+  private updateMetaTags(page: string): void {
+    let description = '';
+    switch (page.toLowerCase()) {
+      case 'home':
+      case '':
+        description = 'MAM - Mission Against Malnutrition. Using Spirulina superfoods to fight malnutrition and heal 1500+ children in India.';
+        break;
+      case 'impact':
+        description = 'Track real-time recovery metrics and geographic impact nodes from our Mission Against Malnutrition Telemetry Center.';
+        break;
+      case 'about':
+        description = 'Learn about our biological intervention mission, Spirulina bioavailability, and how we are rewriting the code of human potential.';
+        break;
+      case 'contact':
+        description = 'Get in touch with A4MAM. Partner with us, volunteer, or reach out to our offices in Hyderabad and Bhubaneswar.';
+        break;
+      case 'donate':
+        description = 'Support our mission. Every contribution heals a life. 80G Tax Exemption available for all donations.';
+        break;
+      default:
+        description = 'MAM - Mission Against Malnutrition. Join the biological crusade against global hunger.';
+    }
+    this.meta.updateTag({ name: 'description', content: description });
   }
 
   ngAfterViewInit(): void {
@@ -386,8 +416,56 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     // ── Spirulina Section ──
     setTimeout(() => {
       this.initSpirulinaAnimations();
+      this.initChickyBarAnimations();
+      this.initFaqAnimations();
       ScrollTrigger.refresh();
     }, 1200);
+  }
+
+  private initChickyBarAnimations(): void {
+    const section = document.querySelector('.chicky-bar-showcase-section');
+    if (!section) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 75%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    tl.fromTo('.chicky-product-frame', 
+      { scale: 0.9, opacity: 0, rotateY: -15 },
+      { scale: 1, opacity: 1, rotateY: 0, duration: 1.5, ease: 'expo.out' }
+    )
+    .fromTo('.chicky-data-tag',
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.3, ease: 'back.out(1.7)' },
+      '-=1'
+    )
+    .fromTo('.fact-item',
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power4.out' },
+      '-=0.8'
+    );
+  }
+
+  private initFaqAnimations(): void {
+    const section = document.querySelector('.faq-section-premium');
+    if (!section) return;
+
+    gsap.fromTo('.accordion-item', 
+      { y: 30, opacity: 0 },
+      {
+        y: 0, opacity: 1, duration: 1,
+        stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.accordion-premium-glass',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
   }
 
   private initFoundationAnimations(): void {

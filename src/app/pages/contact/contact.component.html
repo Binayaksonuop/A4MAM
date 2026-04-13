@@ -106,52 +106,52 @@
               <h3 class="fw-900 text-white mb-1"><i class="bi bi-send me-2 text-cyan"></i>Send a Message</h3>
               <p class="text-white text-opacity-50 mb-4 small">Fill in your details and we'll get back to you promptly.</p>
 
-              <form class="contact-form-premium">
+              <form action="https://formspree.io/f/mqakeylg" method="POST" class="contact-form-premium" id="contactForm">
                 <div class="row g-4">
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" class="premium-input" placeholder="Your Name" id="nameInput">
+                      <input type="text" name="name" class="premium-input" placeholder="Your Name" id="nameInput" required>
                       <label for="nameInput">Your Name</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="email" class="premium-input" placeholder="Email" id="emailInput">
+                      <input type="email" name="email" class="premium-input" placeholder="Email" id="emailInput" required>
                       <label for="emailInput">Email Address</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" class="premium-input" placeholder="Phone" id="phoneInput">
+                      <input type="text" name="phone" class="premium-input" placeholder="Phone" id="phoneInput">
                       <label for="phoneInput">Phone Number</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" class="premium-input" placeholder="Organization" id="orgInput">
+                      <input type="text" name="organization" class="premium-input" placeholder="Organization" id="orgInput">
                       <label for="orgInput">Organization</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-floating-premium">
-                      <input type="text" class="premium-input" placeholder="Subject" id="subjectInput">
+                      <input type="text" name="subject" class="premium-input" placeholder="Subject" id="subjectInput">
                       <label for="subjectInput">Subject</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-floating-premium">
-                      <textarea class="premium-input premium-textarea" placeholder="Message" id="messageInput" rows="5"></textarea>
+                      <textarea name="message" class="premium-input premium-textarea" placeholder="Message" id="messageInput" rows="5" required></textarea>
                       <label for="messageInput">Your Message</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-12 mt-3 pt-2">
-                    <button type="button" class="btn w-100 btn-submit-premium d-flex align-items-center justify-content-center gap-3">
+                    <button type="submit" class="btn w-100 btn-submit-premium d-flex align-items-center justify-content-center gap-3">
                       <span>Send Message</span>
                       <i class="bi bi-arrow-right"></i>
                     </button>

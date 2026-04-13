@@ -1,14 +1,34 @@
 import { Routes } from '@angular/router';
-import { NutritionDetailsComponent } from './nutrition-details/nutrition-details.component';
-import { ImpactComponent } from './pages/impact/impact.component';
-import { AboutComponent } from './pages/about/about.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { DonateComponent } from './pages/donate/donate.component';
 
 export const routes: Routes = [
-  { path: 'nutrition-details', component: NutritionDetailsComponent },
-  { path: 'impact', component: ImpactComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'donate', component: DonateComponent }
+  {
+    path: 'nutrition-details',
+    loadComponent: () => import('./nutrition-details/nutrition-details.component').then(m => m.NutritionDetailsComponent),
+    title: 'Nutrition Details | A4MAM'
+  },
+  {
+    path: 'impact',
+    loadComponent: () => import('./pages/impact/impact.component').then(m => m.ImpactComponent),
+    title: 'Live Telemetry | A4MAM'
+  },
+  {
+    path: 'about',
+    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent),
+    title: 'Our Mission | A4MAM'
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent),
+    title: 'Contact Us | A4MAM'
+  },
+  {
+    path: 'donate',
+    loadComponent: () => import('./pages/donate/donate.component').then(m => m.DonateComponent),
+    title: 'Donate | A4MAM'
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+    title: '404 - Page Not Found | A4MAM'
+  }
 ];
