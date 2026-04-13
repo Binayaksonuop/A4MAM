@@ -16,7 +16,8 @@ export const appConfig: ApplicationConfig = {
     {
       provide: IMAGE_CONFIG,
       useValue: {
-        disableOptimizedImageCheck: true
+        disableImageSizeWarning: true,
+        disableImageLazyLoadWarning: true
       }
     }
   ]
