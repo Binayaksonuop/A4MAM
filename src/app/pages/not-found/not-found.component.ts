@@ -35,35 +35,36 @@ import { RouterModule } from '@angular/router';
       background: #020617;
       position: relative;
       overflow: hidden;
-      padding-top: 80px;
+      padding: 180px 20px 100px 20px;
     }
     .not-found-glow {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
+      filter: blur(140px);
       pointer-events: none;
+      z-index: 1;
     }
     .g1 {
-      width: 400px; height: 400px;
-      background: rgba(16, 185, 129, 0.15);
-      top: 10%; right: 10%;
+      width: 500px; height: 500px;
+      background: rgba(16, 185, 129, 0.12);
+      top: 5%; right: 5%;
     }
     .g2 {
-      width: 300px; height: 300px;
-      background: rgba(59, 130, 246, 0.1);
-      bottom: 10%; left: 15%;
+      width: 400px; height: 400px;
+      background: rgba(59, 130, 246, 0.08);
+      bottom: 5%; left: 10%;
     }
     .error-code {
-      font-size: clamp(8rem, 20vw, 14rem);
+      font-size: clamp(6rem, 15vw, 12rem);
       font-weight: 950;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.2));
+      background: linear-gradient(135deg, #10b981, #3b82f6);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       letter-spacing: -0.05em;
-      user-select: none;
+      filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.2));
     }
     .btn-404-home {
       background: linear-gradient(135deg, #10b981, #059669);
