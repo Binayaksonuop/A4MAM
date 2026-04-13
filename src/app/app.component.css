@@ -7154,7 +7154,63 @@ html {
 
 /* Glass Optimization: Reduce load by using simpler filters on mobile */
 @media (max-width: 991px) {
-  .navbar-premium-bridge,
+  .navbar-premium-bridge {
+    width:calc(100% - 30px) !important;
+    padding: 10px 20px !important;
+    border-radius: 25px !important;
+    backdrop-filter: blur(20px) !important;
+  }
+
+  .nav-logo {
+    height: 38px !important;
+  }
+
+  .brand-text {
+    font-size: 1.4rem !important;
+  }
+
+  .navbar-collapse {
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(40px);
+    margin-top: 15px;
+    border-radius: 25px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar-nav {
+    text-align: center;
+    gap: 15px !important;
+  }
+
+  .nav-link {
+    font-size: 0.9rem !important;
+    padding: 12px !important;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+  }
+
+  .nav-link.active-link {
+    background: rgba(16, 185, 129, 0.15) !important;
+  }
+
+  .nav-link::after {
+    display: none !important;
+  }
+
+  .btn-donate-premium {
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px !important;
+    text-align: center;
+  }
+
+  .impact-tracker-pill-premium {
+    display: none !important; /* Hide to avoid clutter on mobile */
+  }
+
   .nutrition-glass-card,
   .spirulina-card-inner-v2 {
     backdrop-filter: blur(12px) !important;
