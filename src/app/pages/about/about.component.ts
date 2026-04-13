@@ -29,13 +29,22 @@ export class AboutComponent implements AfterViewInit {
 
   initAnimations() {
     const tl = gsap.timeline();
-    // Pre-hide elements
-    gsap.set(['.hero-text-reveal', '.hero-subtext-reveal', '.pill-ultra'], { opacity: 0, y: 30 });
-    gsap.set('.card-premium', { opacity: 0, y: 50 });
 
-    tl.to('.pill-ultra', { opacity: 1, y: 0, duration: 1, ease: 'power4.out', delay: 0.2 })
-      .to('.hero-text-reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' }, '-=0.6')
-      .to('.hero-subtext-reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' }, '-=0.8');
+    // Only set elements that exist
+    const heroText = document.querySelector('.hero-text-reveal');
+    const heroSub = document.querySelector('.hero-subtext-reveal');
+    const pill = document.querySelector('.pill-ultra');
+
+    if (pill) gsap.set(pill, { opacity: 0, y: 30 });
+    if (heroText) gsap.set(heroText, { opacity: 0, y: 30 });
+    if (heroSub) gsap.set(heroSub, { opacity: 0, y: 30 });
+
+    const cardPremiums = document.querySelectorAll('.card-premium');
+    if (cardPremiums.length) gsap.set('.card-premium', { opacity: 0, y: 50 });
+
+    if (pill) tl.to(pill, { opacity: 1, y: 0, duration: 1, ease: 'power4.out', delay: 0.2 });
+    if (heroText) tl.to(heroText, { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' }, '-=0.6');
+    if (heroSub) tl.to(heroSub, { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' }, '-=0.8');
 
     // Cards Scroll
     gsap.utils.toArray('.scroll-card').forEach((card: any, i) => {
@@ -60,13 +69,15 @@ export class AboutComponent implements AfterViewInit {
   }
 
   initParallax() {
-    // Subtle parallax on mouse move for the hero background
     if (this.isBrowser) {
-      document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX - window.innerWidth / 2) / 50;
-        const y = (e.clientY - window.innerHeight / 2) / 50;
-        gsap.to('.ambient-glow', { x: x, y: y, duration: 1, ease: 'power2.out' });
-      });
+      const glows = document.querySelectorAll('.ambient-glow');
+      if (glows.length) {
+        document.addEventListener('mousemove', (e) => {
+          const x = (e.clientX - window.innerWidth / 2) / 50;
+          const y = (e.clientY - window.innerHeight / 2) / 50;
+          gsap.to('.ambient-glow', { x: x, y: y, duration: 1, ease: 'power2.out' });
+        });
+      }
     }
   }
 }
