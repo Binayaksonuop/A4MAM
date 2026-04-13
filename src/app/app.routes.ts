@@ -25,10 +25,5 @@ export const routes: Routes = [
     path: 'donate',
     loadComponent: () => import('./pages/donate/donate.component').then(m => m.DonateComponent),
     title: 'Donate | A4MAM'
-  },
-  {
-    path: '**',
-    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
-    title: '404 - Page Not Found | A4MAM'
   }
 ];
