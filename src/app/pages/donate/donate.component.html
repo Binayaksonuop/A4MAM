@@ -1,0 +1,260 @@
+<main class="donate-page-wrapper position-relative">
+
+  <!-- Hero Section -->
+  <section class="donate-hero position-relative overflow-hidden">
+    <div class="donate-mesh-bg"></div>
+    <div class="hero-glow-orb orb-1"></div>
+    <div class="hero-glow-orb orb-2"></div>
+    <div class="container position-relative z-3" style="padding-top: 120px; padding-bottom: 80px;">
+      <div class="row align-items-center g-5">
+        <!-- Left: Text -->
+        <div class="col-lg-6 text-center text-lg-start">
+          <div class="badge-donate-pill d-inline-flex mb-4">
+            <span class="pulse-dot-gold"></span> Every Rupee Heals a Life
+          </div>
+          <h1 class="display-3 fw-950 text-white mb-4">
+            Power the <span class="text-gradient-gold">Mission</span>
+          </h1>
+          <p class="lead text-white text-opacity-70 mb-4">
+            Your contribution directly funds Spirulina cultivation, clinical nutrition programs, and community health infrastructure across India's most vulnerable regions.
+          </p>
+          <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+            <div class="d-flex align-items-center gap-2 bg-white bg-opacity-10 rounded-pill px-3 py-2">
+              <i class="bi bi-patch-check-fill text-warning"></i>
+              <span class="text-white small fw-bold">80G Tax Exemption</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 bg-white bg-opacity-10 rounded-pill px-3 py-2">
+              <i class="bi bi-shield-lock-fill text-emerald"></i>
+              <span class="text-white small fw-bold">100% Transparent</span>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Image -->
+        <div class="col-lg-6 d-none d-lg-block">
+          <div class="position-relative spirulina-card-inner-v2 hover-scale-3d" style="height: 380px; border-color: rgba(245,158,11,0.3); overflow: hidden;">
+            <div class="glass-reflection-overlay z-3"></div>
+            <img ngSrc="assets/images/smiling_children.png" alt="Children Recovering" fill style="object-fit: cover; filter: brightness(1.05) saturate(1.1);" class="z-1">
+            <div class="position-absolute bottom-0 start-0 w-100 p-4 z-2" style="background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);">
+              <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:42px;height:42px;background:rgba(245,158,11,0.2);"><i class="bi bi-emoji-smile text-warning fs-5"></i></div>
+                <div>
+                  <h5 class="text-white fw-900 mb-0">1,500+ Children Healed</h5>
+                  <p class="text-white text-opacity-50 small mb-0">Actively recovering — India 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Impact Stats Bar -->
+  <section class="impact-stats-bar position-relative z-3">
+    <div class="container">
+      <div class="stats-glass-strip d-flex flex-wrap justify-content-center gap-4 gap-lg-5 py-4 px-4">
+        <div class="stat-item text-center">
+          <div class="stat-value text-white fw-900">&#8377;250</div>
+          <div class="stat-label text-white text-opacity-50 small">Feeds 1 Child / Month</div>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="stat-item text-center">
+          <div class="stat-value text-white fw-900">&#8377;1,500</div>
+          <div class="stat-label text-white text-opacity-50 small">6-Month Recovery Program</div>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="stat-item text-center">
+          <div class="stat-value text-white fw-900">&#8377;5,000</div>
+          <div class="stat-label text-white text-opacity-50 small">Community Farm Setup</div>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="stat-item text-center">
+          <div class="stat-value text-emerald fw-900">94%</div>
+          <div class="stat-label text-white text-opacity-50 small">Recovery Rate Achieved</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donation Tiers -->
+  <section class="donate-tiers-section py-5">
+    <div class="container position-relative z-3">
+      <div class="text-center mb-5">
+        <h2 class="fw-950 text-white mb-3">Choose Your <span class="text-gradient-gold">Impact Level</span></h2>
+        <p class="text-white text-opacity-50 mx-auto" style="max-width: 550px;">
+          Select a tier that matches your intent. Every contribution is tax-deductible under Section 80G.
+        </p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+
+        <!-- Tier 1: Seed -->
+        <div class="col-lg-4 col-md-6">
+          <div class="tier-card p-4 text-center" [class.tier-active]="selectedTier === 'seed'" (click)="selectTier('seed')">
+            <div class="tier-icon-wrap seed mb-3 mx-auto">
+              <i class="bi bi-box-seam"></i>
+            </div>
+            <h4 class="text-white fw-900 mb-1">Seed</h4>
+            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;500</div>
+            <ul class="tier-features text-start mb-4">
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>1 Month of Chicky Bars for 1 child</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Basic nutritional screening</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Digital impact certificate</li>
+            </ul>
+            <button class="btn btn-tier-select w-100">Select Seed</button>
+          </div>
+        </div>
+
+        <!-- Tier 2: Growth (Featured) -->
+        <div class="col-lg-4 col-md-6">
+          <div class="tier-card featured p-4 text-center position-relative" [class.tier-active]="selectedTier === 'growth'" (click)="selectTier('growth')">
+            <div class="featured-badge">MOST IMPACT</div>
+            <div class="tier-icon-wrap growth mb-3 mx-auto">
+              <i class="bi bi-clipboard2-pulse"></i>
+            </div>
+            <h4 class="text-white fw-900 mb-1">Growth</h4>
+            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;1,500</div>
+            <ul class="tier-features text-start mb-4">
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Clinical screening & 3-month dosage</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Targeted anemia prevention</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Named sponsorship recognition</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Monthly photo updates</li>
+            </ul>
+            <button class="btn btn-tier-featured w-100">Select Growth</button>
+          </div>
+        </div>
+
+        <!-- Tier 3: Harvest -->
+        <div class="col-lg-4 col-md-6">
+          <div class="tier-card p-4 text-center" [class.tier-active]="selectedTier === 'harvest'" (click)="selectTier('harvest')">
+            <div class="tier-icon-wrap harvest mb-3 mx-auto">
+              <i class="bi bi-heart-pulse"></i>
+            </div>
+            <h4 class="text-white fw-900 mb-1">Recovery</h4>
+            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;5,000</div>
+            <ul class="tier-features text-start mb-4">
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Full 6-month SAM recovery program</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Specialized intensive dosage</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Impact dashboard access</li>
+              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>80G tax exemption receipt</li>
+            </ul>
+            <button class="btn btn-tier-select w-100">Select Recovery</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Amount -->
+      <div class="custom-amount-card mt-5 p-4 p-md-5 mx-auto" style="max-width: 700px;">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+          <div class="flex-grow-1 text-center text-md-start">
+            <h4 class="text-white fw-900 mb-1"><i class="bi bi-heart-pulse me-2 text-danger"></i>Custom Amount</h4>
+            <p class="text-white text-opacity-50 small mb-0">Every contribution matters — choose your own impact.</p>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="custom-input-wrap">
+              <span class="currency-symbol">&#8377;</span>
+              <input type="number" class="custom-amount-input" placeholder="1,000" min="100">
+            </div>
+            <button class="btn btn-donate-now">Donate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How Your Donation Works -->
+  <section class="how-it-works-section py-5">
+    <div class="container position-relative z-3">
+      <div class="text-center mb-5">
+        <h2 class="fw-950 text-white mb-3">How Your Donation <span class="text-gradient-emerald">Works</span></h2>
+        <p class="text-white text-opacity-50 mx-auto" style="max-width: 550px;">
+          From your wallet to a child's plate — full transparency at every step.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <div class="process-card p-4 text-center h-100">
+            <div class="process-step-num">01</div>
+            <div class="process-icon mb-3"><i class="bi bi-wallet2"></i></div>
+            <h5 class="text-white fw-800 mb-2">You Donate</h5>
+            <p class="text-white text-opacity-50 small mb-0">Secure payment via UPI, card, or bank transfer with instant receipt.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="process-card p-4 text-center h-100">
+            <div class="process-step-num">02</div>
+            <div class="process-icon mb-3"><i class="bi bi-droplet-half"></i></div>
+            <h5 class="text-white fw-800 mb-2">Spirulina Cultivated</h5>
+            <p class="text-white text-opacity-50 small mb-0">Funds go directly to community farms producing fresh Spirulina harvest.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="process-card p-4 text-center h-100">
+            <div class="process-step-num">03</div>
+            <div class="process-icon mb-3"><i class="bi bi-truck"></i></div>
+            <h5 class="text-white fw-800 mb-2">Distribution</h5>
+            <p class="text-white text-opacity-50 small mb-0">Chicky Bars and Spirulina sachets delivered to Anganwadi centers and tribal health clinics.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="process-card p-4 text-center h-100">
+            <div class="process-step-num">04</div>
+            <div class="process-icon mb-3"><i class="bi bi-heart-pulse"></i></div>
+            <h5 class="text-white fw-800 mb-2">Lives Healed</h5>
+            <p class="text-white text-opacity-50 small mb-0">Children recover from malnutrition within 90 days of Spirulina supplementation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust & Transparency -->
+  <section class="trust-section py-5">
+    <div class="container position-relative z-3">
+      <div class="trust-glass-card p-4 p-md-5">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <h3 class="fw-950 text-white mb-3"><i class="bi bi-shield-check me-2 text-emerald"></i>Trust & Transparency</h3>
+            <p class="text-white text-opacity-60 mb-4">
+              A4MAM is registered under Section 12A and 80G of the Income Tax Act. Every rupee is audited, tracked, and reported with full public disclosure.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <div class="trust-badge"><i class="bi bi-patch-check-fill text-emerald me-2"></i>80G Certified</div>
+              <div class="trust-badge"><i class="bi bi-bank text-cyan me-2"></i>12A Registered</div>
+              <div class="trust-badge"><i class="bi bi-file-earmark-bar-graph text-warning me-2"></i>Annual Audit</div>
+              <div class="trust-badge"><i class="bi bi-lock-fill text-emerald me-2"></i>SSL Secured</div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="bank-info-card p-4">
+              <h5 class="text-white fw-800 mb-3 font-monospace"><i class="bi bi-bank2 me-2 text-cyan"></i>Bank Transfer Details</h5>
+              <div class="bank-row">
+                <span class="bank-label">Account Name</span>
+                <span class="bank-value">A4 Conserv Foundation</span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">Bank</span>
+                <span class="bank-value">State Bank of India</span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">Account No.</span>
+                <span class="bank-value font-monospace">XXXX XXXX 4291</span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">IFSC Code</span>
+                <span class="bank-value font-monospace">SBIN0XXXXXX</span>
+              </div>
+              <div class="bank-row border-0">
+                <span class="bank-label">PAN</span>
+                <span class="bank-value font-monospace">AXXXX1234X</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,50 @@
+﻿node.exe : - Building...
+At C:\Users\Administrator\One
+Drive\Desktop\Spirulina Mam\n
+ode_modules\.bin\ng.ps1:24 
+char:5
++     & "node$exe"  "$basedir
+/../@angular/cli/bin/ng.js" 
+$args
++     ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~
+    + CategoryInfo           
+   : NotSpecified: (- Build  
+  ing...:String) [], Remot   
+ eException
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+
+Application bundle generation failed. [4.712 seconds]
+
+X [ERROR] NG5002: Incomplete 
+block "mam". If you meant to 
+write the @ character, you 
+should use the "&#64;" HTML 
+entity instead. [plugin 
+angular-compiler]
+
+    src/app/app.component.htm
+l:390:88:
+      390 Γöé ...rg" 
+class="text-muted text-decora
+tion-none">info@mam.org</a></
+li>
+          Γò╡                
+                             
+       ~~~~
+
+  Error occurs in the 
+template of component 
+AppComponent.
+
+    src/app/app.component.ts:
+8:15:
+      8 Γöé   templateUrl: 
+'./app.component.html',
+        Γò╡                
+~~~~~~~~~~~~~~~~~~~~~~
+
+

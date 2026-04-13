@@ -1,0 +1,237 @@
+.donate-page-wrapper {
+  background: #020617;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* === Hero === */
+.donate-hero {
+  background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.donate-mesh-bg {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none; z-index: 1;
+}
+
+.hero-glow-orb {
+  position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.orb-1 { top: 10%; left: -5%; width: 400px; height: 400px; background: rgba(245, 158, 11, 0.12); }
+.orb-2 { bottom: 5%; right: -5%; width: 350px; height: 350px; background: rgba(16, 185, 129, 0.1); }
+
+.badge-donate-pill {
+  background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24; border-radius: 50px; padding: 10px 22px;
+  font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
+  align-items: center; gap: 10px; letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+.pulse-dot-gold {
+  width: 8px; height: 8px; background: #fbbf24; border-radius: 50%;
+  box-shadow: 0 0 10px #fbbf24; animation: pulseGold 1.5s infinite alternate;
+}
+
+@keyframes pulseGold {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 15px #fbbf24; }
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.text-emerald { color: #10b981; }
+.text-cyan { color: #22d3ee; }
+
+/* === Stats Bar === */
+.stats-glass-strip {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.stat-value { font-size: 1.8rem; line-height: 1; margin-bottom: 5px; }
+.stat-divider { width: 1px; background: rgba(255,255,255,0.1); align-self: stretch; }
+
+/* === Donation Tiers === */
+.tier-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer; height: 100%;
+}
+
+.tier-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.tier-card.tier-active {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.15), 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.tier-card.featured {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.featured-badge {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #020617; font-size: 0.65rem; font-weight: 900;
+  padding: 5px 18px; border-radius: 0 0 10px 10px; letter-spacing: 2px;
+}
+
+.tier-icon-wrap {
+  width: 70px; height: 70px; border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+}
+.tier-icon-wrap.seed { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.tier-icon-wrap.growth { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+.tier-icon-wrap.harvest { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+.tier-price { font-size: 2.5rem; }
+
+.tier-features {
+  list-style: none; padding: 0; margin: 0;
+}
+.tier-features li {
+  color: rgba(255,255,255,0.7); padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.9rem;
+}
+.tier-features li:last-child { border: none; }
+
+.btn-tier-select {
+  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
+  padding: 12px 20px; font-weight: 700; letter-spacing: 1px;
+  font-size: 0.85rem; transition: all 0.3s ease; text-transform: uppercase;
+}
+.btn-tier-select:hover {
+  background: rgba(245, 158, 11, 0.15); color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.btn-tier-featured {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #020617 !important; border: none; border-radius: 12px;
+  padding: 12px 20px; font-weight: 900; letter-spacing: 1px;
+  font-size: 0.85rem; transition: all 0.3s ease; text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+}
+.btn-tier-featured:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(245, 158, 11, 0.4);
+  color: #020617;
+}
+
+/* === Custom Amount === */
+.custom-amount-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; backdrop-filter: blur(20px);
+}
+
+.custom-input-wrap {
+  display: flex; align-items: center; gap: 0;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 0 16px;
+}
+
+.currency-symbol { color: #fbbf24; font-size: 1.2rem; font-weight: 900; }
+
+.custom-amount-input {
+  background: transparent; border: none; outline: none; color: #fff;
+  font-size: 1.1rem; font-weight: 700; padding: 12px 10px;
+  width: 120px; font-family: monospace;
+}
+.custom-amount-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.btn-donate-now {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #020617 !important; border: none; border-radius: 12px;
+  padding: 12px 28px; font-weight: 900; letter-spacing: 1px;
+  font-size: 0.9rem; white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+}
+.btn-donate-now:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(245, 158, 11, 0.4);
+  color: #020617;
+}
+
+/* === How It Works === */
+.process-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px; position: relative;
+  transition: all 0.3s ease; overflow: hidden;
+}
+.process-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.process-step-num {
+  position: absolute; top: 12px; right: 16px;
+  font-size: 2.5rem; font-weight: 950; color: rgba(255,255,255,0.04);
+  line-height: 1; font-family: monospace;
+}
+
+.process-icon {
+  width: 55px; height: 55px; border-radius: 14px;
+  background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #10b981; margin: 0 auto;
+}
+
+/* === Trust Section === */
+.trust-glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 24px; backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.trust-badge {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 10px 16px;
+  color: rgba(255,255,255,0.7); font-size: 0.85rem; font-weight: 700;
+  display: flex; align-items: center;
+}
+
+.bank-info-card {
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  border-radius: 16px;
+}
+
+.bank-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.bank-label { color: rgba(255,255,255,0.4); font-size: 0.85rem; font-weight: 600; }
+.bank-value { color: #fff; font-size: 0.9rem; font-weight: 700; }
+
+.font-monospace { font-family: 'JetBrains Mono', 'Fira Code', monospace !important; }
