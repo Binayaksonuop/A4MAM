@@ -6487,7 +6487,15 @@ p.lead {
   background: rgba(255, 255, 255, 0.02);
 }
 
-.premium-mega-dropdown:hover .mega-menu-glass,
+@media (min-width: 992px) {
+  .premium-mega-dropdown:hover .mega-menu-glass {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+    pointer-events: auto !important;
+  }
+}
+
 .premium-mega-dropdown .mega-menu-glass.show {
   opacity: 1 !important;
   visibility: visible !important;
