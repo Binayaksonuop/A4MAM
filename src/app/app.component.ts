@@ -11,9 +11,9 @@ import {
 import {
   CommonModule,
   NgOptimizedImage,
-  isPlatformBrowser,
-  Meta
+  isPlatformBrowser
 } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {
   Router,

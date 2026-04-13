@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser, CommonModule, NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-impact',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule],
   templateUrl: './impact.component.html',
   styleUrls: ['./impact.component.css']
 })
