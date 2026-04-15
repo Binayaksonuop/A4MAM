@@ -436,15 +436,146 @@ p.lead {
   border-radius: 4px;
 }
 
-/* ACTIVE LINK INDICATOR (ELEGANT LINE) */
-.active-link::after {
+/* --- SHOP DROPDOWN STYLING --- */
+.premium-shop-dropdown {
+  position: relative;
+}
+
+.shop-menu-glass {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 24px !important;
+  min-width: 280px;
+  margin-top: 10px !important; /* Reduced margin */
+  padding: 10px !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block !important;
+  pointer-events: none;
+}
+
+/* BRIDGE PSEUDO-ELEMENT TO PREVENT HOVER GAP */
+.shop-menu-glass::before {
   content: '';
   position: absolute;
-  bottom: 0; left: 18px; right: 18px; height: 2px;
-  background: #10b981;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
-  border-radius: 10px;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent;
 }
+
+.premium-shop-dropdown:hover .shop-menu-glass,
+.premium-shop-dropdown .shop-menu-glass.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.shop-category {
+  position: relative;
+}
+
+.category-title {
+  color: #10b981;
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.shop-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  display: flex;
+  align-items: center;
+}
+
+.shop-item:hover {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #fff !important;
+  transform: translateX(8px);
+}
+
+.bulk-order-item {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px dashed rgba(16, 185, 129, 0.3);
+}
+
+/* --- CART ICON STYLING --- */
+.nav-cart-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-cart-link:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+.cart-badge-premium {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #10b981;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 950;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+  border: 2px solid #0f172a;
+}
+
+/* Mobile Specific (Hamburger Menu) */
+@media (max-width: 991px) {
+  .shop-menu-glass {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    padding-left: 20px !important;
+    margin-top: 0 !important;
+    pointer-events: auto !important;
+  }
+  
+  .category-title {
+    margin-top: 15px;
+  }
+  
+  .nav-cart-wrapper {
+    margin-left: 10px;
+    margin-bottom: 15px;
+  }
+}
+
 
 .active-link .nav-icon-pulse {
   color: #10b981;
@@ -7358,34 +7489,279 @@ img {
   font-size: 1.1rem;
 }
 
-/* ==========================================================================
-   FAQ SECTION (PREMIUM GLASS)
-   ========================================================================== */
-.faq-section-premium {
+.chicky-feature-list {
+  border-left: 2px solid rgba(16, 185, 129, 0.1);
+  padding-left: 25px;
+}
+
+.feature-icon-sm {
+  width: 40px;
+  height: 40px;
   background: white;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   SUCCESS STORIES SECTION (PREMIUM)
+   ========================================================================== */
+.success-stories-section {
+  padding: 100px 0;
+}
+
+.story-card-premium {
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.08);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+}
+
+.story-card-premium:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 40px 80px rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.story-image-wrap {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.story-image-wrap img {
+  transition: transform 1s ease;
+}
+
+.story-card-premium:hover .story-image-wrap img {
+  transform: scale(1.1);
+}
+
+.recovery-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 2;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.location-tag {
+  background: rgba(16, 185, 129, 0.05);
+  color: #10b981;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.metrics-grid-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.metric-item .label {
+  font-size: 0.65rem;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.metric-item .value {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.metric-arrow {
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+.story-card-premium.featured {
+  border: 2px solid #10b981;
+}
+
+/* ==========================================================================
+   SPIRULINA JOURNEY (FARM TO CHILD)
+   ========================================================================== */
+.spirulina-journey-section {
+  padding: 100px 0;
+}
+
+.journey-timeline-container {
+  position: relative;
+  margin-top: 50px;
+}
+
+.journey-line {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+      rgba(245, 158, 11, 0) 0%, 
+      rgba(245, 158, 11, 0.4) 50%, 
+      rgba(245, 158, 11, 0) 100%);
+  z-index: 1;
+}
+
+@media (max-width: 991px) {
+  .journey-line {
+    display: none;
+  }
+}
+
+.journey-node-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 40px 30px;
+  border-radius: 30px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+  height: 100%;
+}
+
+.journey-node-card:hover {
+  background: rgba(245, 158, 11, 0.05);
+  border-color: rgba(245, 158, 11, 0.2);
+  transform: translateY(-10px);
+}
+
+.step-number {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #020617;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 950;
+  font-size: 0.8rem;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.journey-icon {
+  font-size: 2.5rem;
+  color: #f59e0b;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.journey-node-card.featured {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.journey-bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 1;
+}
+
+/* ==========================================================================
+   FAQ SECTION (PREMIUM GLASS V2)
+   ========================================================================== */
+.faq-section-premium-v2 {
+  padding: 100px 0;
+}
+
+.faq-bg-blob {
+  position: absolute;
+  top: 10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+.faq-category-box {
+  background: #f8fafc;
+  padding: 40px;
+  border-radius: 40px;
+  border: 1px solid rgba(16, 185, 129, 0.08);
+  height: 100%;
+}
+
+.faq-cat-title {
+  font-weight: 900;
+  color: #334155;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+}
+
+.faq-cat-title i {
+  color: #10b981;
 }
 
 .accordion-premium-glass .accordion-item {
-  background: rgba(16, 185, 129, 0.02) !important;
+  background: white !important;
   border: 1px solid rgba(16, 185, 129, 0.08) !important;
   border-radius: 20px !important;
   overflow: hidden;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
 }
 
 .accordion-premium-glass .accordion-item:hover {
-  background: rgba(16, 185, 129, 0.04) !important;
-  border-color: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.05);
 }
 
 .accordion-premium-glass .accordion-button {
   background: transparent !important;
-  color: #334155 !important;
+  color: #475569 !important;
   font-weight: 800 !important;
-  font-size: 1.15rem !important;
-  padding: 25px 30px !important;
+  font-size: 1rem !important;
+  padding: 20px 25px !important;
   box-shadow: none !important;
 }
 
@@ -7395,10 +7771,11 @@ img {
 
 .accordion-premium-glass .accordion-button::after {
   background-image: none !important;
-  content: '\F282'; /* Bootstrap Icon Chevron Down */
+  content: '\F282';
   font-family: 'bootstrap-icons' !important;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: transform 0.3s ease;
+  color: #94a3b8;
 }
 
 .accordion-premium-glass .accordion-button:not(.collapsed)::after {
@@ -7407,8 +7784,8 @@ img {
 }
 
 .accordion-premium-glass .accordion-body {
-  padding: 0 30px 25px 30px !important;
+  padding: 0 25px 20px 25px !important;
   color: #64748b !important;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.6;
 }

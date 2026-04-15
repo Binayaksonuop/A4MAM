@@ -37,99 +37,44 @@
           </a>
         </li>
 
-        <!-- ULTRA MEGA MENU -->
-        <li class="nav-item dropdown premium-mega-dropdown">
-          <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-boxes nav-icon-pulse"></i> Architecture <i
-              class="bi bi-chevron-down ms-1 dropdown-chevron"></i>
+        <!-- SHOP DROPDOWN -->
+        <li class="nav-item dropdown premium-shop-dropdown">
+          <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bag nav-icon-pulse"></i> Shop <i class="bi bi-chevron-down ms-1 dropdown-chevron"></i>
           </a>
-          <div class="dropdown-menu mega-menu-glass shadow-2xl" aria-labelledby="navbarDropdown">
-            <div class="row g-0">
-              <!-- Left Holographic Banner -->
-              <div class="col-lg-5 p-0 d-none d-xl-block">
-                <div
-                  class="mega-menu-banner h-100 position-relative overflow-hidden p-4 d-flex flex-column justify-content-end">
-                  <div class="mega-banner-scanner"></div>
-                  <div class="mega-banner-overlay"></div>
-                  <div class="position-relative z-3">
-                    <div class="badge-dot-v2 d-inline-block mb-3 bg-emerald pulse-fast"></div>
-                    <h5 class="text-white fw-950 mb-2 font-monospace"><i class="bi bi-braces"></i> The Science of Life
-                    </h5>
-                    <p class="text-white text-opacity-70 small mb-0 lh-base">Discover how high-density Spirulina is
-                      completely rewriting the rules of the first 1,000 biological days.</p>
-                  </div>
-                </div>
+          <div class="dropdown-menu shop-menu-glass shadow-2xl" aria-labelledby="shopDropdown">
+            <div class="shop-menu-inner p-3">
+              <!-- Spirulina Products -->
+              <div class="shop-category mb-3">
+                <h6 class="category-title px-3 mb-2">Spirulina Products</h6>
+                <a class="dropdown-item shop-item" routerLink="/shop/chicky-bars" (click)="closeNavbar()">
+                  <i class="bi bi-stars text-emerald me-2"></i> Chicky Bars (Kids)
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/powder" (click)="closeNavbar()">
+                  <i class="bi bi-moisture text-emerald me-2"></i> Spirulina Powder
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/capsules" (click)="closeNavbar()">
+                  <i class="bi bi-capsule text-emerald me-2"></i> Supplement Capsules
+                </a>
+              </div>
+              
+              <!-- Nutrition Kits -->
+              <div class="shop-category mb-3">
+                <h6 class="category-title px-3 mb-2">Nutrition Kits</h6>
+                <a class="dropdown-item shop-item" routerLink="/shop/child-kit" (click)="closeNavbar()">
+                  <i class="bi bi-box-seam text-emerald me-2"></i> Child Nutrition Kit
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/maternal-kit" (click)="closeNavbar()">
+                  <i class="bi bi-heart-pulse text-emerald me-2"></i> Maternal Health Kit
+                </a>
               </div>
 
-              <!-- Right Links Side -->
-              <div class="col-lg-7 p-4 mega-menu-right-panel bg-glass-dark">
-                <div class="row g-3">
-                  <!-- Section 1 -->
-                  <div class="col-12">
-                    <a class="dropdown-item explore-item-premium d-flex flex-column align-items-start px-3 py-2"
-                      routerLink="/" fragment="spirulina-info" (click)="closeNavbar()">
-                      <div class="d-flex align-items-start gap-3 w-100 mb-1">
-                        <div class="explore-icon-wrapper droplet bg-glass-blue text-cyan"><i
-                            class="bi bi-droplet-half"></i></div>
-                        <div class="explore-content flex-grow-1">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="explore-title mb-0 text-white font-monospace">1.0 Spirulina Core</h6>
-                            <i class="bi bi-arrow-right explore-arrow-icon mt-1 text-cyan"></i>
-                          </div>
-                          <p class="explore-desc mt-1 text-white text-opacity-50 small">Deep dive into nature's
-                            superfood.</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-
-                  <!-- Section 2 -->
-                  <div class="col-12">
-                    <a class="dropdown-item explore-item-premium d-flex flex-column align-items-start px-3 py-2"
-                      routerLink="/" fragment="nutrition" (click)="closeNavbar()">
-                      <div class="d-flex align-items-start gap-3 w-100 mb-1">
-                        <div class="explore-icon-wrapper nutrition bg-glass-emerald text-emerald"><i
-                            class="bi bi-shield-plus"></i></div>
-                        <div class="explore-content flex-grow-1">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="explore-title mb-0 text-white font-monospace">2.0 Biological Advantage</h6>
-                            <i class="bi bi-arrow-right explore-arrow-icon mt-1 text-emerald"></i>
-                          </div>
-                          <p class="explore-desc mt-1 text-white text-opacity-50 small">Why the first 1000 days are
-                            critical.</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-
-                  <!-- Section 3 -->
-                  <div class="col-12">
-                    <a class="dropdown-item explore-item-premium d-flex flex-column align-items-start px-3 py-2"
-                      routerLink="/" fragment="challenge" (click)="closeNavbar()">
-                      <div class="d-flex align-items-start gap-3 w-100 mb-1">
-                        <div class="explore-icon-wrapper challenge bg-glass-amber text-amber"><i
-                            class="bi bi-bar-chart-steps"></i></div>
-                        <div class="explore-content flex-grow-1">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="explore-title mb-0 text-white font-monospace">3.0 The Clinical Crisis</h6>
-                            <i class="bi bi-arrow-right explore-arrow-icon mt-1 text-amber"></i>
-                          </div>
-                          <p class="explore-desc mt-1 text-white text-opacity-50 small">The clinical data behind
-                            malnutrition.</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
+              <!-- Bulk Orders -->
+              <div class="shop-category">
+                <a class="dropdown-item shop-item bulk-order-item" routerLink="/shop/bulk" (click)="closeNavbar()">
+                  <i class="bi bi-truck text-emerald me-2"></i> Bulk / NGO Orders
+                </a>
               </div>
-            </div>
-
-            <!-- Bottom Accent -->
-            <div class="mega-menu-footer d-flex justify-content-between align-items-center px-4 py-3 bg-black">
-              <span class="text-emerald fw-bold small"><i class="bi bi-activity me-1 pulse-fast indicator-dot"></i> Live
-                Node Feed</span>
-              <a routerLink="/impact" class="mega-footer-link text-white text-opacity-70 hover-emerald" (click)="closeNavbar()">Initialize
-                Impact Report <i class="bi bi-arrow-return-right small ms-1"></i></a>
             </div>
           </div>
         </li>
@@ -141,12 +86,12 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/impact" routerLinkActive="active-link" (click)="closeNavbar()">
-            <i class="bi bi-broadcast nav-icon-pulse"></i> Telemetry
+          <a class="nav-link" routerLink="/gallery" routerLinkActive="active-link" (click)="closeNavbar()">
+            <i class="bi bi-images nav-icon-pulse"></i> Gallery
           </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item"> 
           <a class="nav-link" routerLink="/contact" routerLinkActive="active-link" (click)="closeNavbar()">
             <i class="bi bi-envelope-paper nav-icon-pulse"></i> Contact Us
           </a>
@@ -155,13 +100,14 @@
 
       <!-- CTA BLOCK -->
       <div class="d-flex align-items-center gap-4 ms-lg-4 mt-3 mt-lg-0 pb-3 pb-lg-0">
-        <div class="live-status-indicator d-none d-xl-flex align-items-center gap-2 px-3 py-1 rounded-pill"
-          style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);">
-          <span class="pulse-emerald-dot"
-            style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; animation: pulse-op 1.5s infinite alternate;"></span>
-          <span class="text-emerald small fw-800 text-nowrap" style="letter-spacing: 1px; font-size: 0.7rem;">IMPACT
-            TRACKER: LIVE</span>
+        <!-- CART ICON -->
+        <div class="nav-cart-wrapper position-relative me-2">
+          <a routerLink="/cart" class="nav-cart-link" (click)="closeNavbar()">
+            <i class="bi bi-cart3 fs-4 text-white"></i>
+            <span class="cart-badge-premium" *ngIf="cartCount >= 0">{{ cartCount }}</span>
+          </a>
         </div>
+
         <div class="nav-cta-wrapper">
           <a class="btn btn-premium-nav-ultra futuristic-btn" routerLink="/donate" (click)="closeNavbar()">
             <i class="bi bi-heart-fill me-2 text-danger"></i><span>Donate Now</span>
@@ -192,17 +138,16 @@
         <div class="col-lg-12">
           <div class="hero-content-box-v2">
             <div class="hero-badge-premium hero-animate-1">
-              <i class="bi bi-stars"></i> Next-Gen Nutrition Solution
+              <i class="bi bi-shield-check-fill"></i> Nature's Superfood, India's Solution
             </div>
 
             <h1 class="hero-title-main hero-animate-2">
-              Transforming Child Nutrition with <br>
+              Fighting Hidden Hunger with <br>
               <span class="text-gradient-emerald-v2">Spirulina Innovation</span>
             </h1>
 
             <p class="hero-lead-text hero-animate-3">
-              A science-backed biological intervention designed to systematically eradicate hidden hunger and
-              malnutrition during the most critical 1000 days of human development.
+              A natural, science-backed solution delivering complete nutrition to children and mothers during the most critical 1000 days of development.
             </p>
 
             <div class="hero-actions-row hero-animate-4">
@@ -815,7 +760,7 @@
         <div class="col-lg-6 gsap-reveal">
           <div class="chicky-product-frame hover-scale-3d">
             <div class="card-shimmer-fast"></div>
-            <img src="assets/images/chicky_bar_showcase.png" alt="MAM Chicky Bar" class="img-fluid chicky-main-img">
+            <img src="assets/images/chicky_bars_new.png" alt="MAM Chicky Bar" class="img-fluid chicky-main-img">
             <div class="chicky-data-tag t1">
               <span class="d-block fw-900 fs-4">12g</span>
               <span class="small opacity-70">Protein / Bar</span>
@@ -828,12 +773,46 @@
         </div>
         <div class="col-lg-6 gsap-reveal">
           <div class="ps-lg-5">
-            <h6 class="badge-premium-emerald-light mb-3">Biological Vehicle</h6>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="badge-premium-emerald-light">Biological Vehicle</span>
+              <span class="badge bg-slate-800 text-white px-3 py-1 rounded-pill small fw-bold"><i class="bi bi-cpu me-1"></i> Engineered Format</span>
+            </div>
             <h2 class="display-4 fw-950 text-slate-800 mb-4 lh-1-1">The <span class="text-gradient-emerald">Chicky Bar:</span> Nutrition Engineered</h2>
-            <p class="lead text-slate-600 mb-5">
+            <p class="lead text-slate-600 mb-4">
               Designed for surgical precision in nutritional distribution, the Chicky Bar is our proprietary vehicle for delivering high-density Spirulina in a format that is 100% palatable and culturally accepted.
             </p>
             
+            <div class="chicky-feature-list mb-5">
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-shield-check"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Zero Sensory Barriers</h6>
+                  <p class="small text-slate-500 mb-0">Engineered flavor profile to eliminate algae odor and taste.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-lightning-charge"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Rapid Bioavailability</h6>
+                  <p class="small text-slate-500 mb-0">Molecularly optimized for immediate nutrient uptake in children.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-geo-alt"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Last-Mile Distribution</h6>
+                  <p class="small text-slate-500 mb-0">Distributed via Anganwadi centers and tribal health clinics.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3">
+                <div class="feature-icon-sm"><i class="bi bi-check-circle"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Certified Safety</h6>
+                  <p class="small text-slate-500 mb-0">FSSAI Certified, 100% Vegetarian, and shelf-stable format.</p>
+                </div>
+              </div>
+            </div>
+
             <div class="nutritional-facts-grid">
               <div class="fact-item">
                 <div class="fact-circle">
@@ -1781,103 +1760,6 @@
     </div>
   </section>
 
-  <!-- CHICKY BARS - DELIVERY FORMAT (FROM DOCX) -->
-  <section class="chicky-bars-section section-padding position-relative overflow-hidden" style="background: #020617;">
-    <div class="container position-relative z-2">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6 gsap-reveal">
-          <h6 class="badge-premium-warning-glow mb-3">Product Innovation</h6>
-          <h2 class="display-4 fw-950 text-white mb-4">Introducing <span class="text-gradient-gold-glow">Chicky
-              Bars</span></h2>
-          <p class="lead text-white text-opacity-80 mb-4">To overcome sensory barriers such as taste and odor, we've
-            integrated Spirulina into child-friendly, palatable nutrition bars called <strong
-              class="text-warning">Chicky Bars</strong>.</p>
-
-          <ul class="list-unstyled mb-0">
-            <li class="text-white text-opacity-70 py-2 d-flex gap-3 align-items-start"><i
-                class="bi bi-check2-circle text-warning mt-1"></i><span>Packed with high-density Spirulina protein in
-                every bite</span></li>
-            <li class="text-white text-opacity-70 py-2 d-flex gap-3 align-items-start"><i
-                class="bi bi-check2-circle text-warning mt-1"></i><span>Designed for children aged 2-12 years — the most
-                vulnerable age groups</span></li>
-            <li class="text-white text-opacity-70 py-2 d-flex gap-3 align-items-start"><i
-                class="bi bi-check2-circle text-warning mt-1"></i><span>Eliminates the strong algae odor while
-                preserving full nutritional value</span></li>
-            <li class="text-white text-opacity-70 py-2 d-flex gap-3 align-items-start"><i
-                class="bi bi-check2-circle text-warning mt-1"></i><span>Distributed via Anganwadi centers and tribal
-                health clinics</span></li>
-            <li class="text-white text-opacity-70 py-2 d-flex gap-3 align-items-start"><i
-                class="bi bi-check2-circle text-warning mt-1"></i><span>Affordable, shelf-stable, and easy to transport
-                to remote areas</span></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-6 gsap-reveal">
-          <div class="p-2 position-relative spirulina-card-inner-v2 hover-scale-3d"
-            style="background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.4); border-radius: 50px; box-shadow: 0 40px 100px rgba(245,158,11,0.2), inset 0 0 30px rgba(255,255,255,0.05);">
-            <div class="rounded-5 overflow-hidden position-relative"
-              style="width: 100%; height: 420px; border-radius: 40px !important;">
-              <div class="glass-reflection-overlay z-3"></div>
-              <img ngSrc="assets/images/chicky_bars_new.png" alt="Chicky Bar Product" fill priority
-                style="object-fit: cover; filter: saturate(1.2) contrast(1.1) brightness(1.05);"
-                class="w-100 h-100 position-relative z-1">
-
-              <!-- Floating UI Elements over image -->
-              <div class="position-absolute top-0 end-0 p-4 z-3">
-                <div class="glass-badge px-3 py-2 rounded-pill d-flex align-items-center gap-2"
-                  style="background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
-                  <i class="bi bi-star-fill text-warning"></i>
-                  <span class="text-white small fw-bold">Premium Quality</span>
-                </div>
-              </div>
-
-              <div class="position-absolute bottom-0 start-0 w-100 p-4 z-2 text-start"
-                style="background: linear-gradient(to top, rgba(2,6,23,1) 0%, rgba(2,6,23,0.8) 40%, transparent 100%);">
-                <div class="d-flex align-items-center gap-2 mb-2">
-                  <span class="badge bg-warning text-dark fw-bold"><i class="bi bi-shield-check"></i> FSSAI
-                    Certified</span>
-                  <span class="badge bg-success text-white fw-bold">100% Veg</span>
-                </div>
-                <h3 class="text-white mb-0 fw-950 display-6">Chicky Bar</h3>
-                <p class="text-white text-opacity-70 small mb-0 mt-1">The Ultimate Superfood Snack for Growth</p>
-              </div>
-            </div>
-
-            <div class="p-4">
-              <div class="row g-3">
-                <div class="col-4">
-                  <div class="p-3 text-center"
-                    style="background:rgba(255,255,255,0.03);border-radius:20px; border: 1px solid rgba(255,255,255,0.05);">
-                    <h4 class="fw-950 text-warning mb-0">65%</h4>
-                    <span class="text-white text-opacity-40"
-                      style="font-size:0.65rem; text-transform: uppercase;">Protein</span>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="p-3 text-center"
-                    style="background:rgba(255,255,255,0.03);border-radius:20px; border: 1px solid rgba(255,255,255,0.05);">
-                    <h4 class="fw-950 text-warning mb-0">58x</h4>
-                    <span class="text-white text-opacity-40"
-                      style="font-size:0.65rem; text-transform: uppercase;">Iron</span>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="p-3 text-center"
-                    style="background:rgba(255,255,255,0.03);border-radius:20px; border: 1px solid rgba(255,255,255,0.05);">
-                    <h4 class="fw-950 text-warning mb-0">95%</h4>
-                    <span class="text-white text-opacity-40"
-                      style="font-size:0.65rem; text-transform: uppercase;">Absorption</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- POSHAN APP / DIGITAL TOOLS (FROM DOCX) -->
   <section class="digital-tools-section section-padding position-relative overflow-hidden">
     <div class="container position-relative z-2">
@@ -2014,6 +1896,66 @@
     </div>
   </section>
 
+  <!-- SPIRULINA JOURNEY (PREMIUM TIMELINE) -->
+  <section class="spirulina-journey-section py-5 position-relative overflow-hidden" style="background: #020617;">
+    <div class="journey-bg-glow"></div>
+    <div class="container py-5 position-relative z-3">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-warning-glow mb-3">Farm to Child</h6>
+          <h2 class="display-4 fw-950 text-white mb-4">The <span class="text-gradient-gold-glow">Spirulina</span> Journey</h2>
+          <p class="lead text-white text-opacity-70">A precision-engineered lifecycle ensuring the highest biological value from cultivation to clinical delivery.</p>
+        </div>
+      </div>
+
+      <div class="journey-timeline-container gsap-reveal">
+        <div class="journey-line"></div>
+        
+        <div class="row g-5">
+          <!-- Step 1 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">01</div>
+              <div class="journey-icon"><i class="bi bi-droplet-half"></i></div>
+              <h5 class="text-white fw-900 mb-2">Cultivation</h5>
+              <p class="text-white text-opacity-50 small mb-0">Cultivated in alkaline-controlled ponds with zero chemical pesticides.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">02</div>
+              <div class="journey-icon"><i class="bi bi-thermometer-half"></i></div>
+              <h5 class="text-white fw-900 mb-2">Solar Drying</h5>
+              <p class="text-white text-opacity-50 small mb-0">Low-temperature solar drying to preserve heat-sensitive enzymes.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">03</div>
+              <div class="journey-icon"><i class="bi bi-gear-wide-connected"></i></div>
+              <h5 class="text-white fw-900 mb-2">Processing</h5>
+              <p class="text-white text-opacity-50 small mb-0">Integrated into child-friendly formats like the proprietary Chicky Bar.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card featured">
+              <div class="step-number">04</div>
+              <div class="journey-icon"><i class="bi bi-heart-pulse"></i></div>
+              <h5 class="text-white fw-900 mb-2">Recovery</h5>
+              <p class="text-white text-opacity-50 small mb-0">Monitored clinical protocols for 90-day nutritional reversal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- MISSION SECTION (FULL PREMIUM UPGRADE) -->
   <section id="mission" class="mission-section-ultra py-5 overflow-hidden position-relative">
     <div class="mission-ultra-glow"></div>
@@ -2127,70 +2069,81 @@
     </div>
   </section>
 
-  <!-- PREMIUM GLASS FAQ SECTION -->
-  <section class="faq-section-premium py-5 position-relative overflow-hidden">
+  <!-- PREMIUM CATEGORIZED FAQ SECTION -->
+  <section id="faq-section" class="faq-section-premium-v2 py-5 position-relative overflow-hidden" style="background: #ffffff;">
+    <div class="faq-bg-blob"></div>
     <div class="container py-5 position-relative z-3">
-      <div class="text-center mb-5 gsap-reveal">
-        <h6 class="badge-premium-emerald-light mb-3">Transparency Hub</h6>
-        <h2 class="display-4 fw-950 text-slate-800 mb-4">Frequently Asked <span class="text-gradient-emerald">Questions</span></h2>
-        <p class="text-slate-500 max-w-700 mx-auto">Everything you need to know about our biological intervention and organizational protocols.</p>
+      <div class="row align-items-end mb-5 gsap-reveal">
+        <div class="col-lg-7">
+          <h6 class="badge-premium-emerald-light mb-3">Transparency Hub</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-0">Frequently Asked <span class="text-gradient-emerald">Questions</span></h2>
+        </div>
+        <div class="col-lg-5 text-lg-end mt-4 mt-lg-0">
+          <p class="text-slate-500 mb-0">Everything you need to know about our biological intervention and organizational protocols.</p>
+        </div>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-lg-10 gsap-reveal">
-          <div class="accordion accordion-premium-glass" id="mamFaq">
-            <!-- FAQ 1 -->
-            <div class="accordion-item mb-3">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                  Is Spirulina completely safe for children?
-                </button>
-              </h2>
-              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#mamFaq">
-                <div class="accordion-body">
-                  Yes. Spirulina is classified as "Generally Recognized as Safe" (GRAS) by the US FDA and is recommended by the WHO for its exceptional nutritional density. Our Spirulina is cultivated in strictly controlled, contamination-free environments ensuring medical-grade purity.
+      <div class="row g-5">
+        <!-- FAQ Category 1: Science & Product -->
+        <div class="col-lg-6 gsap-reveal">
+          <div class="faq-category-box">
+            <h5 class="faq-cat-title"><i class="bi bi-microscope me-2"></i> Science & Product</h5>
+            <div class="accordion accordion-premium-glass" id="faqCat1">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    Is Spirulina completely safe for children?
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqCat1">
+                  <div class="accordion-body">
+                    Yes. Spirulina is classified as "Generally Recognized as Safe" (GRAS) by the US FDA and is recommended by the WHO for its exceptional nutritional density. Our Spirulina is cultivated in strictly controlled, contamination-free environments ensuring medical-grade purity.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    What makes the Chicky Bar unique?
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqCat1">
+                  <div class="accordion-body">
+                    The Chicky Bar is more than a snack—it is a biological delivery vehicle. We have engineered its flavor profile to ensure 100% compliance among children while maintaining a massive protein-to-calorie ratio, ensuring that every bite contributes directly to recovery.
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <!-- FAQ 2 -->
-            <div class="accordion-item mb-3">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                  What makes the Chicky Bar unique?
-                </button>
-              </h2>
-              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#mamFaq">
-                <div class="accordion-body">
-                  The Chicky Bar is more than a snack—it is a biological delivery vehicle. We have engineered its flavor profile to ensure 100% compliance among children while maintaining a massive protein-to-calorie ratio, ensuring that every bite contributes directly to recovery.
+        <!-- FAQ Category 2: Impact & Operations -->
+        <div class="col-lg-6 gsap-reveal">
+          <div class="faq-category-box">
+            <h5 class="faq-cat-title"><i class="bi bi-graph-up-arrow me-2"></i> Impact & Operations</h5>
+            <div class="accordion accordion-premium-glass" id="faqCat2">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    How can I track the impact of my donation?
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqCat2">
+                  <div class="accordion-body">
+                    Transparency is our core protocol. Every donor receives an impact report detailing how their funds were used, including geographic tracking of the distribution nodes and verified recovery metrics from our Mission Command Center.
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="accordion-item mb-3">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                  How can I track the impact of my donation?
-                </button>
-              </h2>
-              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#mamFaq">
-                <div class="accordion-body">
-                  Transparency is our core protocol. Every donor receives an impact report detailing how their funds were used, including geographic tracking of the distribution nodes and verified recovery metrics from our Telemetry Command Center.
-                </div>
-              </div>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="accordion-item mb-3">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                  Which regions do you currently operate in?
-                </button>
-              </h2>
-              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#mamFaq">
-                <div class="accordion-body">
-                  We are currently prioritizing high-risk districts in Bihar, Odisha, Jharkhand, and Uttar Pradesh, where malnutrition rates exceed the national average. Our goal is to scale our neural network of distribution centers nationwide.
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    Which regions do you currently operate in?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqCat2">
+                  <div class="accordion-body">
+                    We are currently prioritizing high-risk districts in Bihar, Odisha, Jharkhand, and Uttar Pradesh, where malnutrition rates exceed the national average. Our goal is to scale our neural network of distribution centers nationwide.
+                  </div>
                 </div>
               </div>
             </div>
@@ -2238,7 +2191,7 @@
         <ul class="footer-links-ultra-modern list-unstyled">
           <li><a routerLink="/"><span class="link-dot"></span>Home</a></li>
           <li><a routerLink="/about"><span class="link-dot"></span>About Us</a></li>
-          <li><a routerLink="/impact"><span class="link-dot"></span>Impact</a></li>
+          <li><a routerLink="/donate"><span class="link-dot"></span>Donate Now</a></li>
           <li><a routerLink="/" fragment="spirulina-info"><span class="link-dot"></span>Technology</a></li>
           <li><a routerLink="/" fragment="contact"><span class="link-dot"></span>Contact</a></li>
         </ul>

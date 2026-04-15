@@ -40,11 +40,15 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
 
   // ─── State ────────────────────────────────────────
   isScrolled = false;
   showScrollTop = false;
   isHomePage = false;
+  cartCount = 0;
 
   // Custom Cursor
   cursorX = -100;
@@ -133,6 +137,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => this.initHeroAnimations(), 500);
       } else {
         this.updateMetaTags(url.split('/')[1]);
+        setTimeout(() => {
+          this.initRevealAnimations();
+          ScrollTrigger.refresh();
+        }, 500);
       }
     });
   }
@@ -143,9 +151,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'home':
       case '':
         description = 'MAM - Mission Against Malnutrition. Using Spirulina superfoods to fight malnutrition and heal 1500+ children in India.';
-        break;
-      case 'impact':
-        description = 'Track real-time recovery metrics and geographic impact nodes from our Mission Against Malnutrition Telemetry Center.';
         break;
       case 'about':
         description = 'Learn about our biological intervention mission, Spirulina bioavailability, and how we are rewriting the code of human potential.';
