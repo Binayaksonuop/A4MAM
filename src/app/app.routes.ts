@@ -2,6 +2,21 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+    title: 'MAM - Mission Against Malnutrition'
+  },
+  {
+    path: 'shop',
+    loadComponent: () => import('./pages/shop/shop-listing/shop-listing.component').then(m => m.ShopListingComponent),
+    title: 'Shop | A4MAM'
+  },
+  {
+    path: 'research/intergenerational-malnutrition',
+    loadComponent: () => import('./pages/research/research-article/research-article.component').then(m => m.ResearchArticleComponent),
+    title: 'Research | Intergenerational Malnutrition'
+  },
+  {
     path: 'nutrition-details',
     loadComponent: () => import('./nutrition-details/nutrition-details.component').then(m => m.NutritionDetailsComponent),
     title: 'Nutrition Details | A4MAM'
@@ -28,37 +43,47 @@ export const routes: Routes = [
   },
   {
     path: 'shop/chicky-bars',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Chicky Bars | Shop A4MAM'
   },
   {
     path: 'shop/powder',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Spirulina Powder | Shop A4MAM'
   },
   {
     path: 'shop/capsules',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Supplement Capsules | Shop A4MAM'
   },
   {
     path: 'shop/child-kit',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Child Nutrition Kit | Shop A4MAM'
   },
   {
     path: 'shop/maternal-kit',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Maternal Health Kit | Shop A4MAM'
   },
   {
     path: 'shop/bulk',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
+    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
     title: 'Bulk Orders | Shop A4MAM'
   },
   {
     path: 'cart',
-    loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent), // Placeholder
-    title: 'Your Cart | Shop A4MAM'
+    loadComponent: () => import('./pages/shop/cart/cart.component').then(m => m.CartComponent),
+    title: 'Your Cart | A4MAM'
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./pages/shop/checkout/checkout.component').then(m => m.CheckoutComponent),
+    title: 'Secure Checkout | A4MAM'
+  },
+  {
+    path: 'order-success',
+    loadComponent: () => import('./pages/shop/order-success/order-success.component').then(m => m.OrderSuccessComponent),
+    title: 'Order Confirmed! | A4MAM'
   }
 ];

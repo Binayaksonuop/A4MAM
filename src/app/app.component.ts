@@ -6,11 +6,11 @@ import {
   OnDestroy,
   PLATFORM_ID,
   Inject,
-  NgZone
+  NgZone,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   CommonModule,
-  NgOptimizedImage,
   isPlatformBrowser
 } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
@@ -24,6 +24,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CartService } from './services/cart.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,12 +33,12 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [
     CommonModule,
-    NgOptimizedImage,
     RouterModule,
     FormsModule
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title(title: any) {
@@ -95,7 +96,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private zone: NgZone,
     private meta: Meta,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cartService: CartService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
@@ -143,6 +145,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 500);
       }
     });
+
+    // Subscribe to cart changes
+    this.cartService.cartItems$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.cartCount = this.cartService.getCartCount();
+      });
   }
 
   private updateMetaTags(page: string): void {
@@ -278,19 +287,19 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       opacity: 1, y: 0,
       duration: 1.2, delay: 0.5
     })
-    .to('.hero-animate-2', {
-      opacity: 1, y: 0, duration: 1.4
-    }, '-=0.8')
-    .to('.hero-animate-3', {
-      opacity: 1, y: 0, duration: 1.2
-    }, '-=1')
-    .to('.hero-animate-4', {
-      opacity: 1, y: 0, duration: 1.2
-    }, '-=0.9')
-    .to('.hero-animate-5', {
-      opacity: 1, y: 0, duration: 1.2,
-      stagger: 0.15
-    }, '-=1');
+      .to('.hero-animate-2', {
+        opacity: 1, y: 0, duration: 1.4
+      }, '-=0.8')
+      .to('.hero-animate-3', {
+        opacity: 1, y: 0, duration: 1.2
+      }, '-=1')
+      .to('.hero-animate-4', {
+        opacity: 1, y: 0, duration: 1.2
+      }, '-=0.9')
+      .to('.hero-animate-5', {
+        opacity: 1, y: 0, duration: 1.2,
+        stagger: 0.15
+      }, '-=1');
 
     if (document.querySelector('.hero-floating-card')) {
       tl.to('.hero-floating-card', {
@@ -341,28 +350,28 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     tl.to('.hero-animate-1', {
       y: 0, opacity: 1, duration: 1.4
     })
-    .to('.hero-animate-2', {
-      y: 0, opacity: 1, duration: 1.6
-    }, '-=1.2')
-    .to('.hero-animate-3', {
-      y: 0, opacity: 1, duration: 1.4
-    }, '-=1.3')
-    .to('.hero-animate-4 .btn', {
-      y: 0, opacity: 1, duration: 1.2,
-      stagger: 0.15
-    }, '-=1.1')
-    .to('.hero-animate-5 .hero-stat-item', {
-      y: 0, opacity: 1, duration: 1,
-      stagger: 0.12
-    }, '-=0.9')
-    .to('.hero-floating-card', {
-      x: 0, opacity: 1, scale: 1,
-      duration: 2, ease: 'power4.out'
-    }, '-=1.8')
-    .to('.hero-deco-node', {
-      scale: 1, opacity: 0.6, duration: 1.5,
-      stagger: 0.3, ease: 'back.out(2)'
-    }, '-=1.5');
+      .to('.hero-animate-2', {
+        y: 0, opacity: 1, duration: 1.6
+      }, '-=1.2')
+      .to('.hero-animate-3', {
+        y: 0, opacity: 1, duration: 1.4
+      }, '-=1.3')
+      .to('.hero-animate-4 .btn', {
+        y: 0, opacity: 1, duration: 1.2,
+        stagger: 0.15
+      }, '-=1.1')
+      .to('.hero-animate-5 .hero-stat-item', {
+        y: 0, opacity: 1, duration: 1,
+        stagger: 0.12
+      }, '-=0.9')
+      .to('.hero-floating-card', {
+        x: 0, opacity: 1, scale: 1,
+        duration: 2, ease: 'power4.out'
+      }, '-=1.8')
+      .to('.hero-deco-node', {
+        scale: 1, opacity: 0.6, duration: 1.5,
+        stagger: 0.3, ease: 'back.out(2)'
+      }, '-=1.5');
   }
 
   // ═══════════════════════════════════════════════════
@@ -439,27 +448,27 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    tl.fromTo('.chicky-product-frame', 
+    tl.fromTo('.chicky-product-frame',
       { scale: 0.9, opacity: 0, rotateY: -15 },
       { scale: 1, opacity: 1, rotateY: 0, duration: 1.5, ease: 'expo.out' }
     )
-    .fromTo('.chicky-data-tag',
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.3, ease: 'back.out(1.7)' },
-      '-=1'
-    )
-    .fromTo('.fact-item',
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power4.out' },
-      '-=0.8'
-    );
+      .fromTo('.chicky-data-tag',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.3, ease: 'back.out(1.7)' },
+        '-=1'
+      )
+      .fromTo('.fact-item',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power4.out' },
+        '-=0.8'
+      );
   }
 
   private initFaqAnimations(): void {
     const section = document.querySelector('.faq-section-premium');
     if (!section) return;
 
-    gsap.fromTo('.accordion-item', 
+    gsap.fromTo('.accordion-item',
       { y: 30, opacity: 0 },
       {
         y: 0, opacity: 1, duration: 1,
@@ -491,24 +500,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       { x: -60, opacity: 0 },
       { x: 0, opacity: 1, duration: 1.5, ease: 'power4.out' }
     )
-    .fromTo(
-      '.foundation-content-wrapper > *',
-      { y: 40, opacity: 0 },
-      {
-        y: 0, opacity: 1, duration: 1.2,
-        stagger: 0.2, ease: 'power4.out'
-      },
-      '-=1.2'
-    )
-    .fromTo(
-      '.foundation-block-item',
-      { x: 40, opacity: 0 },
-      {
-        x: 0, opacity: 1, duration: 1,
-        stagger: 0.2, ease: 'back.out(1.2)'
-      },
-      '-=1'
-    );
+      .fromTo(
+        '.foundation-content-wrapper > *',
+        { y: 40, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 1.2,
+          stagger: 0.2, ease: 'power4.out'
+        },
+        '-=1.2'
+      )
+      .fromTo(
+        '.foundation-block-item',
+        { x: 40, opacity: 0 },
+        {
+          x: 0, opacity: 1, duration: 1,
+          stagger: 0.2, ease: 'back.out(1.2)'
+        },
+        '-=1'
+      );
   }
 
   private initWorkflowAnimations(): void {
@@ -642,20 +651,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     tl.to('.spirulina-reveal-1', {
       y: 0, opacity: 1, duration: 1
     })
-    .to('.spirulina-reveal-2', {
-      y: 0, opacity: 1, duration: 1.2
-    }, '-=1')
-    .to('.spirulina-reveal-3', {
-      y: 0, opacity: 1, duration: 1
-    }, '-=1')
-    .to('.feature-item-v2', {
-      x: 0, opacity: 1, duration: 1,
-      stagger: 0.15, ease: 'power4.out'
-    }, '-=0.8')
-    .to('.spirulina-card-inner-v2', {
-      scale: 1, opacity: 1, rotateY: 0,
-      duration: 2, ease: 'expo.out'
-    }, '-=1.5');
+      .to('.spirulina-reveal-2', {
+        y: 0, opacity: 1, duration: 1.2
+      }, '-=1')
+      .to('.spirulina-reveal-3', {
+        y: 0, opacity: 1, duration: 1
+      }, '-=1')
+      .to('.feature-item-v2', {
+        x: 0, opacity: 1, duration: 1,
+        stagger: 0.15, ease: 'power4.out'
+      }, '-=0.8')
+      .to('.spirulina-card-inner-v2', {
+        scale: 1, opacity: 1, rotateY: 0,
+        duration: 2, ease: 'expo.out'
+      }, '-=1.5');
 
     // Card parallax
     gsap.to('.spirulina-card-inner-v2', {

@@ -526,6 +526,28 @@ p {
   }
 }
 
+/* ── Cart Empty State Animations ── */
+@keyframes emptyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1); }
+  50% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0.06); transform: scale(1.03); }
+}
 
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 
+/* ── Global Emerald Button ── */
+.btn-emerald {
+  background-color: #10b981 !important;
+  border-color: #10b981 !important;
+  color: #ffffff !important;
+}
+.btn-emerald:hover {
+  background-color: #059669 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+}
+
+.text-emerald { color: #10b981 !important; }
 

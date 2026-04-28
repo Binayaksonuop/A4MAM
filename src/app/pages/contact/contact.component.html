@@ -1,19 +1,23 @@
 <main class="contact-page-wrapper position-relative">
   <!-- Atmospheric background -->
-  <div class="environment-glow-cyan position-fixed"></div>
+  <div class="contact-atmospheric-bg">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-glow-blob blob-1"></div>
+    <div class="hero-glow-blob blob-2"></div>
+    <div class="hero-mesh-overlay"></div>
+  </div>
 
   <!-- Hero Section -->
-  <section class="contact-hero">
-    <div class="mesh-bg-contact"></div>
-    <div class="container text-center">
+  <section class="contact-hero pt-5">
+    <div class="container text-center pt-5">
       <div class="badge-premium-pill mb-3 d-inline-flex mx-auto">
-        <span class="pulse-dot-cyan"></span> Direct Protocol
+        <span class="pulse-dot-cyan"></span> Mission Response Center
       </div>
       <h1 class="display-3 fw-950 text-white mb-3 tracking-tighter title-glow">
-        Connect with <span class="text-gradient-cyan">MAM</span>
+        Secure Communication <br><span class="text-gradient-cyan">Protocol</span>
       </h1>
       <p class="lead text-white text-opacity-70 mx-auto mb-4" style="max-width: 650px;">
-        Join our biological crusade against malnutrition. Our response team handles all inquiries within a 24-hour verification window.
+        Join our biological crusade against malnutrition. Our response team handles all inquiries within a 24-hour verification window through our encrypted tactical channel.
       </p>
     </div>
   </section>
@@ -101,54 +105,90 @@
               <h2 class="fw-950 text-white mb-2 display-5">Send a Message</h2>
               <p class="text-white text-opacity-40 mb-5">Your communication is prioritized through our encrypted mission channel.</p>
 
-              <form action="https://formspree.io/f/mqakeylg" method="POST" class="contact-form-premium" id="contactForm">
+              <!-- SUCCESS STATE -->
+              <div *ngIf="submitted" class="success-state-premium text-center py-5">
+                <div class="success-icon-wrap mb-4">
+                  <i class="bi bi-check-circle-fill text-emerald"></i>
+                  <div class="success-ripple"></div>
+                </div>
+                <h3 class="display-6 fw-950 text-white mb-3">Message Received</h3>
+                <p class="text-white text-opacity-70 mb-5 mx-auto fs-5" style="max-width: 450px;">
+                  Protocol initiated. Our tactical response team will verify your inquiry and contact you within 24 hours.
+                </p>
+                <button (click)="resetForm()" class="btn btn-premium-glass-v2 px-5">
+                  Send Another Protocol <i class="bi bi-arrow-repeat ms-2"></i>
+                </button>
+              </div>
+
+              <!-- CONTACT FORM -->
+              <form *ngIf="!submitted" (ngSubmit)="onSubmit()" #contactForm="ngForm" class="contact-form-premium" id="contactForm">
                 <div class="row g-4">
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" name="name" class="premium-input" placeholder=" " id="nameInput" required>
+                      <input type="text" name="name" class="premium-input" placeholder=" " id="nameInput" [(ngModel)]="formData.name" required #name="ngModel">
                       <label for="nameInput">Full Name</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="email" name="email" class="premium-input" placeholder=" " id="emailInput" required>
+                      <input type="email" name="email" class="premium-input" placeholder=" " id="emailInput" [(ngModel)]="formData.email" required #email="ngModel">
                       <label for="emailInput">Email Address</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" name="phone" class="premium-input" placeholder=" " id="phoneInput">
+                      <input type="text" name="phone" class="premium-input" placeholder=" " id="phoneInput" [(ngModel)]="formData.phone">
                       <label for="phoneInput">Phone Number</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-premium">
-                      <input type="text" name="organization" class="premium-input" placeholder=" " id="orgInput">
+                      <input type="text" name="organization" class="premium-input" placeholder=" " id="orgInput" [(ngModel)]="formData.organization">
                       <label for="orgInput">Organization</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-floating-premium">
-                      <input type="text" name="subject" class="premium-input" placeholder=" " id="subjectInput">
+                      <input type="text" name="subject" class="premium-input" placeholder=" " id="subjectInput" [(ngModel)]="formData.subject">
                       <label for="subjectInput">Inquiry Subject</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-floating-premium">
-                      <textarea name="message" class="premium-input premium-textarea" placeholder=" " id="messageInput" rows="6" required></textarea>
+                      <textarea name="message" class="premium-input premium-textarea" placeholder=" " id="messageInput" rows="6" [(ngModel)]="formData.message" required #message="ngModel"></textarea>
                       <label for="messageInput">Detailed Message</label>
                       <div class="input-focus-border"></div>
                     </div>
                   </div>
+                  
+                  <div *ngIf="error" class="col-12">
+                    <div class="alert alert-danger bg-danger bg-opacity-10 border-danger border-opacity-20 text-danger p-4 rounded-4">
+                      <div class="d-flex gap-3">
+                        <i class="bi bi-exclamation-octagon-fill fs-4"></i>
+                        <div>
+                          <h6 class="fw-900 mb-1">Configuration Required</h6>
+                          <p class="small mb-0 opacity-75">
+                            {{ errorMessage || 'The current Form ID (mqakeylg) is not active on Formspree. Please update the ID in contact.component.ts to enable message delivery.' }}
+                          </p>
+                          <a href="https://formspree.io/f/mqakeylg" target="_blank" class="btn btn-sm btn-outline-danger mt-2 fw-800">Check Form Status</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-12 mt-4">
-                    <button type="submit" class="btn w-100 btn-submit-premium d-flex align-items-center justify-content-center gap-3">
-                      <span>Initiate Contact</span>
-                      <i class="bi bi-arrow-right-circle-fill fs-5"></i>
+                    <button type="submit" [disabled]="contactForm.invalid || isSubmitting" class="btn w-100 btn-submit-premium d-flex align-items-center justify-content-center gap-3">
+                      <span *ngIf="!isSubmitting">Initiate Contact</span>
+                      <span *ngIf="isSubmitting" class="d-flex align-items-center gap-2">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Transmitting Protocol...
+                      </span>
+                      <i *ngIf="!isSubmitting" class="bi bi-arrow-right-circle-fill fs-5"></i>
                       <div class="btn-shine"></div>
                     </button>
                   </div>

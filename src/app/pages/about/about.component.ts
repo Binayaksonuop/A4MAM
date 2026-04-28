@@ -23,7 +23,6 @@ export class AboutComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.isBrowser) {
       this.initAnimations();
-      this.initParallax();
     }
   }
 
@@ -68,16 +67,15 @@ export class AboutComponent implements AfterViewInit {
     ScrollTrigger.refresh();
   }
 
-  initParallax() {
-    if (this.isBrowser) {
-      const glows = document.querySelectorAll('.ambient-glow');
-      if (glows.length) {
-        document.addEventListener('mousemove', (e) => {
-          const x = (e.clientX - window.innerWidth / 2) / 50;
-          const y = (e.clientY - window.innerHeight / 2) / 50;
-          gsap.to('.ambient-glow', { x: x, y: y, duration: 1, ease: 'power2.out' });
-        });
-      }
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    if (!this.isBrowser) return;
+
+    const glows = document.querySelectorAll('.ambient-glow');
+    if (glows.length) {
+      const x = (e.clientX - window.innerWidth / 2) / 50;
+      const y = (e.clientY - window.innerHeight / 2) / 50;
+      gsap.to('.ambient-glow', { x: x, y: y, duration: 1, ease: 'power2.out' });
     }
   }
 }

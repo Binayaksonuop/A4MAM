@@ -1,0 +1,120 @@
+<div class="product-detail-hero" *ngIf="product">
+  <div class="container">
+    
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-white text-opacity-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-white text-opacity-50 text-decoration-none">Shop</a></li>
+        <li class="breadcrumb-item active text-emerald fw-bold" aria-current="page">{{ product.title }}</li>
+      </ol>
+    </nav>
+
+    <div class="row align-items-center g-5">
+      
+      <!-- IMAGE SECTION -->
+      <div class="col-lg-5">
+        <div class="product-image-glass shadow-lg">
+          <!-- Try showing image, fallback to icon if not pure image path -->
+          <img *ngIf="product.image.includes('.png') || product.image.includes('.jpg')" [src]="product.image" [alt]="product.title" class="img-fluid" style="height: 400px; width: 100%; object-fit: cover; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          
+          <div *ngIf="!product.image.includes('.png') && !product.image.includes('.jpg')" class="icon-fallback display-1 text-emerald p-5">
+            <i class="bi" [ngClass]="{'bi-truck': product.id === 'bulk', 'bi-box-seam': product.id !== 'bulk'}"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT SECTION -->
+      <div class="col-lg-7">
+        <div class="mb-3">
+          <span class="badge-premium d-inline-block">{{ product.badge }}</span>
+        </div>
+        
+        <h1 class="display-4 text-white fw-900 mb-2">{{ product.title }}</h1>
+        <h4 class="text-white text-opacity-50 fw-light mb-4">{{ product.subtitle }}</h4>
+        
+        <div class="display-5 text-emerald fw-bold letter-spacing-1 mb-4">
+          ₹{{ product.price }}
+        </div>
+
+        <p class="lead text-white text-opacity-75 mb-5 lh-lg">
+          {{ product.description }}
+        </p>
+
+        <div class="row g-4 mb-5">
+          <div class="col-md-6">
+            <h5 class="text-white fw-bold mb-3 border-bottom border-white border-opacity-10 pb-2">Clinical Benefits</h5>
+            <ul class="list-unstyled feature-list">
+              <li *ngFor="let benefit of product.benefits">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>{{ benefit }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h5 class="text-white fw-bold mb-3 border-bottom border-white border-opacity-10 pb-2">What's in the Box?</h5>
+            <ul class="list-unstyled feature-list">
+              <li *ngFor="let item of product.includes">
+                <i class="bi bi-box-seam-fill"></i>
+                <span>{{ item }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- QUANTITY SELECTOR + ADD TO CART (Hidden for Bulk) -->
+        <div class="d-flex flex-column gap-3" *ngIf="product.id !== 'bulk'">
+
+          <!-- Quantity Row -->
+          <div class="d-flex align-items-center gap-3">
+            <span class="text-white text-opacity-60 small fw-bold text-uppercase letter-spacing-1">Qty:</span>
+            <div class="qty-stepper d-flex align-items-center rounded-pill border border-white border-opacity-20" style="overflow:hidden; background: rgba(255,255,255,0.06);">
+              <button class="btn btn-link text-white px-3 py-2 fs-5 shadow-none text-decoration-none" style="min-width:44px;" (click)="changeQty(-1)" [disabled]="selectedQty <= 1">−</button>
+              <span class="text-white fw-bold px-2" style="min-width:36px; text-align:center; font-size:1.1rem;">{{ selectedQty }}</span>
+              <button class="btn btn-link text-white px-3 py-2 fs-5 shadow-none text-decoration-none" style="min-width:44px;" (click)="changeQty(1)">+</button>
+            </div>
+            <span class="text-white text-opacity-40 small">Total: <strong class="text-emerald">₹{{ (product.price * selectedQty) }}</strong></span>
+          </div>
+
+          <!-- Add to Cart buttons -->
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <button *ngIf="!isAdded" class="btn btn-success btn-lg px-5 py-3 fw-bold rounded-pill text-uppercase letter-spacing-1 hover-scale d-flex align-items-center gap-2" style="background-color: #10b981; border-color: #10b981;" (click)="triggerAddToCart()">
+              <i class="bi bi-cart-plus fs-5"></i> Add {{ selectedQty > 1 ? selectedQty + 'x' : '' }} to Cart (₹{{ product.price * selectedQty }})
+            </button>
+            
+            <button *ngIf="isAdded" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill text-uppercase letter-spacing-1 d-flex align-items-center gap-2 text-white" style="background-color: #3b82f6; border-color: #3b82f6; transform: scale(1.02); transition: all 0.2s ease;">
+              <i class="bi bi-check2-circle fs-5"></i> +{{ lastAddedQty }} Added!
+            </button>
+            
+            <p class="text-white text-opacity-50 small mb-0">
+              <i class="bi bi-shield-check text-emerald me-1"></i>
+              100% Secure Checkout<br>Verified by A4MAM
+            </p>
+          </div>
+        </div>
+
+        <!-- SPECIAL CONTENT FOR BULK/NGO -->
+        <div class="bulk-enquiry-section p-4 rounded-4" style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);" *ngIf="product.id === 'bulk'">
+          <h5 class="text-white fw-bold mb-3 d-flex align-items-center">
+            <i class="bi bi-building-fill-check text-emerald me-2"></i> Institutional Inquiry
+          </h5>
+          <p class="text-white text-opacity-70 small mb-4">
+            For large-scale NGO, CSR, or School interventions, we provide customized pricing, impact reporting, and distribution logistics support.
+          </p>
+          <a href="mailto:info@a4conserv.com?subject=Bulk NGO Inquiry - A4MAM" class="btn btn-success w-100 py-3 rounded-pill fw-bold">
+            Submit Bulk Inquiry <i class="bi bi-envelope-fill ms-2"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="product-detail-hero d-flex align-items-center justify-content-center" *ngIf="!product">
+  <div class="text-center">
+    <h2 class="text-white fw-bold">Product not found.</h2>
+    <p class="text-white text-opacity-50">The item you are looking for does not exist.</p>
+    <a routerLink="/" class="btn btn-outline-emerald mt-3">Return Home</a>
+  </div>
+</div>

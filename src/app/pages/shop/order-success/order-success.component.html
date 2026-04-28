@@ -1,0 +1,78 @@
+<div class="order-success-page">
+
+  <!-- Animated Background -->
+  <div class="success-bg-mesh"></div>
+  <div class="confetti-layer">
+    <span *ngFor="let c of [1,2,3,4,5,6,7,8,9,10,11,12]" class="confetti-piece" [style.animation-delay]="(c * 0.15) + 's'"></span>
+  </div>
+
+  <div class="container position-relative z-2">
+    <div class="row justify-content-center align-items-center min-vh-100 py-5">
+      <div class="col-lg-7 col-md-10 text-center">
+
+        <!-- Success Icon -->
+        <div class="success-icon-wrapper mx-auto mb-5">
+          <div class="success-ring"></div>
+          <div class="success-icon">
+            <i class="bi bi-check-lg"></i>
+          </div>
+        </div>
+
+        <!-- Heading -->
+        <div class="mb-4">
+          <span class="badge-order-success mb-3">Order Confirmed</span>
+          <h1 class="display-3 fw-900 text-white mb-3">
+            Thank You for<br>
+            <span class="text-gradient-emerald-success">Supporting Health! 💚</span>
+          </h1>
+          <p class="lead text-white text-opacity-70 mx-auto" style="max-width: 500px;">
+            Your order has been placed successfully. Every purchase directly funds our 
+            mission to eradicate malnutrition across India.
+          </p>
+        </div>
+
+        <!-- Order ID Card -->
+        <div class="order-id-card mx-auto mb-5">
+          <div class="row g-0 align-items-center">
+            <div class="col-6 border-end border-white border-opacity-10 p-4">
+              <p class="text-white text-opacity-50 small text-uppercase letter-spacing-1 mb-1">Order ID</p>
+              <h5 class="text-emerald fw-bold mb-0">{{ orderId }}</h5>
+            </div>
+            <div class="col-6 p-4">
+              <p class="text-white text-opacity-50 small text-uppercase letter-spacing-1 mb-1">Est. Delivery</p>
+              <h5 class="text-white fw-bold mb-0">5–7 Working Days</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact Stat -->
+        <div class="impact-note mx-auto mb-5">
+          <i class="bi bi-heart-fill text-emerald me-2"></i>
+          <span class="text-white text-opacity-80">
+            Your order will help nourish <strong class="text-emerald">at least 3 children</strong> in underserved communities.
+          </span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+          <button class="btn btn-success btn-lg px-5 py-3 rounded-pill fw-bold hover-scale" 
+                  style="background-color: #10b981; border-color: #10b981;"
+                  (click)="goShop()">
+            <i class="bi bi-shop me-2"></i> Continue Shopping
+          </button>
+          <button class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill fw-bold hover-scale" 
+                  (click)="goHome()">
+            <i class="bi bi-house me-2"></i> Back to Home
+          </button>
+        </div>
+
+        <!-- Countdown -->
+        <p class="text-white text-opacity-40 small">
+          <i class="bi bi-clock me-1"></i>
+          Redirecting to home in <strong class="text-white text-opacity-70">{{ countdown }}s</strong>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
