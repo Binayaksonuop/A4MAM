@@ -9302,3 +9302,69 @@ img {
     min-height: auto;
   }
 }
+
+/* STICKY STACK CARDS FOR SILENT CRISIS */
+.sticky-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35vh; /* Increased space so scrub animation has more time */
+  position: relative;
+  padding-bottom: 30vh;
+}
+
+.sticky-card-ultra {
+  position: sticky;
+  width: 100%;
+  max-width: 1100px; /* Made the card much larger */
+  min-height: 400px;
+  margin: 0 auto;
+  border-radius: 40px;
+  padding: 60px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease;
+}
+
+.sticky-card-ultra.hunger-card { top: 20vh; z-index: 10; border-top-color: rgba(239, 68, 68, 0.4); }
+.sticky-card-ultra.anemia-card { top: 23vh; z-index: 11; border-top-color: rgba(14, 165, 233, 0.4); }
+.sticky-card-ultra.growth-card { top: 26vh; z-index: 12; border-top-color: rgba(245, 158, 11, 0.4); }
+
+.crisis-icon-ultra-v2.large-icon {
+  width: 120px;
+  height: 120px;
+  font-size: 3.5rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.crisis-card-title-premium.large-title {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.crisis-card-desc-premium.large-desc {
+  font-size: 1.25rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+}
+
+.crisis-card-stat-premium.large-stat {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .sticky-cards-container { gap: 15vh; }
+  .sticky-card-ultra { padding: 30px; min-height: auto; }
+  .crisis-card-title-premium.large-title { font-size: 1.8rem; }
+  .crisis-icon-ultra-v2.large-icon { width: 80px; height: 80px; font-size: 2.5rem; }
+}

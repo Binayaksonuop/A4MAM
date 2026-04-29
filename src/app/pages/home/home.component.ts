@@ -131,6 +131,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initRevealAnimations();
     this.initComparisonAnimations();
     this.initChickyBarAnimations();
+    this.initStickyStackAnimations();
   }
 
   private initImpactAnimations(): void {
@@ -244,6 +245,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           ring.setAttribute('stroke-dasharray', `${currentVal}, 100`);
         });
       }
+    });
+  }
+
+  private initStickyStackAnimations(): void {
+    const cards = gsap.utils.toArray<HTMLElement>('.sticky-card-ultra');
+    if (!cards.length) return;
+
+    cards.forEach((card, index) => {
+      // The last card doesn't need to shrink
+      if (index === cards.length - 1) return;
+
+      gsap.to(card, {
+        scale: 0.92,
+        opacity: 0.4,
+        y: -30, // pushes it slightly up/back
+        ease: 'none',
+        scrollTrigger: {
+          trigger: cards[index + 1],
+          start: 'top 85%', // starts shrinking when the next card enters
+          end: 'top 25%',   // finishes shrinking when the next card reaches its sticky position
+          scrub: true
+        }
+      });
     });
   }
 
