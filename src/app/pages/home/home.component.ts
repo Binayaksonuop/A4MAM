@@ -8,11 +8,7 @@ import {
   NgZone,
   ViewEncapsulation
 } from '@angular/core';
-import {
-  CommonModule,
-  isPlatformBrowser,
-  NgOptimizedImage
-} from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
@@ -23,31 +19,22 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    NgOptimizedImage
-  ],
+  imports: [CommonModule, RouterModule, FormsModule, NgOptimizedImage],
   templateUrl: './home.component.html',
-  styleUrls: [], // Using global styles from app.component.css
+  styleUrl: './home.component.css',
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  // ─── State ────────────────────────────────────────
   private isBrowser: boolean;
 
-  // Impact Stats
   childrenSupported = 0;
   nutritionImprovement = 0;
   communitiesReached = 0;
 
-  // Chicky Bar Nutritional Metrics
   proteinDensity = 0;
   absorptionRate = 0;
   micronutrientLevel = 0;
 
-  // Calculator State
   calcGender = 'male';
   calcAge: number | null = null;
   calcWeight: number | null = null;
@@ -59,7 +46,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   calcRecommendation = '';
   calcDosageMg = '';
 
-  // WHO Reference Data (Weight-for-Age Median in kg)
   private whoMediansMale: Record<number, number> = {
     6: 7.9, 9: 8.9, 12: 9.6, 15: 10.3, 18: 10.9,
     21: 11.5, 24: 12.2, 30: 13.3, 36: 14.3,
@@ -79,65 +65,103 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    if (this.isBrowser) {
-      setTimeout(() => {
-        this.animateHero();
-        this.initGlobalScrollAnimations();
-        ScrollTrigger.refresh();
-      }, 500);
-    }
+    if (!this.isBrowser) return;
+
+    setTimeout(() => {
+      this.animateHero();
+      this.initRevealAnimations();
+      this.initImpactAnimations();
+      this.initComparisonAnimations();
+      this.initChickyBarAnimations();
+      this.initStackedCardAnimations();
+      this.initJourneyAnimations();
+      ScrollTrigger.refresh();
+    }, 300);
   }
 
   ngOnDestroy(): void {
-    if (this.isBrowser) {
-      ScrollTrigger.getAll().forEach(st => st.kill());
-    }
+    if (!this.isBrowser) return;
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   }
-
-  // ═══════════════════════════════════════════════════
-  //  GSAP ANIMATIONS
-  // ═══════════════════════════════════════════════════
 
   private animateHero(): void {
     const heroTargets = [
-      '.hero-animate-1',
-      '.hero-animate-2',
-      '.hero-animate-3',
-      '.hero-animate-4',
-      '.hero-animate-5'
+      '.hero-reveal-1',
+      '.hero-reveal-2',
+      '.hero-reveal-3',
+      '.hero-reveal-4',
+      '.hero-reveal-5',
+      '.floating-dashboard-v3'
     ];
 
     gsap.set(heroTargets, { opacity: 0, y: 50 });
-    gsap.set('.hero-floating-card', { opacity: 0, x: 100 });
+    gsap.set(['.image-3d-wrapper-v3', '.hero-back-glow'], { opacity: 0, scale: 0.9 });
+    gsap.set('.image-3d-wrapper-v3', { rotateY: -15 });
 
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.4 } });
 
-    tl.to('.hero-animate-1', { opacity: 1, y: 0, duration: 1.2, delay: 0.5 })
-      .to('.hero-animate-2', { opacity: 1, y: 0, duration: 1.4 }, '-=0.8')
-      .to('.hero-animate-3', { opacity: 1, y: 0, duration: 1.2 }, '-=1')
-      .to('.hero-animate-4', { opacity: 1, y: 0, duration: 1.2 }, '-=0.9')
-      .to('.hero-animate-5', { opacity: 1, y: 0, duration: 1.2, stagger: 0.15 }, '-=1')
-      .to('.hero-floating-card', { opacity: 1, x: 0, duration: 1.5, ease: 'expo.out' }, '-=1.2');
+    tl.to(heroTargets, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.18,
+      delay: 0.4
+    }, 0);
 
-    gsap.from('.hero-bg-img', { scale: 1.2, duration: 10, ease: 'linear', repeat: -1, yoyo: true });
+    tl.to(['.image-3d-wrapper-v3', '.hero-back-glow'], {
+      opacity: 1,
+      scale: 1,
+      duration: 2.2,
+      ease: 'expo.out'
+    }, 0.6);
+
+    tl.to('.image-3d-wrapper-v3', {
+      rotateY: -12,
+      duration: 2.2,
+      ease: 'expo.out'
+    }, 0.6);
+
+    gsap.to('.hero-bg-img', {
+      scale: 1.08,
+      duration: 8,
+      ease: 'sine.inOut',
+      repeat: -1,
+      yoyo: true
+    });
   }
 
-  private initGlobalScrollAnimations(): void {
-    this.initImpactAnimations();
-    this.initRevealAnimations();
-    this.initComparisonAnimations();
-    this.initChickyBarAnimations();
-    this.initStickyStackAnimations();
+  private initRevealAnimations(): void {
+    gsap.utils.toArray<HTMLElement>('.gsap-reveal').forEach(el => {
+      gsap.fromTo(
+        el,
+        { y: 55, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
   }
 
   private initImpactAnimations(): void {
+    const impact = document.querySelector('#impact');
+    if (!impact) return;
+
     const counter = { c: 0, n: 0, r: 0 };
+
     gsap.to(counter, {
-      c: 1500, n: 92, r: 45,
+      c: 1500,
+      n: 92,
+      r: 45,
       duration: 3,
       ease: 'power2.out',
       scrollTrigger: {
@@ -155,37 +179,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private initRevealAnimations(): void {
-    gsap.utils.toArray<HTMLElement>('.gsap-reveal').forEach(el => {
-      gsap.fromTo(el,
-        { y: 50, opacity: 0 },
-        {
-          y: 0, opacity: 1,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 92%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-    });
-  }
-
   private initComparisonAnimations(): void {
     const dashboard = document.querySelector('.comparison-dashboard-3d');
     if (!dashboard) return;
 
-    gsap.fromTo('.progress-bar-spirulina',
+    gsap.fromTo(
+      '.progress-bar-spirulina',
       { width: '0%' },
       {
-        width: '85%',
-        duration: 2.5,
+        width: '65%',
+        duration: 2,
         ease: 'expo.out',
         scrollTrigger: {
           trigger: dashboard,
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none reverse'
         }
       }
@@ -196,34 +203,38 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const section = document.querySelector('.chicky-bar-showcase-section');
     if (!section) return;
 
-    const tl = gsap.timeline({
+    gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top 75%',
+        start: 'top 78%',
         toggleActions: 'play none none reverse'
       }
-    });
-
-    tl.fromTo('.chicky-product-frame-v2',
-      { scale: 0.9, opacity: 0, rotateY: -15 },
-      { scale: 1, opacity: 1, rotateY: 0, duration: 1.5, ease: 'expo.out' }
-    )
-      .fromTo('.chicky-data-tag-v2',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.3, ease: 'back.out(1.7)' },
-        '-=1'
+    })
+      .fromTo(
+        '.chicky-product-frame',
+        { scale: 0.92, opacity: 0, rotateY: -10 },
+        { scale: 1, opacity: 1, rotateY: 0, duration: 1.25, ease: 'expo.out' }
       )
-      .fromTo('.fact-ring-item-v2',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power4.out' },
-        '-=0.8'
+      .fromTo(
+        '.chicky-data-tag',
+        { y: 22, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'back.out(1.7)' },
+        '-=0.75'
+      )
+      .fromTo(
+        '.fact-item',
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15 },
+        '-=0.5'
       );
 
-    // Dynamic Rings & Counters
     const metrics = { p: 0, a: 0, m: 0 };
+
     gsap.to(metrics, {
-      p: 85, a: 95, m: 70,
-      duration: 2.5,
+      p: 85,
+      a: 95,
+      m: 70,
+      duration: 2.4,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: '.nutritional-facts-premium-row',
@@ -237,43 +248,62 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.micronutrientLevel = Math.round(metrics.m);
         });
 
-        // Update SVG Dasharrays
-        const rings = document.querySelectorAll('.progress-ring-bar');
-        rings.forEach((ring: any) => {
+        const pEl = document.getElementById('protein-val');
+        const aEl = document.getElementById('absorption-val');
+        const mEl = document.getElementById('micronutrient-val');
+
+        if (pEl) pEl.textContent = Math.round(metrics.p) + '%';
+        if (aEl) aEl.textContent = Math.round(metrics.a) + '%';
+        if (mEl) mEl.textContent = Math.round(metrics.m) + '%';
+
+        document.querySelectorAll<SVGPathElement>('.progress-ring-bar').forEach(ring => {
           const target = ring.getAttribute('data-target');
-          const currentVal = target === '85' ? metrics.p : (target === '95' ? metrics.a : metrics.m);
-          ring.setAttribute('stroke-dasharray', `${currentVal}, 100`);
+          const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
+          ring.setAttribute('stroke-dasharray', `${current}, 100`);
         });
       }
     });
   }
 
-  private initStickyStackAnimations(): void {
-    const cards = gsap.utils.toArray<HTMLElement>('.sticky-card-ultra');
-    if (!cards.length) return;
+  private initStackedCardAnimations(): void {
+    const stackItems = document.querySelectorAll('.stack-card-item');
+    if (!stackItems.length) return;
 
-    cards.forEach((card, index) => {
-      // The last card doesn't need to shrink
-      if (index === cards.length - 1) return;
-
-      gsap.to(card, {
-        scale: 0.92,
-        opacity: 0.4,
-        y: -30, // pushes it slightly up/back
-        ease: 'none',
+    gsap.fromTo(stackItems,
+      { y: 60, rotateX: -15, scale: 0.9, opacity: 0, transformOrigin: 'top center' },
+      {
+        y: 0, rotateX: 0, scale: 1, opacity: 1, duration: 1.2, stagger: 0.15,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: cards[index + 1],
-          start: 'top 85%', // starts shrinking when the next card enters
-          end: 'top 25%',   // finishes shrinking when the next card reaches its sticky position
-          scrub: true
+          trigger: '.target-areas-section',
+          start: 'top 75%',
+          toggleActions: 'play none none reverse'
         }
-      });
-    });
+      }
+    );
   }
 
-  // ═══════════════════════════════════════════════════
-  //  CALCULATOR LOGIC
-  // ═══════════════════════════════════════════════════
+  private initJourneyAnimations(): void {
+    const journeyItems = document.querySelectorAll('.journey-step-wrapper');
+    if (!journeyItems.length) return;
+
+    journeyItems.forEach((item, index) => {
+      const tilt = index % 2 === 0 ? -12 : 12;
+      
+      gsap.fromTo(item.querySelector('.journey-node-card'),
+        { opacity: 0, y: 40, rotateY: tilt, scale: 0.95 },
+        {
+          opacity: 1, y: 0, rotateY: 0, scale: 1, duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  }
 
   private getWhoMedian(ageMonths: number): number {
     const table = this.calcGender === 'female' ? this.whoMediansFemale : this.whoMediansMale;
@@ -283,13 +313,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (ageMonths >= keys[keys.length - 1]) return table[keys[keys.length - 1]];
 
     for (let i = 0; i < keys.length - 1; i++) {
-      const lo = keys[i];
-      const hi = keys[i + 1];
-      if (ageMonths >= lo && ageMonths <= hi) {
-        const t = (ageMonths - lo) / (hi - lo);
-        return table[lo] + t * (table[hi] - table[lo]);
+      const low = keys[i];
+      const high = keys[i + 1];
+
+      if (ageMonths >= low && ageMonths <= high) {
+        const t = (ageMonths - low) / (high - low);
+        return table[low] + t * (table[high] - table[low]);
       }
     }
+
     return table[keys[keys.length - 1]];
   }
 
@@ -304,6 +336,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const median = this.getWhoMedian(this.calcAge);
     const sd = median * 0.12;
     const waz = (this.calcWeight - median) / sd;
+
     this.calcZScore = Math.round(waz * 10) / 10;
 
     if (waz >= -1) {
@@ -311,25 +344,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.calcColor = '#10b981';
       this.calcIcon = 'bi-shield-check';
       this.calcDosageMg = '0.5g / day';
-      this.calcRecommendation = 'Level 1 — Preventive Dose: 0.5g Spirulina daily via Chicky Bar to sustain nutritional immunity. Continue monthly MUAC screening.';
+      this.calcRecommendation = 'Preventive dose: continue balanced nutrition and monthly screening.';
     } else if (waz >= -2) {
       this.calcStatus = 'At Risk';
       this.calcColor = '#06b6d4';
       this.calcIcon = 'bi-exclamation-circle';
       this.calcDosageMg = '1g / day';
-      this.calcRecommendation = 'Level 1+ — Watchful Dose: 1g Spirulina daily. Monitor weight every 2 weeks. Increase nutrition via Chicky Bar.';
+      this.calcRecommendation = 'Watchful dose: daily Spirulina support with regular follow-up screening.';
     } else if (waz >= -3) {
-      this.calcStatus = 'Moderate Acute Malnutrition (MAM)';
+      this.calcStatus = 'Moderate Acute Malnutrition';
       this.calcColor = '#f59e0b';
-      this.calcIcon = 'bi-capsule';
-      this.calcDosageMg = '2–3g / day';
-      this.calcRecommendation = 'Level 2 — Therapeutic Dose: 2–3g Spirulina daily (1 Chicky Bar). Full 90-day structured recovery. Anganwadi enrollment required.';
+      this.calcIcon = 'bi-exclamation-triangle';
+      this.calcDosageMg = '2g / day';
+      this.calcRecommendation = 'Therapeutic dose: supervised nutrition support with close monitoring.';
     } else {
-      this.calcStatus = 'Severe Acute Malnutrition (SAM)';
+      this.calcStatus = 'Severe Risk';
       this.calcColor = '#ef4444';
       this.calcIcon = 'bi-hospital';
-      this.calcDosageMg = '5g / day';
-      this.calcRecommendation = 'Level 3 — Intensive Protocol: 5g supervised Spirulina + RUTF. Immediate clinical referral. Emergency POSHAN enrollment + Chicky Bar 2x.';
+      this.calcDosageMg = 'Clinical Review';
+      this.calcRecommendation = 'Immediate clinical supervision is recommended.';
     }
   }
 }

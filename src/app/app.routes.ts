@@ -85,5 +85,10 @@ export const routes: Routes = [
     path: 'order-success',
     loadComponent: () => import('./pages/shop/order-success/order-success.component').then(m => m.OrderSuccessComponent),
     title: 'Order Confirmed! | A4MAM'
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./pages/admin/admin-login/admin-login.component').then(m => m.AdminLoginComponent),
+    title: 'Admin Login | A4MAM'
   }
 ];

@@ -1,0 +1,2155 @@
+﻿<!-- Scroll to Top (Ultra Premium) -->
+<div class="scroll-to-top-premium" [class.visible]="showScrollTop" (click)="scrollToTop()">
+  <svg class="progress-circle-svg" viewBox="0 0 64 64">
+    <circle class="circle-bg" cx="32" cy="32" r="30"></circle>
+    <circle class="circle-progress" cx="32" cy="32" r="30"></circle>
+  </svg>
+  <i class="bi bi-arrow-up"></i>
+</div>
+<div class="cursor-dot" [style.left.px]="cursorX" [style.top.px]="cursorY"></div>
+<div class="cursor-outline" [style.left.px]="cursorX" [style.top.px]="cursorY"></div>
+
+<!-- NAVBAR (ULTRA PREMIUM) -->
+<nav class="navbar navbar-expand-lg fixed-top" [ngClass]="{'scrolled': isScrolled}"
+  style="z-index: 99999; pointer-events: auto;">
+  <div class="navbar-premium-bridge d-flex align-items-center justify-content-between mx-auto">
+
+    <!-- LEFT: BRANDING -->
+    <a class="navbar-brand m-0 p-0 d-flex align-items-center" routerLink="/">
+      <div class="brand-logo-glow">
+        <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="nav-logo me-2" style="width: 48px; height: 48px;">
+      </div>
+      <span class="brand-text">A4MAM<span class="text-emerald fs-6 ms-1">///</span></span>
+    </a>
+
+    <!-- MOBILE TOGGLE -->
+    <button class="navbar-toggler border-0 shadow-none toggle-futuristic" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+      <i class="bi bi-grid-3x3-gap-fill fs-2 text-emerald"></i>
+    </button>
+
+    <!-- RIGHT: LINKS & CTA -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto gap-2">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="closeNavbar()">
+            <i class="bi bi-house-door nav-icon-pulse"></i> Home
+          </a>
+        </li>
+
+        <!-- SHOP DROPDOWN -->
+        <li class="nav-item dropdown premium-shop-dropdown">
+          <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bag nav-icon-pulse"></i> Shop <i class="bi bi-chevron-down ms-1 dropdown-chevron"></i>
+          </a>
+          <div class="dropdown-menu shop-menu-glass shadow-2xl" aria-labelledby="shopDropdown">
+            <div class="shop-menu-inner p-3">
+              <!-- Spirulina Products -->
+              <div class="shop-category mb-3">
+                <h6 class="category-title px-3 mb-2">Spirulina Products</h6>
+                <a class="dropdown-item shop-item" routerLink="/shop/chicky-bars" (click)="closeNavbar()">
+                  <i class="bi bi-stars text-emerald me-2"></i> Chicky Bars (Kids)
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/powder" (click)="closeNavbar()">
+                  <i class="bi bi-moisture text-emerald me-2"></i> Spirulina Powder
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/capsules" (click)="closeNavbar()">
+                  <i class="bi bi-capsule text-emerald me-2"></i> Supplement Capsules
+                </a>
+              </div>
+              
+              <!-- Nutrition Kits -->
+              <div class="shop-category mb-3">
+                <h6 class="category-title px-3 mb-2">Nutrition Kits</h6>
+                <a class="dropdown-item shop-item" routerLink="/shop/child-kit" (click)="closeNavbar()">
+                  <i class="bi bi-box-seam text-emerald me-2"></i> Child Nutrition Kit
+                </a>
+                <a class="dropdown-item shop-item" routerLink="/shop/maternal-kit" (click)="closeNavbar()">
+                  <i class="bi bi-heart-pulse text-emerald me-2"></i> Maternal Health Kit
+                </a>
+              </div>
+
+              <!-- Bulk Orders -->
+              <div class="shop-category">
+                <a class="dropdown-item shop-item bulk-order-item" routerLink="/shop/bulk" (click)="closeNavbar()">
+                  <i class="bi bi-truck text-emerald me-2"></i> Bulk / NGO Orders
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active-link" (click)="closeNavbar()">
+            <i class="bi bi-compass nav-icon-pulse"></i> Mission
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/gallery" routerLinkActive="active-link" (click)="closeNavbar()">
+            <i class="bi bi-images nav-icon-pulse"></i> Gallery
+          </a>
+        </li>
+
+        <li class="nav-item"> 
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link" (click)="closeNavbar()">
+            <i class="bi bi-envelope-paper nav-icon-pulse"></i> Contact Us
+          </a>
+        </li>
+      </ul>
+
+      <!-- CTA BLOCK -->
+      <div class="d-flex align-items-center gap-4 ms-lg-4 mt-3 mt-lg-0 pb-3 pb-lg-0">
+        <!-- CART ICON -->
+        <div class="nav-cart-wrapper position-relative me-2">
+          <a routerLink="/cart" class="nav-cart-link" (click)="closeNavbar()">
+            <i class="bi bi-cart3 fs-4 text-white"></i>
+            <span class="cart-badge-premium" *ngIf="cartCount >= 0">{{ cartCount }}</span>
+          </a>
+        </div>
+
+        <div class="nav-cta-wrapper">
+          <a class="btn btn-premium-nav-ultra futuristic-btn" routerLink="/donate" (click)="closeNavbar()">
+            <i class="bi bi-heart-fill me-2 text-danger"></i><span>Donate Now</span>
+            <div class="btn-shine"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<main *ngIf="isHomePage">
+
+  <!-- HERO SECTION (ULTRA PREMIUM) -->
+  <section class="hero-section-premium-v2">
+    <div class="hero-bg-image-wrapper">
+      <img ngSrc="assets/images/hero_bg.png" alt="Hero Background" fill class="hero-bg-img" priority>
+      <div class="hero-overlay-gradient"></div>
+      <div class="hero-mesh-glow"></div>
+      <div class="hero-deco-node node-top"></div>
+      <div class="hero-deco-node node-bottom"></div>
+    </div>
+
+    <div class="container position-relative h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-12">
+          <div class="hero-content-box-v2">
+            <div class="hero-badge-premium hero-animate-1">
+              <i class="bi bi-shield-check-fill"></i> Nature's Superfood, India's Solution
+            </div>
+
+            <h1 class="hero-title-main hero-animate-2">
+              Fighting Hidden Hunger with <br>
+              <span class="text-gradient-emerald-v2">Spirulina Innovation</span>
+            </h1>
+
+            <p class="hero-lead-text hero-animate-3">
+              A natural, science-backed solution delivering complete nutrition to children and mothers during the most critical 1000 days of development.
+            </p>
+
+            <div class="hero-actions-row hero-animate-4">
+              <a href="#challenge" class="btn btn-premium-emerald-v2">
+                Explore Our Mission <i class="bi bi-arrow-right"></i>
+              </a>
+              <a href="#contact" class="btn btn-premium-glass-v2">
+                Join The Cause
+              </a>
+            </div>
+
+            <div class="hero-stats-strip hero-animate-5">
+              <div class="hero-stat-item">
+                <span class="hero-stat-value">100%</span>
+                <span class="hero-stat-label">Bioavailable</span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-value">65%</span>
+                <span class="hero-stat-label">Pure Protein</span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-value">50x</span>
+                <span class="hero-stat-label">More Iron than Spinach</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Info Card -->
+      <div class="hero-floating-card d-none d-xl-block">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="bg-emerald-soft p-3 rounded-4">
+            <i class="bi bi-shield-fill-check text-emerald fs-2"></i>
+          </div>
+          <div>
+            <h5 class="text-white fw-900 mb-0">Certified Safe</h5>
+            <p class="text-white text-opacity-50 small mb-0">WHO & FDA Standards</p>
+          </div>
+        </div>
+        <p class="text-white text-opacity-70 small mb-0">
+          Our Spirulina is cultivated in controlled environments ensuring the highest purity and nutrient density for
+          child recovery.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT NUTRITION SECTION (PREMIUM) -->
+  <section class="nutrition-premium-section section-padding position-relative overflow-hidden" id="nutrition">
+    <div class="nutrition-mesh-bg"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-emerald-light mb-3">Foundations of Life</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">The Science of <span class="text-gradient-emerald">Human
+              Potential</span></h2>
+          <p class="lead text-slate-600">Nutrition is the architectural blueprint of development, providing the
+            essential biological elements for physical growth, cognitive brilliance, and a resilient immune system.</p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Macronutrients -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="nutrition-glass-card">
+            <div class="nutrition-card-glow macro"></div>
+            <div class="nutrition-card-icon-box macro"><i class="bi bi-stack"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-3">Macronutrients</h4>
+            <p class="text-slate-600 mb-4">The primary fuel sources and structural building blocks for the human body.
+            </p>
+            <ul class="nutrition-list-premium list-unstyled mb-0">
+              <li><span class="bullet-box"></span> <strong>Carbohydrates:</strong> Primary fuel for cellular energy</li>
+              <li><span class="bullet-box"></span> <strong>Proteins:</strong> Essential for growth, repair & immunity
+              </li>
+              <li><span class="bullet-box"></span> <strong>Fats:</strong> Critical for brain health & hormone regulation
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+        <!-- Micronutrients -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="nutrition-glass-card featured">
+            <div class="nutrition-card-glow micro"></div>
+            <div class="nutrition-card-icon-box micro"><i class="bi bi-shield-shaded"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-3">Micronutrients</h4>
+            <p class="text-slate-600 mb-4">High-impact metabolic regulators required in precision amounts for health.
+            </p>
+            <ul class="nutrition-list-premium list-unstyled mb-0">
+              <li><span class="bullet-box"></span> <strong>Vitamins:</strong> Bio-catalysts supporting all vital
+                functions</li>
+              <li><span class="bullet-box"></span> <strong>Minerals:</strong> Iron, Zinc & Iodine for neuro-development
+              </li>
+            </ul>
+            <div class="card-shimmer-premium"></div>
+          </div>
+        </div>
+
+        <!-- Essential Components -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="nutrition-glass-card">
+            <div class="nutrition-card-glow essential"></div>
+            <div class="nutrition-card-icon-box essential"><i class="bi bi-droplet-half"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-3">Essential Elements</h4>
+            <p class="text-slate-600 mb-4">Vital supporting components required for optimal physiological maintenance.
+            </p>
+            <ul class="nutrition-list-premium list-unstyled mb-0">
+              <li><span class="bullet-box"></span> <strong>Water:</strong> The medium for nutrient transport & hydration
+              </li>
+              <li><span class="bullet-box"></span> <strong>Dietary Fiber:</strong> Fundamental for digestive health &
+                gut biome</li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SILENT CRISIS (PREMIUM DARK) -->
+  <section class="silent-crisis-premium-section section-padding position-relative overflow-hidden" id="challenge">
+    <div class="crisis-glow-bg-ultra"></div>
+    <div class="crisis-mesh-pattern"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-danger-glow mb-3">Global Health Emergency</h6>
+          <h2 class="display-3 fw-950 text-white mb-4">The Silent Crisis: <span
+              class="text-gradient-danger-glow">Malnutrition</span></h2>
+          <p class="lead text-white text-opacity-90">Malnutrition is a systemic failure to provide the essential
+            nutrients required for human potential, affecting millions of lives invisibly.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Compromised Immunity -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="crisis-card-ultra-v2 hunger-card">
+            <div class="crisis-card-inner hunger">
+              <div class="crisis-icon-ultra-v2"><i class="bi bi-shield-lock-fill"></i></div>
+              <h4 class="crisis-card-title-premium">Compromised Immunity</h4>
+              <p class="crisis-card-desc-premium">Weakens natural defense mechanisms against preventable diseases.</p>
+              <div class="crisis-card-stat-premium">Affects 1 in 3 globally</div>
+              <div class="crisis-card-glow-ultra hunger-glow"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anemia -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="crisis-card-ultra-v2 anemia-card">
+            <div class="crisis-card-inner anemia">
+              <div class="crisis-icon-ultra-v2"><i class="bi bi-droplet-half"></i></div>
+              <h4 class="crisis-card-title-premium">Anemia</h4>
+              <p class="crisis-card-desc-premium">Reduces oxygen-carrying capacity, causing chronic fatigue and severe
+                risks for maternal and child health.</p>
+              <div class="crisis-card-stat-premium">Primary cause of fatigue</div>
+              <div class="crisis-card-glow-ultra anemia-glow"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stunted Growth -->
+        <div class="col-lg-4 gsap-reveal">
+          <div class="crisis-card-ultra-v2 growth-card">
+            <div class="crisis-card-inner growth">
+              <div class="crisis-icon-ultra-v2"><i class="bi bi-bar-chart-fill"></i></div>
+              <h4 class="crisis-card-title-premium">Stunted Growth</h4>
+              <p class="crisis-card-desc-premium">Severely impacts physical scaling & vital cognitive development.</p>
+              <div class="crisis-card-stat-premium">Irreversible damage</div>
+              <div class="crisis-card-glow-ultra growth-glow"></div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="text-center mt-5 pt-5 gsap-reveal">
+        <div class="cycle-warning-box-ultra">
+          <div class="warning-shimmer"></div>
+          <p class="mb-0 text-white fw-800 fs-5">
+            <i class="bi bi-arrow-repeat me-3 text-danger-glow animate-spin-slow"></i>
+            Without intervention, malnutrition fuels an intergenerational cycle of poverty.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANTHROPOMETRIC INDICATORS (FROM DOCX) -->
+  <section class="anthropometric-section section-padding position-relative overflow-hidden" id="anthropometrics">
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-emerald-light mb-3">Clinical Assessment</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">Anthropometric <span
+              class="text-gradient-emerald">Indicators</span></h2>
+          <p class="lead text-slate-600">Field-level identification of malnutrition relies on precise anthropometric
+            measurements to classify nutritional status and guide intervention.</p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Stunting -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="anthropo-card p-4 h-100 text-center">
+            <div class="anthropo-icon danger mb-3 mx-auto"><i class="bi bi-rulers"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-2">Stunting</h4>
+            <div class="anthropo-metric mb-3">Low Height for Age</div>
+            <span class="anthropo-type danger-type">Chronic Malnutrition</span>
+            <p class="text-slate-600 small mt-3 mb-0">Reflects long-term nutritional deprivation. Height is considered
+              more reliable than weight for field assessments as it is less prone to temporary fluctuation.</p>
+          </div>
+        </div>
+
+        <!-- Wasting -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="anthropo-card featured p-4 h-100 text-center">
+            <div class="anthropo-icon warning mb-3 mx-auto"><i class="bi bi-activity"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-2">Wasting</h4>
+            <div class="anthropo-metric mb-3">Low Weight for Height</div>
+            <span class="anthropo-type warning-type">Acute Malnutrition</span>
+            <p class="text-slate-600 small mt-3 mb-0">Represents rapid, short-term weight loss often caused by illness
+              or severely inadequate food intake. Requires urgent nutritional intervention.</p>
+          </div>
+        </div>
+
+        <!-- Underweight -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="anthropo-card p-4 h-100 text-center">
+            <div class="anthropo-icon info mb-3 mx-auto"><i class="bi bi-speedometer"></i></div>
+            <h4 class="fw-900 text-slate-800 mb-2">Underweight</h4>
+            <div class="anthropo-metric mb-3">Low Weight for Age</div>
+            <span class="anthropo-type info-type">Mixed Indicator</span>
+            <p class="text-slate-600 small mt-3 mb-0">Combines effects of both stunting and wasting. Used as a composite
+              indicator in population-level surveys like NFHS-5.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CYCLE OF MALNUTRITION (PREMIUM VERTICAL FLOW) -->
+  <section class="cycle-of-malnutrition-premium section-padding position-relative overflow-hidden">
+    <div class="cycle-mesh-bg-ultra"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-emerald-light mb-3">Intergenerational Impact</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">The Cycle of <span
+              class="text-gradient-emerald">Malnutrition</span></h2>
+          <p class="lead text-slate-600">Malnutrition is a continuous loop that passes from mother to child, creating a
+            legacy of systemic health challenges.</p>
+        </div>
+      </div>
+
+      <div class="cycle-flow-container-ultra">
+        <div class="cycle-line-path"></div>
+
+        <div class="row g-5">
+          <!-- Step 1 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">01</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-person-x-fill"></i></div>
+              </div>
+              <h5 class="fw-900 text-slate-800 mb-3">Undernourished Mother</h5>
+              <p class="text-slate-600 small mb-0">Maternal nutrient deficiency directly impacts fetal development and
+                long-term health prospects.</p>
+              <div class="step-card-glow"></div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">02</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-emoji-dizzy"></i></div>
+              </div>
+              <h5 class="fw-900 text-slate-800 mb-3">Low Birth Weight</h5>
+              <p class="text-slate-600 small mb-0">Infants are born with compromised immune systems and physiological
+                vulnerabilities.</p>
+              <div class="step-card-glow"></div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2 featured-ultra">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">03</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-person-bounding-box"></i></div>
+              </div>
+              <h5 class="fw-900 text-white mb-3">Malnourished Child</h5>
+              <p class="text-white text-opacity-90 small mb-0">Critical growth windows are missed, leading to stunting
+                and permanent developmental delays.</p>
+              <div class="step-card-glow-active"></div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">04</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-graph-down"></i></div>
+              </div>
+              <h5 class="fw-900 text-slate-800 mb-3">Learning Failure</h5>
+              <p class="text-slate-600 small mb-0">Cognitive impairments result in poor educational performance and
+                reduced life potential.</p>
+              <div class="step-card-glow"></div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">05</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-person-hearts"></i></div>
+              </div>
+              <h5 class="fw-900 text-slate-800 mb-3">Malnourished Adult</h5>
+              <p class="text-slate-600 small mb-0">Chronic health issues and low economic productivity persist through
+                adulthood.</p>
+              <div class="step-card-glow"></div>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="col-lg-4 col-md-6 gsap-reveal">
+            <div class="cycle-step-card-v2">
+              <div class="cycle-step-header">
+                <span class="cycle-step-number-v2">06</span>
+                <div class="cycle-step-icon-v2"><i class="bi bi-person-plus-fill"></i></div>
+              </div>
+              <h5 class="fw-900 text-slate-800 mb-3">Undernourished Pregnancy</h5>
+              <p class="text-slate-600 small mb-0">The cycle repeats as the next generation enters life with the same
+                nutritional disadvantages.</p>
+              <div class="step-card-glow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 pt-5 gsap-reveal">
+        <div class="cycle-break-cta-ultra p-5">
+          <div class="cta-mesh-overlay"></div>
+          <h4 class="fw-950 text-slate-800 mb-0 position-relative z-1">
+            <i class="bi bi-shield-check-fill text-success me-3"></i>
+            Breaking this cycle requires <span class="text-gradient-emerald">targeted scientific intervention</span>.
+          </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FIRST 1000 DAYS (ULTRA PREMIUM DARK) -->
+  <section class="critical-1000-days-ultra section-padding position-relative overflow-hidden">
+    <div class="days-bg-mesh"></div>
+    <div class="container position-relative z-2">
+      <div class="row align-items-center g-5 mb-5">
+        <div class="col-lg-6 gsap-reveal">
+          <h6 class="badge-premium-warning-glow mb-3">The Window of Opportunity</h6>
+          <h2 class="fs-1 fs-lg-2 fw-950 text-white mb-4">The First <span class="text-gradient-gold-glow">1000 Days</span>
+          </h2>
+          <p class="lead text-white text-opacity-80">The period from pregnancy to a childΓÇÖs second birthday is the most
+            critical window for lifelong health, brain architecture, and human development.</p>
+        </div>
+        <div class="col-lg-6 gsap-reveal">
+          <div class="days-warning-box-ultra">
+            <p class="mb-0 text-white text-opacity-90 fw-600">
+              <i class="bi bi-info-circle-fill text-warning me-3 fs-4"></i>
+              This phase determines a childΓÇÖs physical growth, brain structure, and immune resilience. Damage during
+              this window is often <span class="text-warning fw-900">irreversible</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 gsap-reveal">
+          <div class="impact-card-ultra-3d brain-card">
+            <div class="card-ultra-icon brain"><i class="bi bi-lightbulb-fill"></i></div>
+            <h5 class="fw-900 text-white mb-3">Brain Development</h5>
+            <p class="text-white text-opacity-75 small mb-0">Supports critical neural path creation and cognitive
+              intelligence.</p>
+            <div class="card-ultra-glow"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 gsap-reveal">
+          <div class="impact-card-ultra-3d immunity-card">
+            <div class="card-ultra-icon immunity"><i class="bi bi-shield-check"></i></div>
+            <h5 class="fw-900 text-white mb-3">Immune Strength</h5>
+            <p class="text-white text-opacity-75 small mb-0">Builds the biological foundation to resist infections and
+              disease.</p>
+            <div class="card-ultra-glow"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 gsap-reveal">
+          <div class="impact-card-ultra-3d growth-card">
+            <div class="card-ultra-icon growth"><i class="bi bi-graph-up-arrow"></i></div>
+            <h5 class="fw-900 text-white mb-3">Physical Scaling</h5>
+            <p class="text-white text-opacity-75 small mb-0">Ensures healthy height, weight, and overall skeletal
+              development.</p>
+            <div class="card-ultra-glow"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 gsap-reveal">
+          <div class="impact-card-ultra-3d metabolic-card">
+            <div class="card-ultra-icon metabolic"><i class="bi bi-heart-pulse"></i></div>
+            <h5 class="fw-900 text-white mb-3">Metabolic Health</h5>
+            <p class="text-white text-opacity-75 small mb-0">Programs long-term metabolic health and reduces future
+              risks.</p>
+            <div class="card-ultra-glow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS SPIRULINA? (ULTRA PREMIUM V2) -->
+  <section id="spirulina-info"
+    class="spirulina-info-section-ultra-v2 section-padding position-relative overflow-hidden">
+    <div class="spirulina-mesh-bg-v2"></div>
+    <div class="spirulina-blob-glow-1"></div>
+    <div class="spirulina-blob-glow-2"></div>
+
+    <div class="container position-relative z-3">
+      <div class="row align-items-center g-3 g-lg-5">
+        <!-- Left: Content -->
+        <div class="col-lg-6">
+          <div class="spirulina-content-box-v2">
+            <div class="premium-badge-v2 mb-4 spirulina-reveal-1">
+              <span class="badge-dot-v2"></span> Nature's Superfood
+            </div>
+
+            <h2 class="fs-2 fs-lg-3 fw-950 text-slate-800 mb-4 lh-1-1 spirulina-reveal-2">
+              What is <span class="text-gradient-emerald-v2">Spirulina?</span>
+            </h2>
+
+            <p class="lead text-slate-600 mb-5 spirulina-reveal-3">
+              Spirulina is a blue-green algae known as one of the world's most powerful superfoods. It is a highly
+              sustainable, nutrient-dense solution for combating global malnutrition.
+            </p>
+
+            <div class="spirulina-features-grid-v2">
+              <!-- Feature 1 -->
+              <div class="feature-item-v2 spirulina-reveal-4">
+                <div class="feature-icon-wrapper-v2 protein">
+                  <i class="bi bi-shield-check"></i>
+                  <div class="icon-ring-v2"></div>
+                </div>
+                <div class="feature-info-v2">
+                  <h5 class="fw-900 text-slate-800 mb-1">60-70% Protein</h5>
+                  <p class="small text-slate-500 mb-0">Contains all essential amino acids required for growth.</p>
+                </div>
+              </div>
+
+              <!-- Feature 2 -->
+              <div class="feature-item-v2 spirulina-reveal-5">
+                <div class="feature-icon-wrapper-v2 absorption">
+                  <i class="bi bi-lightning-charge-fill"></i>
+                  <div class="icon-ring-v2"></div>
+                </div>
+                <div class="feature-info-v2">
+                  <h5 class="fw-900 text-slate-800 mb-1">Rapid Absorption</h5>
+                  <p class="small text-slate-500 mb-0">Cell wall lacks cellulose, making it 95% digestible.</p>
+                </div>
+              </div>
+
+              <!-- Feature 3 -->
+              <div class="feature-item-v2 spirulina-reveal-6">
+                <div class="feature-icon-wrapper-v2 iron">
+                  <i class="bi bi-heart-pulse-fill"></i>
+                  <div class="icon-ring-v2"></div>
+                </div>
+                <div class="feature-info-v2">
+                  <h5 class="fw-900 text-slate-800 mb-1">Iron & Vitamins</h5>
+                  <p class="small text-slate-500 mb-0">Rich in B-vitamins and bioavailable Iron.</p>
+                </div>
+              </div>
+
+              <!-- Feature 4 -->
+              <div class="feature-item-v2 spirulina-reveal-7">
+                <div class="feature-icon-wrapper-v2 antioxidant">
+                  <i class="bi bi-shield-fill-check"></i>
+                  <div class="icon-ring-v2"></div>
+                </div>
+                <div class="feature-info-v2">
+                  <h5 class="fw-900 text-slate-800 mb-1">Powerful Antioxidants</h5>
+                  <p class="small text-slate-500 mb-0">Contains Phycocyanin, a potent antioxidant combating oxidative
+                    stress.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual 3D Stack -->
+        <div class="col-lg-6">
+          <div class="spirulina-visual-container-v2">
+            <div class="visual-glow-main"></div>
+
+            <div class="spirulina-card-3d-wrapper">
+              <div class="spirulina-card-inner-v2">
+                <img ngSrc="assets/images/spirulina_2.png" alt="Spirulina Algae" class="img-fluid main-spirulina-img"
+                  width="600" height="600">
+                <div class="card-overlay-glass"></div>
+              </div>
+
+              <!-- Floating Data Tags -->
+              <div class="floating-tag-v2 tag-top-left animate-float-slow">
+                <div class="tag-icon-v2"><i class="bi bi-capsule-pill"></i></div>
+                <div class="tag-content-v2">
+                  <span class="tag-val-v2">65%</span>
+                  <span class="tag-lbl-v2">Protein</span>
+                </div>
+              </div>
+
+              <div class="floating-tag-v2 tag-bottom-right animate-float-reverse">
+                <div class="tag-icon-v2"><i class="bi bi-gem"></i></div>
+                <div class="tag-content-v2">
+                  <span class="tag-val-v2">50x</span>
+                  <span class="tag-lbl-v2">Iron vs Spinach</span>
+                </div>
+              </div>
+
+              <!-- Decorative Elements -->
+              <div class="decorative-circle-v2 c1"></div>
+              <div class="decorative-circle-v2 c2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SPIRULINA WORKS SECTION (ULTRA PREMIUM) -->
+  <section class="why-spirulina-ultra-section section-padding position-relative overflow-hidden">
+    <div class="spirulina-works-mesh-bg"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-emerald-light mb-3">Clinical Efficiency</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">Why Spirulina <span
+              class="text-gradient-emerald">Works</span></h2>
+          <p class="lead text-slate-600 mx-auto" style="max-width: 800px;">
+            Spirulina provides a powerful and efficient nutritional solution due to its superior absorption, rich
+            nutrient profile, and scientifically proven clinical benefits.
+          </p>
+        </div>
+      </div>
+
+      <!-- Premium Power Spirulina Banner -->
+      <div class="row mb-5 gsap-reveal">
+        <div class="col-12">
+          <div class="position-relative rounded-4 overflow-hidden hover-scale-3d premium-glow-border"
+            style="height: 280px; border-radius: 30px !important;">
+            <div class="glass-reflection-overlay z-3"></div>
+            <img ngSrc="assets/images/power_spirulina.png" alt="Power of Spirulina" fill
+              style="object-fit: cover; filter: brightness(1.05) saturate(1.15);" class="z-1">
+            <div class="position-absolute top-0 start-0 w-100 h-100 z-2"
+              style="background: linear-gradient(to right, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.4) 60%, rgba(2,6,23,0) 100%);">
+            </div>
+            <div class="position-absolute top-0 start-0 h-100 d-flex flex-column justify-content-center p-5 z-3"
+              style="max-width: 500px;">
+              <span class="badge bg-emerald-subtle text-emerald px-3 py-2 rounded-pill fs-7 fw-bold mb-3 d-inline-block"
+                style="width: fit-content;"><i class="bi bi-stars me-2"></i>The #1 Superfood</span>
+              <h3 class="fw-950 text-white mb-2">65% Protein ┬╖ 58x Iron ┬╖ 95% Absorption</h3>
+              <p class="text-white text-opacity-60 mb-0">Spirulina's unique cell structure eliminates the
+                bioavailability barrier that defeats plant-based iron and protein supplements.</p>
+            </div>
+            <!-- Right side floating stats -->
+            <div class="position-absolute end-0 top-50 translate-middle-y pe-5 z-3 d-none d-lg-flex gap-4">
+              <div class="text-center">
+                <div class="display-5 fw-950 text-emerald">95%</div>
+                <div class="text-white text-opacity-50 small text-uppercase">Absorption</div>
+              </div>
+              <div class="text-center">
+                <div class="display-5 fw-950 text-warning">58x</div>
+                <div class="text-white text-opacity-50 small text-uppercase">vs Spinach</div>
+              </div>
+              <div class="text-center">
+                <div class="display-5 fw-950 text-cyan">65%</div>
+                <div class="text-white text-opacity-50 small text-uppercase">Protein</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+      </div>
+    </div>
+  </section>
+
+  <!-- CHICKY BAR PRODUCT SHOWCASE (ULTRA PREMIUM) -->
+  <section class="chicky-bar-showcase-section py-5 overflow-hidden position-relative">
+    <div class="chicky-bg-glow"></div>
+    <div class="container py-5 position-relative z-3">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 gsap-reveal">
+          <div class="chicky-product-frame hover-scale-3d">
+            <div class="card-shimmer-fast"></div>
+            <img src="assets/images/chicky_bars_new.png" alt="MAM Chicky Bar" class="img-fluid chicky-main-img">
+            <div class="chicky-data-tag t1">
+              <span class="d-block fw-900 fs-4">12g</span>
+              <span class="small opacity-70">Protein / Bar</span>
+            </div>
+            <div class="chicky-data-tag t2">
+              <span class="d-block fw-900 fs-4">100%</span>
+              <span class="small opacity-70">Bioavailable</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 gsap-reveal">
+          <div class="ps-lg-5">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="badge-premium-emerald-light">Biological Vehicle</span>
+              <span class="badge bg-slate-800 text-white px-3 py-1 rounded-pill small fw-bold"><i class="bi bi-cpu me-1"></i> Engineered Format</span>
+            </div>
+            <h2 class="display-4 fw-950 text-slate-800 mb-4 lh-1-1">The <span class="text-gradient-emerald">Chicky Bar:</span> Nutrition Engineered</h2>
+            <p class="lead text-slate-600 mb-4">
+              Designed for surgical precision in nutritional distribution, the Chicky Bar is our proprietary vehicle for delivering high-density Spirulina in a format that is 100% palatable and culturally accepted.
+            </p>
+            
+            <div class="chicky-feature-list mb-5">
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-shield-check"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Zero Sensory Barriers</h6>
+                  <p class="small text-slate-500 mb-0">Engineered flavor profile to eliminate algae odor and taste.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-lightning-charge"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Rapid Bioavailability</h6>
+                  <p class="small text-slate-500 mb-0">Molecularly optimized for immediate nutrient uptake in children.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mb-3">
+                <div class="feature-icon-sm"><i class="bi bi-geo-alt"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Last-Mile Distribution</h6>
+                  <p class="small text-slate-500 mb-0">Distributed via Anganwadi centers and tribal health clinics.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3">
+                <div class="feature-icon-sm"><i class="bi bi-check-circle"></i></div>
+                <div>
+                  <h6 class="fw-800 text-slate-800 mb-1">Certified Safety</h6>
+                  <p class="small text-slate-500 mb-0">FSSAI Certified, 100% Vegetarian, and shelf-stable format.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="nutritional-facts-grid">
+              <div class="fact-item">
+                <div class="fact-circle">
+                  <svg viewBox="0 0 36 36"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="85, 100"/></svg>
+                  <span>85%</span>
+                </div>
+                <h6 class="mt-3 fw-800 text-slate-700">Protein Density</h6>
+              </div>
+              <div class="fact-item">
+                <div class="fact-circle">
+                  <svg viewBox="0 0 36 36"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="95, 100"/></svg>
+                  <span>95%</span>
+                </div>
+                <h6 class="mt-3 fw-800 text-slate-700">Absorption Rate</h6>
+              </div>
+              <div class="fact-item">
+                <div class="fact-circle">
+                  <svg viewBox="0 0 36 36"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="70, 100"/></svg>
+                  <span>70%</span>
+                </div>
+                <h6 class="mt-3 fw-800 text-slate-700">Micronutrients</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPIRULINA'S 4 TARGET AREAS (FROM DOCX) -->
+  <section class="target-areas-section section-padding position-relative overflow-hidden" style="background: #020617;">
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-warning-glow mb-3">Nutritional Reversal</h6>
+          <h2 class="display-4 fw-950 text-white mb-4">Spirulina's <span class="text-gradient-gold-glow">4 Target
+              Areas</span></h2>
+          <p class="lead text-white text-opacity-80">Spirulina addresses malnutrition by targeting four critical
+            physiological areas that determine a child's long-term health and survival.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Target 1: Physical Growth -->
+        <div class="col-lg-6 col-md-6 gsap-reveal">
+          <div class="benefit-card-premium theme-physical">
+            <div class="benefit-glow"></div>
+            <div class="benefit-icon-box">
+              <i class="bi bi-activity"></i>
+            </div>
+            <span class="benefit-subtitle">Physical Growth & Development</span>
+            <h4 class="benefit-title">Stunting & Wasting Recovery</h4>
+            <ul class="benefit-list">
+              <li><i class="bi bi-check2"></i><span>High-density proteins and lipids to reverse wasting (low weight for
+                  height)</span></li>
+              <li><i class="bi bi-check2"></i><span>Supports reversal of stunting (low height for age) ΓÇö chronic
+                  malnutrition</span></li>
+              <li><i class="bi bi-check2"></i><span>Essential proteins serve as building blocks for tissue repair and
+                  body maintenance</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Target 2: Brain & Cognitive -->
+        <div class="col-lg-6 col-md-6 gsap-reveal">
+          <div class="benefit-card-premium theme-brain">
+            <div class="benefit-glow"></div>
+            <div class="benefit-icon-box">
+              <i class="bi bi-cpu"></i>
+            </div>
+            <span class="benefit-subtitle">Brain & Cognitive Function</span>
+            <h4 class="benefit-title">Neural Development</h4>
+            <ul class="benefit-list">
+              <li><i class="bi bi-check2"></i><span>Lipids (fats) provide concentrated energy vital for early brain
+                  development</span></li>
+              <li><i class="bi bi-check2"></i><span>Iodine content supports healthy thyroid function and cognitive
+                  growth</span></li>
+              <li><i class="bi bi-check2"></i><span>Essential fatty acids facilitate absorption of fat-soluble vitamins
+                  (A, D, K, E)</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Target 3: Immune System -->
+        <div class="col-lg-6 col-md-6 gsap-reveal">
+          <div class="benefit-card-premium theme-immune">
+            <div class="benefit-glow"></div>
+            <div class="benefit-icon-box">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <span class="benefit-subtitle">Immune System & Metabolism</span>
+            <h4 class="benefit-title">Defense & Regulation</h4>
+            <ul class="benefit-list">
+              <li><i class="bi bi-check2"></i><span>Zinc and Vitamin A strengthen immune defense and promote wound
+                  healing</span></li>
+              <li><i class="bi bi-check2"></i><span>Vitamin E acts as a powerful antioxidant protecting cells from
+                  damage</span></li>
+              <li><i class="bi bi-check2"></i><span>Water-soluble and fat-soluble vitamins support normal metabolic
+                  development</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Target 4: Blood Vitality -->
+        <div class="col-lg-6 col-md-6 gsap-reveal">
+          <div class="benefit-card-premium theme-blood">
+            <div class="benefit-glow"></div>
+            <div class="benefit-icon-box">
+              <i class="bi bi-droplet-half"></i>
+            </div>
+            <span class="benefit-subtitle">Blood Vitality & Anemia Prevention</span>
+            <h4 class="benefit-title">Hemoglobin Recovery</h4>
+            <ul class="benefit-list">
+              <li><i class="bi bi-check2"></i><span>Rich in bioavailable Iron ΓÇö essential for hemoglobin and RBC
+                  formation</span></li>
+              <li><i class="bi bi-check2"></i><span>Increases hemoglobin levels to reverse anemia and improve oxygen
+                  transport</span></li>
+              <li><i class="bi bi-check2"></i><span>Iron combined with amino acids enhances absorption ΓÇö faster than
+                  plant-based iron</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHALLENGE SECTION -->
+  <section id="mam-challenge" class="challenge-section-premium-light section-padding position-relative overflow-hidden">
+    <div class="challenge-light-mesh"></div>
+    <div class="container position-relative z-2">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 gsap-reveal">
+          <h6 class="badge-premium-indigo-light mb-3">The Challenge</h6>
+          <div class="challenge-title-container-premium">
+            <h2 class="challenge-title-premium display-4 fw-900 mb-4">
+              <span class="text-mask-reveal text-slate-800">Understanding</span><br>
+              <span class="text-gradient-oceanic text-mask-reveal-delayed">Moderate Acute Malnutrition</span>
+            </h2>
+            <div class="title-underline-glow"></div>
+          </div>
+          <p class="challenge-description-premium lead text-slate-600 mb-5">MAM is a critical condition affecting
+            millions of children globally through inadequate nutrition, leading to <span
+              class="highlight-emerald">severe weakened immunity</span>, <span class="highlight-emerald">delayed
+              growth</span>, and high risk of infections.</p>
+
+          <div class="row g-4 mt-2">
+            <div class="col-md-6 gsap-reveal">
+              <div class="mam-impact-card-3d-light immunity">
+                <div class="card-3d-glow-light"></div>
+                <div class="card-icon-3d-light"><i class="bi bi-shield-lock-fill"></i></div>
+                <h5 class="fw-800 text-slate-800 mb-3">Compromised Immunity</h5>
+                <p class="text-slate-600 mb-0">Weakens natural defense mechanisms against preventable diseases.</p>
+                <div class="card-edge-glow-light"></div>
+              </div>
+            </div>
+            <div class="col-md-6 gsap-reveal">
+              <div class="mam-impact-card-3d-light growth">
+                <div class="card-3d-glow-light"></div>
+                <div class="card-icon-3d-light"><i class="bi bi-bar-chart-fill"></i></div>
+                <h5 class="fw-800 text-slate-800 mb-3">Stunted Growth</h5>
+                <p class="text-slate-600 mb-0">Severely impacts physical scaling & vital cognitive development.</p>
+                <div class="card-edge-glow-light"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repositioned Comparison Card -->
+          <div class="mt-5 gsap-reveal">
+            <div class="comparison-dashboard-3d">
+              <div class="dashboard-header">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="pulse-indicator"></div>
+                  <h5 class="fw-900 text-slate-800 mb-0">Scientific Comparison</h5>
+                </div>
+                <p class="small text-slate-600 mt-1 mb-0">Nutritional Density Metrics</p>
+              </div>
+
+              <div class="dashboard-body p-4">
+                <div class="comparison-item mb-4">
+                  <div class="d-flex justify-content-between align-items-end mb-2">
+                    <div class="label-group">
+                      <span class="d-block small text-slate-400 text-uppercase fw-800">Standard Meals</span>
+                      <span class="fw-700 text-slate-600">Average Nutrition</span>
+                    </div>
+                    <span class="percentage-display text-slate-400">25%</span>
+                  </div>
+                  <div class="progress-container-premium">
+                    <div class="progress-bar-standard" style="width: 25%"></div>
+                  </div>
+                </div>
+
+                <div class="comparison-item">
+                  <div class="d-flex justify-content-between align-items-end mb-2">
+                    <div class="label-group">
+                      <span class="d-block small text-primary text-uppercase fw-800">Spirulina Intervention</span>
+                      <span class="fw-900 text-slate-800">Superfood Density</span>
+                    </div>
+                    <span class="percentage-display text-primary-glow">65%</span>
+                  </div>
+                  <div class="progress-container-premium active">
+                    <div class="progress-bar-spirulina" style="width: 65%">
+                      <div class="shimmer-fast"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dashboard-footer mt-4 pt-3 border-top border-slate-100">
+                  <p class="small italic text-slate-400 mb-0">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Highly bioavailable for rapid cellular recovery.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 gsap-reveal">
+          <div class="premium-image-wrapper-3d mx-auto">
+            <div class="image-3d-backdrop-light"></div>
+            <div class="premium-image-frame-3d">
+              <img ngSrc="assets/images/malnutrition.png" alt="Understanding MAM" class="img-fluid w-100 image-3d-main"
+                width="500" height="625">
+              <div class="image-info-tag-3d-light">
+                <h6>Clinical Screening</h6>
+                <p>Moderate Acute Malnutrition</p>
+              </div>
+            </div>
+            <div class="floating-particle-3d-light p1"></div>
+            <div class="floating-particle-3d-light p2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST / PARTNERS SECTION (ULTRA PREMIUM DARK ORANGE) -->
+  <section class="trust-standards-section py-5 position-relative overflow-hidden">
+    <div class="trust-mesh-bg"></div>
+    <div class="container position-relative z-2">
+      <div class="text-center mb-5 gsap-reveal">
+        <h6 class="badge-premium-orange-light mb-3">Trust & Reliability</h6>
+        <h2 class="display-5 fw-900 text-white mb-3">Trusted by Global <span class="text-gradient-orange-glow">Health
+            Standards</span></h2>
+        <p class="lead text-white text-opacity-70 mx-auto" style="max-width: 850px;">
+          Our approach aligns with globally recognized health and nutrition standards, ensuring safety, reliability, and
+          measurable outcomes.
+        </p>
+      </div>
+
+      <div class="row g-4 justify-content-center text-center">
+        <!-- WHO Compliant -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="trust-badge-card premium p-5 position-relative overflow-hidden">
+            <div class="holographic-sweep"></div>
+            <div class="trust-icon-container mb-4">
+              <i class="bi bi-patch-check-fill"></i>
+            </div>
+            <h6 class="mb-0">WHO Compliant</h6>
+            <div class="card-shimmer"></div>
+          </div>
+        </div>
+
+        <!-- UN Goals -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="trust-badge-card premium p-5 position-relative overflow-hidden">
+            <div class="holographic-sweep"></div>
+            <div class="trust-icon-container mb-4">
+              <i class="bi bi-globe-americas"></i>
+            </div>
+            <h6 class="mb-0">UN Development Goals</h6>
+            <div class="card-shimmer"></div>
+          </div>
+        </div>
+
+        <!-- FDA Approved -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="trust-badge-card premium p-5 position-relative overflow-hidden">
+            <div class="holographic-sweep"></div>
+            <div class="trust-icon-container mb-4">
+              <i class="bi bi-building-check"></i>
+            </div>
+            <h6 class="mb-0">FDA Approved Facility</h6>
+            <div class="card-shimmer"></div>
+          </div>
+        </div>
+
+        <!-- Global Health Protocols -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="trust-badge-card premium p-5 position-relative overflow-hidden">
+            <div class="holographic-sweep"></div>
+            <div class="trust-icon-container mb-4">
+              <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <h6 class="mb-0">Global Health Protocols</h6>
+            <div class="card-shimmer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FIRST 1000 DAYS -->
+  <section id="nutrition-1000" class="section-padding bg-light-blue overflow-hidden gsap-reveal">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-2 ps-lg-5 gsap-reveal">
+          <h6 class="text-primary fw-bold text-uppercase letter-spacing-1 mb-3"> The Crucial Window</h6>
+          <h2 class="display-5 fw-bold mb-4">Why the First 1000 Days Matter Most</h2>
+          <p class="lead mb-4">From conception to age two, the body undergoes rapid growth and brain development.
+            Deficiencies during this period cause irreversible physiological and neurological damage.</p>
+
+          <div
+            class="glass-card p-4 p-md-5 mt-5 bg-white border-0 shadow-md position-relative overflow-hidden premium-feature-card">
+            <div class="position-absolute bg-primary h-100 top-0 start-0" style="width: 6px;"></div>
+            <p class="fs-4 fst-italic text-secondary fw-medium mb-0 position-relative z-1">"Early nutrition is not an
+              option ΓÇö it is a life-saving necessity."</p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 order-lg-1 gsap-reveal">
+          <div class="premium-image-wrapper position-relative w-100">
+            <div class="premium-image-backdrop"></div>
+            <div class="position-relative z-2">
+              <img ngSrc="assets/images/about_1000.png" alt="1000 Days" class="premium-image-frame img-fluid w-100"
+                style="aspect-ratio: 1/1;" width="600" height="600">
+            </div>
+            <div class="glass-card p-4 p-lg-5 bg-white text-center position-absolute shadow-lg border-0 gsap-reveal"
+              style="bottom: -2rem; right: -2rem; min-width: 280px; z-index: 3; border-radius: 24px;">
+              <div class="display-2 fw-bolder text-primary mb-1">1000</div>
+              <p class="text-secondary fw-bold mb-0 text-uppercase letter-spacing-1">Days to shape<br>a future</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- SPIRULINA POWER SHOWCASE -->
+  <section id="spirulina-power" class="spirulina-power-showcase section-padding position-relative overflow-hidden">
+    <div class="power-bg-mesh"></div>
+    <div class="container position-relative z-2">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-2">
+          <div class="power-content-3d gsap-reveal">
+            <div class="badge-premium-3d-animated mb-3">
+              <span class="badge-dot"></span>
+              Product Spotlight
+            </div>
+            <h2 class="display-3 fw-900 text-white mb-4 showcase-title">
+              <span class="text-reveal-stagger">The Power of</span><br>
+              <span class="text-gradient-emerald-3d text-reveal-stagger">Pure Spirulina</span>
+            </h2>
+            <p class="lead text-white text-opacity-90 mb-5 premium-description-text">Experience the world's most
+              nutrient-dense superfood, biologically engineered by nature to restore health and vitality in record time.
+            </p>
+
+            <div class="power-features-grid">
+              <div class="power-feature-item">
+                <div class="p-icon"><i class="bi bi-shield-shaded"></i></div>
+                <div class="p-text">
+                  <h5 class="fw-800 text-white mb-1">Pharmaceutical Grade</h5>
+                  <p class="small text-white text-opacity-80 mb-0">Processed in FDA approved facilities for maximum
+                    purity.</p>
+                </div>
+              </div>
+              <div class="power-feature-item">
+                <div class="p-icon secondary"><i class="bi bi-cpu-fill"></i></div>
+                <div class="p-text">
+                  <h5 class="fw-800 text-white mb-1">Bio-available</h5>
+                  <p class="small text-white text-opacity-80 mb-0">95% absorption rate for rapid nutritional recovery.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 order-lg-1">
+          <div class="power-image-container-3d">
+            <div class="image-glow-ring"></div>
+            <div class="power-image-wrapper-3d gsap-reveal">
+              <img ngSrc="assets/images/power_spirulina.png" alt="Spirulina Power" class="img-fluid power-img-3d"
+                width="500" height="600">
+              <div class="floating-glass-label top-right">
+                <span class="label-pulse"></span>
+                100% Organic
+              </div>
+              <div class="floating-glass-label bottom-left">
+                <span class="label-pulse secondary"></span>
+                Nature's Gold
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (HORIZONTAL TIMELINE PREMIUM DARK) -->
+  <section id="workflow" class="how-it-works-section py-5 position-relative overflow-hidden">
+    <div class="workflow-mesh-bg"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-10 mx-auto">
+          <h6 class="badge-premium-workflow">Process Flow</h6>
+          <h2 class="display-3 fw-950 text-white title-premium-workflow mb-0">A Structured Approach to <span
+              class="text-gradient-emerald">Recovery</span></h2>
+          <div class="title-underline-premium"></div>
+          <p class="lead desc-premium-workflow">Our clinically guided process ensures precise identification, effective
+            intervention, and measurable recovery.</p>
+        </div>
+      </div>
+
+      <div class="timeline-container position-relative py-5">
+        <!-- Horizontal Connecting Line -->
+        <div class="timeline-main-line d-none d-lg-block"></div>
+
+        <div class="row g-4 timeline-row">
+          <!-- Step 01: Identification -->
+          <div class="col-lg-3 col-md-6 gsap-reveal">
+            <div class="timeline-step-item text-center">
+              <div class="step-circle-wrapper mb-4">
+                <div class="step-number">01</div>
+                <div class="step-icon-circle"><i class="bi bi-search"></i></div>
+              </div>
+              <h4 class="fw-800 text-white mb-3">Identification</h4>
+              <p class="text-white text-opacity-75 small px-3">Children at risk are identified through clinical
+                screening methods</p>
+            </div>
+          </div>
+
+          <!-- Step 02: Intervention -->
+          <div class="col-lg-3 col-md-6 gsap-reveal">
+            <div class="timeline-step-item text-center">
+              <div class="step-circle-wrapper mb-4">
+                <div class="step-number">02</div>
+                <div class="step-icon-circle"><i class="bi bi-capsule-pill"></i></div>
+              </div>
+              <h4 class="fw-800 text-white mb-3">Intervention</h4>
+              <p class="text-white text-opacity-75 small px-3">Spirulina-based nutrition is provided based on individual
+                needs</p>
+            </div>
+          </div>
+
+          <!-- Step 03: Monitoring -->
+          <div class="col-lg-3 col-md-6 gsap-reveal">
+            <div class="timeline-step-item text-center">
+              <div class="step-circle-wrapper mb-4">
+                <div class="step-number">03</div>
+                <div class="step-icon-circle"><i class="bi bi-graph-up-arrow"></i></div>
+              </div>
+              <h4 class="fw-800 text-white mb-3">Monitoring</h4>
+              <p class="text-white text-opacity-75 small px-3">Continuous tracking of growth, health, and nutrient
+                absorption</p>
+            </div>
+          </div>
+
+          <!-- Step 04: Recovery -->
+          <div class="col-lg-3 col-md-6 gsap-reveal">
+            <div class="timeline-step-item text-center">
+              <div class="step-circle-wrapper mb-4">
+                <div class="step-number">04</div>
+                <div class="step-icon-circle"><i class="bi bi-heart-pulse"></i></div>
+              </div>
+              <h4 class="fw-800 text-white mb-3">Recovery</h4>
+              <p class="text-white text-opacity-75 small px-3">Improved nutritional status and long-term health outcomes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY / LAB SECTION (PREMIUM) -->
+  <section id="technology" class="lab-premium-section position-relative overflow-hidden">
+    <div class="lab-image-container position-absolute top-0 start-0 w-100 h-100" style="z-index: 1;">
+      <img ngSrc="assets/images/lab_quality.png" alt="Lab Quality Assurance" fill priority
+        style="object-fit: cover; filter: brightness(0.4) saturate(1.2);" class="w-100 h-100">
+      <div class="lab-overlay position-absolute top-0 start-0 w-100 h-100"
+        style="background: linear-gradient(to bottom, rgba(2,6,23,0.8), rgba(2,6,23,0.9));"></div>
+    </div>
+
+    <div class="container position-relative z-3 py-5">
+      <div class="row mb-5 pb-4 text-center">
+        <div class="col-lg-10 mx-auto gsap-reveal">
+          <h6 class="badge-premium-emerald-light mb-3">Advanced Science</h6>
+          <h2 class="display-3 fw-950 text-white mb-4">Advanced Cultivation & <span
+              class="text-gradient-emerald-glow">Quality Assurance</span></h2>
+          <p class="lead text-white text-opacity-80 mx-auto max-w-800">
+            Our Spirulina is cultivated in controlled environments using advanced technology to maintain purity,
+            consistency, and high nutritional value.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Feature 1: Controlled Light -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="lab-glass-card h-100 p-5 text-center">
+            <div class="lab-icon-box mb-4">
+              <i class="bi bi-brightness-high"></i>
+            </div>
+            <h5 class="fw-800 text-white mb-3">Controlled Light Exposure</h5>
+            <p class="text-white text-opacity-80 small mb-0">Optimized photosynthesis cycles for maximum nutrient
+              production.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2: Temperature Regulation -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="lab-glass-card h-100 p-5 text-center">
+            <div class="lab-icon-box mb-4">
+              <i class="bi bi-thermometer-half"></i>
+            </div>
+            <h5 class="fw-800 text-white mb-3">Temperature Regulation</h5>
+            <p class="text-white text-opacity-80 small mb-0">Precise thermal monitoring for stable growth and purity.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 3: pH Balance -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="lab-glass-card h-100 p-5 text-center">
+            <div class="lab-icon-box mb-4">
+              <i class="bi bi-droplet-half"></i>
+            </div>
+            <h5 class="fw-800 text-white mb-3">pH Balance Optimization</h5>
+            <p class="text-white text-opacity-80 small mb-0">Maintaining ideal alkaline levels for superior Spirulina
+              quality.</p>
+          </div>
+        </div>
+
+        <!-- Feature 4: Nutrient Supply -->
+        <div class="col-lg-3 col-md-6 gsap-reveal">
+          <div class="lab-glass-card h-100 p-5 text-center">
+            <div class="lab-icon-box mb-4">
+              <i class="bi bi-cpu"></i>
+            </div>
+            <h5 class="fw-800 text-white mb-3">Precision Nutrient Supply</h5>
+            <p class="text-white text-opacity-80 small mb-0">Automated feeding systems delivering essential mineral
+              profiles.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 pt-4 gsap-reveal">
+        <p class="display-6 fw-900 text-white letter-spacing-1">
+          Engineered for <span class="text-gradient-emerald">purity.</span>
+          Designed for <span class="text-primary-glow">impact.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- SPO2 / PULSE OXIMETRY CLINICAL INSIGHT -->
+  <section id="challenge" class="spo2-section section-padding position-relative overflow-hidden"
+    style="background: linear-gradient(180deg, #0f172a 0%, #020617 100%);">
+    <div class="container position-relative z-2">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 gsap-reveal">
+          <h6 class="badge-premium-danger-glow mb-3">Clinical Monitoring</h6>
+          <h2 class="display-4 fw-950 text-white mb-4">The SpO&#8322; <span
+              class="text-gradient-danger-glow">Connection</span></h2>
+          <p class="lead text-white text-opacity-80 mb-4">Malnutrition doesn't just affect weight ΓÇö it compromises the
+            body's ability to breathe and deliver oxygen to vital tissues.</p>
+
+          <div class="spo2-flow p-4 mb-4"
+            style="background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 16px;">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <i class="bi bi-arrow-down-circle text-danger fs-4"></i>
+              <span class="text-white fw-800">Protein Deficiency &rarr; Weak Muscles</span>
+            </div>
+            <div class="d-flex align-items-center gap-3 mb-3 ps-4">
+              <i class="bi bi-arrow-down-circle text-danger fs-5"></i>
+              <span class="text-white text-opacity-70 small">Diaphragm and chest muscles weaken &rarr; reduced lung
+                expansion</span>
+            </div>
+            <div class="d-flex align-items-center gap-3 mb-3 ps-4">
+              <i class="bi bi-arrow-down-circle text-warning fs-5"></i>
+              <span class="text-white text-opacity-70 small">Iron deficiency &rarr; anemia &rarr; low hemoglobin = less
+                oxygen delivery</span>
+            </div>
+            <div class="d-flex align-items-center gap-3 mb-3 ps-4">
+              <i class="bi bi-arrow-down-circle text-warning fs-5"></i>
+              <span class="text-white text-opacity-70 small">Frequent infections (pneumonia) &rarr; lungs cannot
+                transfer oxygen efficiently</span>
+            </div>
+            <div class="d-flex align-items-center gap-3 ps-4">
+              <i class="bi bi-exclamation-triangle text-danger fs-5"></i>
+              <span class="text-white text-opacity-70 small">Low SpO&#8322; creates a vicious cycle of fatigue, poor
+                growth &amp; worsened malnutrition</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 gsap-reveal">
+          <div class="p-4 p-md-5 medical-monitor-card"
+            style="background: rgba(15,23,42,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px); box-shadow: 0 40px 100px rgba(0,0,0,0.4);">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 class="fw-900 text-white mb-0"><i class="bi bi-activity me-2 text-danger"></i>Clinical SpO&#8322;
+                Monitor</h5>
+              <div class="d-flex align-items-center gap-2">
+                <span class="text-danger small fw-800 font-monospace">LIVE DATA</span>
+                <div class="pulse-glow-dot"></div>
+              </div>
+            </div>
+
+            <div class="medical-pulse-line mb-4"></div>
+
+            <!-- Normal -->
+            <div class="d-flex align-items-center gap-3 p-3 mb-3 hover-scale-3d"
+              style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;">
+              </div>
+              <div class="flex-grow-1">
+                <span class="text-white fw-800 small text-uppercase letter-spacing-1">Stage 01: Stable</span>
+                <p class="text-white text-opacity-60 mb-0" style="font-size:0.8rem;">Child stable &mdash; nutrition
+                  intervention can continue safely</p>
+              </div>
+              <div class="text-emerald fw-900 small font-monospace">>95%</div>
+            </div>
+
+            <!-- Slightly Low -->
+            <div class="d-flex align-items-center gap-3 p-3 mb-3 hover-scale-3d"
+              style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b;box-shadow:0 0 8px #f59e0b;">
+              </div>
+              <div class="flex-grow-1">
+                <span class="text-white fw-800 small text-uppercase letter-spacing-1">Stage 02: At Risk</span>
+                <p class="text-white text-opacity-60 mb-0" style="font-size:0.8rem;">Possible infection or anemia
+                  &mdash; closer clinical monitoring required</p>
+              </div>
+              <div class="text-warning fw-900 small font-monospace">90-94%</div>
+            </div>
+
+            <!-- Very Low -->
+            <div class="d-flex align-items-center gap-3 p-3 hover-scale-3d"
+              style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;">
+              <div
+                style="width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 8px #ef4444;animation:pulse-dot-red 1.5s infinite alternate;">
+              </div>
+              <div class="flex-grow-1">
+                <span class="text-white fw-800 small text-uppercase letter-spacing-1">Stage 03: Critical</span>
+                <p class="text-white text-opacity-60 mb-0" style="font-size:0.8rem;">Complicated SAM &mdash; requires
+                  urgent medical referral immediately</p>
+              </div>
+              <div class="text-danger fw-900 small font-monospace">&lt;90%</div>
+            </div>
+
+            <div class="mt-4 p-3 border border-white border-opacity-10 rounded-3 bg-slate-800 bg-opacity-50">
+                <p class="text-white text-opacity-90 small mb-0 fst-italic"><i
+                    class="bi bi-info-circle me-2"></i>SpO&#8322; is a critical risk-assessment parameter used to
+                  identify pulmonary complications during malnutrition recovery.</p>
+              </div>
+            </div> <!-- medical-monitor-card -->
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- GRADED DOSAGE PROTOCOL (FROM DOCX) -->
+  <section class="dosage-protocol-section section-padding position-relative overflow-hidden">
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-emerald-light mb-3">Intervention Protocol</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">Graded Dosage <span
+              class="text-gradient-emerald">Protocol</span></h2>
+          <p class="lead text-slate-600">Spirulina supplementation is provided in graded dosages based on severity level
+            ΓÇö ensuring safe and need-based intervention for every child.</p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Preventive -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="dosage-card p-4 h-100 text-center"
+            style="background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.15); border-radius: 20px;">
+            <div class="dosage-level mb-3 mx-auto"
+              style="width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.12);color:#10b981;font-size:1.5rem;">
+              <i class="bi bi-shield-check"></i></div>
+            <span
+              style="font-size:0.65rem;color:#10b981;text-transform:uppercase;letter-spacing:2px;font-weight:800;">Level
+              1</span>
+            <h4 class="fw-900 text-slate-800 mt-2 mb-2">Preventive Dose</h4>
+            <p class="text-slate-600 small mb-3">For <strong>normal or mildly undernourished</strong> children to
+              maintain nutritional immunity and prevent regression.</p>
+            <div style="background:rgba(16,185,129,0.08);border-radius:10px;padding:10px 15px;">
+              <span class="text-slate-800 fw-800 small">Low-dose daily supplementation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Therapeutic -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="dosage-card p-4 h-100 text-center"
+            style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.2); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+            <div class="dosage-level mb-3 mx-auto"
+              style="width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(245,158,11,0.12);color:#f59e0b;font-size:1.5rem;">
+              <i class="bi bi-capsule"></i></div>
+            <span
+              style="font-size:0.65rem;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;font-weight:800;">Level
+              2</span>
+            <h4 class="fw-900 text-slate-800 mt-2 mb-2">Therapeutic Dose</h4>
+            <p class="text-slate-600 small mb-3">For <strong>underweight and moderately wasted</strong> children
+              requiring accelerated nutritional recovery.</p>
+            <div style="background:rgba(245,158,11,0.08);border-radius:10px;padding:10px 15px;">
+              <span class="text-slate-800 fw-800 small">Moderate daily supplementation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intensive -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="dosage-card p-4 h-100 text-center"
+            style="background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.15); border-radius: 20px;">
+            <div class="dosage-level mb-3 mx-auto"
+              style="width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(239,68,68,0.12);color:#ef4444;font-size:1.5rem;">
+              <i class="bi bi-hospital"></i></div>
+            <span
+              style="font-size:0.65rem;color:#ef4444;text-transform:uppercase;letter-spacing:2px;font-weight:800;">Level
+              3</span>
+            <h4 class="fw-900 text-slate-800 mt-2 mb-2">Supervised Intensive Dose</h4>
+            <p class="text-slate-600 small mb-3">For <strong>severely malnourished (SAM)</strong> children under
+              clinical supervision for maximum recovery impact.</p>
+            <div style="background:rgba(239,68,68,0.08);border-radius:10px;padding:10px 15px;">
+              <span class="text-slate-800 fw-800 small">High-dose supervised supplementation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLINICAL DOSAGE CALCULATOR WIDGET -->
+  <section class="clinical-calculator-section section-padding position-relative overflow-hidden" id="calculator">
+    <!-- Background Elements -->
+    <div class="position-absolute top-0 start-0 w-100 h-100"
+      style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index: 1;"></div>
+    <div class="position-absolute w-50 h-50"
+      style="top: 20%; right: -10%; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%); filter: blur(60px); z-index: 1;">
+    </div>
+
+    <div class="container position-relative z-2">
+      <div class="row g-5 align-items-center">
+        <!-- Text Column -->
+        <div class="col-lg-5 gsap-reveal">
+          <h6 class="badge-premium-emerald-light mb-3">Interactive Tool</h6>
+          <h2 class="display-4 fw-950 text-white mb-4">Clinical <span class="text-gradient-emerald">Dosage</span>
+            Calculator</h2>
+          <p class="lead text-white text-opacity-80 mb-5">
+            Use this screening tool to estimate the required nutritional intervention level. Based on standard
+            anthropometric weight-for-age parameters.
+          </p>
+
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div
+              style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16,185,129,0.1); color: #10b981; display: flex; align-items: center; justify-content: center;">
+              <i class="bi bi-person-check-fill"></i>
+            </div>
+            <div>
+              <h6 class="text-white fw-bold mb-0">Age Focus</h6>
+              <span class="text-white text-opacity-50 small">Targeting 6 to 60 months</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div
+              style="width: 40px; height: 40px; border-radius: 10px; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center;">
+              <i class="bi bi-clipboard2-data"></i>
+            </div>
+            <div>
+              <h6 class="text-white fw-bold mb-0">Data Driven</h6>
+              <span class="text-white text-opacity-50 small">Approximates WHO Growth Standards</span>
+            </div>
+          </div>
+          <div class="mt-4 border-glass rounded-4 overflow-hidden position-relative hover-scale-3d premium-glow-border"
+            style="max-width: 400px; height: 200px;">
+            <img ngSrc="assets/images/checkup_measure.png" alt="Clinical Checkup" class="w-100 h-100"
+              style="object-fit: cover;" fill>
+            <div class="glass-reflection-overlay"></div>
+            <div class="position-absolute bottom-0 start-0 w-100 p-2"
+              style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+              <span class="small text-white text-opacity-75 ps-2">Clinical Assessment Protocol Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Calculator Widget -->
+        <div class="col-lg-7 gsap-reveal">
+          <div class="calculator-glass-card p-4 p-md-5">
+            <!-- Header -->
+            <div
+              class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+              <div>
+                <h4 class="text-white fw-900 mb-0"><i class="bi bi-calculator me-2 text-emerald"></i>Screening Engine
+                </h4>
+                <span class="text-white text-opacity-40 small">WHO Weight-for-Age Z-score Protocol</span>
+              </div>
+              <span class="badge bg-emerald bg-opacity-25 text-emerald fw-bold px-3 py-2">v2.0.4</span>
+            </div>
+
+            <!-- Gender Toggle -->
+            <div class="mb-4">
+              <label
+                class="text-white text-opacity-70 fw-bold small mb-2 d-block text-uppercase letter-spacing-1">Gender</label>
+              <div class="d-flex gap-2">
+                <button class="btn flex-fill py-2 fw-bold"
+                  [style.background]="calcGender === 'male' ? 'rgba(59,130,246,0.2)' : 'rgba(255,255,255,0.04)'"
+                  [style.border]="calcGender === 'male' ? '1px solid rgba(59,130,246,0.5)' : '1px solid rgba(255,255,255,0.1)'"
+                  [style.color]="calcGender === 'male' ? '#60a5fa' : 'rgba(255,255,255,0.4)'"
+                  (click)="calcGender='male'; calculateDosage()">
+                  <i class="bi bi-gender-male me-2"></i>Male
+                </button>
+                <button class="btn flex-fill py-2 fw-bold"
+                  [style.background]="calcGender === 'female' ? 'rgba(236,72,153,0.2)' : 'rgba(255,255,255,0.04)'"
+                  [style.border]="calcGender === 'female' ? '1px solid rgba(236,72,153,0.5)' : '1px solid rgba(255,255,255,0.1)'"
+                  [style.color]="calcGender === 'female' ? '#f472b6' : 'rgba(255,255,255,0.4)'"
+                  (click)="calcGender='female'; calculateDosage()">
+                  <i class="bi bi-gender-female me-2"></i>Female
+                </button>
+              </div>
+            </div>
+
+            <!-- Inputs Row -->
+            <div class="row g-3 mb-4">
+              <!-- Age Input -->
+              <div class="col-md-6">
+                <label class="text-white text-opacity-70 fw-bold small mb-2 text-uppercase letter-spacing-1">Child's
+                  Age</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-dark border-secondary text-emerald border-opacity-25"><i
+                      class="bi bi-calendar-event"></i></span>
+                  <input type="number" class="form-control premium-calculator-input" placeholder="e.g. 24" min="6"
+                    max="60" [(ngModel)]="calcAge" (input)="calculateDosage()">
+                  <span
+                    class="input-group-text bg-dark border-secondary text-white text-opacity-50 border-opacity-25">months</span>
+                </div>
+                <div class="text-white text-opacity-30 small mt-1"><i class="bi bi-info-circle me-1"></i>Range: 6 to 60
+                  months</div>
+              </div>
+
+              <!-- Weight Input -->
+              <div class="col-md-6">
+                <label class="text-white text-opacity-70 fw-bold small mb-2 text-uppercase letter-spacing-1">Current
+                  Weight</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-dark border-secondary text-emerald border-opacity-25"><i
+                      class="bi bi-speedometer2"></i></span>
+                  <input type="number" class="form-control premium-calculator-input" placeholder="e.g. 9.5" min="2"
+                    max="30" step="0.1" [(ngModel)]="calcWeight" (input)="calculateDosage()">
+                  <span
+                    class="input-group-text bg-dark border-secondary text-white text-opacity-50 border-opacity-25">kg</span>
+                </div>
+                <div class="text-white text-opacity-30 small mt-1"><i class="bi bi-info-circle me-1"></i>To nearest 0.1
+                  kg</div>
+              </div>
+            </div>
+
+            <!-- WHO Z-Score Visual Meter -->
+            <div class="mb-4 p-3 rounded-3"
+              style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-white text-opacity-50 small fw-bold text-uppercase">WHO WAZ Score</span>
+                <span class="fw-900 text-white" *ngIf="calcZScore !== null" [ngStyle]="{'color': calcColor}">{{
+                  calcZScore > 0 ? '+' : '' }}{{ calcZScore }}╧â</span>
+                <span class="text-white text-opacity-30 small" *ngIf="calcZScore === null">Enter data above</span>
+              </div>
+              <!-- Z-Score Bar -->
+              <div class="position-relative"
+                style="height: 12px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: visible;">
+                <div style="display:flex; height:100%; border-radius:10px; overflow:hidden;">
+                  <div style="flex:1; background: rgba(239,68,68,0.4);"></div>
+                  <div style="flex:1; background: rgba(245,158,11,0.4);"></div>
+                  <div style="flex:1; background: rgba(6,182,212,0.4);"></div>
+                  <div style="flex:1; background: rgba(16,185,129,0.4);"></div>
+                </div>
+                <!-- Marker -->
+                <div *ngIf="calcZScore !== null" class="position-absolute top-50 translate-middle-y"
+                  [style.left]="((calcZScore + 4) / 6 * 100 | number:'1.0-0') + '%'"
+                  style="width:16px;height:16px;border-radius:50%;border:3px solid white;transform:translateY(-50%) translateX(-50%);z-index:5;transition:left 0.5s ease;"
+                  [ngStyle]="{'background': calcColor, 'box-shadow': '0 0 10px ' + calcColor}">
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-1">
+                <span class="text-danger" style="font-size:0.6rem; font-weight:800;">SAM &lt;-3</span>
+                <span class="text-warning" style="font-size:0.6rem; font-weight:800;">MAM -2</span>
+                <span class="text-cyan" style="font-size:0.6rem; font-weight:800;">At Risk -1</span>
+                <span class="text-emerald" style="font-size:0.6rem; font-weight:800;">Normal ΓëÑ0</span>
+              </div>
+            </div>
+
+            <!-- Results Output -->
+            <div class="calculator-result-box p-4" [ngClass]="calcResultClass">
+              <div class="text-center" *ngIf="!calcStatus">
+                <i class="bi bi-arrow-down-up fs-1 text-white text-opacity-25 mb-2 d-block"></i>
+                <p class="text-white text-opacity-50 mb-0">Enter age and weight above to run the WHO screening protocol
+                </p>
+              </div>
+
+              <div *ngIf="calcStatus" class="result-content animate-fade-in">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <span class="text-uppercase small fw-bold letter-spacing-1"
+                      [ngStyle]="{'color': calcColor}">Classification</span>
+                    <h4 class="fw-950 text-white mb-0 mt-1">{{calcStatus}}</h4>
+                  </div>
+                  <div class="text-center">
+                    <div class="status-icon" [ngStyle]="{'background': calcColor + '20', 'color': calcColor}">
+                      <i class="bi" [ngClass]="calcIcon"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dosage Badge -->
+                <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3"
+                  style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                  <i class="bi bi-capsule-pill fs-3" [ngStyle]="{'color': calcColor}"></i>
+                  <div>
+                    <div class="text-white text-opacity-50 small text-uppercase fw-bold">Spirulina Dosage</div>
+                    <div class="fw-950 fs-4" [ngStyle]="{'color': calcColor}">{{ calcDosageMg }}</div>
+                  </div>
+                </div>
+
+                <div class="recommendation-box p-3"
+                  style="background: rgba(0,0,0,0.2); border-radius: 12px; border-left: 4px solid"
+                  [style.border-color]="calcColor">
+                  <p class="text-white fw-bold mb-1 small text-uppercase">Recommended Protocol:</p>
+                  <p class="text-white text-opacity-90 mb-0 small">{{calcRecommendation}}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POSHAN APP / DIGITAL TOOLS (FROM DOCX) -->
+  <section class="digital-tools-section section-padding position-relative overflow-hidden">
+    <div class="container position-relative z-2">
+      <div class="row align-items-center g-5 mb-5 pb-4 gsap-reveal">
+        <div class="col-lg-6">
+          <h6 class="badge-premium-emerald-light mb-3">Digital Infrastructure</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-4">Digital Monitoring <span
+              class="text-gradient-emerald">Tools</span></h2>
+          <p class="lead text-slate-600">Integration of digital tools ensures standardized assessment, quick
+            classification, improved monitoring, and evidence-based nutritional intervention at the grassroots level.
+          </p>
+        </div>
+        <div class="col-lg-6 text-center">
+          <div
+            class="d-inline-block position-relative rounded-4 overflow-hidden shadow-lg border border-success border-opacity-25 hover-scale-3d premium-glow-border"
+            style="width: 100%; max-width: 500px; height: 350px;">
+            <div class="glass-reflection-overlay z-3"></div>
+            <img ngSrc="assets/images/impact_stat.png" alt="Digital Impact Data" fill
+              style="object-fit: cover; filter: saturate(1.15) brightness(1.1);" class="z-1">
+            <div class="position-absolute bottom-0 start-0 w-100 p-3 text-start z-2"
+              style="background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
+              <h5 class="text-white fw-bold mb-0">Live Poshan Matrix Integration</h5>
+              <p class="text-emerald small mb-0"><i class="bi bi-activity"></i> Data sync active</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- POSHAN App -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="digital-tool-card p-4 h-100"
+            style="background:rgba(16,185,129,0.04);border:1px solid rgba(16,185,129,0.15);border-radius:20px;">
+            <div class="mb-3"
+              style="width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.12);color:#10b981;font-size:1.3rem;">
+              <i class="bi bi-phone"></i>
+            </div>
+            <h5 class="fw-900 text-slate-800 mb-2">POSHAN App</h5>
+            <p class="text-slate-600 small mb-0">Mobile-based growth monitoring application for analyzing graph data and
+              charts that categorize children below 12 years into health ranges ΓÇö from "healthy" to various levels of
+              malnutrition.</p>
+          </div>
+        </div>
+
+        <!-- Anthropometric Digital -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="digital-tool-card p-4 h-100"
+            style="background:rgba(59,130,246,0.04);border:1px solid rgba(59,130,246,0.15);border-radius:20px;">
+            <div class="mb-3"
+              style="width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(59,130,246,0.12);color:#3b82f6;font-size:1.3rem;">
+              <i class="bi bi-bar-chart-line"></i>
+            </div>
+            <h5 class="fw-900 text-slate-800 mb-2">Growth Tracking</h5>
+            <p class="text-slate-600 small mb-0">Digital instrumentation and RPMS to accurately assess weight-for-age,
+              height-for-age, and weight-for-height metrics. Tracks improvement in growth velocity and hemoglobin status
+              over time.</p>
+          </div>
+        </div>
+
+        <!-- NFHS-5 Data -->
+        <div class="col-lg-4 col-md-6 gsap-reveal">
+          <div class="digital-tool-card p-4 h-100"
+            style="background:rgba(245,158,11,0.04);border:1px solid rgba(245,158,11,0.15);border-radius:20px;">
+            <div class="mb-3"
+              style="width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(245,158,11,0.12);color:#f59e0b;font-size:1.3rem;">
+              <i class="bi bi-database"></i>
+            </div>
+            <h5 class="fw-900 text-slate-800 mb-2">NFHS-5 Dataset Integration</h5>
+            <p class="text-slate-600 small mb-0">Reference to the latest National Family Health Survey data for
+              area-based malnutrition mapping, enabling targeted intervention in India's most affected districts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT SECTION (HIGH-END) -->
+  <section id="impact" class="impact-section-premium section-padding position-relative overflow-hidden">
+    <div class="impact-mesh-gradient-light"></div>
+    <div class="impact-bg-overlay-light"></div>
+    <div class="container position-relative z-2">
+      <div class="row mb-5 pb-4 text-center">
+        <div class="col-lg-8 mx-auto gsap-reveal">
+          <h6 class="badge-premium-emerald-light mb-3">Global Output</h6>
+          <h2 class="display-4 fw-900 text-dark mb-4">Creating Measurable <span
+              class="text-gradient-emerald">Impact</span></h2>
+          <p class="lead text-muted mb-4">Our science-backed intervention delivers real, measurable improvements in
+            child health through targeted nutrition and continuous monitoring.</p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center text-center">
+        <!-- Stat 1: Children Supported -->
+        <div class="col-lg-4 col-md-6">
+          <div class="impact-card-modern card-1">
+            <div class="stat-visual-container">
+              <h2 class="stat-number-modern fw-900 mb-0">{{childrenSupported | number:'1.0-0'}}+</h2>
+            </div>
+            <p class="stat-label-modern mb-0">Children Supported</p>
+            <div class="stat-card-glow"></div>
+          </div>
+        </div>
+
+        <!-- Stat 2: Nutritional Recovery -->
+        <div class="col-lg-4 col-md-6">
+          <div class="impact-card-modern card-2">
+            <div class="stat-visual-container">
+              <h2 class="stat-number-modern fw-900 mb-0">{{nutritionImprovement}}%</h2>
+            </div>
+            <p class="stat-label-modern mb-0">Nutritional Recovery</p>
+            <div class="stat-card-glow"></div>
+          </div>
+        </div>
+
+        <!-- Stat 3: Communities Reached -->
+        <div class="col-lg-4 col-md-6">
+          <div class="impact-card-modern card-3">
+            <div class="stat-visual-container">
+              <h2 class="stat-number-modern fw-900 mb-0">{{communitiesReached}}+</h2>
+            </div>
+            <p class="stat-label-modern mb-0">Communities Reached</p>
+            <div class="stat-card-glow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 pt-5 gsap-reveal">
+        <p class="highlight-line-premium display-5 fw-900">
+          <span class="text-success-gradient">Real data.</span>
+          <span class="text-primary-gradient mx-3">Real recovery.</span>
+          <span class="text-success-gradient">Real change.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPIRULINA JOURNEY (PREMIUM TIMELINE) -->
+  <section class="spirulina-journey-section py-5 position-relative overflow-hidden" style="background: #020617;">
+    <div class="journey-bg-glow"></div>
+    <div class="container py-5 position-relative z-3">
+      <div class="row mb-5 pb-4 text-center gsap-reveal">
+        <div class="col-lg-8 mx-auto">
+          <h6 class="badge-premium-warning-glow mb-3">Farm to Child</h6>
+          <h2 class="display-4 fw-950 text-white mb-4">The <span class="text-gradient-gold-glow">Spirulina</span> Journey</h2>
+          <p class="lead text-white text-opacity-70">A precision-engineered lifecycle ensuring the highest biological value from cultivation to clinical delivery.</p>
+        </div>
+      </div>
+
+      <div class="journey-timeline-container gsap-reveal">
+        <div class="journey-line"></div>
+        
+        <div class="row g-5">
+          <!-- Step 1 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">01</div>
+              <div class="journey-icon"><i class="bi bi-droplet-half"></i></div>
+              <h5 class="text-white fw-900 mb-2">Cultivation</h5>
+              <p class="text-white text-opacity-50 small mb-0">Cultivated in alkaline-controlled ponds with zero chemical pesticides.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">02</div>
+              <div class="journey-icon"><i class="bi bi-thermometer-half"></i></div>
+              <h5 class="text-white fw-900 mb-2">Solar Drying</h5>
+              <p class="text-white text-opacity-50 small mb-0">Low-temperature solar drying to preserve heat-sensitive enzymes.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card">
+              <div class="step-number">03</div>
+              <div class="journey-icon"><i class="bi bi-gear-wide-connected"></i></div>
+              <h5 class="text-white fw-900 mb-2">Processing</h5>
+              <p class="text-white text-opacity-50 small mb-0">Integrated into child-friendly formats like the proprietary Chicky Bar.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="col-lg-3 col-md-6 journey-step-wrapper">
+            <div class="journey-node-card featured">
+              <div class="step-number">04</div>
+              <div class="journey-icon"><i class="bi bi-heart-pulse"></i></div>
+              <h5 class="text-white fw-900 mb-2">Recovery</h5>
+              <p class="text-white text-opacity-50 small mb-0">Monitored clinical protocols for 90-day nutritional reversal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION SECTION (FULL PREMIUM UPGRADE) -->
+  <section id="mission" class="mission-section-ultra py-5 overflow-hidden position-relative">
+    <div class="mission-ultra-glow"></div>
+    <div class="container position-relative z-3 py-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 gsap-reveal">
+          <div class="mission-content-wrapper">
+            <div class="d-flex align-items-center mb-4">
+              <div class="mission-vertical-line me-3"></div>
+              <h6 class="badge-premium-emerald-light mb-0">Our Core Mission</h6>
+            </div>
+            <h2 class="display-3 fw-950 text-slate-800 mb-4 lh-1-1">Engineering a <span
+                class="text-gradient-emerald-glow">Healthier Future</span></h2>
+            <p class="lead text-slate-600 mb-5 mission-desc-ultra">
+              Our mission is to eliminate child malnutrition through scalable, science-driven nutritional solutions that
+              create lasting global impact.
+            </p>
+
+            <div class="mission-grid-ultra mb-5">
+              <div class="mission-grid-item">
+                <div class="point-icon-box-ultra"><i class="bi bi-shield-check"></i></div>
+                <h6 class="fw-800 text-slate-800 mb-1">Science-backed</h6>
+                <p class="x-small text-slate-600 mb-0">Nutrition programs</p>
+              </div>
+              <div class="mission-grid-item">
+                <div class="point-icon-box-ultra"><i class="bi bi-people-fill"></i></div>
+                <h6 class="fw-800 text-slate-800 mb-1">Community-focused</h6>
+                <p class="x-small text-slate-600 mb-0">Interventions</p>
+              </div>
+              <div class="mission-grid-item">
+                <div class="point-icon-box-ultra"><i class="bi bi-diagram-3-fill"></i></div>
+                <h6 class="fw-800 text-slate-800 mb-1">Scalable Model</h6>
+                <p class="x-small text-slate-600 mb-0">Implementation</p>
+              </div>
+              <div class="mission-grid-item">
+                <div class="point-icon-box-ultra"><i class="bi bi-graph-up-arrow"></i></div>
+                <h6 class="fw-800 text-slate-800 mb-1">Sustainable</h6>
+                <p class="x-small text-slate-600 mb-0">Long-term outcomes</p>
+              </div>
+            </div>
+
+            <div class="mission-cta-card-ultra p-5">
+              <div class="card-glass-glow"></div>
+              <div class="position-relative z-2">
+                <h4 class="fw-950 text-slate-800 mb-3">Every Child Deserves a Beautiful Start.</h4>
+                <p class="text-slate-600 mb-4 small fw-500">Your strategic support mathematically transforms a child's
+                  future. Join hands with us to engineer a future free from systemic malnutrition.</p>
+                <button class="btn btn-premium-emerald-glow-cta">
+                  Join the Mission
+                  <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 gsap-reveal">
+          <div class="premium-3d-image-wrapper mx-auto">
+            <div class="image-3d-backdrop-emerald-ultra"></div>
+            <div class="premium-image-frame-3d-ultra shadow-2xl">
+              <img ngSrc="assets/images/team_mission.png" alt="Engineering a Healthier Future"
+                class="img-fluid w-100 image-3d-main-ultra" width="600" height="400">
+              <div class="image-info-tag-3d-ultra">
+                <div class="tag-pulse"></div>
+                <h6>Global Impact</h6>
+                <p>Science-Driven Recovery</p>
+              </div>
+            </div>
+            <div class="floating-particle-emerald p1"></div>
+            <div class="floating-particle-emerald p2"></div>
+            <div class="floating-particle-emerald p3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA SECTION (FINAL CONVERSION) -->
+  <section class="final-cta-section-ultra py-5 position-relative overflow-hidden">
+    <div class="cta-image-container position-absolute top-0 start-0 w-100 h-100" style="z-index: 1;">
+      <img ngSrc="assets/images/smiling_children.png" alt="Healthy Children Portfolio" fill
+        style="object-fit: cover; filter: brightness(0.3) saturate(1.1);" class="w-100 h-100">
+      <div class="cta-overlay-gradient position-absolute top-0 start-0 w-100 h-100"
+        style="background: linear-gradient(135deg, rgba(2,6,23,0.95) 0%, rgba(16,185,129,0.3) 100%);"></div>
+    </div>
+
+    <div class="container position-relative z-3 py-5">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-10 gsap-reveal">
+          <div class="cta-content-card p-5">
+            <h6 class="badge-premium-white gsap-cta-reveal">Final Conversion</h6>
+            <h2 class="display-2 fw-950 text-white cta-title-ultra gsap-cta-reveal">
+              Every Child Deserves a <span class="text-gradient-emerald-glow">Healthy Start</span>
+            </h2>
+            <p class="cta-desc-ultra gsap-cta-reveal max-w-700 mx-auto">
+              Your support can transform a childΓÇÖs future. Join us in building a world free from malnutrition.
+            </p>
+            <div class="cta-button-group d-flex flex-wrap justify-content-center gap-4 gsap-cta-reveal">
+              <button class="btn btn-premium-white-cta">
+                Support Initiative
+                <i class="bi bi-heart-fill ms-2"></i>
+              </button>
+              <button class="btn btn-premium-glass-outline-cta">
+                Contact Us
+                <i class="bi bi-envelope-fill ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREMIUM CATEGORIZED FAQ SECTION -->
+  <section id="faq-section" class="faq-section-premium-v2 py-5 position-relative overflow-hidden" style="background: #ffffff;">
+    <div class="faq-bg-blob"></div>
+    <div class="container py-5 position-relative z-3">
+      <div class="row align-items-end mb-5 gsap-reveal">
+        <div class="col-lg-7">
+          <h6 class="badge-premium-emerald-light mb-3">Transparency Hub</h6>
+          <h2 class="display-4 fw-950 text-slate-800 mb-0">Frequently Asked <span class="text-gradient-emerald">Questions</span></h2>
+        </div>
+        <div class="col-lg-5 text-lg-end mt-4 mt-lg-0">
+          <p class="text-slate-500 mb-0">Everything you need to know about our biological intervention and organizational protocols.</p>
+        </div>
+      </div>
+
+      <div class="row g-5">
+        <!-- FAQ Category 1: Science & Product -->
+        <div class="col-lg-6 gsap-reveal">
+          <div class="faq-category-box">
+            <h5 class="faq-cat-title"><i class="bi bi-microscope me-2"></i> Science & Product</h5>
+            <div class="accordion accordion-premium-glass" id="faqCat1">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    Is Spirulina completely safe for children?
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqCat1">
+                  <div class="accordion-body">
+                    Yes. Spirulina is classified as "Generally Recognized as Safe" (GRAS) by the US FDA and is recommended by the WHO for its exceptional nutritional density. Our Spirulina is cultivated in strictly controlled, contamination-free environments ensuring medical-grade purity.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    What makes the Chicky Bar unique?
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqCat1">
+                  <div class="accordion-body">
+                    The Chicky Bar is more than a snackΓÇöit is a biological delivery vehicle. We have engineered its flavor profile to ensure 100% compliance among children while maintaining a massive protein-to-calorie ratio, ensuring that every bite contributes directly to recovery.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Category 2: Impact & Operations -->
+        <div class="col-lg-6 gsap-reveal">
+          <div class="faq-category-box">
+            <h5 class="faq-cat-title"><i class="bi bi-graph-up-arrow me-2"></i> Impact & Operations</h5>
+            <div class="accordion accordion-premium-glass" id="faqCat2">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    How can I track the impact of my donation?
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqCat2">
+                  <div class="accordion-body">
+                    Transparency is our core protocol. Every donor receives an impact report detailing how their funds were used, including geographic tracking of the distribution nodes and verified recovery metrics from our Mission Command Center.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    Which regions do you currently operate in?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqCat2">
+                  <div class="accordion-body">
+                    We are currently prioritizing high-risk districts in Bihar, Odisha, Jharkhand, and Uttar Pradesh, where malnutrition rates exceed the national average. Our goal is to scale our neural network of distribution centers nationwide.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+

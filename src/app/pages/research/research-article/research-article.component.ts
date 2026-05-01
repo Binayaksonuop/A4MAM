@@ -1,271 +1,256 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone, ViewEncapsulation } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-research-article',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `
-    <div class="scientific-paper-container py-5">
-      <div class="container py-5">
-        
-        <!-- Back Button -->
-        <div class="mb-5 no-print">
-          <a routerLink="/" class="back-link-premium">
-            <i class="bi bi-arrow-left-circle"></i> Return to Mission Home
-          </a>
-        </div>
-
-        <article class="journal-entry">
-          <!-- Premium Paper Header -->
-          <div class="journal-header p-5">
-            <div class="archival-seal">ARCHIVE #A4-MAM-2026</div>
-            
-            <div class="row align-items-end mb-5">
-              <div class="col-md-12">
-                 <div class="journal-vol-header text-uppercase">Mission Against Malnutrition /// Scientific Division</div>
-                 <h1 class="journal-title mt-3">
-                   <span class="title-top">INTERGENERATIONAL</span>
-                   <span class="title-bottom">MALNOURISHMENT</span>
-                 </h1>
-                 <p class="journal-subtitle">Women Eat <span class="accent-maroon">Last.</span> Women Pay <span class="accent-maroon">First!</span></p>
-              </div>
-            </div>
-
-            <p class="journal-pub-info">
-              A4MAM Scientific Division &bull; South Asia Context &bull; Nutrition Research &bull; 2026
-            </p>
-          </div>
-
-          <!-- Journal Body: Clean Single Column -->
-          <div class="journal-body p-5">
-            <div class="row justify-content-center">
-              <div class="col-lg-10 content-column">
-                
-                <!-- Main Article Text -->
-                <div class="article-text">
-                  <p class="dropcase">
-                    In households across South Asia, there is a meal-time hierarchy so embedded it is rarely spoken aloud: 
-                    men eat first, children eat next, women eat what remains. In food-insecure homes, what remains is rarely enough.
-                    This is not simply a social injustice. It is a physiological one with cascading consequences. 
-                  </p>
-
-                  <p>
-                    A malnourished girl becomes a malnourished adolescent. A malnourished adolescent becomes a pregnant woman 
-                    whose body — already depleted of iron, calcium, folate — is asked to build a human being from its own reserves.
-                    Her child is born into the first of those 1,000 critical days already behind. The cycle does not begin at birth. 
-                    It begins a generation earlier, on a plate that was never full enough.
-                  </p>
-                  
-                  <p>
-                    Anemia affects nearly 40% of pregnant women globally. In India alone, over 50% of women of 
-                    reproductive age are anemic — a figure that has barely shifted in decades. 
-                    Iron-deficiency anemia during pregnancy raises the risk of maternal death, premature birth, and low birth weight. 
-                    It contributes directly to the cognitive deficits described earlier. And it is, overwhelmingly, 
-                    a disease of women who were taught that their hunger mattered less.
-                  </p>
-
-                  <p>
-                    When a mother is malnourished, her child is more likely to be malnourished — and more likely 
-                    to grow into a malnourished adult who passes the same deficit to the next generation. 
-                    Nutritionists call this the <strong>intergenerational cycle of malnutrition</strong>. 
-                    Breaking it requires reaching women not just during pregnancy, but throughout adolescence 
-                    — before the damage is internal and permanent.
-                  </p>
-
-                  <p>
-                    The tragedy compounds further in older age. Women who have spent decades eating last — 
-                    feeding children, deferring to husbands, skipping meals during economic hardship — arrive 
-                    at old age with bone density depleted by calcium deficiency, immune systems eroded by protein gaps, 
-                    and no buffer left for the illnesses that come with age.
-                  </p>
-
-                  <p class="final-statement mt-5 pt-4 border-top text-center text-maroon fw-bold">
-                    Hunger, for women, is not an episode. It is a biography.
-                  </p>
-                </div>
-
-                <div class="footer-signatures mt-5 d-flex justify-content-between align-items-center opacity-75">
-                   <div class="sig-seal">
-                     <span class="small font-monospace">OFFICIAL SCIENTIFIC RECORD</span>
-                   </div>
-                   <div class="pagination-leaf">ARCHIVE PAGE 01 // MISSION CONTROL</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .scientific-paper-container {
-      background: #f4f1ea; /* Paper Tone */
-      min-height: 100vh;
-      font-family: 'Cambria', 'Georgia', serif;
-      position: relative;
-    }
-
-    .back-link-premium {
-      text-decoration: none;
-      color: #666;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .back-link-premium:hover {
-      color: #800000;
-      transform: translateX(-5px);
-    }
-
-    .journal-entry {
-      background: #ffffff;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2);
-      max-width: 1100px;
-      margin: 0 auto;
-      border-radius: 4px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Paper Aesthetic Overlays */
-    .journal-entry::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    .journal-header {
-      background: #fff;
-      border-bottom: 3px double #e0e0e0;
-      position: relative;
-    }
-
-    .archival-seal {
-      position: absolute;
-      top: 50px;
-      right: -30px;
-      transform: rotate(15deg);
-      border: 2px solid #80000020;
-      color: #80000040;
-      padding: 5px 20px;
-      font-family: monospace;
-      font-weight: 900;
-      font-size: 0.7rem;
-      border-radius: 4px;
-    }
-
-    .journal-vol-header {
-      font-family: sans-serif;
-      font-size: 0.7rem;
-      font-weight: 900;
-      color: #888;
-      letter-spacing: 3px;
-    }
-
-    .journal-title {
-      line-height: 0.9;
-      margin: 0;
-    }
-
-    .title-top {
-      font-size: 2.5rem;
-      display: block;
-      color: #800000;
-      font-weight: 900;
-    }
-
-    .title-bottom {
-      font-size: 3.5rem;
-      display: block;
-      color: #111;
-      font-weight: 950;
-      letter-spacing: -2px;
-    }
-
-    .journal-subtitle {
-      font-size: 1.5rem;
-      font-style: italic;
-      color: #555;
-      margin-top: 15px;
-      font-weight: 400;
-    }
-
-    .date-stamp {
-      font-family: sans-serif;
-      font-size: 0.8rem;
-      color: #666;
-    }
-
-    .journal-pub-info {
-      margin-top: 40px;
-      border-top: 1px solid #efefef;
-      padding-top: 25px;
-      font-family: sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .article-text {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .dropcase::first-letter {
-      float: left;
-      font-size: 4rem;
-      line-height: 0.8;
-      padding-top: 4px;
-      padding-right: 8px;
-      padding-left: 3px;
-      color: #800000;
-      font-weight: 950;
-    }
-
-    .article-text p {
-      font-size: 1.15rem; /* Larger for better readability */
-      line-height: 1.9;
-      color: #222;
-      margin-bottom: 2rem;
-      text-align: justify;
-    }
-
-    .final-statement {
-      font-size: 1.6rem;
-      color: #800000 !important;
-    }
-
-    .text-maroon { color: #800000 !important; }
-    .accent-maroon { color: #800000; font-weight: 700; }
-
-    @media print {
-      .no-print { display: none; }
-      .scientific-paper-container { background: white; padding: 0 !important; }
-      .journal-entry { box-shadow: none; border: none; }
-    }
-
-    @media (max-width: 768px) {
-      .title-top { font-size: 1.8rem; }
-      .title-bottom { font-size: 2.2rem; }
-      .journal-meta-grid { grid-template-columns: 1fr 1fr; }
-    }
-  `]
+  templateUrl: './research-article.component.html',
+  styleUrls: ['./research-article.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ResearchArticleComponent implements OnInit {
-  constructor() {}
-  ngOnInit(): void {}
+export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestroy {
+  private isBrowser: boolean;
+
+  constructor(
+    private zone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  ngOnInit(): void { }
+
+  ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.initRevealAnimations();
+        this.initStickyStackAnimations();
+        this.initAnthropoStackAnimations();
+        this.initCircularProgressAnimations();
+        this.initCycleOrbitAnimations();
+        ScrollTrigger.refresh();
+      }, 500);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.isBrowser) {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    }
+  }
+
+  private initRevealAnimations(): void {
+    gsap.utils.toArray<HTMLElement>('.gsap-reveal').forEach(el => {
+      gsap.fromTo(el,
+        { y: 50, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 92%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  }
+
+  private initStickyStackAnimations(): void {
+    const cards = gsap.utils.toArray<HTMLElement>('.sticky-card-ultra');
+    if (!cards.length) return;
+
+    cards.forEach((card, index) => {
+      if (index === cards.length - 1) return;
+
+      gsap.to(card, {
+        scale: 0.90,
+        opacity: 0.5,
+        y: -10,
+        filter: 'blur(4px)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: cards[index + 1],
+          start: 'top 90%',
+          end: 'top 20%',
+          scrub: true
+        }
+      });
+    });
+  }
+
+  private initAnthropoStackAnimations(): void {
+    const section = document.querySelector('.anthropometric-stack-section');
+    if (!section) return;
+
+    const cards = gsap.utils.toArray<HTMLElement>('.anthropo-stack-card');
+    const dots = gsap.utils.toArray<HTMLElement>('.stack-dot');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.anthropometric-stack-section',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 2.5,
+        snap: {
+          snapTo: [0, 0.5, 1], // Snaps perfectly to Card 1, Card 2, or Card 3
+          duration: { min: 0.8, max: 1.5 },
+          delay: 0.1,
+          ease: 'power3.inOut'
+        }
+      }
+    });
+
+    // Setup: Card 1 is visible. Cards 2 and 3 are hidden below.
+    gsap.set('.card-1', { transformOrigin: 'center center' });
+    gsap.set('.card-2', { y: '100%', opacity: 1, transformOrigin: 'center center' });
+    gsap.set('.card-3', { y: '100%', opacity: 1, transformOrigin: 'center center' });
+
+    // Step 1: Card 1 fades and shrinks back, Card 2 slides up to cover it cleanly
+    tl.to('.card-1', {
+      scale: 0.8,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, "step1")
+      .to('.card-2', {
+        y: '0%',
+        duration: 1,
+        ease: 'power2.inOut'
+      }, "step1")
+      .call(() => {
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[1]) dots[1].classList.add('active');
+      }, [], 0.5);
+
+    // Step 2: Card 2 fades and shrinks back, Card 3 slides up to cover it cleanly
+    tl.to('.card-2', {
+      scale: 0.8,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, "step2")
+      .to('.card-3', {
+        y: '0%',
+        duration: 1,
+        ease: 'power2.inOut'
+      }, "step2")
+      .call(() => {
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[2]) dots[2].classList.add('active');
+      }, [], 1.5);
+  }
+
+  private initCircularProgressAnimations(): void {
+    const paths = document.querySelectorAll('.progress-path');
+    paths.forEach(path => {
+      const target = (path as HTMLElement).dataset['target'];
+      const container = path.closest('.fact-item');
+      const text = container?.querySelector('.progress-text');
+
+      gsap.to(path, {
+        strokeDasharray: target + ', 100',
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      if (text) {
+        const counter = { value: 0 };
+        gsap.to(counter, {
+          value: Number(target),
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: () => {
+            text.textContent = Math.round(counter.value) + '%';
+          },
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+    });
+  }
+
+  private initCycleOrbitAnimations(): void {
+    const isDesktop = window.innerWidth > 991;
+    if (!isDesktop) return; // Skip complex scroll orbit on mobile, let CSS handle stack
+
+    const section = document.querySelector('.fly-through-section');
+    const wrapper = document.querySelector('.fly-zoom-wrapper');
+    const cards = gsap.utils.toArray<HTMLElement>('.fly-card');
+
+    if (!section || !wrapper || !cards.length) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 2.5, // super smooth heavy scrubbing
+        snap: {
+          snapTo: [0, 1], // Snaps to fully scattered or fully assembled
+          duration: { min: 0.8, max: 2 },
+          delay: 0.1,
+          ease: 'power3.inOut'
+        }
+      }
+    });
+
+    // Set cards far back in 3D space, scattered outward, and invisible
+    cards.forEach((card, i) => {
+      // Alternate starting positions to make them fly from all corners
+      const randomX = (i % 2 === 0 ? -1 : 1) * gsap.utils.random(500, 1000);
+      const randomY = (i < 3 ? -1 : 1) * gsap.utils.random(300, 800);
+
+      gsap.set(card, {
+        scale: 0.1,
+        z: -1500,
+        x: randomX,
+        y: randomY,
+        rotationZ: gsap.utils.random(-60, 60),
+        rotationX: gsap.utils.random(-45, 45),
+        rotationY: gsap.utils.random(-45, 45),
+        opacity: 0
+      });
+    });
+
+    // 1. Gently scale up the entire wrapper to give a feeling of flying INTO the scene
+    tl.to(wrapper, {
+      scale: 1.2,
+      duration: 1,
+      ease: 'none'
+    }, 0);
+
+    // 2. Pull all cards forward into their perfect absolute positions (joining together)
+    tl.to(cards, {
+      scale: 1,
+      z: 0,
+      x: 0,
+      y: 0,
+      rotationZ: 0,
+      rotationX: 0,
+      rotationY: 0,
+      opacity: 1,
+      stagger: 0.05,
+      duration: 1,
+      ease: 'power3.out'
+    }, 0);
+  }
 }
+
+
+
