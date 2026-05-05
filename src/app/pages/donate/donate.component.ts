@@ -13,22 +13,50 @@ import { Subscription } from 'rxjs';
   templateUrl: './donate.component.html',
   styleUrls: ['./donate.component.css']
 })
-export class DonateComponent implements OnInit, OnDestroy {
-  selectedTierId: string = '';
+export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
+  private isBrowser: boolean;
+  selectedTierId: string | null = null;
   customAmount: number | null = null;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
   activePlans: DonationPlan[] = [];
   private subscription: Subscription | null = null;
 
   constructor(
     private cartService: CartService, 
     private router: Router,
-    private donationService: DonationService
-  ) {}
+    private donationService: DonationService,
+    private zone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
     this.subscription = this.donationService.getPlans().subscribe(plans => {
       this.activePlans = plans.filter(p => p.active);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+
+    this.zone.runOutsideAngular(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } });
+      
+      tl.from('.badge-donate-pill', { y: 20, opacity: 0, delay: 0.3 })
+        .from('h1', { y: 30, opacity: 0 }, '-=0.7')
+        .from('.lead', { y: 20, opacity: 0 }, '-=0.7')
+        .from('.stat-item', { y: 30, opacity: 0, stagger: 0.1 }, '-=0.5')
+        .from('.tier-card', { y: 40, opacity: 0, stagger: 0.15, duration: 1.2 }, '-=0.3');
+
+      // Floating animation for featured card
+      gsap.to('.tier-card.featured', {
+        y: -15,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
     });
   }
 

@@ -12,12 +12,24 @@ import { ResearchService, ResearchArticle } from '../../../services/research.ser
 import { DonationService, DonationPlan } from '../../../services/donation.service';
 import { ProductService, AdminProduct } from '../../../services/product.service';
 import { FormsModule } from '@angular/forms';
+import { Pipe, PipeTransform } from '@angular/core';
 import gsap from 'gsap';
+
+@Pipe({
+  name: 'filterByStatus',
+  standalone: true
+})
+export class FilterByStatusPipe implements PipeTransform {
+  transform(items: any[], status: string): any[] {
+    if (!items) return [];
+    return items.filter(item => item.status === status);
+  }
+}
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, FilterByStatusPipe],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
 })
