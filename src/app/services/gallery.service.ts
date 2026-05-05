@@ -72,6 +72,7 @@ export class GalleryService {
       { id: 'IMG-014', url: base + 'mam_gallery_2.jpg', title: 'Field Intervention Odisha', location, description: 'Direct nutritional support delivery.', category: 'Intervention', date: new Date() },
       { id: 'IMG-015', url: base + 'mam_gallery_3.jpg', title: 'Health Metrics Odisha', location, description: 'Measuring impact with precision.', category: 'Field Data', date: new Date() },
       { id: 'IMG-016', url: base + 'mam_gallery_4.jpg', title: 'Product Showcase Odisha', location, description: 'Our range of Spirulina-based solutions.', category: 'Production', date: new Date() },
+      { id: 'IMG-017', url: base + 'mam_gallery_5.jpg', title: 'Health Screening Odisha', location, description: 'Direct monitoring in remote sectors.', category: 'Field Data', date: new Date() },
       { id: 'IMG-018', url: base + 'mam_gallery_6.jpg', title: 'Scaling Impact Odisha', location, description: 'Expanding our reach across the state.', category: 'Impact', date: new Date() },
       { id: 'IMG-019', url: base + 'mam_gallery_7.jpg', title: 'Operational Excellence Odisha', location, description: 'Streamlined delivery systems.', category: 'Intervention', date: new Date() },
       { id: 'IMG-020', url: base + 'mam_gallery_8.jpg', title: 'Scientific Rigor Odisha', location, description: 'Evidence-based nutritional science.', category: 'Field Data', date: new Date() },

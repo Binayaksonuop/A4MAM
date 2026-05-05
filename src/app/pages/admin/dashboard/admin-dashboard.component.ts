@@ -24,7 +24,11 @@ import gsap from 'gsap';
 export class AdminDashboardComponent implements OnInit, AfterViewInit {
   private isBrowser: boolean;
   activeAdminPanel: 'dashboard' | 'images' | 'research' | 'donations' | 'products' | 'inquiries' = 'dashboard';
+  isSidebarOpen = false;
   today = new Date();
+  currentTime = new Date();
+  missionTime: string = '00:00:00';
+  private timerHandle: any;
 
   // Gallery State
   galleryImages: GalleryImage[] = [];
@@ -73,6 +77,16 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     this.researchService.getArticles().subscribe(arts => this.articles = arts);
     this.donationService.getPlans().subscribe(plans => this.donationPlans = plans);
     this.productService.getProducts().subscribe(prods => this.products = prods);
+
+    if (this.isBrowser) {
+      this.timerHandle = setInterval(() => {
+        this.currentTime = new Date();
+        const hrs = this.currentTime.getHours().toString().padStart(2, '0');
+        const mins = this.currentTime.getMinutes().toString().padStart(2, '0');
+        const secs = this.currentTime.getSeconds().toString().padStart(2, '0');
+        this.missionTime = `${hrs}:${mins}:${secs}`;
+      }, 1000);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -83,6 +97,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   openAdminPanel(panel: any): void {
     this.activeAdminPanel = panel;
+    this.isSidebarOpen = false; // Close on selection for mobile
     if (this.isBrowser && panel === 'dashboard') {
       setTimeout(() => this.animateDashboard(), 100);
     } else if (this.isBrowser) {
@@ -90,6 +105,10 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         gsap.fromTo('.section-fade-in', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
        }, 50);
     }
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   logout(): void {
@@ -207,6 +226,10 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   deleteProduct(id: string): void {
     if (confirm('Delete this product?')) this.productService.deleteProduct(id);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerHandle) clearInterval(this.timerHandle);
   }
 
   // --- Inquiry Actions ---

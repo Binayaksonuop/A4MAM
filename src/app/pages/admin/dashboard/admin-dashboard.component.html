@@ -1,6 +1,6 @@
 <div class="admin-layout">
   <!-- Sidebar -->
-  <aside class="admin-sidebar shadow-2xl">
+  <aside class="admin-sidebar shadow-2xl" [class.mobile-open]="isSidebarOpen">
     <div class="sidebar-header p-4 border-bottom border-white border-opacity-10">
       <div class="d-flex align-items-center gap-3">
         <div class="admin-logo-orb"><i class="bi bi-shield-lock-fill"></i></div>
@@ -45,11 +45,21 @@
   <!-- Main Content -->
   <main class="admin-main-content">
     
-    <!-- Admin Top Bar -->
     <header class="admin-top-bar px-4 px-lg-5 d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-2">
-        <i class="bi bi-cpu-fill text-emerald"></i>
-        <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">SYSTEM_HEALTH: <span class="text-emerald">OPTIMAL</span></span>
+      <div class="d-flex align-items-center gap-4">
+        <!-- Mobile Toggle -->
+        <button class="btn admin-sidebar-toggle d-lg-none" (click)="toggleSidebar()">
+          <i class="bi" [ngClass]="isSidebarOpen ? 'bi-x-lg' : 'bi-list'"></i>
+        </button>
+
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-cpu-fill text-emerald"></i>
+          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">SYSTEM_HEALTH: <span class="text-emerald">OPTIMAL</span></span>
+        </div>
+        <div class="d-none d-xl-flex align-items-center gap-2 border-start border-white border-opacity-10 ps-4">
+          <i class="bi bi-clock-history text-white text-opacity-30"></i>
+          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">MISSION_TIME: <span class="text-white">{{ missionTime }}</span></span>
+        </div>
       </div>
       
       <div class="d-flex align-items-center gap-4">
@@ -61,7 +71,7 @@
         <div class="admin-profile-pill d-flex align-items-center gap-3 px-3 py-2 rounded-pill shadow-lg">
           <div class="profile-avatar-v6">TP</div>
           <div class="d-none d-sm-block">
-            <div class="text-white fw-bold x-small lh-1">Trishna P.</div>
+            <div class="text-white fw-bold x-small lh-1">Trishna Priyadarshini</div>
             <div class="text-emerald x-small fw-bold opacity-50">Chief Admin</div>
           </div>
         </div>
