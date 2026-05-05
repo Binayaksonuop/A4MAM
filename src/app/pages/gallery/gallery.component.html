@@ -19,9 +19,9 @@
         </div>
       </div>
 
-      <div class="row g-4 gallery-grid">
-        <div class="col-md-6 col-lg-4 gallery-item gsap-reveal" *ngFor="let img of images" [class]="img.class"
-          (click)="openLightbox(img)">
+      <div class="gallery-grid-masonry">
+        <div class="gallery-item gsap-reveal" *ngFor="let img of images" 
+          [ngClass]="img.class" (click)="openLightbox(img)">
           <div class="gallery-card rounded-5 overflow-hidden position-relative">
             <div class="img-overlay">
               <div class="overlay-content p-4">

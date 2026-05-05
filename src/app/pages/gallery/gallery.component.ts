@@ -31,13 +31,16 @@ export class GalleryComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.galleryService.getImages().subscribe(data => {
       this.allImagesRaw = data;
-      this.images = data.map((img, index) => ({
-        src: img.url,
-        title: img.title,
-        tag: img.category,
-        location: img.location,
-        class: index % 3 === 0 ? 'item-tall' : (index % 5 === 0 ? 'item-wide' : '')
-      }));
+      this.images = data.map((img, index) => {
+        const classes = ['item-tall', 'item-short', 'item-wide', ''];
+        return {
+          src: img.url,
+          title: img.title,
+          tag: img.category,
+          location: img.location,
+          class: classes[index % classes.length]
+        };
+      });
 
       if (this.isBrowser) {
         setTimeout(() => this.initAnimations(), 100);
