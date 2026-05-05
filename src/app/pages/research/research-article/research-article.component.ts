@@ -21,6 +21,15 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   publishedArticles: ResearchArticle[] = [];
   private subscription: Subscription | null = null;
 
+  workflowSteps = [
+    { title: 'Screening', icon: 'bi bi-search', desc: 'Initial identification of at-risk children in community blocks.' },
+    { title: 'Measurement', icon: 'bi bi-rulers', desc: 'Clinical assessment via MUAC and weight-for-age metrics.' },
+    { title: 'Risk ID', icon: 'bi bi-exclamation-triangle', desc: 'Categorization into SAM/MAM recovery protocols.' },
+    { title: 'Nutrition', icon: 'bi bi-cup-hot', desc: 'Deployment of specialized Spirulina-based interventions.' },
+    { title: 'Monitoring', icon: 'bi bi-activity', desc: 'Bi-weekly tracking of growth velocity and hemoglobin.' },
+    { title: 'Recovery', icon: 'bi bi-check-circle', desc: 'Transition to maintenance nutrition after full stabilization.' }
+  ];
+
   constructor(
     private zone: NgZone,
     private researchService: ResearchService,
@@ -54,6 +63,7 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
         this.initAnthropoSliderAnimations();
         this.initCircularProgressAnimations();
         this.initCycleOrbitAnimations();
+        this.initStatCounters();
         ScrollTrigger.refresh();
       }, 500);
     }
@@ -271,6 +281,28 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
       duration: 1,
       ease: 'power3.out'
     }, 0);
+  }
+
+  private initStatCounters(): void {
+    const counters = document.querySelectorAll('.counter-val');
+    counters.forEach(counter => {
+      const target = Number((counter as HTMLElement).dataset['target']);
+      const obj = { value: 0 };
+      
+      gsap.to(obj, {
+        value: target,
+        duration: 2.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: counter,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        },
+        onUpdate: () => {
+          counter.textContent = Math.round(obj.value).toString();
+        }
+      });
+    });
   }
 }
 

@@ -649,3 +649,157 @@ section + section::before {
   .article-text p             { font-size: 1rem; line-height: 1.8; }
   .hover-scale-3d:hover       { transform: translateX(4px); }
 }
+
+/* --- Field Workflow Timeline --- */
+.field-workflow-section {
+  padding: 120px 0;
+}
+.workflow-glow-orb {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.workflow-timeline-wrapper {
+  position: relative;
+  margin-top: 80px;
+}
+.workflow-line {
+  position: absolute;
+  top: 40px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.4) 20%, rgba(16, 185, 129, 0.4) 80%, rgba(16, 185, 129, 0));
+}
+.workflow-step-card {
+  text-align: center;
+  position: relative;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+.step-number {
+  width: 36px; height: 36px;
+  background: #0f172a;
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  color: #10b981;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  font-weight: 900;
+  font-size: 0.8rem;
+  transition: all 0.4s ease;
+}
+.step-icon {
+  width: 80px; height: 80px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0 auto 25px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.workflow-step-card:hover .step-icon {
+  transform: translateY(-10px) scale(1.1);
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #10b981;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+}
+.workflow-step-card:hover .step-number {
+  background: #10b981;
+  color: #fff;
+  transform: scale(1.2);
+}
+
+/* --- Research Stats --- */
+.stat-counter-v6 {
+  padding: 30px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: all 0.4s ease;
+}
+.stat-counter-v6:hover {
+  transform: translateY(-5px);
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* --- India Context --- */
+.context-map-mockup {
+  position: relative;
+  overflow: hidden;
+}
+.info-icon-circle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.08);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fact-pill-v6 {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: #fff;
+  border-radius: 100px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+/* --- References --- */
+.ref-item {
+  transition: all 0.3s ease;
+}
+.ref-item:hover {
+  transform: translateX(5px);
+  border-color: #10b981 !important;
+}
+
+/* --- Final CTA --- */
+.final-research-cta {
+  min-height: 500px;
+  display: flex; align-items: center;
+}
+.cta-mesh-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.glow-orb-emerald {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.btn-premium-emerald-v6 {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+}
+.btn-premium-emerald-v6:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+  color: #fff;
+}
+.btn-outline-white-v6:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+  .workflow-line { display: none; }
+  .workflow-timeline-wrapper { margin-top: 40px; }
+  .workflow-step-card { margin-bottom: 40px; }
+}

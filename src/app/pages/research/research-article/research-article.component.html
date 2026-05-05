@@ -739,3 +739,154 @@
     </div>
   </div>
 </section>
+
+<!-- 9. FIELD WORKFLOW TIMELINE (PREMIUM HORIZONTAL) -->
+<section class="field-workflow-section section-padding position-relative overflow-hidden bg-slate-900">
+  <div class="workflow-glow-orb"></div>
+  <div class="container position-relative z-2">
+    <div class="row mb-5 pb-4 text-center gsap-reveal">
+      <div class="col-lg-8 mx-auto">
+        <h6 class="badge-premium-emerald-glow mb-3">Operational Excellence</h6>
+        <h2 class="display-4 fw-950 text-white mb-4">Field Intervention <span class="text-gradient-emerald">Workflow</span></h2>
+        <p class="lead text-white text-opacity-80">Our clinical protocol ensures every child receives precision nutrition monitoring from initial screening to full recovery.</p>
+      </div>
+    </div>
+
+    <div class="workflow-timeline-wrapper">
+      <div class="workflow-line"></div>
+      <div class="row g-4 position-relative">
+        <div class="col gsap-reveal" *ngFor="let step of workflowSteps; let i = index">
+          <div class="workflow-step-card" [class.active]="i === 0">
+            <div class="step-number">{{i + 1}}</div>
+            <div class="step-icon"><i [class]="step.icon"></i></div>
+            <h5 class="text-white fw-900 mb-2">{{step.title}}</h5>
+            <p class="text-white text-opacity-50 x-small mb-0">{{step.desc}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. STATISTICS / DATA SECTION (ANIMATED COUNTERS) -->
+<section class="research-stats-section py-100 bg-white">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-3 gsap-reveal">
+        <div class="stat-counter-v6">
+          <h2 class="display-3 fw-950 text-slate-800"><span class="counter-val" data-target="50">0</span>%<span class="text-danger">+</span></h2>
+          <p class="fw-bold text-slate-500 text-uppercase letter-spacing-1">Women Anemic</p>
+        </div>
+      </div>
+      <div class="col-md-3 gsap-reveal">
+        <div class="stat-counter-v6">
+          <h2 class="display-3 fw-950 text-slate-800">1<span class="text-slate-400">/</span>3</h2>
+          <p class="fw-bold text-slate-500 text-uppercase letter-spacing-1">Children Malnourished</p>
+        </div>
+      </div>
+      <div class="col-md-3 gsap-reveal">
+        <div class="stat-counter-v6">
+          <h2 class="display-3 fw-950 text-emerald">1000</h2>
+          <p class="fw-bold text-slate-500 text-uppercase letter-spacing-1">Day Critical Window</p>
+        </div>
+      </div>
+      <div class="col-md-3 gsap-reveal">
+        <div class="stat-counter-v6">
+          <h2 class="display-3 fw-950 text-danger">HIGH</h2>
+          <p class="fw-bold text-slate-500 text-uppercase letter-spacing-1">Maternal Risk</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. INDIA / ODISHA CONTEXT SECTION (PREMIUM INFOGRAPHIC) -->
+<section class="india-context-section section-padding bg-light position-relative">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 gsap-reveal-left">
+        <div class="context-map-mockup p-5 rounded-5 shadow-2xl bg-white border border-light">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <h4 class="fw-950 text-slate-800 mb-0">Regional Deep-Dive: <span class="text-emerald">Odisha</span></h4>
+          </div>
+          <p class="text-slate-600 mb-4">In rural Odisha, the nutrition gap remains a critical barrier to socio-economic growth. Anganwadi centers and community health workers (ASHAs) are the frontline warriors in this mission.</p>
+          <div class="infographic-list">
+            <div class="info-item d-flex gap-3 mb-3">
+              <div class="info-icon-circle"><i class="bi bi-geo-alt-fill text-emerald"></i></div>
+              <div>
+                <h6 class="fw-900 text-slate-800 mb-1">Aspirational Districts</h6>
+                <p class="x-small text-slate-500 mb-0">Targeting the most vulnerable blocks with high SAM/MAM prevalence.</p>
+              </div>
+            </div>
+            <div class="info-item d-flex gap-3">
+              <div class="info-icon-circle"><i class="bi bi-people-fill text-emerald"></i></div>
+              <div>
+                <h6 class="fw-900 text-slate-800 mb-1">Community Integration</h6>
+                <p class="x-small text-slate-500 mb-0">Empowering mothers through nutrition literacy and local resource mapping.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 gsap-reveal">
+        <h2 class="display-5 fw-950 text-slate-800 mb-4">Bridging the <br><span class="text-gradient-emerald">Nutrition Gap</span></h2>
+        <p class="lead text-slate-600 mb-4">The Odisha model of malnutrition management leverages digital tracking and decentralized nutritional support to reach the last mile.</p>
+        <div class="fact-pill-v6">
+          <i class="bi bi-shield-check me-2 text-emerald"></i> Role of Anganwadi Centers is fundamental to delivery.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. REFERENCES / SOURCES -->
+<section class="references-section py-80 border-top bg-white">
+  <div class="container">
+    <h5 class="fw-900 text-slate-800 mb-4 opacity-50">SCIENTIFIC REFERENCES & SOURCES</h5>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="ref-item p-3 border-start border-2 border-emerald">
+          <div class="ref-source fw-900 small text-slate-400">World Health Organization</div>
+          <div class="ref-link small text-slate-700">Global Database on Child Growth (2025)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ref-item p-3 border-start border-2 border-emerald">
+          <div class="ref-source fw-900 small text-slate-400">UNICEF</div>
+          <div class="ref-link small text-slate-700">The State of the World's Children (2026)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ref-item p-3 border-start border-2 border-emerald">
+          <div class="ref-source fw-900 small text-slate-400">NFHS-5 / Govt of India</div>
+          <div class="ref-link small text-slate-700">National Family Health Survey Data (2019-21)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ref-item p-3 border-start border-2 border-emerald">
+          <div class="ref-source fw-900 small text-slate-400">Ministry of WCD</div>
+          <div class="ref-link small text-slate-700">POSHAN Abhiyaan Operational Guidelines</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14. FINAL CTA (OBSIDIAN V6 PREMIUM) -->
+<section class="final-research-cta section-padding position-relative overflow-hidden bg-slate-950">
+  <div class="cta-mesh-bg"></div>
+  <div class="glow-orb-emerald top-0 end-0"></div>
+  <div class="container position-relative z-3 text-center py-5">
+    <h2 class="display-3 fw-950 text-white mb-4">Breaking the Cycle <br><span class="text-gradient-emerald">Starts With You</span></h2>
+    <p class="lead text-white text-opacity-70 mb-5 mx-auto" style="max-width: 700px;">Join A4MAM in our mission to engineer a future where every child has the nutritional foundation to thrive.</p>
+    
+    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-5">
+      <button class="btn btn-premium-emerald-v6 px-5 py-3 rounded-pill shadow-lg border-0">
+        <i class="bi bi-file-earmark-pdf me-2"></i> Download Full Report
+      </button>
+      <button class="btn btn-outline-white-v6 px-5 py-3 rounded-pill border border-white border-opacity-30 text-white bg-transparent">
+        Join the Mission <i class="bi bi-arrow-right ms-2"></i>
+      </button>
+    </div>
+  </div>
+</section>
