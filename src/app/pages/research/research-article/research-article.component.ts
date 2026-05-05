@@ -20,6 +20,8 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   private isBrowser: boolean;
   publishedArticles: ResearchArticle[] = [];
   private subscription: Subscription | null = null;
+  activeWorkflowStep = 0;
+  private workflowInterval: any;
 
   workflowSteps = [
     { title: 'Screening', icon: 'bi bi-search', desc: 'Initial identification of at-risk children in community blocks.' },
@@ -64,6 +66,7 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
         this.initCircularProgressAnimations();
         this.initCycleOrbitAnimations();
         this.initStatCounters();
+        this.startWorkflowCycle();
         ScrollTrigger.refresh();
       }, 500);
     }
@@ -75,6 +78,7 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
     }
     if (this.isBrowser) {
       ScrollTrigger.getAll().forEach(st => st.kill());
+      if (this.workflowInterval) clearInterval(this.workflowInterval);
     }
   }
 
@@ -303,6 +307,15 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
         }
       });
     });
+  }
+
+  private startWorkflowCycle(): void {
+    if (!this.isBrowser) return;
+    this.workflowInterval = setInterval(() => {
+      this.zone.run(() => {
+        this.activeWorkflowStep = (this.activeWorkflowStep + 1) % this.workflowSteps.length;
+      });
+    }, 4000);
   }
 }
 

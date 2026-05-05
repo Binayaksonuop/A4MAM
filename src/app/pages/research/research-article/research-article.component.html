@@ -756,7 +756,7 @@
       <div class="workflow-line"></div>
       <div class="row g-4 position-relative">
         <div class="col gsap-reveal" *ngFor="let step of workflowSteps; let i = index">
-          <div class="workflow-step-card" [class.active]="i === 0">
+          <div class="workflow-step-card" [class.active]="i === activeWorkflowStep">
             <div class="step-number">{{i + 1}}</div>
             <div class="step-icon"><i [class]="step.icon"></i></div>
             <h5 class="text-white fw-900 mb-2">{{step.title}}</h5>

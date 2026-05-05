@@ -650,156 +650,237 @@ section + section::before {
   .hover-scale-3d:hover       { transform: translateX(4px); }
 }
 
-/* --- Field Workflow Timeline --- */
+/* --- Field Intervention Workflow: Deep Obsidian Theme --- */
 .field-workflow-section {
-  padding: 120px 0;
+  padding: 160px 0;
+  background: linear-gradient(135deg, #020808 0%, #051a16 100%);
+  position: relative;
+  overflow: hidden;
 }
 .workflow-glow-orb {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  top: 40%; left: 30%;
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
   transform: translate(-50%, -50%);
+  filter: blur(120px);
   pointer-events: none;
-}
-.workflow-timeline-wrapper {
-  position: relative;
-  margin-top: 80px;
 }
 .workflow-line {
   position: absolute;
-  top: 40px; left: 0; right: 0;
+  top: 70px; left: 5%; right: 5%;
   height: 2px;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.4) 20%, rgba(16, 185, 129, 0.4) 80%, rgba(16, 185, 129, 0));
+  background: linear-gradient(90deg, 
+    rgba(16, 185, 129, 0) 0%, 
+    rgba(16, 185, 129, 0.3) 15%, 
+    rgba(16, 185, 129, 0.3) 85%, 
+    rgba(16, 185, 129, 0) 100%
+  );
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
 }
 .workflow-step-card {
   text-align: center;
   position: relative;
-  transition: all 0.4s ease;
+  transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
   z-index: 2;
+  padding: 30px 20px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(5px);
 }
 .step-number {
-  width: 36px; height: 36px;
-  background: #0f172a;
+  width: 50px; height: 50px;
+  background: #020808;
   border: 2px solid rgba(16, 185, 129, 0.4);
   color: #10b981;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 35px;
   font-weight: 900;
-  font-size: 0.8rem;
+  font-size: 1rem;
   transition: all 0.4s ease;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
 }
 .step-icon {
-  width: 80px; height: 80px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  width: 100px; height: 100px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 28px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: #fff;
-  margin: 0 auto 25px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 0 auto 35px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.workflow-step-card:hover {
+  transform: translateY(-20px);
+  background: rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.2);
 }
 .workflow-step-card:hover .step-icon {
-  transform: translateY(-10px) scale(1.1);
+  transform: scale(1.1) rotate(-5deg);
   background: rgba(16, 185, 129, 0.1);
   border-color: rgba(16, 185, 129, 0.4);
   color: #10b981;
-  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.25);
 }
 .workflow-step-card:hover .step-number {
   background: #10b981;
   color: #fff;
   transform: scale(1.2);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+}
+
+/* Clinical Pulse Animation */
+.workflow-step-card.active .step-icon {
+  border-color: #10b981;
+  animation: clinicalPulse 3s ease-in-out infinite;
+}
+@keyframes clinicalPulse {
+  0%, 100% { box-shadow: 0 20px 40px rgba(16, 185, 129, 0.1); border-color: rgba(16,185,129,0.3); }
+  50% { box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3); border-color: rgba(16,185,129,0.8); }
+}
+
+@media (max-width: 991px) {
+  .workflow-step-card { margin-bottom: 50px; }
+  .workflow-line { display: none; }
 }
 
 /* --- Research Stats --- */
 .stat-counter-v6 {
-  padding: 30px;
-  border-radius: 24px;
+  padding: 45px 30px;
+  border-radius: 32px;
   background: rgba(15, 23, 42, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  transition: all 0.4s ease;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .stat-counter-v6:hover {
-  transform: translateY(-5px);
-  background: #fff;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  transform: translateY(-10px);
+  background: #ffffff;
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.06);
+}
+.counter-val {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* --- India Context --- */
-.context-map-mockup {
+/* --- India Context Section: Clinical Parchment --- */
+.india-context-section {
+  padding: 160px 0;
+  background: #f8fafc;
   position: relative;
   overflow: hidden;
 }
+.india-context-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.03) 0%, transparent 40%),
+              radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+  pointer-events: none;
+}
+.context-map-mockup {
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 40px 100px rgba(15, 23, 42, 0.08);
+  z-index: 2;
+}
 .info-icon-circle {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.08);
+  width: 54px; height: 54px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  font-size: 1.4rem;
+  color: #10b981;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.1);
 }
 .fact-pill-v6 {
   display: inline-flex;
   align-items: center;
-  padding: 12px 24px;
-  background: #fff;
+  padding: 18px 36px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 100px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  font-weight: 700;
-  font-size: 0.9rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+  font-weight: 900;
+  font-size: 1rem;
   color: #1e293b;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
-/* --- References --- */
-.ref-item {
-  transition: all 0.3s ease;
-}
-.ref-item:hover {
-  transform: translateX(5px);
-  border-color: #10b981 !important;
+.fact-pill-v6:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: #10b981;
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.15);
 }
 
 /* --- Final CTA --- */
 .final-research-cta {
-  min-height: 500px;
+  min-height: 600px;
   display: flex; align-items: center;
+  background: #020617;
 }
 .cta-mesh-bg {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-              radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  background: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
   pointer-events: none;
 }
 .glow-orb-emerald {
   position: absolute;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-  filter: blur(40px);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+  filter: blur(100px);
   pointer-events: none;
 }
 .btn-premium-emerald-v6 {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  transition: all 0.4s ease;
+  font-size: 0.9rem;
+  padding: 20px 40px !important;
+  border-radius: 100px !important;
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
 }
 .btn-premium-emerald-v6:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.5);
   color: #fff;
 }
+.btn-outline-white-v6 {
+  padding: 20px 40px !important;
+  border-radius: 100px !important;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: all 0.5s ease;
+}
 .btn-outline-white-v6:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
+  .field-workflow-section { padding: 100px 0; }
   .workflow-line { display: none; }
-  .workflow-timeline-wrapper { margin-top: 40px; }
-  .workflow-step-card { margin-bottom: 40px; }
+  .workflow-timeline-wrapper { margin-top: 40px; padding: 0 20px; }
+  .workflow-step-card { margin-bottom: 60px; }
+  .stat-counter-v6 { padding: 30px 20px; }
 }
