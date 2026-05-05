@@ -62,6 +62,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   previewUrl: string | null = null;
   selectedFile: File | null = null;
   isUploading = false;
+  searchTerm = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -247,5 +248,35 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   // --- Inquiry Actions ---
   updateInquiryStatus(id: string, status: 'New' | 'Viewed' | 'Responded'): void {
     this.inquiryService.updateInquiryStatus(id, status);
+  }
+
+  // --- Search Getters ---
+  get filteredOrders() {
+    if (!this.searchTerm) return this.orders;
+    const term = this.searchTerm.toLowerCase();
+    return this.orders.filter(o => 
+      o.id.toLowerCase().includes(term) || 
+      o.customerName.toLowerCase().includes(term)
+    );
+  }
+
+  get filteredInquiries() {
+    if (!this.searchTerm) return this.inquiries;
+    const term = this.searchTerm.toLowerCase();
+    return this.inquiries.filter(i => 
+      i.name.toLowerCase().includes(term) || 
+      i.email.toLowerCase().includes(term) ||
+      (i.organization && i.organization.toLowerCase().includes(term)) ||
+      i.message.toLowerCase().includes(term)
+    );
+  }
+
+  get filteredProducts() {
+    if (!this.searchTerm) return this.products;
+    const term = this.searchTerm.toLowerCase();
+    return this.products.filter(p => 
+      p.name.toLowerCase().includes(term) ||
+      p.status.toLowerCase().includes(term)
+    );
   }
 }

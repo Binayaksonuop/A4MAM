@@ -76,7 +76,7 @@
 
         <div class="admin-search-box d-none d-md-flex align-items-center px-3 py-2 rounded-pill">
           <i class="bi bi-search text-white text-opacity-30 me-2"></i>
-          <input type="text" placeholder="Search mission data..." class="bg-transparent border-0 text-white small">
+          <input type="text" placeholder="Search mission data..." class="bg-transparent border-0 text-white small" [(ngModel)]="searchTerm">
         </div>
         
         <div class="admin-profile-pill d-flex align-items-center gap-3 px-3 py-2 rounded-pill shadow-lg">
@@ -424,7 +424,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let prod of products">
+                <tr *ngFor="let prod of filteredProducts">
                   <td class="p-4 d-flex align-items-center gap-3">
                     <img [src]="prod.imageUrl" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
                     <span class="text-white fw-bold">{{ prod.name }}</span>
@@ -462,7 +462,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let inq of inquiries">
+              <tr *ngFor="let inq of filteredInquiries">
                 <td class="p-4 text-white text-opacity-50 small">{{ inq.date | date:'shortDate' }}</td>
                 <td>
                   <div class="fw-bold text-white">{{ inq.name }}</div>
