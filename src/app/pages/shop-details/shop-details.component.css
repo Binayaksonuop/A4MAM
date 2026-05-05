@@ -10,7 +10,10 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  position: relative;
+  z-index: 5;
 }
 
 .hero-mesh-glow-v6 {
@@ -83,16 +86,22 @@
 }
 
 .product-img-v6 {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 85%;
+  max-height: 85%;
   object-fit: contain;
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
   transform: translateZ(50px);
+  position: relative;
+  z-index: 10;
 }
 
-/* --- INFO AREA --- */
+.product-info-reveal-v6 {
+  position: relative;
+  z-index: 10;
+}
+
 .glass-chip-v6 {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   padding: 6px 16px;
@@ -147,17 +156,19 @@
 }
 
 .price-wrap-v6 .amount {
-  font-size: 4.5rem;
+  font-size: clamp(3rem, 8vw, 4.5rem);
   font-weight: 950;
   line-height: 1;
   letter-spacing: -2px;
+  color: #fff;
 }
 
 .description-v6 {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.1rem;
-  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.15rem;
+  line-height: 1.6;
   max-width: 550px;
+  margin-bottom: 2.5rem;
 }
 
 .qty-stepper-v6 {

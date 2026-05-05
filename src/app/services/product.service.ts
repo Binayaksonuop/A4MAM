@@ -18,7 +18,7 @@ export interface AdminProduct {
 })
 export class ProductService {
   private productsSubject = new BehaviorSubject<AdminProduct[]>([]);
-  private storageKey = 'a4mam_admin_products';
+  private storageKey = 'a4mam_admin_products_v2';
 
   constructor() {
     this.loadFromStorage();
@@ -40,6 +40,7 @@ export class ProductService {
               p.imageUrl = 'assets/images/outreach_kit_s.png';
               p.status = 'In Stock';
               p.stock = 50;
+              p.slug = 'outreach-kit';
             }
           }
           // General fix for other broken 's.png'
@@ -49,6 +50,16 @@ export class ProductService {
             else if (p.name.includes('Capsule')) p.imageUrl = 'assets/images/Spirulia Capsule.jpg';
             else p.imageUrl = 'assets/images/spirulina_s.png';
           }
+
+          // Ensure slugs are hyphenated and clean
+          if (p.slug && p.slug.includes(' ')) {
+            migrationNeeded = true;
+            p.slug = p.slug.trim().toLowerCase().replace(/\s+/g, '-');
+          } else if (!p.slug) {
+            migrationNeeded = true;
+            p.slug = p.name.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+          }
+
           return p;
         });
 
@@ -59,9 +70,12 @@ export class ProductService {
         this.productsSubject.next(products);
       } else {
         const initialData: AdminProduct[] = [
-          { id: '1', name: 'Premium Spirulina Powder', price: 999, stock: 45, status: 'In Stock', imageUrl: 'assets/images/spirulina_s.png', category: 'powder', slug: 'powder', description: '100% organic sun-dried powder.' },
-          { id: '2', name: 'Spirulina Capsules', price: 1299, stock: 12, status: 'In Stock', imageUrl: 'assets/images/Spirulia Capsule.jpg', category: 'maternal', slug: 'capsules', description: 'Concentrated daily dosage.' },
-          { id: '3', name: 'Nutrition Outreach Kit', price: 2500, stock: 50, status: 'In Stock', imageUrl: 'assets/images/outreach_kit_s.png', category: 'kit', slug: 'outreach-kit', description: 'Complete kit.' }
+          { id: '1', name: 'Premium Spirulina Powder', price: 999, stock: 45, status: 'In Stock', imageUrl: 'assets/images/spirulina_2.png', category: 'powder', slug: 'powder', description: '100% organic sun-dried powder. The raw superfood in its most complete form.' },
+          { id: '2', name: 'Spirulina Capsules', price: 649, stock: 12, status: 'In Stock', imageUrl: 'assets/images/Spirulia Capsule.jpg', category: 'maternal', slug: 'capsules', description: 'Daily Immunity & Energy Support. FSSAI-certified Spirulina capsules.' },
+          { id: '3', name: 'Nutrition Outreach Kit', price: 2500, stock: 50, status: 'In Stock', imageUrl: 'assets/images/outreach_kit_s.png', category: 'kit', slug: 'outreach-kit', description: 'Institutional Intervention Supply. Designed for high-impact MAM recovery.' },
+          { id: '4', name: 'Chicky Bars (Kids)', price: 499, stock: 100, status: 'In Stock', imageUrl: 'assets/images/chicky_bars_new.png', category: 'kids', slug: 'chicky-bars', description: 'Spirulina Nutrition Bar for Kids. Packed with protein and Iron.' },
+          { id: '5', name: 'Child Nutrition Kit', price: 1299, stock: 30, status: 'In Stock', imageUrl: 'assets/images/Child Nutrition Kit.jpg', category: 'kit', slug: 'child-kit', description: '30-Day Complete Recovery Plan for children.' },
+          { id: '6', name: 'Maternal Health Kit', price: 1599, stock: 25, status: 'In Stock', imageUrl: 'assets/images/Maternal Health Kit.jpg', category: 'maternal', slug: 'maternal-kit', description: 'Pregnancy & Lactation Support. Fights iron-deficiency anemia.' }
         ];
         this.productsSubject.next(initialData);
         this.saveToStorage(initialData);

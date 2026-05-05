@@ -43,34 +43,14 @@ export const routes: Routes = [
     title: 'Donate | A4MAM'
   },
   {
-    path: 'shop/chicky-bars',
-    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Chicky Bars | Shop A4MAM'
-  },
-  {
-    path: 'shop/powder',
-    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Spirulina Powder | Shop A4MAM'
-  },
-  {
-    path: 'shop/capsules',
-    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Supplement Capsules | Shop A4MAM'
-  },
-  {
-    path: 'shop/child-kit',
-    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Child Nutrition Kit | Shop A4MAM'
-  },
-  {
-    path: 'shop/maternal-kit',
-    loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Maternal Health Kit | Shop A4MAM'
-  },
-  {
     path: 'shop/bulk',
+    loadComponent: () => import('./pages/shop/bulk-orders/bulk-orders.component').then(m => m.BulkOrdersComponent),
+    title: 'Bulk & NGO Orders | A4MAM'
+  },
+  {
+    path: 'shop/:slug',
     loadComponent: () => import('./pages/shop-details/shop-details.component').then(m => m.ShopDetailsComponent),
-    title: 'Bulk Orders | Shop A4MAM'
+    title: 'Product Details | Shop A4MAM'
   },
   {
     path: 'cart',

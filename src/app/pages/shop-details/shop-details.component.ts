@@ -188,46 +188,46 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.url.subscribe(segments => {
-      if (segments.length > 0) {
-        const segmentPath = segments[segments.length - 1].path;
-        this.productId = segmentPath;
-        
-        // Dynamically load from ProductService
-        this.productService.getProducts().subscribe(products => {
-          const found = products.find(p => p.slug === this.productId || p.id === this.productId);
-          if (found) {
-            // Merge with local rich data if it exists, otherwise provide fallback rich data
-            const localRichData = this.products[this.productId] || this.products[found.slug || ''];
-            
-            this.product = {
-              id: found.id,
-              title: found.name,
-              subtitle: localRichData?.subtitle || 'Premium Nutritional Support',
-              price: found.price,
-              image: found.imageUrl,
-              badge: localRichData?.badge || (found.status === 'Out of Stock' ? 'Sold Out' : 'Available'),
-              description: found.description || localRichData?.description || 'A premium nutritional intervention product.',
-              benefits: localRichData?.benefits || [
-                'Provides essential micronutrients.',
-                'Supports overall health and immunity.',
-                'Highly bio-available formulation.'
-              ],
-              includes: localRichData?.includes || [
-                '1x Premium Package'
-              ],
-              nutrition: localRichData?.nutrition || { protein: 80, iron: 85, absorption: 90 }
-            };
-
-            // If we're already initialized and running, trigger animations
-            if (this.isBrowser && this.proteinDisplay === 0) {
-               setTimeout(() => this.initGsapAnimations(), 100);
-            }
-          } else {
-            this.product = null;
-          }
+    this.route.params.subscribe(params => {
+      const rawSlug = params['slug'] || '';
+      // Normalize slug for matching (handle spaces, %20, etc)
+      const normalizedSlug = rawSlug.trim().toLowerCase().replace(/%20| /g, '-');
+      this.productId = normalizedSlug;
+      
+      this.productService.getProducts().subscribe(products => {
+        const found = products.find(p => {
+          const pSlug = (p.slug || '').trim().toLowerCase().replace(/ /g, '-');
+          return pSlug === normalizedSlug || p.id === rawSlug;
         });
-      }
+        
+        if (found) {
+          const localRichData = this.products[this.productId] || this.products[found.slug || ''];
+          
+          this.product = {
+            id: found.id,
+            title: found.name,
+            subtitle: localRichData?.subtitle || 'Premium Nutritional Support',
+            price: found.price,
+            image: found.imageUrl,
+            badge: localRichData?.badge || (found.status === 'Out of Stock' ? 'Sold Out' : 'Available'),
+            description: found.description || localRichData?.description || 'A premium nutritional intervention product.',
+            benefits: localRichData?.benefits || [
+              'Provides essential micronutrients.',
+              'Supports overall health and immunity.',
+              'Highly bio-available formulation.'
+            ],
+            includes: localRichData?.includes || ['1x Premium Package'],
+            nutrition: localRichData?.nutrition || { protein: 80, iron: 85, absorption: 90 }
+          };
+
+          // Trigger entrance animation with a safe delay
+          if (this.isBrowser) {
+            setTimeout(() => this.initHeroAnimation(), 300);
+          }
+        } else {
+          this.product = null;
+        }
+      });
     });
   }
 
@@ -236,8 +236,8 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zone.runOutsideAngular(() => {
       setTimeout(() => {
-        this.initGsapAnimations();
-      }, 500);
+        this.initScrollAnimations();
+      }, 800);
     });
   }
 
@@ -247,31 +247,28 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private initGsapAnimations(): void {
-    // 1. Hero Entrance
-    gsap.from('.product-detail-hero', {
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out'
-    });
-
+  private initHeroAnimation(): void {
+    if (!this.isBrowser) return;
+    
+    // Set initial state via GSAP to avoid flashes, then animate
     gsap.from('.product-hero-visual-v6', {
-      x: -50,
+      x: -30,
       opacity: 0,
-      duration: 1.5,
-      ease: 'expo.out',
-      delay: 0.2
+      duration: 1,
+      ease: 'power2.out'
     });
 
     gsap.from('.product-info-reveal-v6 > *', {
-      y: 30,
+      y: 20,
       opacity: 0,
       stagger: 0.1,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.4
+      duration: 0.8,
+      ease: 'power2.out',
+      clearProps: 'all' // Crucial: remove GSAP styles after animation
     });
+  }
 
+  private initScrollAnimations(): void {
     // 2. Nutritional Stats Counter
     if (this.product) {
       const stats = { p: 0, i: 0, a: 0 };
