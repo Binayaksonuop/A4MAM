@@ -52,6 +52,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   showScrollTop = false;
   isHomePage = false;
   isAdminPage = false;
+  isAdminDashboard = false;
   cartCount = 0;
 
   // Custom Cursor
@@ -117,6 +118,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     // Immediate initial check for SSR and first load
     this.isAdminPage = this.router.url.startsWith('/admin');
+    this.isAdminDashboard = this.router.url.startsWith('/admin/dashboard');
 
     this.router.events.pipe(
       filter(
@@ -130,6 +132,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         url === '/' || url.startsWith('/#');
       
       this.isAdminPage = url.startsWith('/admin');
+      this.isAdminDashboard = url.startsWith('/admin/dashboard');
 
       if (!this.isBrowser) return;
 
