@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { InquiryService } from '../../../services/inquiry.service';
+import gsap from 'gsap';
 
 @Component({
   selector: 'app-bulk-orders',
@@ -62,55 +64,87 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <div class="col-lg-6">
-            <div class="inquiry-glass-card">
-              <div class="glass-header text-center mb-4">
-                <h3 class="fw-900 text-white">Institutional Inquiry</h3>
-                <p class="small text-white text-opacity-50">Request a partnership proposal or bulk quotation</p>
-              </div>
+            <div class="inquiry-glass-card min-h-600 d-flex flex-column justify-content-center">
               
-              <form class="inquiry-form-premium" (submit)="submitInquiry()">
-                <div class="row g-3">
-                  <div class="col-12">
-                    <div class="form-floating-premium">
-                      <input type="text" class="form-control-premium" placeholder="Organization Name" required>
-                      <label>Organization Name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-floating-premium">
-                      <input type="text" class="form-control-premium" placeholder="Contact Person" required>
-                      <label>Contact Person</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-floating-premium">
-                      <input type="email" class="form-control-premium" placeholder="Work Email" required>
-                      <label>Work Email</label>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-floating-premium">
-                      <select class="form-control-premium-select">
-                        <option>School Feeding Program</option>
-                        <option>Community Health Center</option>
-                        <option>CSR Initiative</option>
-                        <option>NGO / Relief Op</option>
-                      </select>
-                      <label>Intervention Category</label>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-floating-premium">
-                      <textarea class="form-control-premium" placeholder="Project Details" style="height: 120px;"></textarea>
-                      <label>Project Details & Estimated Volume</label>
-                    </div>
-                  </div>
+              <!-- Default Form State -->
+              <div *ngIf="!isSuccess" class="form-state-container">
+                <div class="glass-header text-center mb-4">
+                  <h3 class="fw-900 text-white">Institutional Inquiry</h3>
+                  <p class="small text-white text-opacity-50">Request a partnership proposal or bulk quotation</p>
                 </div>
-                <button type="submit" class="btn-bulk-submit mt-4">
-                  <span>Send Partnership Request</span>
-                  <i class="bi bi-arrow-right"></i>
+                
+                <form class="inquiry-form-premium" (submit)="submitInquiry()" #bulkForm="ngForm">
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <div class="form-floating-premium">
+                        <input type="text" class="form-control-premium" name="orgName" [(ngModel)]="formData.orgName" placeholder="Organization Name" required #orgName="ngModel" [class.is-invalid]="submitted && orgName.invalid">
+                        <label>Organization Name</label>
+                        <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && orgName.invalid">Organization name is required</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating-premium">
+                        <input type="text" class="form-control-premium" name="contactPerson" [(ngModel)]="formData.contactPerson" placeholder="Contact Person" required #contactPerson="ngModel" [class.is-invalid]="submitted && contactPerson.invalid">
+                        <label>Contact Person</label>
+                        <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && contactPerson.invalid">Required</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating-premium">
+                        <input type="email" class="form-control-premium" name="workEmail" [(ngModel)]="formData.workEmail" placeholder="Work Email" required #workEmail="ngModel" [class.is-invalid]="submitted && workEmail.invalid">
+                        <label>Work Email</label>
+                        <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && workEmail.invalid">Valid email required</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating-premium">
+                        <select class="form-control-premium-select" name="category" [(ngModel)]="formData.category">
+                          <option>School Feeding Program</option>
+                          <option>Community Health Center</option>
+                          <option>CSR Initiative</option>
+                          <option>NGO / Relief Op</option>
+                        </select>
+                        <label>Intervention Category</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating-premium">
+                        <textarea class="form-control-premium" name="details" [(ngModel)]="formData.details" placeholder="Project Details" style="height: 120px;"></textarea>
+                        <label>Project Details & Estimated Volume</label>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn-bulk-submit mt-4" [disabled]="isSubmitting">
+                    <ng-container *ngIf="!isSubmitting">
+                      <span>Submit Institutional Inquiry</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </ng-container>
+                    <ng-container *ngIf="isSubmitting">
+                      <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                      <span>{{ loadingText }}</span>
+                    </ng-container>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Success State -->
+              <div *ngIf="isSuccess" class="success-state-modern text-center py-4">
+                <div class="success-icon-wrap mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: rgba(16,185,129,0.1); border-radius: 50%; border: 1px solid rgba(16,185,129,0.3); box-shadow: 0 0 30px rgba(16,185,129,0.2);">
+                  <i class="bi bi-shield-check text-emerald" style="font-size: 3.5rem; color: #10b981;"></i>
+                </div>
+                <h3 class="fw-900 text-white mb-3 text-glow-emerald">Inquiry Submitted</h3>
+                <p class="text-white text-opacity-70 mb-4 px-3">Our mission partnerships team has safely received your request and will contact you shortly.</p>
+                
+                <div class="reference-badge p-3 mb-4" style="background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px dashed rgba(255,255,255,0.15);">
+                  <span class="d-block text-white text-opacity-50 small text-uppercase mb-1 fw-bold">Trace Reference ID</span>
+                  <span class="d-block fs-5 fw-900 font-monospace" style="color: #34d399; letter-spacing: 2px;">{{ referenceId }}</span>
+                </div>
+                
+                <button class="btn btn-outline-emerald rounded-pill px-4 py-2 mt-2" (click)="resetForm()" style="border: 1px solid rgba(16,185,129,0.5); color: #10b981; background: transparent; transition: 0.3s;" onmouseover="this.style.background='rgba(16,185,129,0.1)'" onmouseout="this.style.background='transparent'">
+                  <i class="bi bi-arrow-repeat me-2"></i> Submit Another Request
                 </button>
-              </form>
+              </div>
+
             </div>
           </div>
         </div>
@@ -298,7 +332,88 @@ import { RouterModule } from '@angular/router';
   `]
 })
 export class BulkOrdersComponent {
+  @ViewChild('bulkForm') bulkForm!: NgForm;
+
+  submitted = false;
+  isSubmitting = false;
+  isSuccess = false;
+  loadingText = 'Processing Inquiry...';
+  referenceId = '';
+
+  formData = {
+    orgName: '',
+    contactPerson: '',
+    workEmail: '',
+    category: 'School Feeding Program',
+    details: ''
+  };
+
+  constructor(private inquiryService: InquiryService) {}
+
   submitInquiry() {
-    alert('Strategic Partnership Request Received! Our Institutional Support team will contact you with a formal proposal within 12-24 hours.');
+    this.submitted = true;
+
+    if (this.bulkForm.invalid) {
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.loadingText = 'Submitting Institutional Inquiry...';
+
+    setTimeout(() => {
+      this.loadingText = 'Verifying Organization Details...';
+    }, 1000);
+
+    setTimeout(() => {
+      this.loadingText = 'Routing to Mission Partnerships Team...';
+    }, 2000);
+
+    setTimeout(() => {
+      const result = this.inquiryService.addInquiry({
+        name: this.formData.contactPerson,
+        email: this.formData.workEmail,
+        organization: this.formData.orgName,
+        message: `[${this.formData.category}] ${this.formData.details}`,
+        type: 'Bulk Order'
+      });
+
+      this.isSubmitting = false;
+      this.isSuccess = true;
+      this.referenceId = result.id;
+      
+      setTimeout(() => {
+        gsap.fromTo('.success-state-modern', 
+          { opacity: 0, scale: 0.95, y: 10 }, 
+          { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+        );
+        gsap.fromTo('.success-icon-wrap',
+          { scale: 0.5, opacity: 0, rotation: -30 },
+          { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.5)', delay: 0.1 }
+        );
+        gsap.fromTo('.reference-badge',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.5, delay: 0.4 }
+        );
+      }, 50);
+    }, 3200);
+  }
+
+  resetForm() {
+    this.submitted = false;
+    this.isSuccess = false;
+    this.formData = {
+      orgName: '',
+      contactPerson: '',
+      workEmail: '',
+      category: 'School Feeding Program',
+      details: ''
+    };
+    
+    setTimeout(() => {
+      gsap.fromTo('.form-state-container',
+        { opacity: 0, x: -10 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' }
+      );
+    }, 50);
   }
 }

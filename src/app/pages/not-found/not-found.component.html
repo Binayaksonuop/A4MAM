@@ -1,0 +1,51 @@
+<main class="not-found-wrapper">
+  <!-- Obsidian V6 Ambient Background -->
+  <div class="not-found-bg">
+    <div class="ambient-glow g1"></div>
+    <div class="ambient-glow g2"></div>
+    <div class="mesh-overlay"></div>
+  </div>
+
+  <div class="container h-100 position-relative z-3 d-flex align-items-center justify-content-center">
+    <div class="row justify-content-center w-100">
+      <div class="col-lg-8 text-center">
+        <!-- Error Card -->
+        <div class="error-card-v6 p-5 rounded-5 border-glass shadow-2xl">
+          <div class="card-glass-shine"></div>
+          
+          <div class="error-badge mb-4">
+            <span class="badge-dot"></span> 404 ERROR
+          </div>
+
+          <h1 class="display-1 fw-950 text-white mb-0 error-code">404</h1>
+          
+          <div class="status-indicator mb-5">
+            <i class="bi bi-broadcast text-danger pulse-fast me-2"></i>
+            <span class="text-white text-opacity-50 small fw-700 letter-spacing-1">SIGNAL INTERRUPTED</span>
+          </div>
+
+          <h2 class="display-5 fw-950 text-white mb-3">Mission Route <span class="text-gradient-emerald">Not Found</span></h2>
+          <p class="lead text-white text-opacity-70 mb-5 max-w-600 mx-auto">
+            The page you are looking for is outside the active intervention network. 
+            Redirecting field route to verified mission paths.
+          </p>
+
+          <div class="d-flex flex-column flex-sm-row justify-content-center gap-4">
+            <button class="btn btn-premium-emerald-v6" routerLink="/">
+              Back to Mission Home
+              <i class="bi bi-house-fill ms-2"></i>
+            </button>
+            <button class="btn btn-premium-outline-v6" routerLink="/gallery">
+              Explore Impact
+              <i class="bi bi-images ms-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <p class="mt-5 text-white text-opacity-30 small font-monospace letter-spacing-2">
+          ERROR_CODE: ROUTE_UNDEFINED_NULL_SECTOR_V6
+        </p>
+      </div>
+    </div>
+  </div>
+</main>

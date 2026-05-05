@@ -25,6 +25,8 @@ import { Subject } from 'rxjs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CartService } from './services/cart.service';
+import { LightboxService } from './services/lightbox.service';
+import { Observable } from 'rxjs';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isScrolled = false;
   showScrollTop = false;
   isHomePage = false;
+  isAdminPage = false;
   cartCount = 0;
 
   // Custom Cursor
@@ -71,6 +74,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   calcIcon = '';
   calcRecommendation = '';
   calcDosageMg = '';
+  
+  // Lightbox
+  lightboxData$: Observable<any>;
 
   // Internal flags
   private statsAnimated = false;
@@ -97,9 +103,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     private meta: Meta,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cartService: CartService
+    private cartService: CartService,
+    private lightboxService: LightboxService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.lightboxData$ = this.lightboxService.lightboxData$;
   }
 
   // ═══════════════════════════════════════════════════
@@ -107,6 +115,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   // ═══════════════════════════════════════════════════
 
   ngOnInit(): void {
+    // Immediate initial check for SSR and first load
+    this.isAdminPage = this.router.url.startsWith('/admin');
+
     this.router.events.pipe(
       filter(
         (event): event is NavigationEnd =>
@@ -117,6 +128,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       const url = event.urlAfterRedirects;
       this.isHomePage =
         url === '/' || url.startsWith('/#');
+      
+      this.isAdminPage = url.startsWith('/admin');
 
       if (!this.isBrowser) return;
 
@@ -229,22 +242,36 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private updateScrollProgress(): void {
     requestAnimationFrame(() => {
-      const scrollTotal =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+      const doc = document.documentElement;
+      const body = document.body;
+
+      const scrollTop = window.scrollY || doc.scrollTop;
+      const scrollHeight = Math.max(
+        body.scrollHeight, doc.scrollHeight,
+        body.offsetHeight, doc.offsetHeight,
+        body.clientHeight, doc.clientHeight
+      );
+      const clientHeight = doc.clientHeight;
+      const scrollTotal = scrollHeight - clientHeight;
+
       if (scrollTotal <= 0) return;
 
-      const CIRCUMFERENCE = 188.5; // 2 * PI * 30
-      const progress =
-        (window.scrollY / scrollTotal) * CIRCUMFERENCE;
+      const CIRCUMFERENCE = 188.5;
+      const progressRatio = scrollTop / scrollTotal;
 
-      const circle = document.querySelector(
-        '.circle-progress'
-      ) as SVGCircleElement | null;
+      const circle = document.querySelector('.circle-progress') as SVGCircleElement | null;
 
       if (circle) {
-        circle.style.strokeDashoffset =
-          (CIRCUMFERENCE - progress).toString();
+        // If we are within 2% of the bottom, snap to 100% completion
+        if (progressRatio > 0.98) {
+          circle.style.strokeDashoffset = '0';
+        } else {
+          const progress = progressRatio * CIRCUMFERENCE;
+          // Use Math.max(0.1, ...) to ensure it doesn't look weird at the very start
+          // and sub-pixel rounding doesn't cause issues
+          const offset = Math.max(0, CIRCUMFERENCE - progress);
+          circle.style.strokeDashoffset = offset.toFixed(2);
+        }
       }
     });
   }
@@ -272,8 +299,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     gsap.set(existing, { opacity: 0, y: 50 });
 
-    if (document.querySelector('.hero-floating-card')) {
-      gsap.set('.hero-floating-card', {
+    const floatingCard = document.querySelector('.hero-floating-card');
+    if (floatingCard) {
+      gsap.set(floatingCard, {
         opacity: 0,
         x: 100
       });
@@ -301,16 +329,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         stagger: 0.15
       }, '-=1');
 
-    if (document.querySelector('.hero-floating-card')) {
-      tl.to('.hero-floating-card', {
+    if (floatingCard) {
+      tl.to(floatingCard, {
         opacity: 1, x: 0,
         duration: 1.5, ease: 'expo.out'
       }, '-=1.2');
     }
 
     // Background zoom
-    if (document.querySelector('.hero-bg-img')) {
-      gsap.from('.hero-bg-img', {
+    const heroBgImg = document.querySelector('.hero-bg-img');
+    if (heroBgImg) {
+      gsap.from(heroBgImg, {
         scale: 1.2, duration: 5,
         ease: 'power2.out'
       });
@@ -783,18 +812,38 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   closeNavbar(): void {
     if (!this.isBrowser) return;
-
-    const navbar = document.getElementById('navbarNav');
-    if (navbar?.classList.contains('show')) {
-      const toggler = document.querySelector(
-        '.navbar-toggler'
-      ) as HTMLElement | null;
-      toggler?.click();
+    const nav = document.getElementById('navbarNav');
+    if (nav && nav.classList.contains('show')) {
+      const bsCollapse = (window as any).bootstrap?.Collapse.getInstance(nav);
+      if (bsCollapse) {
+        bsCollapse.hide();
+      } else {
+        // Fallback if bootstrap is not available or instance not found
+        const toggler = document.querySelector('.navbar-toggler') as HTMLElement | null;
+        toggler?.click();
+      }
     }
 
     // Close any open dropdowns
-    document
-      .querySelectorAll('.dropdown-menu.show')
-      .forEach(d => d.classList.remove('show'));
+    document.querySelectorAll('.dropdown-menu.show').forEach(d => d.classList.remove('show'));
+  }
+
+  // ═══════════════════════════════════════════════════
+  //  LIGHTBOX ACTIONS
+  // ═══════════════════════════════════════════════════
+
+  closeLightbox(): void {
+    this.lightboxService.close();
+  }
+
+  nextImage(event: Event): void {
+    event.stopPropagation();
+    this.lightboxService.next();
+  }
+
+  prevImage(event: Event): void {
+    event.stopPropagation();
+    this.lightboxService.prev();
   }
 }
+

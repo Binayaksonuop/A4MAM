@@ -46,16 +46,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   calcRecommendation = '';
   calcDosageMg = '';
 
-  private whoMediansMale: Record<number, number> = {
-    6: 7.9, 9: 8.9, 12: 9.6, 15: 10.3, 18: 10.9,
-    21: 11.5, 24: 12.2, 30: 13.3, 36: 14.3,
-    42: 15.3, 48: 16.3, 54: 17.3, 60: 18.3
+  private whoDataMale: Record<number, {m: number, s: number}> = {
+    6: {m: 7.9, s: 0.8}, 9: {m: 8.9, s: 0.9}, 12: {m: 9.6, s: 1.0}, 15: {m: 10.3, s: 1.1}, 18: {m: 10.9, s: 1.2},
+    21: {m: 11.5, s: 1.3}, 24: {m: 12.2, s: 1.4}, 30: {m: 13.3, s: 1.6}, 36: {m: 14.3, s: 1.8},
+    42: {m: 15.3, s: 2.0}, 48: {m: 16.3, s: 2.2}, 54: {m: 17.3, s: 2.4}, 60: {m: 18.3, s: 2.6}
   };
 
-  private whoMediansFemale: Record<number, number> = {
-    6: 7.3, 9: 8.2, 12: 8.9, 15: 9.6, 18: 10.2,
-    21: 10.9, 24: 11.5, 30: 12.7, 36: 13.9,
-    42: 15.0, 48: 16.1, 54: 17.2, 60: 18.2
+  private whoDataFemale: Record<number, {m: number, s: number}> = {
+    6: {m: 7.3, s: 0.8}, 9: {m: 8.2, s: 0.9}, 12: {m: 8.9, s: 1.0}, 15: {m: 9.6, s: 1.1}, 18: {m: 10.2, s: 1.2},
+    21: {m: 10.9, s: 1.3}, 24: {m: 11.5, s: 1.4}, 30: {m: 12.7, s: 1.6}, 36: {m: 13.9, s: 1.8},
+    42: {m: 15.0, s: 2.0}, 48: {m: 16.1, s: 2.2}, 54: {m: 17.2, s: 2.4}, 60: {m: 18.2, s: 2.6}
   };
 
   constructor(
@@ -70,16 +70,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
 
-    setTimeout(() => {
-      this.animateHero();
-      this.initRevealAnimations();
-      this.initImpactAnimations();
-      this.initComparisonAnimations();
-      this.initChickyBarAnimations();
-      this.initStackedCardAnimations();
-      this.initJourneyAnimations();
-      ScrollTrigger.refresh();
-    }, 300);
+    this.zone.runOutsideAngular(() => {
+      setTimeout(() => {
+        this.animateHero();
+        this.initRevealAnimations();
+        this.initImpactAnimations();
+        this.initComparisonAnimations();
+        this.initChickyBarAnimations();
+        this.initStackedCardAnimations();
+        this.initJourneyAnimations();
+        ScrollTrigger.refresh();
+      }, 300);
+    });
   }
 
   ngOnDestroy(): void {
@@ -123,13 +125,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ease: 'expo.out'
     }, 0.6);
 
-    gsap.to('.hero-bg-img', {
-      scale: 1.08,
-      duration: 8,
-      ease: 'sine.inOut',
-      repeat: -1,
-      yoyo: true
-    });
+    const heroBgImg = document.querySelector('.hero-bg-img');
+    if (heroBgImg) {
+      gsap.to(heroBgImg, {
+        scale: 1.08,
+        duration: 8,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true
+      });
+    }
   }
 
   private initRevealAnimations(): void {
@@ -170,6 +175,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         once: true
       },
       onUpdate: () => {
+        // Run zone only once every 2nd or 3rd frame, or just at the end if it's too much.
+        // For counters, we need it to be reactive, so we run it, but outsideAngular helps.
         this.zone.run(() => {
           this.childrenSupported = Math.round(counter.c);
           this.nutritionImprovement = Math.round(counter.n);
@@ -258,8 +265,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
         document.querySelectorAll<SVGPathElement>('.progress-ring-bar').forEach(ring => {
           const target = ring.getAttribute('data-target');
-          const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
-          ring.setAttribute('stroke-dasharray', `${current}, 100`);
+          if (target) {
+            const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
+            ring.setAttribute('stroke-dasharray', `${current}, 100`);
+          }
         });
       }
     });
@@ -305,8 +314,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private getWhoMedian(ageMonths: number): number {
-    const table = this.calcGender === 'female' ? this.whoMediansFemale : this.whoMediansMale;
+  private getWhoMetrics(ageMonths: number): { m: number, s: number } {
+    const table = this.calcGender === 'female' ? this.whoDataFemale : this.whoDataMale;
     const keys = Object.keys(table).map(Number).sort((a, b) => a - b);
 
     if (ageMonths <= keys[0]) return table[keys[0]];
@@ -318,7 +327,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (ageMonths >= low && ageMonths <= high) {
         const t = (ageMonths - low) / (high - low);
-        return table[low] + t * (table[high] - table[low]);
+        return {
+          m: table[low].m + t * (table[high].m - table[low].m),
+          s: table[low].s + t * (table[high].s - table[low].s)
+        };
       }
     }
 
@@ -333,36 +345,36 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    const median = this.getWhoMedian(this.calcAge);
-    const sd = median * 0.12;
-    const waz = (this.calcWeight - median) / sd;
+    const metrics = this.getWhoMetrics(this.calcAge);
+    const waz = (this.calcWeight - metrics.m) / metrics.s;
 
-    this.calcZScore = Math.round(waz * 10) / 10;
+    this.calcZScore = Math.round(waz * 100) / 100;
+    this.calcResultClass = 'active';
 
     if (waz >= -1) {
       this.calcStatus = 'Normal / Healthy';
       this.calcColor = '#10b981';
       this.calcIcon = 'bi-shield-check';
-      this.calcDosageMg = '0.5g / day';
-      this.calcRecommendation = 'Preventive dose: continue balanced nutrition and monthly screening.';
+      this.calcDosageMg = '1.0g / day';
+      this.calcRecommendation = 'Maintain current nutrition. 1g daily Spirulina for preventive immunity support.';
     } else if (waz >= -2) {
-      this.calcStatus = 'At Risk';
+      this.calcStatus = 'At Risk (Mildly Underweight)';
       this.calcColor = '#06b6d4';
       this.calcIcon = 'bi-exclamation-circle';
-      this.calcDosageMg = '1g / day';
-      this.calcRecommendation = 'Watchful dose: daily Spirulina support with regular follow-up screening.';
+      this.calcDosageMg = '2.0g / day';
+      this.calcRecommendation = 'Nutritional support needed. 2g daily Spirulina to prevent progression to MAM.';
     } else if (waz >= -3) {
-      this.calcStatus = 'Moderate Acute Malnutrition';
+      this.calcStatus = 'Moderate Acute Malnutrition (MAM)';
       this.calcColor = '#f59e0b';
       this.calcIcon = 'bi-exclamation-triangle';
-      this.calcDosageMg = '2g / day';
-      this.calcRecommendation = 'Therapeutic dose: supervised nutrition support with close monitoring.';
+      this.calcDosageMg = '3.0g - 5.0g / day';
+      this.calcRecommendation = 'Therapeutic intervention required. High-dose Spirulina (Chicky Bars) plus balanced diet.';
     } else {
-      this.calcStatus = 'Severe Risk';
+      this.calcStatus = 'Severe Acute Malnutrition (SAM)';
       this.calcColor = '#ef4444';
       this.calcIcon = 'bi-hospital';
-      this.calcDosageMg = 'Clinical Review';
-      this.calcRecommendation = 'Immediate clinical supervision is recommended.';
+      this.calcDosageMg = 'Immediate Clinical Action';
+      this.calcRecommendation = 'CRITICAL: Requires immediate referral to a Nutrition Rehabilitation Center (NRC).';
     }
   }
 }

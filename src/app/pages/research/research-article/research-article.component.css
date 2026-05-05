@@ -385,15 +385,267 @@ section[id] {
   background: linear-gradient(90deg, #3b82f6, #60a5fa);
 }
 
-/* Anthropo Stack CSS */
-.anthropo-stack-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  will-change: transform, opacity, filter;
+/* Anthropo Slider CSS */
+.anthropometric-slider-section {
+  position: relative;
+  z-index: 5;
+}
+
+.anthropo-slider-viewport {
+  padding: 40px 10px;
+  cursor: grab;
+}
+
+.anthropo-slider-viewport:active {
+  cursor: grabbing;
+}
+
+.anthropo-slider-track {
+  width: max-content;
+}
+
+.anthropo-slide-card {
+  width: 450px;
+  flex-shrink: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.anthropo-card-inner {
+  transition: all 0.5s ease;
   transform-style: preserve-3d;
 }
 
+.anthropo-slide-card:hover .anthropo-card-inner {
+  transform: translateY(-15px) scale(1.02);
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.15) !important;
+}
 
+.anthropo-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.anthropo-icon.danger { color: #f43f5e; box-shadow: 0 0 20px rgba(244, 63, 94, 0.2); }
+.anthropo-icon.warning { color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+.anthropo-icon.info { color: #0ea5e9; box-shadow: 0 0 20px rgba(14, 165, 233, 0.2); }
+
+.anthropo-type {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.danger-type { color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.2); }
+.warning-type { color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+.info-type { color: #0ea5e9; border: 1px solid rgba(14, 165, 233, 0.2); }
+
+/* Slider Controls */
+.slider-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #1e293b;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.slider-btn:hover {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
+}
+
+@media (max-width: 768px) {
+  .anthropo-slide-card {
+    width: 320px;
+  }
+  .anthropo-card-inner {
+    padding: 30px !important;
+  }
+}
+
+
+
+/* ============================================
+   PREMIUM ENHANCEMENTS — A4MAM RESEARCH PAGE
+   ============================================ */
+
+/* 1. SMOOTH PAGE ENTRY */
+.scientific-paper-container {
+  animation: pageEnter 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. JOURNAL LEFT BORDER */
+.journal-entry {
+  border-left: 5px solid #800000;
+}
+
+/* 3. ARTICLE TEXT HOVER */
+.article-text p {
+  transition: color 0.3s ease;
+}
+.article-text p:hover {
+  color: #111;
+}
+
+/* 4. FINAL STATEMENT GLOW */
+.final-statement {
+  animation: maroonPulse 3s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(128, 0, 0, 0.15);
+}
+@keyframes maroonPulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(128,0,0,0.1); }
+  50%       { text-shadow: 0 0 40px rgba(128,0,0,0.35); }
+}
+
+/* 5. NUTRITION CARDS TOP BORDER */
+.nutrition-premium-card.macro:hover     { border-top: 3px solid #10b981; }
+.nutrition-premium-card.micro:hover     { border-top: 3px solid #3b82f6; }
+.nutrition-premium-card.essential:hover { border-top: 3px solid #f59e0b; }
+
+/* 6. NUTRIENT ITEM SLIDE */
+.nutrient-detail-item {
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.nutrient-detail-item:hover {
+  transform: translateX(6px);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* 7. CRISIS CARD GLOWS */
+.sticky-card-ultra {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.hunger-card:hover { border-color: rgba(239,68,68,0.4)  !important; box-shadow: 0 0 40px rgba(239,68,68,0.08); }
+.anemia-card:hover { border-color: rgba(14,165,233,0.4) !important; box-shadow: 0 0 40px rgba(14,165,233,0.08); }
+.growth-card:hover { border-color: rgba(245,158,11,0.4) !important; box-shadow: 0 0 40px rgba(245,158,11,0.08); }
+
+/* 8. ANTHROPO CARD HOVER */
+.anthropo-card-inner:hover {
+  border-color: rgba(16,185,129,0.3) !important;
+  box-shadow: 0 0 60px rgba(16,185,129,0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 9. 1000 DAYS 3D LIFT */
+.impact-card-ultra-3d {
+  transition: transform 0.4s cubic-bezier(0.165,0.84,0.44,1), box-shadow 0.4s ease;
+}
+.impact-card-ultra-3d:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 30px rgba(16,185,129,0.1);
+}
+
+/* 10. SPO2 ROW HOVER */
+.hover-scale-3d {
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.3s ease;
+}
+.hover-scale-3d:hover {
+  transform: translateX(8px) scale(1.01);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+/* 11. DIGITAL TOOL CARDS */
+.digital-tool-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.digital-tool-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* 12. LIVE PULSE DOT */
+.pulse-glow-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+  animation: livePulse 2s ease-out infinite;
+}
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0   rgba(16,185,129,0.6); }
+  70%  { box-shadow: 0 0 0 12px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0   rgba(16,185,129,0); }
+}
+
+/* 13. BACK LINK UNDERLINE */
+.back-link-premium {
+  position: relative;
+  display: inline-flex;
+}
+.back-link-premium::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 2px;
+  background: #800000;
+  transition: width 0.3s ease;
+}
+.back-link-premium:hover::after { width: 100%; }
+
+/* 14. ARCHIVAL SEAL ANIMATION */
+.archival-seal {
+  animation: sealWobble 6s ease-in-out infinite;
+}
+@keyframes sealWobble {
+  0%, 100% { transform: rotate(15deg); }
+  50%       { transform: rotate(18deg) scale(1.03); }
+}
+
+/* 15. CUSTOM SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #10b981, #059669);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+/* 16. SECTION DIVIDERS */
+section + section::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16,185,129,0.2), transparent);
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* 17. FLY CARD CYCLE HOVER */
+.fly-card-premium:hover .icon-container {
+  transform: scale(1.1);
+}
+
+/* 18. MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+  .journal-entry              { border-left: 3px solid #800000; }
+  .final-statement            { font-size: 1.2rem; }
+  .impact-card-ultra-3d:hover { transform: translateY(-6px); }
+  .digital-tool-card:hover    { transform: translateY(-4px); }
+  .article-text p             { font-size: 1rem; line-height: 1.8; }
+  .hover-scale-3d:hover       { transform: translateX(4px); }
+}

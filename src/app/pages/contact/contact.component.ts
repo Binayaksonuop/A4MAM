@@ -2,7 +2,8 @@ import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { InquiryService } from '../../services/inquiry.service';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -21,6 +22,7 @@ export class ContactComponent implements AfterViewInit {
   submitted = false;
   error = false;
   errorMessage = '';
+  referenceId = '';
 
   formData = {
     name: '',
@@ -31,7 +33,7 @@ export class ContactComponent implements AfterViewInit {
     message: ''
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private inquiryService: InquiryService) {}
 
   ngAfterViewInit(): void {
     this.initAnimations();
@@ -60,12 +62,28 @@ export class ContactComponent implements AfterViewInit {
     this.error = false;
     this.errorMessage = '';
 
-    // Simulate a successful API call for demonstration purposes
+    // Simulate network delay for premium loading state
     setTimeout(() => {
-      this.isSubmitting = false;
-      this.submitted = true;
-      this.animateSuccess();
-    }, 1500);
+      try {
+        const result = this.inquiryService.addInquiry({
+          name: this.formData.name,
+          email: this.formData.email,
+          phone: this.formData.phone,
+          organization: this.formData.organization,
+          message: this.formData.subject ? `[${this.formData.subject}] ${this.formData.message}` : this.formData.message,
+          type: 'Contact'
+        });
+        
+        this.referenceId = result.id;
+        this.isSubmitting = false;
+        this.submitted = true;
+        this.animateSuccess();
+      } catch (err) {
+        this.isSubmitting = false;
+        this.error = true;
+        this.errorMessage = 'Failed to submit inquiry. Please try again.';
+      }
+    }, 1200);
   }
 
   private animateSuccess() {

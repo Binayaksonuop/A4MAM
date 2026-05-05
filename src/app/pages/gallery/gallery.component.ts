@@ -1,24 +1,48 @@
-import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
-import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { Component, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { GalleryService } from '../../services/gallery.service';
+import { LightboxService } from '../../services/lightbox.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgOptimizedImage],
+  imports: [CommonModule, RouterModule],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css'
 })
-export class GalleryComponent implements AfterViewInit {
+export class GalleryComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser: boolean;
-  selectedImage: string | null = null;
+  images: any[] = [];
+  private allImagesRaw: any[] = [];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private galleryService: GalleryService,
+    private lightboxService: LightboxService
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  ngOnInit(): void {
+    this.galleryService.getImages().subscribe(data => {
+      this.allImagesRaw = data;
+      this.images = data.map((img, index) => ({
+        src: img.url,
+        title: img.title,
+        tag: img.category,
+        location: img.location,
+        class: index % 3 === 0 ? 'item-tall' : (index % 5 === 0 ? 'item-wide' : '')
+      }));
+
+      if (this.isBrowser) {
+        setTimeout(() => this.initAnimations(), 100);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -27,18 +51,22 @@ export class GalleryComponent implements AfterViewInit {
     }
   }
 
-  openLightbox(imageSrc: string): void {
-    this.selectedImage = imageSrc;
+  ngOnDestroy(): void {
     if (this.isBrowser) {
-      document.body.style.overflow = 'hidden'; // Prevent scrolling
+      ScrollTrigger.getAll().forEach(t => t.kill());
     }
   }
 
-  closeLightbox(): void {
-    this.selectedImage = null;
-    if (this.isBrowser) {
-      document.body.style.overflow = 'auto'; // Restore scrolling
-    }
+  openLightbox(image: any): void {
+    const idx = this.images.indexOf(image);
+    this.lightboxService.open({
+      src: image.src,
+      title: image.title,
+      tag: image.tag,
+      location: image.location,
+      images: this.images,
+      currentIndex: idx
+    });
   }
 
   private initAnimations(): void {

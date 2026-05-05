@@ -87,61 +87,36 @@
         </p>
       </div>
 
-      <div class="row g-4 justify-content-center">
-
-        <!-- Tier 1: Seed -->
-        <div class="col-lg-4 col-md-6">
-          <div class="tier-card p-4 text-center" [class.tier-active]="selectedTier === 'seed'" (click)="selectTier('seed')">
-            <div class="tier-icon-wrap seed mb-3 mx-auto">
-              <i class="bi bi-box-seam"></i>
+      <div class="row g-4 justify-content-center" *ngIf="activePlans.length > 0">
+        <div class="col-lg-4 col-md-6" *ngFor="let plan of activePlans; let i = index; trackBy: trackByPlanId">
+          <div class="tier-card p-4 text-center position-relative" 
+               [class.tier-active]="selectedTierId === plan.id" 
+               [class.featured]="i === 1"
+               (click)="selectTier(plan.id)">
+            
+            <div class="featured-badge" *ngIf="i === 1">MOST IMPACT</div>
+            
+            <div class="tier-icon-wrap mb-3 mx-auto" [ngClass]="{'seed': i === 0, 'growth': i === 1, 'harvest': i === 2}">
+              <i class="bi" [ngClass]="{'bi-box-seam': i === 0, 'bi-clipboard2-pulse': i === 1, 'bi-heart-pulse': i >= 2}"></i>
             </div>
-            <h4 class="text-white fw-900 mb-1">Seed</h4>
-            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;500</div>
-            <ul class="tier-features text-start mb-4">
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>1 Month of Chicky Bars for 1 child</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Basic nutritional screening</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Digital impact certificate</li>
-            </ul>
-            <button class="btn btn-tier-select w-100">Select Seed</button>
+            
+            <h4 class="text-white fw-900 mb-1">{{ plan.name }}</h4>
+            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;{{ plan.amount | number }}</div>
+            
+            <p class="text-white text-opacity-70 small text-start mb-4">{{ plan.impactText }}</p>
+            
+            <button class="btn w-100" [ngClass]="i === 1 ? 'btn-tier-featured' : 'btn-tier-select'" (click)="processTierDonation(plan); $event.stopPropagation()">
+              Activate Contribution
+            </button>
           </div>
         </div>
+      </div>
 
-        <!-- Tier 2: Growth (Featured) -->
-        <div class="col-lg-4 col-md-6">
-          <div class="tier-card featured p-4 text-center position-relative" [class.tier-active]="selectedTier === 'growth'" (click)="selectTier('growth')">
-            <div class="featured-badge">MOST IMPACT</div>
-            <div class="tier-icon-wrap growth mb-3 mx-auto">
-              <i class="bi bi-clipboard2-pulse"></i>
-            </div>
-            <h4 class="text-white fw-900 mb-1">Growth</h4>
-            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;1,500</div>
-            <ul class="tier-features text-start mb-4">
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Clinical screening & 3-month dosage</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Targeted anemia prevention</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Named sponsorship recognition</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Monthly photo updates</li>
-            </ul>
-            <button class="btn btn-tier-featured w-100">Select Growth</button>
-          </div>
-        </div>
-
-        <!-- Tier 3: Harvest -->
-        <div class="col-lg-4 col-md-6">
-          <div class="tier-card p-4 text-center" [class.tier-active]="selectedTier === 'harvest'" (click)="selectTier('harvest')">
-            <div class="tier-icon-wrap harvest mb-3 mx-auto">
-              <i class="bi bi-heart-pulse"></i>
-            </div>
-            <h4 class="text-white fw-900 mb-1">Recovery</h4>
-            <div class="tier-price text-gradient-gold fw-950 mb-3">&#8377;5,000</div>
-            <ul class="tier-features text-start mb-4">
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Full 6-month SAM recovery program</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Specialized intensive dosage</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>Impact dashboard access</li>
-              <li><i class="bi bi-check-circle-fill text-emerald me-2"></i>80G tax exemption receipt</li>
-            </ul>
-            <button class="btn btn-tier-select w-100">Select Recovery</button>
-          </div>
-        </div>
+      <!-- Empty State -->
+      <div class="text-center py-5" *ngIf="activePlans.length === 0">
+        <i class="bi bi-heart-pulse text-gold" style="font-size: 3rem; color: #f59e0b;"></i>
+        <h3 class="text-white fw-bold mt-3">No Plans Available</h3>
+        <p class="text-white text-opacity-50">Please add donation plans from the Admin Panel.</p>
       </div>
 
       <!-- Custom Amount -->
@@ -150,14 +125,15 @@
           <div class="flex-grow-1 text-center text-md-start">
             <h4 class="text-white fw-900 mb-1"><i class="bi bi-heart-pulse me-2 text-danger"></i>Custom Amount</h4>
             <p class="text-white text-opacity-50 small mb-0">Every contribution matters — choose your own impact.</p>
+            <div *ngIf="errorMessage" class="text-danger small mt-2 fw-bold">{{ errorMessage }}</div>
           </div>
           <div class="d-flex align-items-center gap-3">
             <div class="custom-input-wrap">
               <label for="customAmountInput" class="visually-hidden">Custom Donation Amount</label>
               <span class="currency-symbol">&#8377;</span>
-              <input type="number" id="customAmountInput" name="customAmountInput" class="custom-amount-input" placeholder="1,000" min="100">
+              <input type="number" id="customAmountInput" name="customAmountInput" class="custom-amount-input" placeholder="1,000" min="100" [(ngModel)]="customAmount">
             </div>
-            <button class="btn btn-donate-now">Donate</button>
+            <button class="btn btn-donate-now" (click)="processCustomDonation()">Activate Contribution</button>
           </div>
         </div>
       </div>

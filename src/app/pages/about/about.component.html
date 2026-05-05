@@ -2,6 +2,7 @@
   <!-- BIO-HERO SECTION -->
   <header class="about-hero position-relative">
     <div class="bg-noise"></div>
+    <div class="mesh-gradient-overlay"></div>
     <div class="ambient-glow g-primary"></div>
     <div class="ambient-glow g-secondary"></div>
     <div class="ambient-glow g-acc"></div>
@@ -9,8 +10,7 @@
     <div class="container h-100 position-relative z-3">
       <div class="row h-100 align-items-center g-5">
         <div class="col-lg-6 py-5 mt-5">
-          <div class="pill-ultra emerald mb-4 d-inline-flex"><i class="bi bi-shield-check me-2"></i> The Biological
-            Intervention</div>
+          <div class="pill-ultra emerald mb-4 d-inline-flex"><i class="bi bi-shield-check me-2"></i> Our Mission</div>
           <h1 class="display-4 fw-950 text-white mb-4 hero-text-reveal text-shadow-glow">
             Our Mission to <br /> End <span class="text-gradient-emerald">Child Malnutrition.</span>
           </h1>
@@ -38,7 +38,7 @@
                   style="width:42px;height:42px;"><i class="bi bi-heart-pulse text-emerald fs-5"></i></div>
                 <div>
                   <h5 class="text-white fw-900 mb-0">A4 Conserv Foundation</h5>
-                  <p class="text-white text-opacity-50 small mb-0">Field Operations — India 2025</p>
+                  <p class="text-white text-opacity-50 small mb-0">Field Operations — India 2026</p>
                 </div>
               </div>
             </div>
@@ -58,8 +58,9 @@
         <div class="col-lg-6 mx-auto text-start">
           <h2 class="display-5 fw-900 text-white mb-3 scroll-card">The <span
               class="text-danger">Intergenerational</span> Cycle</h2>
-          <p class="text-white text-opacity-70 fs-5 mx-auto scroll-card">Malnutrition creates an endless biological
-            loop. We have engineered the exact intervention point required to break it permanently.</p>
+          <p class="text-white text-opacity-70 fs-5 mx-auto scroll-card">Malnutrition creates an endless cycle — passing
+            from mother to child, generation after generation. A4MAM intervenes at the most critical point to break it.
+          </p>
         </div>
         <div class="col-lg-6">
           <div
@@ -76,46 +77,74 @@
         </div>
       </div>
 
-      <div
-        class="process-container d-flex flex-column flex-lg-row align-items-center justify-content-between position-relative z-3">
-        <!-- Connecting Line -->
-        <div class="process-line d-none d-lg-block"></div>
-
-        <div class="process-node text-center z-3">
-          <div class="node-icon bg-glass-dark border-primary-subtle text-primary"><i
-              class="bi bi-person-standing-dress"></i></div>
-          <h4 class="text-white fw-bold mt-4 mb-2">Malnourished Mother</h4>
-          <p class="text-white text-opacity-70 small max-w-xs mx-auto">Lacks vital micronutrients and stores for
-            pregnancy.</p>
+      <div class="process-container position-relative z-3">
+        <!-- Connecting Line with Flow Dots -->
+        <div class="process-line-premium d-none d-lg-block">
+          <div class="flow-dot emerald"></div>
+          <div class="flow-dot amber"></div>
         </div>
 
-        <div class="process-arrow d-lg-none"><i class="bi bi-chevron-down text-white text-opacity-30 fs-1"></i></div>
-
-        <div class="process-node text-center z-3">
-          <div class="node-icon bg-glass-dark border-warning-subtle text-warning"><i class="bi bi-bandaid"></i></div>
-          <h4 class="text-white fw-bold mt-4 mb-2">Low Birth Weight</h4>
-          <p class="text-white text-opacity-70 small max-w-xs mx-auto">Infant begins life physically and cognitively
-            disadvantaged.</p>
-        </div>
-
-        <div class="process-arrow d-lg-none"><i class="bi bi-chevron-down text-white text-opacity-30 fs-1"></i></div>
-
-        <div class="process-node text-center z-3 target-node tilt-effect" style="transform-style: preserve-3d;">
-          <div class="intervention-badge pulse-fast">MAM Target Point</div>
-          <div class="node-icon bg-glass-dark border-emerald text-emerald node-glow-emerald"><i class="bi bi-lungs"></i>
+        <div class="row g-4 align-items-start justify-content-between">
+          <!-- Stage 1: Mother -->
+          <div class="col-lg-3 col-md-6 scroll-card text-center">
+            <div class="process-node-ultra">
+              <div class="node-icon-wrap glass-red">
+                <i class="bi bi-person-hearts"></i>
+                <div class="icon-glow red"></div>
+              </div>
+              <div class="node-card-content mt-4 p-3 rounded-4 bg-glass-dark border-glass shadow-lg">
+                <h5 class="text-white fw-900 mb-2">Malnourished Mother</h5>
+                <p class="text-white text-opacity-60 small mb-0">Lacks vital micronutrients and stores for pregnancy.
+                </p>
+              </div>
+            </div>
           </div>
-          <h4 class="text-white fw-bold mt-4 mb-2">Cellular Fortification</h4>
-          <p class="text-white text-opacity-70 small max-w-xs mx-auto fw-600">Spirulina intervention ensures total
-            bioavailability of Iron, Proteins, & Vitamins.</p>
-        </div>
 
-        <div class="process-arrow d-lg-none"><i class="bi bi-chevron-down text-white text-opacity-30 fs-1"></i></div>
+          <!-- Stage 2: Birth -->
+          <div class="col-lg-3 col-md-6 scroll-card text-center">
+            <div class="process-node-ultra">
+              <div class="node-icon-wrap glass-amber">
+                <i class="bi bi-moisture"></i>
+                <div class="icon-glow amber"></div>
+              </div>
+              <div class="node-card-content mt-4 p-3 rounded-4 bg-glass-dark border-glass shadow-lg">
+                <h5 class="text-white fw-900 mb-2">Low Birth Weight</h5>
+                <p class="text-white text-opacity-60 small mb-0">Infant begins life physically and cognitively
+                  disadvantaged.</p>
+              </div>
+            </div>
+          </div>
 
-        <div class="process-node text-center z-3">
-          <div class="node-icon bg-glass-dark border-info-subtle text-info"><i class="bi bi-rocket-takeoff"></i></div>
-          <h4 class="text-white fw-bold mt-4 mb-2">Healthy Development</h4>
-          <p class="text-white text-opacity-70 small max-w-xs mx-auto">Unlocks full genetic potential for physical and
-            cognitive growth.</p>
+          <!-- Stage 3: Intervention -->
+          <div class="col-lg-3 col-md-6 scroll-card text-center">
+            <div class="process-node-ultra target-stage">
+              <div class="intervention-pill pulse-fast">MAM Critical Point</div>
+              <div class="node-icon-wrap glass-emerald">
+                <i class="bi bi-shield-check"></i>
+                <div class="icon-glow emerald"></div>
+              </div>
+              <div class="node-card-content mt-4 p-3 rounded-4 bg-glass-dark border-emerald-light shadow-lg">
+                <h5 class="text-emerald fw-950 mb-2">Spirulina Intervention</h5>
+                <p class="text-white text-opacity-70 small mb-0 fw-600">Spirulina delivers Iron and Protein in a form
+                  the body absorbs rapidly.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 4: Result -->
+          <div class="col-lg-3 col-md-6 scroll-card text-center">
+            <div class="process-node-ultra">
+              <div class="node-icon-wrap glass-blue">
+                <i class="bi bi-stars"></i>
+                <div class="icon-glow blue"></div>
+              </div>
+              <div class="node-card-content mt-4 p-3 rounded-4 bg-glass-dark border-glass shadow-lg">
+                <h5 class="text-white fw-900 mb-2">Healthy Development</h5>
+                <p class="text-white text-opacity-60 small mb-0">Children grow stronger, learn better, and build a
+                  healthy foundation.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -138,12 +167,11 @@
             <div class="position-absolute top-0 start-0 w-100 h-100 z-2"
               style="background: linear-gradient(to right, rgba(15,23,42,0.8), transparent);"></div>
           </div>
-          <h2 class="display-5 fw-900 text-white mb-4">Precision <span class="text-gradient-emerald">Biological</span>
-            Intervention</h2>
+          <h2 class="display-5 fw-900 text-white mb-4">Why <span class="text-gradient-emerald">Spirulina Works</span>
+          </h2>
           <p class="lead text-white text-opacity-90 max-w-800">
-            We combine the wisdom of nature with the rigor of clinical science to address the root causes of stunting
-            and
-            micronutrient deficiency.
+            Spirulina is one of the most nutrient-dense foods on earth — and unlike most plant-based supplements, the
+            body absorbs nearly all of it.
           </p>
           <div class="glass-alert mb-4">
             <i class="bi bi-exclamation-triangle-fill text-warning me-3 fs-4"></i>
@@ -154,9 +182,9 @@
             </div>
           </div>
           <p class="text-white text-opacity-90 fs-5 mb-0 fw-light line-height-lg">
-            Spirulina solves this critical biological bottleneck. Because it is a cyanobacterium, it <strong
-              class="text-emerald">lacks a hard cellulose wall</strong>, allowing its extremely dense nutrient core to
-            be rapidly absorbed by the human digestive tract—with <strong>up to 95% bioavailability</strong>.
+            Spirulina has no hard cellulose wall — so the body absorbs its nutrients directly and rapidly. This gives it
+            <strong class="text-emerald">up to 95% bioavailability</strong>, far higher than any standard supplement or
+            plant-based iron source.
           </p>
         </div>
 
@@ -182,15 +210,16 @@
               <div class="stat-glass-card h-100 amber-glow hover-transform">
                 <i class="bi bi-shield-plus fs-1 text-amber-400 mb-3 d-block"></i>
                 <h3 class="text-white fw-bold text-shadow mb-1">Zinc & Vit A</h3>
-                <p class="text-white text-opacity-80 mb-0 small">Critical systemic immune system fortification.</p>
+                <p class="text-white text-opacity-80 mb-0 small">Strengthens immunity and supports healthy growth in
+                  children.</p>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="stat-glass-card h-100 purple-glow hover-transform">
                 <i class="bi bi-activity fs-1 text-purple-400 mb-3 d-block"></i>
                 <h3 class="text-white fw-bold text-shadow mb-1">SpO₂ Rescue</h3>
-                <p class="text-white text-opacity-80 mb-0 small">Rebuilds respiratory resilience against severe wasting.
-                </p>
+                <p class="text-white text-opacity-80 mb-0 small">Supports oxygen levels and lung health in malnourished
+                  children.</p>
               </div>
             </div>
           </div>
@@ -199,34 +228,104 @@
     </div>
   </section>
 
-  <!-- IMPLEMENTATION -->
-  <section class="py-150 position-relative z-3 section-dark">
-    <div class="container text-center max-w-4xl scroll-card">
-      <div class="pill-ultra blue mb-4 d-inline-flex">A4 Conserv Implementation</div>
-      <h2 class="display-5 fw-950 text-white mb-4">Bioavailability <span class="text-gradient-blue">Matrix</span></h2>
-      <p class="lead text-white text-opacity-90 max-w-800 mx-auto">
-        Unlike synthetic supplements, our Spirulina is recognized by the body as a whole food, leading to absorption
-        rates that exceed 90%.
-      </p>
-      <p class="text-white text-opacity-90 mb-5">
-        Precision nutrition demands precision delivery. We integrate our Spirulina intervention seamlessly into local
-        environments via localized formats like the "Chicky Bar"—ensuring exceptional palatability and adherence in
-        target demographics.
-      </p>
+  <!-- IMPLEMENTATION / DELIVERY PIPELINE -->
+  <section class="py-150 position-relative z-3 section-dark overflow-hidden">
+    <div class="delivery-bg-glow"></div>
+    <div class="container position-relative z-2">
+      <div class="row justify-content-center text-center mb-5 pb-3 scroll-card">
+        <div class="col-lg-8">
+          <div class="pill-ultra blue mb-4 d-inline-flex">How We Deliver It</div>
+          <h2 class="display-5 fw-950 text-white mb-4">From Farm <span class="text-gradient-blue">to Child</span></h2>
+          <p class="lead text-white text-opacity-90 mx-auto max-w-700">
+            We have engineered a high-efficiency supply chain that ensures clinical-grade Spirulina reaches the most
+            remote communities without losing nutritional potency.
+          </p>
+        </div>
+      </div>
 
-      <div class="cta-glass p-5 rounded-4 d-inline-block shadow-lg border-emerald glow-box mx-auto hover-scale">
-        <h4 class="text-white fw-bold mb-3 fs-3">Join the Biological Crusade</h4>
-        <p class="text-white text-opacity-90 mb-4 fs-6">Are you ready to support an intervention that solves malnutrition at
-          the molecular root?</p>
-        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-          <button class="btn btn-emerald-ultra px-5 py-3 fw-bold rounded-pill text-uppercase" routerLink="/donate">
-            Join the Biological Crusade <i class="bi bi-heart-fill ms-2 pulse-icon text-danger"></i>
-          </button>
+      <!-- DELIVERY PIPELINE GRID -->
+      <div class="row g-4 delivery-pipeline-grid">
+        <!-- Node 1: Bio-Farming -->
+        <div class="col-lg-4 col-md-6 scroll-card">
+          <div class="delivery-node-card h-100">
+            <div class="node-image-wrap">
+              <img ngSrc="assets/images/lab_s.png" fill alt="Bio-Farming" class="node-img">
+              <div class="node-number">01</div>
+              <div class="node-overlay-glow"></div>
+            </div>
+            <div class="node-content p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-microscope text-emerald"></i>
+                <h5 class="fw-900 text-white mb-0">Eco-Farming</h5>
+              </div>
+              <p class="text-white text-opacity-60 small mb-0">Our Spirulina is cultivated in strictly controlled,
+                alkaline-rich environments ensuring 100% purity and zero heavy-metal contamination.</p>
+            </div>
+          </div>
+        </div>
 
-          <a class="btn btn-outline-light px-5 py-3 fw-bold rounded-pill text-uppercase d-flex align-items-center justify-content-center"
-            href="javascript:void(0)" onclick="alert('PDF download will begin shortly.')">
-            <i class="bi bi-file-earmark-pdf-fill text-danger fs-5 me-2"></i> Download Research
-          </a>
+        <!-- Node 2: Nutrient Lockdown -->
+        <div class="col-lg-4 col-md-6 scroll-card">
+          <div class="delivery-node-card h-100">
+            <div class="node-image-wrap">
+              <img ngSrc="assets/images/chicky_s.png" fill alt="Nutrient Lockdown" class="node-img">
+              <div class="node-number">02</div>
+              <div class="node-overlay-glow blue"></div>
+            </div>
+            <div class="node-content p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-box-seam text-blue-400"></i>
+                <h5 class="fw-900 text-white mb-0">Nutrient Lockdown</h5>
+              </div>
+              <p class="text-white text-opacity-60 small mb-0">The biomass is processed into "Chicky Bars" and Kits,
+                locking in micronutrients while ensuring a shelf-life that withstands rural environments.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 3: Last-Mile Deployment -->
+        <div class="col-lg-4 col-md-6 scroll-card">
+          <div class="delivery-node-card h-100">
+            <div class="node-image-wrap">
+              <img ngSrc="assets/images/smiling_children.png" fill alt="Last-Mile Deployment" class="node-img">
+              <div class="node-number">03</div>
+              <div class="node-overlay-glow emerald"></div>
+            </div>
+            <div class="node-content p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-truck text-emerald"></i>
+                <h5 class="fw-900 text-white mb-0">Last-Mile Impact</h5>
+              </div>
+              <p class="text-white text-opacity-60 small mb-0">Strategic partnership with Anganwadis and health centers
+                ensures children receive their dosage with 100% adherence and monitoring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Card -->
+      <div class="row mt-5 pt-5 justify-content-center text-center scroll-card">
+        <div class="col-lg-10">
+          <div class="cta-glass-premium-v2 p-5 rounded-5 border-emerald glow-box position-relative overflow-hidden">
+            <div class="cta-shine-effect"></div>
+            <div class="position-relative z-2">
+              <h3 class="display-6 fw-950 text-white mb-3">Join the Mission to Save Lives</h3>
+              <p class="lead text-white text-opacity-80 mb-5 max-w-700 mx-auto">
+                Partner with A4MAM to scale this biological intervention. Your support transforms a child's
+                biological future at the molecular level.
+              </p>
+              <div class="d-flex flex-column flex-sm-row justify-content-center gap-4">
+                <button class="btn btn-emerald-ultra px-5 py-3 fw-bold rounded-pill text-uppercase"
+                  routerLink="/donate">
+                  Partner With Us <i class="bi bi-heart-fill ms-2 pulse-icon text-danger"></i>
+                </button>
+                <a class="btn btn-outline-light px-5 py-3 fw-bold rounded-pill text-uppercase d-flex align-items-center justify-content-center"
+                  href="javascript:void(0)" onclick="alert('Our operational roadmap will begin downloading shortly.')">
+                  <i class="bi bi-file-earmark-pdf-fill text-danger fs-5 me-2"></i> Operational Roadmap
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

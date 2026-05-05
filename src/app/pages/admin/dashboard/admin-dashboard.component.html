@@ -1,0 +1,477 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar shadow-2xl">
+    <div class="sidebar-header p-4 border-bottom border-white border-opacity-10">
+      <div class="d-flex align-items-center gap-3">
+        <div class="admin-logo-orb"><i class="bi bi-shield-lock-fill"></i></div>
+        <div>
+          <h6 class="text-white fw-950 mb-0">MISSION CONTROL</h6>
+          <span class="text-emerald x-small fw-bold letter-spacing-1">SECURE ACCESS</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav p-3">
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'dashboard'" (click)="openAdminPanel('dashboard')">
+        <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
+      </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'images'" (click)="openAdminPanel('images')">
+        <i class="bi bi-images"></i> <span>Manage Images</span>
+      </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'research'" (click)="openAdminPanel('research')">
+        <i class="bi bi-journal-text"></i> <span>Research Articles</span>
+      </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'donations'" (click)="openAdminPanel('donations')">
+        <i class="bi bi-heart-pulse-fill"></i> <span>Donation Plans</span>
+      </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'products'" (click)="openAdminPanel('products')">
+        <i class="bi bi-box-seam"></i> <span>Product Management</span>
+      </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'inquiries'" (click)="openAdminPanel('inquiries')">
+        <i class="bi bi-chat-dots-fill"></i> <span>Inquiries</span>
+      </div>
+      <div class="nav-item-v6 opacity-50" style="cursor: not-allowed;">
+        <i class="bi bi-gear-fill"></i> <span>System Settings <i class="bi bi-lock-fill ms-1"></i></span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer p-4 border-top border-white border-opacity-10 mt-auto">
+      <button class="btn btn-logout-v6 w-100" (click)="logout()">
+        <i class="bi bi-box-arrow-left me-2"></i> Log Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main-content">
+    
+    <!-- Admin Top Bar -->
+    <header class="admin-top-bar px-4 px-lg-5 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-cpu-fill text-emerald"></i>
+        <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">SYSTEM_HEALTH: <span class="text-emerald">OPTIMAL</span></span>
+      </div>
+      
+      <div class="d-flex align-items-center gap-4">
+        <div class="admin-search-box d-none d-md-flex align-items-center px-3 py-2 rounded-pill">
+          <i class="bi bi-search text-white text-opacity-30 me-2"></i>
+          <input type="text" placeholder="Search mission data..." class="bg-transparent border-0 text-white small">
+        </div>
+        
+        <div class="admin-profile-pill d-flex align-items-center gap-3 px-3 py-2 rounded-pill shadow-lg">
+          <div class="profile-avatar-v6">TP</div>
+          <div class="d-none d-sm-block">
+            <div class="text-white fw-bold x-small lh-1">Trishna P.</div>
+            <div class="text-emerald x-small fw-bold opacity-50">Chief Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="p-4 p-lg-5">
+
+    <!-- DASHBOARD OVERVIEW -->
+    <div *ngIf="activeAdminPanel === 'dashboard'" class="section-fade-in">
+      <div class="d-flex justify-content-between align-items-end mb-5 reveal-dash">
+        <div>
+          <div class="badge-premium-emerald-outline mb-3">
+            <span class="pulse-dot-v6"></span> SECURE ADMIN MODE
+          </div>
+          <h1 class="display-5 fw-950 text-white mb-0">Clinical <span class="text-gradient-emerald">Transparency</span></h1>
+          <p class="text-white text-opacity-50 mt-2 mb-0">Real-time data visualization of A4MAM interventions.</p>
+        </div>
+        <div class="text-white text-opacity-50 small font-monospace">LATEST SYNC: {{ today | date:'medium' }}</div>
+      </div>
+
+      <!-- Top Stats Row -->
+      <div class="row g-4 mb-5 reveal-dash" *ngIf="stats">
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="stat-value counter-v6 text-emerald" [attr.data-target]="stats.childrenScreened">0</div>
+            <div class="stat-label">Children Screened</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="stat-value counter-v6 text-blue" [attr.data-target]="stats.kitsDistributed">0</div>
+            <div class="stat-label">Kits Distributed</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="stat-value counter-v6 text-amber" [attr.data-target]="stats.activeInterventions">0</div>
+            <div class="stat-label">Active Interventions</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="stat-value counter-v6 text-violet d-inline-block" [attr.data-target]="stats.recoveryRate">0</div><span class="text-violet fs-4 fw-bold">%</span>
+            <div class="stat-label">Recovery Rate</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="text-white fs-4 fw-bold d-inline-block">₹</div><div class="stat-value counter-v6 text-white d-inline-block" [attr.data-target]="stats.totalDonations">0</div>
+            <div class="stat-label">Total Donations</div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="stat-card-glass p-3 h-100 text-center">
+            <div class="stat-value counter-v6 text-danger" [attr.data-target]="stats.pendingCOD">0</div>
+            <div class="stat-label">Pending COD</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 reveal-dash">
+        <div class="col-lg-8">
+          <div class="panel-glass p-4 mb-4">
+            <h5 class="fw-900 text-white mb-4">Donation Stream (INR)</h5>
+            <div class="chart-mockup flex-grow-1 d-flex align-items-end gap-2 pb-2">
+              <div class="bar-v6" data-height="30%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="50%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="40%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="70%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="60%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="90%" style="height: 0%; background: #10b981;"></div>
+              <div class="bar-v6" data-height="80%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="100%" style="height: 0%; background: #10b981;"></div>
+              <div class="bar-v6" data-height="85%" style="height: 0%"></div>
+              <div class="bar-v6" data-height="65%" style="height: 0%"></div>
+            </div>
+          </div>
+
+          <div class="panel-glass p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 class="fw-900 text-white mb-0">Recent Activity Log</h5>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-dark table-hover table-borderless align-middle activity-table-v6">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ord of orders.slice(0,4)">
+                    <td><span class="text-white text-opacity-50 font-monospace">{{ ord.id }}</span></td>
+                    <td class="text-white fw-bold">{{ ord.type }}</td>
+                    <td>₹{{ ord.amount | number }}</td>
+                    <td><span class="badge" [class.bg-emerald-subtle]="ord.paymentMethod === 'UPI'"
+                        [class.bg-blue-subtle]="ord.paymentMethod === 'COD'">{{ ord.paymentMethod }}</span></td>
+                    <td><i class="bi bi-check-circle-fill text-emerald me-1"></i> {{ ord.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="panel-glass p-4 mb-4">
+            <h5 class="fw-900 text-white mb-4">Mission Control</h5>
+            <div class="d-flex flex-column gap-3">
+              <div class="control-card-v6" (click)="openAdminPanel('images')">
+                <div class="icon-box"><i class="bi bi-images"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">Manage Images</div>
+                </div>
+                <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+              </div>
+              <div class="control-card-v6" (click)="openAdminPanel('research')">
+                <div class="icon-box"><i class="bi bi-journal-text"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">Research Articles</div>
+                </div>
+                <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+              </div>
+              <div class="control-card-v6" (click)="openAdminPanel('donations')">
+                <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">Donation Plans</div>
+                </div>
+                <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+              </div>
+              <div class="control-card-v6" (click)="openAdminPanel('products')">
+                <div class="icon-box"><i class="bi bi-box-seam"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">Product Management</div>
+                </div>
+                <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+              </div>
+              <div class="control-card-v6" (click)="openAdminPanel('inquiries')">
+                <div class="icon-box"><i class="bi bi-chat-dots"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">Inquiry Management</div>
+                </div>
+                <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+              </div>
+              <div class="control-card-v6 opacity-50" style="cursor: not-allowed;">
+                <div class="icon-box"><i class="bi bi-gear-fill"></i></div>
+                <div class="flex-grow-1">
+                  <div class="fw-bold text-white mb-1">System Settings</div>
+                </div>
+                <i class="bi bi-lock-fill text-white text-opacity-50"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-glass p-4">
+            <h5 class="fw-900 text-white mb-4">Regional Distribution</h5>
+            <div class="region-row mb-3">
+              <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Odisha</span><span>45%</span></div>
+              <div class="progress-track"><div class="progress-fill emerald" data-width="45%" style="width: 45%"></div></div>
+            </div>
+            <div class="region-row mb-3">
+              <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Telangana</span><span>30%</span></div>
+              <div class="progress-track"><div class="progress-fill blue" data-width="30%" style="width: 30%"></div></div>
+            </div>
+            <div class="region-row mb-3">
+              <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Jharkhand</span><span>15%</span></div>
+              <div class="progress-track"><div class="progress-fill amber" data-width="15%" style="width: 15%"></div></div>
+            </div>
+            <div class="region-row">
+              <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Other</span><span>10%</span></div>
+              <div class="progress-track"><div class="progress-fill violet" data-width="10%" style="width: 10%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMAGES PANEL -->
+    <div *ngIf="activeAdminPanel === 'images'" class="section-fade-in">
+      <h2 class="fw-900 text-white mb-4">Image Management</h2>
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+            <h5 class="fw-bold text-white mb-3">Upload New Image</h5>
+            <div class="upload-preview mb-3 rounded-3 overflow-hidden border border-white border-opacity-10" *ngIf="previewUrl">
+              <img [src]="previewUrl" class="w-100 h-auto">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="imageFile" class="text-white text-opacity-50 x-small fw-bold">Image File</label>
+              <input type="file" id="imageFile" name="imageFile" (change)="onFileSelected($event)" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="imageTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
+              <input type="text" id="imageTitle" name="imageTitle" [(ngModel)]="newImage.title" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="imageLocation" class="text-white text-opacity-50 x-small fw-bold">Location</label>
+              <input type="text" id="imageLocation" name="imageLocation" [(ngModel)]="newImage.location" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="imageDescription" class="text-white text-opacity-50 x-small fw-bold">Caption/Description</label>
+              <textarea id="imageDescription" name="imageDescription" [(ngModel)]="newImage.description" class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100" (click)="uploadImage()" [disabled]="!previewUrl || isUploading">
+              {{ isUploading ? 'Saving...' : 'Save Image' }}
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-3">
+            <div class="col-md-6" *ngFor="let img of galleryImages">
+              <div class="panel-glass overflow-hidden position-relative" (click)="openLightbox(img)" style="cursor: pointer;">
+                <img [src]="img.url" class="w-100" style="height: 200px; object-fit: cover;">
+                <div class="p-3">
+                  <h6 class="text-white mb-1">{{ img.title }}</h6>
+                  <p class="text-white text-opacity-50 x-small mb-0">{{ img.location }}</p>
+                </div>
+                <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" (click)="$event.stopPropagation(); deleteImage(img.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH PANEL -->
+    <div *ngIf="activeAdminPanel === 'research'" class="section-fade-in">
+      <h2 class="fw-900 text-white mb-4">Research Articles</h2>
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+            <h5 class="fw-bold text-white mb-3">Add New Article</h5>
+            <div class="form-group-v6 mb-3">
+              <label for="articleTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
+              <input type="text" id="articleTitle" name="articleTitle" [(ngModel)]="newArticle.title" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="articleCategory" class="text-white text-opacity-50 x-small fw-bold">Category</label>
+              <input type="text" id="articleCategory" name="articleCategory" [(ngModel)]="newArticle.category" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="articleStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+              <select id="articleStatus" name="articleStatus" [(ngModel)]="newArticle.status" class="form-select bg-dark text-white border-secondary">
+                <option value="Draft">Draft</option>
+                <option value="Published">Published</option>
+              </select>
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="articleSummary" class="text-white text-opacity-50 x-small fw-bold">Summary</label>
+              <textarea id="articleSummary" name="articleSummary" [(ngModel)]="newArticle.summary" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100" (click)="saveArticle()">Save Article</button>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="panel-glass p-4 mb-3" *ngFor="let article of articles">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <span class="badge bg-secondary mb-2" [class.bg-success]="article.status === 'Published'">{{ article.status }}</span>
+                <span class="badge border border-secondary text-secondary ms-2 mb-2">{{ article.category }}</span>
+                <h5 class="text-white fw-bold">{{ article.title }}</h5>
+                <p class="text-white text-opacity-70 mb-0">{{ article.summary }}</p>
+              </div>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle(article.id)"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONATIONS PANEL -->
+    <div *ngIf="activeAdminPanel === 'donations'" class="section-fade-in">
+      <h2 class="fw-900 text-white mb-4">Donation Plans Management</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" *ngFor="let plan of donationPlans">
+          <div class="panel-glass p-4 h-100 d-flex flex-column">
+            <input type="text" [id]="'planName'+plan.id" [name]="'planName'+plan.id" aria-label="Plan Name" [(ngModel)]="plan.name" class="form-control bg-transparent text-white fw-bold fs-5 border-0 px-0 mb-2" style="box-shadow: none;">
+            <div class="input-group mb-3">
+              <span class="input-group-text bg-dark text-white border-secondary">₹</span>
+              <input type="number" [id]="'planAmount'+plan.id" [name]="'planAmount'+plan.id" aria-label="Plan Amount" [(ngModel)]="plan.amount" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <textarea [id]="'planImpact'+plan.id" [name]="'planImpact'+plan.id" aria-label="Plan Impact Text" [(ngModel)]="plan.impactText" class="form-control bg-dark text-white border-secondary mb-3 flex-grow-1" rows="3"></textarea>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" role="switch" [id]="'switch'+plan.id" [(ngModel)]="plan.active">
+              <label class="form-check-label text-white" [for]="'switch'+plan.id">Active Plan</label>
+            </div>
+            <button class="btn btn-outline-emerald w-100 mt-auto" (click)="updatePlan(plan)">Update Plan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS PANEL -->
+    <div *ngIf="activeAdminPanel === 'products'" class="section-fade-in">
+      <h2 class="fw-900 text-white mb-4">Product Management</h2>
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+            <h5 class="fw-bold text-white mb-3">Add Product</h5>
+            <div class="form-group-v6 mb-3">
+              <label for="productName" class="text-white text-opacity-50 x-small fw-bold">Name</label>
+              <input type="text" id="productName" name="productName" [(ngModel)]="newProduct.name" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="productPrice" class="text-white text-opacity-50 x-small fw-bold">Price (₹)</label>
+              <input type="number" id="productPrice" name="productPrice" [(ngModel)]="newProduct.price" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="productStock" class="text-white text-opacity-50 x-small fw-bold">Stock</label>
+              <input type="number" id="productStock" name="productStock" [(ngModel)]="newProduct.stock" class="form-control bg-dark text-white border-secondary">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label for="productStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+              <select id="productStatus" name="productStatus" [(ngModel)]="newProduct.status" class="form-select bg-dark text-white border-secondary">
+                <option value="In Stock">In Stock</option>
+                <option value="Out of Stock">Out of Stock</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100" (click)="saveProduct()">Save Product</button>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="table-responsive panel-glass p-0">
+            <table class="table table-dark table-hover table-borderless align-middle m-0">
+              <thead>
+                <tr>
+                  <th class="p-4">Product</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th class="text-end p-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prod of products">
+                  <td class="p-4 d-flex align-items-center gap-3">
+                    <img [src]="prod.imageUrl" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                    <span class="text-white fw-bold">{{ prod.name }}</span>
+                  </td>
+                  <td>₹{{ prod.price }}</td>
+                  <td>{{ prod.stock }}</td>
+                  <td>
+                    <span class="badge" [class.bg-success]="prod.status === 'In Stock'" [class.bg-danger]="prod.status === 'Out of Stock'" [class.bg-secondary]="prod.status === 'Draft'">{{ prod.status }}</span>
+                  </td>
+                  <td class="text-end p-4">
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(prod.id)"><i class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INQUIRIES PANEL -->
+    <div *ngIf="activeAdminPanel === 'inquiries'" class="section-fade-in">
+      <h2 class="fw-900 text-white mb-4">Inquiry Management</h2>
+      <div class="panel-glass p-0 overflow-hidden">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover table-borderless align-middle m-0 activity-table-v6">
+            <thead>
+              <tr>
+                <th class="p-4">Date</th>
+                <th>Name / Email</th>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th class="text-end p-4">Mark As</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inq of inquiries">
+                <td class="p-4 text-white text-opacity-50 small">{{ inq.date | date:'shortDate' }}</td>
+                <td>
+                  <div class="fw-bold text-white">{{ inq.name }}</div>
+                  <div class="text-white text-opacity-50 x-small">{{ inq.email }}</div>
+                  <div class="text-emerald x-small fw-bold" *ngIf="inq.organization">{{ inq.organization }}</div>
+                </td>
+                <td><span class="badge border border-secondary text-secondary">{{ inq.type }}</span></td>
+                <td style="max-width: 250px;" class="text-truncate" [title]="inq.message">{{ inq.message }}</td>
+                <td>
+                  <span class="badge" [class.bg-primary]="inq.status === 'New'" [class.bg-warning]="inq.status === 'Viewed'" [class.bg-success]="inq.status === 'Responded'">{{ inq.status }}</span>
+                </td>
+                <td class="text-end p-4">
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      Action
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                      <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'New')">New</a></li>
+                      <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'Viewed')">Viewed</a></li>
+                      <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'Responded')">Responded</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </main>
+</div>

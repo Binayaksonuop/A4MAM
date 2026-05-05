@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -90,5 +91,16 @@ export const routes: Routes = [
     path: 'admin',
     loadComponent: () => import('./pages/admin/admin-login/admin-login.component').then(m => m.AdminLoginComponent),
     title: 'Admin Login | A4MAM'
+  },
+  {
+    path: 'admin/dashboard',
+    canActivate: [adminGuard],
+    loadComponent: () => import('./pages/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
+    title: 'Mission Control | A4MAM'
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+    title: '404 - Route Not Found | A4MAM'
   }
 ];

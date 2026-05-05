@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, PLATFORM_ID, Inject, HostListener } from '@angular/core';
+import { Component, AfterViewInit, PLATFORM_ID, Inject, HostListener, NgZone } from '@angular/core';
 import { isPlatformBrowser, CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
@@ -16,13 +16,18 @@ gsap.registerPlugin(ScrollTrigger);
 export class AboutComponent implements AfterViewInit {
   private isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private zone: NgZone
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngAfterViewInit() {
     if (this.isBrowser) {
-      this.initAnimations();
+      this.zone.runOutsideAngular(() => {
+        this.initAnimations();
+      });
     }
   }
 
@@ -47,15 +52,16 @@ export class AboutComponent implements AfterViewInit {
 
     // Cards Scroll
     gsap.utils.toArray('.scroll-card').forEach((card: any, i) => {
+      gsap.set(card, { opacity: 0, y: 40 });
       gsap.to(card, {
-        scrollTrigger: { trigger: card, start: 'top 85%' },
-        opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: i * 0.1
+        scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' },
+        opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: i * 0.08, force3D: true
       });
     });
 
     // Bio Process Loop
     gsap.utils.toArray('.process-node').forEach((node: any, i) => {
-      gsap.fromTo(node, 
+      gsap.fromTo(node,
         { opacity: 0, x: -50 },
         {
           scrollTrigger: { trigger: '.process-container', start: 'top 70%' },
@@ -67,15 +73,26 @@ export class AboutComponent implements AfterViewInit {
     ScrollTrigger.refresh();
   }
 
+  @HostListener('window:resize')
+  onResize() {
+    if (this.isBrowser) {
+      this.zone.runOutsideAngular(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+  }
+
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
     if (!this.isBrowser) return;
 
-    const glows = document.querySelectorAll('.ambient-glow');
-    if (glows.length) {
-      const x = (e.clientX - window.innerWidth / 2) / 50;
-      const y = (e.clientY - window.innerHeight / 2) / 50;
-      gsap.to('.ambient-glow', { x: x, y: y, duration: 1, ease: 'power2.out' });
-    }
+    this.zone.runOutsideAngular(() => {
+      const glows = document.querySelectorAll('.ambient-glow');
+      if (glows.length) {
+        const x = (e.clientX - window.innerWidth / 2) / 50;
+        const y = (e.clientY - window.innerHeight / 2) / 50;
+        gsap.to('.ambient-glow', { x: x, y: y, duration: 1.5, ease: 'power2.out', overwrite: 'auto' });
+      }
+    });
   }
 }

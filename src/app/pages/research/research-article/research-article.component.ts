@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ResearchService, ResearchArticle } from '../../../services/research.service';
+import { Subscription } from 'rxjs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,22 +18,40 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser: boolean;
+  publishedArticles: ResearchArticle[] = [];
+  private subscription: Subscription | null = null;
 
   constructor(
     private zone: NgZone,
+    private researchService: ResearchService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.subscription = this.researchService.getArticles().subscribe(articles => {
+      this.publishedArticles = articles.filter(a => a.status === 'Published');
+      
+      // Re-trigger scroll triggers if DOM updates and we're in browser
+      if (this.isBrowser) {
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
+      }
+    });
+  }
+
+  trackByArticleId(index: number, article: ResearchArticle): string {
+    return article.id;
+  }
 
   ngAfterViewInit(): void {
     if (this.isBrowser) {
       setTimeout(() => {
         this.initRevealAnimations();
         this.initStickyStackAnimations();
-        this.initAnthropoStackAnimations();
+        this.initAnthropoSliderAnimations();
         this.initCircularProgressAnimations();
         this.initCycleOrbitAnimations();
         ScrollTrigger.refresh();
@@ -40,6 +60,9 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     if (this.isBrowser) {
       ScrollTrigger.getAll().forEach(st => st.kill());
     }
@@ -86,66 +109,65 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private initAnthropoStackAnimations(): void {
-    const section = document.querySelector('.anthropometric-stack-section');
-    if (!section) return;
+  private initAnthropoSliderAnimations(): void {
+    const track = document.querySelector('.anthropo-slider-track') as HTMLElement;
+    const viewport = document.querySelector('.anthropo-slider-viewport') as HTMLElement;
+    const nextBtn = document.querySelector('.next-btn');
+    const prevBtn = document.querySelector('.prev-btn');
 
-    const cards = gsap.utils.toArray<HTMLElement>('.anthropo-stack-card');
-    const dots = gsap.utils.toArray<HTMLElement>('.stack-dot');
+    if (!track || !viewport) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.anthropometric-stack-section',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2.5,
-        snap: {
-          snapTo: [0, 0.5, 1], // Snaps perfectly to Card 1, Card 2, or Card 3
-          duration: { min: 0.8, max: 1.5 },
-          delay: 0.1,
-          ease: 'power3.inOut'
-        }
-      }
+    const cards = gsap.utils.toArray<HTMLElement>('.anthropo-slide-card');
+    const cardWidth = cards[0].offsetWidth + 24; // width + gap
+    let currentIndex = 0;
+    const totalCards = cards.length;
+
+    const goToSlide = (index: number) => {
+      if (index < 0) index = totalCards - 1;
+      if (index >= totalCards) index = 0;
+      currentIndex = index;
+
+      gsap.to(track, {
+        x: -currentIndex * cardWidth,
+        duration: 1.2,
+        ease: 'power3.inOut'
+      });
+    };
+
+    // Auto Slide
+    let autoSlide = setInterval(() => {
+      goToSlide(currentIndex + 1);
+    }, 4000);
+
+    const resetTimer = () => {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 4000);
+    };
+
+    nextBtn?.addEventListener('click', () => {
+      goToSlide(currentIndex + 1);
+      resetTimer();
     });
 
-    // Setup: Card 1 is visible. Cards 2 and 3 are hidden below.
-    gsap.set('.card-1', { transformOrigin: 'center center' });
-    gsap.set('.card-2', { y: '100%', opacity: 1, transformOrigin: 'center center' });
-    gsap.set('.card-3', { y: '100%', opacity: 1, transformOrigin: 'center center' });
+    prevBtn?.addEventListener('click', () => {
+      goToSlide(currentIndex - 1);
+      resetTimer();
+    });
 
-    // Step 1: Card 1 fades and shrinks back, Card 2 slides up to cover it cleanly
-    tl.to('.card-1', {
-      scale: 0.8,
+    // Reveal animations
+    gsap.from('.anthropo-slide-card', {
+      x: 100,
       opacity: 0,
+      stagger: 0.2,
       duration: 1,
-      ease: 'power2.inOut'
-    }, "step1")
-      .to('.card-2', {
-        y: '0%',
-        duration: 1,
-        ease: 'power2.inOut'
-      }, "step1")
-      .call(() => {
-        dots.forEach(d => d.classList.remove('active'));
-        if (dots[1]) dots[1].classList.add('active');
-      }, [], 0.5);
-
-    // Step 2: Card 2 fades and shrinks back, Card 3 slides up to cover it cleanly
-    tl.to('.card-2', {
-      scale: 0.8,
-      opacity: 0,
-      duration: 1,
-      ease: 'power2.inOut'
-    }, "step2")
-      .to('.card-3', {
-        y: '0%',
-        duration: 1,
-        ease: 'power2.inOut'
-      }, "step2")
-      .call(() => {
-        dots.forEach(d => d.classList.remove('active'));
-        if (dots[2]) dots[2].classList.add('active');
-      }, [], 1.5);
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.anthropometric-slider-section',
+        start: 'top 70%'
+      }
+    });
   }
 
   private initCircularProgressAnimations(): void {

@@ -1,0 +1,185 @@
+.not-found-wrapper {
+  background-color: #020617; /* Deep Obsidian */
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ambient Background */
+.not-found-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+}
+
+.ambient-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.ambient-glow.g1 {
+  top: -10%; right: -10%;
+  background: radial-gradient(circle, #10b981 0%, transparent 70%);
+}
+
+.ambient-glow.g2 {
+  bottom: -10%; left: -10%;
+  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+}
+
+.mesh-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.4;
+}
+
+/* Error Card */
+.error-card-v6 {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  animation: cardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card-glass-shine {
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  transform: skewX(-25deg);
+  animation: shineLoop 8s infinite linear;
+}
+
+@keyframes shineLoop {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+/* Typography */
+.error-code {
+  font-size: 10rem;
+  letter-spacing: -5px;
+  background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  text-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.error-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulse-dot 1s infinite alternate;
+}
+
+@keyframes pulse-dot {
+  from { opacity: 0.4; }
+  to { opacity: 1; box-shadow: 0 0 10px #ef4444; }
+}
+
+.pulse-fast {
+  animation: pulse-simple 1.5s infinite;
+}
+
+@keyframes pulse-simple {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Buttons */
+.btn-premium-emerald-v6 {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  border: none;
+  padding: 16px 36px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.2);
+}
+
+.btn-premium-emerald-v6:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 20px 45px rgba(16, 185, 129, 0.3);
+  color: #fff;
+}
+
+.btn-premium-outline-v6 {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 16px 36px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-premium-outline-v6:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fff;
+  transform: translateY(-5px);
+  color: #fff;
+}
+
+.max-w-600 { max-width: 600px; }
+.letter-spacing-1 { letter-spacing: 1px; }
+.letter-spacing-2 { letter-spacing: 2px; }
+.fw-950 { font-weight: 950; }
+
+@media (max-width: 768px) {
+  .error-code { font-size: 7rem; }
+  .error-card-v6 { padding: 30px 20px !important; }
+  .display-5 { font-size: 1.8rem; }
+  .lead { font-size: 1rem; }
+  .btn-premium-emerald-v6, .btn-premium-outline-v6 { width: 100%; padding: 14px 20px; }
+}
