@@ -1,4 +1,12 @@
-<main class="product-detail-page-v6" *ngIf="product">
+<!-- LOADING STATE -->
+<div class="product-loading-v6 d-flex align-items-center justify-content-center" *ngIf="isLoading">
+  <div class="text-center">
+    <div class="spinner-premium-v6"></div>
+    <p class="text-white text-opacity-50 mt-4 letter-spacing-2">AUTHENTICATING BIO-DATA...</p>
+  </div>
+</div>
+
+<main class="product-detail-page-v6" *ngIf="!isLoading && product">
 
   <!-- HERO: PRODUCT SHOWCASE -->
   <section class="product-hero-v6 position-relative overflow-hidden">
@@ -7,18 +15,18 @@
 
     <div class="container position-relative z-3">
       <!-- Nav/Breadcrumb -->
-      <nav class="pt-4 mb-5">
+      <nav class="pt-2 mb-3">
         <a routerLink="/shop" class="btn-back-v6">
           <i class="bi bi-arrow-left me-2"></i> Back to Collection
         </a>
       </nav>
 
-      <div class="row align-items-center g-5 min-vh-75">
+      <div class="row align-items-center g-5 product-hero-row-v6">
         <!-- Image Area -->
         <div class="col-lg-6 product-hero-visual-v6">
           <div class="product-frame-3d-v6">
             <div class="glass-reflection-v6"></div>
-            <img [src]="product.image" [alt]="product.title" class="product-img-v6">
+            <img [src]="product.image" [alt]="product.title" class="product-img-v6" onerror="this.src='assets/images/logo_mam.png'">
           </div>
         </div>
 
@@ -178,7 +186,7 @@
     <div class="container">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-none d-md-flex align-items-center gap-3">
-          <img [src]="product.image" class="sticky-thumb-v6">
+          <img [src]="product.image" class="sticky-thumb-v6" onerror="this.src='assets/images/logo_mam.png'">
           <div>
             <div class="text-white fw-900 small lh-1 mb-1">{{ product.title }}</div>
             <div class="text-emerald fw-bold x-small">₹{{ product.price }}</div>
@@ -195,7 +203,7 @@
 </main>
 
 <!-- 404 STATE -->
-<div class="not-found-v6 d-flex align-items-center justify-content-center" *ngIf="!product">
+<div class="not-found-v6 d-flex align-items-center justify-content-center" *ngIf="!isLoading && !product">
   <div class="text-center">
     <div class="display-1 text-white text-opacity-10 mb-4">404</div>
     <h2 class="text-white fw-950 mb-3">PRODUCT NOT FOUND</h2>

@@ -1,6 +1,7 @@
 <main class="contact-page-wrapper position-relative">
   <!-- Soft Atmospheric background -->
   <div class="contact-atmospheric-bg">
+    <div class="contact-grid-overlay"></div>
     <div class="hero-bg-overlay-soft"></div>
     <div class="hero-glow-blob blob-emerald"></div>
     <div class="hero-glow-blob blob-blue"></div>
@@ -15,6 +16,12 @@
       <h1 class="display-4 fw-950 text-white mb-3 tracking-tighter title-glow-soft">
         Connect With <br><span class="text-gradient-emerald">Our Mission</span>
       </h1>
+      <p class="contact-hero-sub text-white text-opacity-60 fs-5 mx-auto">For partnerships, volunteer programs, and Spirulina donation inquiries — our team responds within 24 hours.</p>
+      <div class="contact-trust-row d-flex justify-content-center gap-3 flex-wrap mt-3">
+        <div class="contact-trust-chip"><i class="bi bi-clock me-1"></i>24hr Response</div>
+        <div class="contact-trust-chip"><i class="bi bi-handshake me-1"></i>Partnership Focused</div>
+        <div class="contact-trust-chip"><i class="bi bi-shield-check me-1"></i>Mission-Driven</div>
+      </div>
 
     </div>
   </section>
@@ -80,10 +87,33 @@
               </p>
             </div>
           </div>
+
+          <!-- Quick Social Links -->
+          <div class="social-glass-card p-4">
+            <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 small">Follow the Mission</h6>
+            <div class="d-flex gap-3">
+              <a href="https://www.linkedin.com/company/a4mam" target="_blank" class="social-icon-btn linkedin">
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="https://twitter.com/a4mam" target="_blank" class="social-icon-btn twitter">
+                <i class="bi bi-twitter-x"></i>
+              </a>
+              <a href="https://www.instagram.com/a4mam" target="_blank" class="social-icon-btn instagram">
+                <i class="bi bi-instagram"></i>
+              </a>
+              <a href="https://wa.me/919642437773" target="_blank" class="social-icon-btn whatsapp">
+                <i class="bi bi-whatsapp"></i>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <!-- Right: Contact Form -->
+        <!-- Right: Contact Image + Form -->
         <div class="col-lg-7">
+          <!-- Premium Contact Image -->
+          <div class="contact-premium-image mb-4 rounded-5 overflow-hidden shadow-2xl hover-scale-soft">
+            <img src="assets/images/gallery/Contact.png" alt="A4MAM Team" class="w-100 h-auto" style="object-fit: cover; max-height: 350px;">
+          </div>
           <div class="form-premium-card p-4 position-relative">
             <div class="position-relative" style="z-index: 2;">
               <div class="d-flex align-items-center gap-3 mb-4">
@@ -117,6 +147,7 @@
                 <div class="row g-4">
                   <div class="col-md-6">
                     <div class="form-floating-modern">
+                      <i class="bi bi-person input-icon"></i>
                       <input type="text" name="name" class="modern-input" placeholder=" " id="nameInput" [(ngModel)]="formData.name" required #name="ngModel">
                       <label for="nameInput">Full Name</label>
                       <div class="input-focus-line"></div>
@@ -124,6 +155,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-modern">
+                      <i class="bi bi-envelope input-icon"></i>
                       <input type="email" name="email" class="modern-input" placeholder=" " id="emailInput" [(ngModel)]="formData.email" required #email="ngModel">
                       <label for="emailInput">Email Address</label>
                       <div class="input-focus-line"></div>
@@ -131,6 +163,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-modern">
+                      <i class="bi bi-telephone input-icon"></i>
                       <input type="text" name="phone" class="modern-input" placeholder=" " id="phoneInput" [(ngModel)]="formData.phone">
                       <label for="phoneInput">Phone Number</label>
                       <div class="input-focus-line"></div>
@@ -138,6 +171,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating-modern">
+                      <i class="bi bi-building input-icon"></i>
                       <input type="text" name="organization" class="modern-input" placeholder=" " id="orgInput" [(ngModel)]="formData.organization">
                       <label for="orgInput">Organization (Optional)</label>
                       <div class="input-focus-line"></div>
@@ -145,6 +179,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-floating-modern">
+                      <i class="bi bi-chat-dots input-icon"></i>
                       <input type="text" name="subject" class="modern-input" placeholder=" " id="subjectInput" [(ngModel)]="formData.subject" required>
                       <label for="subjectInput">Subject of Inquiry</label>
                       <div class="input-focus-line"></div>
@@ -152,9 +187,11 @@
                   </div>
                   <div class="col-12">
                     <div class="form-floating-modern">
-                      <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput" rows="5" [(ngModel)]="formData.message" required #message="ngModel"></textarea>
+                      <i class="bi bi-pencil input-icon"></i>
+                      <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput" rows="5" [(ngModel)]="formData.message" (ngModelChange)="countChars($event)" required #message="ngModel"></textarea>
                       <label for="messageInput">How can we collaborate?</label>
                       <div class="input-focus-line"></div>
+                      <span class="char-counter text-white text-opacity-30 small">0 / 500</span>
                     </div>
                   </div>
 
@@ -167,10 +204,55 @@
                       </span>
                       <i *ngIf="!isSubmitting" class="bi bi-send-fill fs-5"></i>
                     </button>
+                    <p class="text-white text-opacity-30 text-center small mt-3"><i class="bi bi-lock-fill me-1"></i>Encrypted & Secure · We never share your information</p>
                   </div>
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT HAPPENS NEXT SECTION -->
+  <section class="contact-process-section py-5 position-relative z-3">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h3 class="fw-900 text-white">What Happens <span class="text-gradient-emerald">Next?</span></h3>
+        <p class="text-white text-opacity-50 small">After you reach out, here's our response protocol</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
+          <div class="cp-step-card p-4 text-center">
+            <div class="cp-step-num">01</div>
+            <div class="cp-step-icon mb-3"><i class="bi bi-envelope-open-fill"></i></div>
+            <h6 class="text-white fw-800 mb-2">We Receive</h6>
+            <p class="text-white text-opacity-50 x-small mb-0">Your message reaches our partnership team instantly with a system-generated reference ID.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
+          <div class="cp-step-card p-4 text-center">
+            <div class="cp-step-num">02</div>
+            <div class="cp-step-icon mb-3"><i class="bi bi-person-check-fill"></i></div>
+            <h6 class="text-white fw-800 mb-2">Team Reviews</h6>
+            <p class="text-white text-opacity-50 x-small mb-0">Our mission team evaluates your inquiry for partnership, donation, or volunteer opportunity.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
+          <div class="cp-step-card p-4 text-center">
+            <div class="cp-step-num">03</div>
+            <div class="cp-step-icon mb-3"><i class="bi bi-telephone-fill"></i></div>
+            <h6 class="text-white fw-800 mb-2">We Connect</h6>
+            <p class="text-white text-opacity-50 x-small mb-0">Within 24 hours, a designated mission coordinator reaches out via your preferred channel.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
+          <div class="cp-step-card p-4 text-center">
+            <div class="cp-step-num">04</div>
+            <div class="cp-step-icon mb-3"><i class="bi bi-heart-pulse-fill"></i></div>
+            <h6 class="text-white fw-800 mb-2">Mission Begins</h6>
+            <p class="text-white text-opacity-50 x-small mb-0">Together, we define how your support translates into measurable nutrition impact.</p>
           </div>
         </div>
       </div>

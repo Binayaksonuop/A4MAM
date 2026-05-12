@@ -5,15 +5,50 @@
   overflow-x: hidden;
 }
 
+/* --- LOADING STATE --- */
+.product-loading-v6 {
+  position: fixed;
+  inset: 0;
+  background: #020617;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.product-loading-v6.ng-star-inserted {
+  opacity: 1;
+}
+
+.spinner-premium-v6 {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(16, 185, 129, 0.1);
+  border-top-color: #10b981;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin-v6 1s linear infinite;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+@keyframes spin-v6 {
+  to { transform: rotate(360deg); }
+}
+
+.letter-spacing-2 { letter-spacing: 2px; }
+
 /* --- HERO --- */
 .product-hero-v6 {
-  min-height: 100vh;
+  min-height: calc(100vh - 90px) !important;
   display: flex;
   align-items: center;
-  padding-top: 100px;
-  padding-bottom: 80px;
+  padding-top: 80px !important;
+  padding-bottom: 60px !important;
   position: relative;
   z-index: 5;
+}
+
+.product-hero-row-v6 {
+  min-height: 620px;
+  align-items: center;
 }
 
 .hero-mesh-glow-v6 {
@@ -58,23 +93,25 @@
   perspective: 2000px;
   display: flex;
   justify-content: center;
+  margin-top: 0 !important;
 }
 
 .product-frame-3d-v6 {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 620px;
   aspect-ratio: 1;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 60px;
+  border-radius: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 28px;
   transform-style: preserve-3d;
   box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
   will-change: transform;
+  margin-top: 0 !important;
 }
 
 .glass-reflection-v6 {
@@ -86,8 +123,8 @@
 }
 
 .product-img-v6 {
-  max-width: 85%;
-  max-height: 85%;
+  max-width: 95%;
+  max-height: 95%;
   object-fit: contain;
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
   transform: translateZ(50px);
@@ -98,6 +135,7 @@
 .product-info-reveal-v6 {
   position: relative;
   z-index: 10;
+  margin-top: 0 !important;
 }
 
 .glass-chip-v6 {

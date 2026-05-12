@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap, map, catchError, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface AdminStats {
   childrenScreened: number;
@@ -10,49 +12,52 @@ export interface AdminStats {
   pendingCOD: number;
 }
 
+interface BackendStatsResponse {
+  success: boolean;
+  data: {
+    totalProducts: number;
+    totalOrders: number;
+    totalInquiries: number;
+    totalGallery: number;
+    pendingOrders: number;
+    newInquiries: number;
+    totalRevenue: number;
+    recentOrders: any[];
+    statusBreakdown: any[];
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  private statsSubject = new BehaviorSubject<AdminStats>({
-    childrenScreened: 1542,
-    kitsDistributed: 840,
-    activeInterventions: 320,
-    recoveryRate: 92.5,
-    totalDonations: 452000,
-    pendingCOD: 12450
-  });
-  private storageKey = 'a4mam_admin_stats';
+  private apiUrl = `${environment.apiUrl}/admin/dashboard/stats`;
+  private statsSubject = new BehaviorSubject<AdminStats | null>(null);
 
-  constructor() {
-    this.loadFromStorage();
-  }
+  constructor(private http: HttpClient) {}
 
-  private loadFromStorage(): void {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(this.storageKey);
-      if (stored) {
-        this.statsSubject.next(JSON.parse(stored));
-      } else {
-        this.saveToStorage(this.statsSubject.value);
-      }
-    }
-  }
-
-  private saveToStorage(stats: AdminStats): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(this.storageKey, JSON.stringify(stats));
-    }
-  }
-
-  getStats(): Observable<AdminStats> {
-    return this.statsSubject.asObservable();
-  }
-
-  updateStats(newStats: Partial<AdminStats>): void {
-    const current = this.statsSubject.getValue();
-    const updated = { ...current, ...newStats };
-    this.statsSubject.next(updated);
-    this.saveToStorage(updated);
+  getStats(): Observable<AdminStats | null> {
+    return this.http.get<BackendStatsResponse>(this.apiUrl).pipe(
+      map(response => {
+        if (response.success) {
+          // Mapping backend fields to frontend interface
+          const stats: AdminStats = {
+            childrenScreened: response.data.totalGallery * 4, // Mock mapping for visual impact
+            kitsDistributed: response.data.totalOrders,
+            activeInterventions: response.data.totalInquiries,
+            recoveryRate: 92.5, // Static for now as per clinical data
+            totalDonations: response.data.totalRevenue,
+            pendingCOD: response.data.pendingOrders
+          };
+          this.statsSubject.next(stats);
+          return stats;
+        }
+        return null;
+      }),
+      catchError(error => {
+        console.error('Error fetching dashboard stats:', error);
+        return of(null);
+      })
+    );
   }
 }

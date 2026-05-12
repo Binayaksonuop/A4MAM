@@ -236,28 +236,43 @@
 
 /* === How It Works === */
 .process-card {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px; position: relative;
-  transition: all 0.3s ease; overflow: hidden;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 2;
+  padding: 24px;
 }
 .process-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(16, 185, 129, 0.3);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  transform: translateY(-8px);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(16,185,129,0.1);
 }
 
 .process-step-num {
-  position: absolute; top: 12px; right: 16px;
-  font-size: 2.5rem; font-weight: 950; color: rgba(255,255,255,0.04);
-  line-height: 1; font-family: monospace;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 2.5rem;
+  font-weight: 950;
+  color: rgba(255,255,255,0.05);
+  line-height: 1;
+  font-family: monospace;
 }
 
 .process-icon {
-  width: 55px; height: 55px; border-radius: 14px;
-  background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; color: #10b981; margin: 0 auto;
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #34d399;
+  margin: 0 auto 16px;
 }
 
 /* === Trust Section === */
@@ -291,3 +306,276 @@
 .bank-value { color: #fff; font-size: 0.9rem; font-weight: 700; }
 
 .font-monospace { font-family: 'JetBrains Mono', 'Fira Code', monospace !important; }
+
+/* === New Donate Features === */
+.donate-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(245,158,11,0.03) 50px, rgba(245,158,11,0.03) 51px),
+    repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(245,158,11,0.03) 50px, rgba(245,158,11,0.03) 51px);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.donate-img-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(251, 191, 36, 0.08) 50%, transparent 100%);
+  animation: scan 4s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(50%); }
+}
+
+.donate-live-badge {
+  background: rgba(15,23,42,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 8px 20px;
+  backdrop-filter: blur(10px);
+}
+
+.donate-live-pulse {
+  width: 8px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fbbf24;
+  animation: pulseGold 1.5s infinite alternate;
+}
+
+/* Impact Calculator */
+.impact-calc-card {
+  background: rgba(15,23,42,0.6);
+  border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 40px;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+
+.calc-glow-orb {
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+  filter: blur(120px);
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.calc-slider-wrap {
+  width: 100%;
+}
+
+.calc-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 20px rgba(251,191,36,0.5);
+  cursor: pointer;
+}
+
+.calc-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 20px rgba(251,191,36,0.5);
+  cursor: pointer;
+  border: none;
+}
+
+.calc-slider-ticks span {
+  font-size: 0.7rem;
+}
+
+.calc-impact-box {
+  background: rgba(15,23,42,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 20px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.calc-impact-box:hover {
+  transform: translateY(-5px);
+}
+
+.calc-impact-box.children:hover {
+  border-color: rgba(16,185,129,0.2);
+}
+.calc-impact-box.children .calc-box-icon {
+  color: #10b981;
+}
+
+.calc-impact-box.days:hover {
+  border-color: rgba(245,158,11,0.2);
+}
+.calc-impact-box.days .calc-box-icon {
+  color: #fbbf24;
+}
+
+.calc-impact-box.meals:hover {
+  border-color: rgba(59,130,246,0.2);
+}
+.calc-impact-box.meals .calc-box-icon {
+  color: #60a5fa;
+}
+
+.calc-impact-box.recovery:hover {
+  border-color: rgba(168,85,247,0.2);
+}
+.calc-impact-box.recovery .calc-box-icon {
+  color: #a855f7;
+}
+
+.calc-box-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calc-box-num {
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+.calc-box-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Process Connector Arrow */
+.process-connector-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.process-connector-arrow i {
+  font-size: 2rem;
+  color: rgba(255,255,255,0.15);
+  transform: scaleX(1.2);
+}
+
+/* Fund Progress */
+.fund-progress-card {
+  background: rgba(15,23,42,0.5);
+  border: 1px solid rgba(245,158,11,0.12);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+}
+
+.fund-live-dot {
+  width: 8px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fbbf24;
+  animation: pulseGold 1.5s infinite alternate;
+}
+
+.fund-progress-bar-wrap {
+  position: relative;
+  height: 12px;
+}
+
+.fund-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: visible;
+}
+
+.fund-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #10b981, #fbbf24);
+  position: relative;
+}
+
+.fund-progress-glow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #fbbf24;
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: pulseGold 1.5s infinite alternate;
+}
+
+.fund-progress-marker {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fund-marker-dot {
+  width: 14px;
+  height: 14px;
+  background: #fbbf24;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.fund-marker-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fbbf24;
+  margin-bottom: 4px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+  .spirulina-card-inner-v2 {
+    height: 260px !important;
+  }
+}
+

@@ -27,11 +27,14 @@
       <div class="nav-item-v6" [class.active]="activeAdminPanel === 'products'" (click)="openAdminPanel('products')">
         <i class="bi bi-box-seam"></i> <span>Product Management</span>
       </div>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'orders'" (click)="openAdminPanel('orders')">
+        <i class="bi bi-cart-check-fill"></i> <span>Mission Orders</span>
+      </div>
       <div class="nav-item-v6" [class.active]="activeAdminPanel === 'inquiries'" (click)="openAdminPanel('inquiries')">
         <i class="bi bi-chat-dots-fill"></i> <span>Inquiries</span>
       </div>
-      <div class="nav-item-v6 opacity-50" style="cursor: not-allowed;">
-        <i class="bi bi-gear-fill"></i> <span>System Settings <i class="bi bi-lock-fill ms-1"></i></span>
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'settings'" (click)="openAdminPanel('settings')">
+        <i class="bi bi-gear-fill"></i> <span>System Settings</span>
       </div>
     </nav>
 
@@ -70,7 +73,7 @@
           </div>
           <div class="status-badge-v6 orders" [title]="orders.length + ' Total Orders'">
             <i class="bi bi-cart-fill"></i>
-            <span>{{ (orders | filterByStatus:'Pending').length }} PENDING</span>
+            <span>{{ (orders | filterByStatus:'Processing').length }} NEW ORDERS</span>
           </div>
         </div>
 
@@ -80,10 +83,10 @@
         </div>
         
         <div class="admin-profile-pill d-flex align-items-center gap-3 px-3 py-2 rounded-pill shadow-lg">
-          <div class="profile-avatar-v6">TP</div>
+          <div class="profile-avatar-v6">{{ adminName.substring(0,2).toUpperCase() }}</div>
           <div class="d-none d-sm-block">
-            <div class="text-white fw-bold x-small lh-1">Trishna Priyadarshini</div>
-            <div class="text-emerald x-small fw-bold opacity-50">Chief Admin</div>
+            <div class="text-white fw-bold x-small lh-1">{{ adminName }}</div>
+            <div class="text-emerald x-small fw-bold opacity-50">{{ adminRole }}</div>
           </div>
         </div>
       </div>
@@ -107,37 +110,37 @@
       <!-- Top Stats Row -->
       <div class="row g-4 mb-5 reveal-dash" *ngIf="stats">
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass emerald p-3 h-100 text-center">
             <div class="stat-value counter-v6 text-emerald" [attr.data-target]="stats.childrenScreened">0</div>
             <div class="stat-label">Children Screened</div>
           </div>
         </div>
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass blue p-3 h-100 text-center">
             <div class="stat-value counter-v6 text-blue" [attr.data-target]="stats.kitsDistributed">0</div>
             <div class="stat-label">Kits Distributed</div>
           </div>
         </div>
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass amber p-3 h-100 text-center">
             <div class="stat-value counter-v6 text-amber" [attr.data-target]="stats.activeInterventions">0</div>
             <div class="stat-label">Active Interventions</div>
           </div>
         </div>
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass violet p-3 h-100 text-center">
             <div class="stat-value counter-v6 text-violet d-inline-block" [attr.data-target]="stats.recoveryRate">0</div><span class="text-violet fs-4 fw-bold">%</span>
             <div class="stat-label">Recovery Rate</div>
           </div>
         </div>
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass white p-3 h-100 text-center">
             <div class="text-white fs-4 fw-bold d-inline-block">₹</div><div class="stat-value counter-v6 text-white d-inline-block" [attr.data-target]="stats.totalDonations">0</div>
             <div class="stat-label">Total Donations</div>
           </div>
         </div>
         <div class="col-xl-2 col-md-4 col-sm-6">
-          <div class="stat-card-glass p-3 h-100 text-center">
+          <div class="stat-card-glass danger p-3 h-100 text-center">
             <div class="stat-value counter-v6 text-danger" [attr.data-target]="stats.pendingCOD">0</div>
             <div class="stat-label">Pending COD</div>
           </div>
@@ -165,6 +168,7 @@
           <div class="panel-glass p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <h5 class="fw-900 text-white mb-0">Recent Activity Log</h5>
+              <button class="btn btn-sm btn-outline-emerald" (click)="openAdminPanel('orders')">View All Orders</button>
             </div>
             <div class="table-responsive">
               <table class="table table-dark table-hover table-borderless align-middle activity-table-v6">
@@ -182,8 +186,8 @@
                     <td><span class="text-white text-opacity-50 font-monospace">{{ ord.id }}</span></td>
                     <td class="text-white fw-bold">{{ ord.type }}</td>
                     <td>₹{{ ord.amount | number }}</td>
-                    <td><span class="badge" [class.bg-emerald-subtle]="ord.paymentMethod === 'UPI'"
-                        [class.bg-blue-subtle]="ord.paymentMethod === 'COD'">{{ ord.paymentMethod }}</span></td>
+                    <td><span class="badge" [class.bg-emerald-subtle]="ord.paymentMethod === 'upi'"
+                        [class.bg-blue-subtle]="ord.paymentMethod === 'cod'">{{ ord.paymentMethod.toUpperCase() }}</span></td>
                     <td><i class="bi bi-check-circle-fill text-emerald me-1"></i> {{ ord.status }}</td>
                   </tr>
                 </tbody>
@@ -445,6 +449,121 @@
       </div>
     </div>
 
+    <!-- ORDERS PANEL -->
+    <div *ngIf="activeAdminPanel === 'orders'" class="section-fade-in">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <div class="badge-premium-emerald-outline mb-2"><span class="pulse-dot-v6"></span> LIVE ORDERS</div>
+          <h2 class="fw-900 text-white mb-0">Mission Orders</h2>
+        </div>
+        <button class="btn btn-outline-emerald d-flex align-items-center gap-2" (click)="refreshDashboardData()">
+          <i class="bi bi-arrow-clockwise"></i> Sync Latest
+        </button>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="order-filter-tabs mb-4">
+        <button class="order-filter-tab" [class.active]="orderFilter === 'active'" (click)="orderFilter = 'active'">
+          <i class="bi bi-lightning-charge-fill"></i> Active
+          <span class="tab-count">{{ (orders | filterByStatus:'Processing').length + (orders | filterByStatus:'Confirmed').length + (orders | filterByStatus:'Shipped').length }}</span>
+        </button>
+        <button class="order-filter-tab" [class.active]="orderFilter === 'delivered'" (click)="orderFilter = 'delivered'">
+          <i class="bi bi-check2-all"></i> Delivered
+          <span class="tab-count delivered">{{ (orders | filterByStatus:'Delivered').length }}</span>
+        </button>
+        <button class="order-filter-tab" [class.active]="orderFilter === 'cancelled'" (click)="orderFilter = 'cancelled'">
+          <i class="bi bi-x-circle"></i> Cancelled
+          <span class="tab-count cancelled">{{ (orders | filterByStatus:'Cancelled').length }}</span>
+        </button>
+        <button class="order-filter-tab" [class.active]="orderFilter === 'all'" (click)="orderFilter = 'all'">
+          <i class="bi bi-grid-3x3-gap-fill"></i> All Orders
+          <span class="tab-count all">{{ orders.length }}</span>
+        </button>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredOrders.length === 0" class="panel-glass p-5 text-center">
+        <i class="bi bi-inbox text-white text-opacity-20" style="font-size: 4rem;"></i>
+        <p class="text-white text-opacity-40 mt-3 mb-0">No mission orders found.</p>
+      </div>
+
+      <!-- Order Cards -->
+      <div class="d-flex flex-column gap-3">
+        <div *ngFor="let ord of filteredOrders" class="order-card-v6 panel-glass p-4">
+          <div class="row align-items-center g-3">
+
+            <!-- Left: Order Info -->
+            <div class="col-lg-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="order-avatar-v6" [class.cod]="ord.paymentMethod === 'cod'" [class.upi]="ord.paymentMethod === 'upi'">
+                  <i class="bi" [class.bi-truck]="ord.paymentMethod === 'cod'" [class.bi-phone]="ord.paymentMethod === 'upi'"></i>
+                </div>
+                <div>
+                  <div class="fw-900 text-white fs-6">{{ ord.customerName }}</div>
+                  <div class="text-white text-opacity-30 x-small font-monospace mt-1">{{ ord.id }}</div>
+                  <div class="text-white text-opacity-20 x-small">{{ ord.date | date:'dd MMM yyyy, hh:mm a' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Middle: Amount & Method -->
+            <div class="col-lg-3">
+              <div class="fw-950 text-white" style="font-size: 1.5rem;">₹{{ ord.amount | number }}</div>
+              <span class="badge rounded-pill px-3 py-1 mt-1 d-inline-block"
+                [class.order-badge-upi]="ord.paymentMethod === 'upi'"
+                [class.order-badge-cod]="ord.paymentMethod === 'cod'">
+                <i class="bi me-1" [class.bi-phone]="ord.paymentMethod === 'upi'" [class.bi-truck]="ord.paymentMethod === 'cod'"></i>
+                {{ ord.paymentMethod.toUpperCase() }}
+              </span>
+            </div>
+
+            <!-- Status Badge -->
+            <div class="col-lg-2">
+              <span class="order-status-badge"
+                [class.status-processing]="ord.status === 'Processing'"
+                [class.status-confirmed]="ord.status === 'Confirmed'"
+                [class.status-shipped]="ord.status === 'Shipped'"
+                [class.status-delivered]="ord.status === 'Delivered'"
+                [class.status-cancelled]="ord.status === 'Cancelled'">
+                <span class="status-dot"></span>
+                {{ ord.status }}
+              </span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="col-lg-3">
+              <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                <button class="btn order-action-btn confirm" (click)="updateOrderStatus(ord.id, 'Confirmed')"
+                  [disabled]="ord.status === 'Confirmed' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                  title="Confirm Order">
+                  <i class="bi bi-check-circle-fill"></i> Confirm
+                </button>
+                <button class="btn order-action-btn ship" (click)="updateOrderStatus(ord.id, 'Shipped')"
+                  [disabled]="ord.status === 'Shipped' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                  title="Mark Shipped">
+                  <i class="bi bi-truck"></i> Ship
+                </button>
+                <button class="btn order-action-btn deliver" (click)="updateOrderStatus(ord.id, 'Delivered')"
+                  [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                  title="Mark Delivered">
+                  <i class="bi bi-check2-all"></i> Deliver
+                </button>
+                <button class="btn order-action-btn cancel" (click)="updateOrderStatus(ord.id, 'Cancelled')"
+                  [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                  title="Cancel Order">
+                  <i class="bi bi-x-circle"></i>
+                </button>
+                <button class="btn order-action-btn delete-order" (click)="deleteOrder(ord.mongoId, ord.customerName)"
+                  title="Delete Order Permanently">
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- INQUIRIES PANEL -->
     <div *ngIf="activeAdminPanel === 'inquiries'" class="section-fade-in">
       <h2 class="fw-900 text-white mb-4">Inquiry Management</h2>
@@ -489,6 +608,110 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYSTEM SETTINGS PANEL -->
+    <div *ngIf="activeAdminPanel === 'settings'" class="section-fade-in">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <div class="badge-premium-emerald-outline mb-3">
+            <span class="pulse-dot-v6"></span> SYSTEM CONFIGURATION
+          </div>
+          <h1 class="display-5 fw-950 text-white mb-0">Mission <span class="text-gradient-emerald">Settings</span></h1>
+          <p class="text-white text-opacity-50 mt-2 mb-0">Configure email, payments, analytics and more.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- General Settings -->
+        <div class="col-lg-6">
+          <div class="panel-glass p-4">
+            <h5 class="fw-bold text-white mb-4"><i class="bi bi-globe me-2 text-emerald"></i>General Settings</h5>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Site Name</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" value="A4MAM - Mission Against Malnutrition">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Site URL</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" value="https://a4mam.com">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Contact Email</label>
+              <input type="email" class="form-control bg-dark text-white border-secondary" value="contact@a4mam.com">
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100">Save General Settings</button>
+          </div>
+        </div>
+
+        <!-- Email Settings -->
+        <div class="col-lg-6">
+          <div class="panel-glass p-4">
+            <h5 class="fw-bold text-white mb-4"><i class="bi bi-envelope-at me-2 text-blue"></i>Email Notifications</h5>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Host</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="smtp.gmail.com">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Port</label>
+              <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="587">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Username</label>
+              <input type="email" class="form-control bg-dark text-white border-secondary" placeholder="noreply@a4mam.org">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Password</label>
+              <input type="password" class="form-control bg-dark text-white border-secondary" placeholder="••••••••">
+            </div>
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" role="switch" checked id="emailNotifications">
+              <label class="form-check-label text-white" for="emailNotifications">Enable Email Notifications</label>
+            </div>
+            <button class="btn btn-outline-emerald w-100 mb-2">Test Email Connection</button>
+            <button class="btn btn-premium-emerald-v6 w-100">Save Email Settings</button>
+          </div>
+        </div>
+
+        <!-- Payment Settings -->
+        <div class="col-lg-6">
+          <div class="panel-glass p-4">
+            <h5 class="fw-bold text-white mb-4"><i class="bi bi-credit-card-2-front me-2 text-amber"></i>Payment Gateway</h5>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Razorpay Key ID</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="rzp_test_••••••••••••">
+            </div>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Razorpay Secret Key</label>
+              <input type="password" class="form-control bg-dark text-white border-secondary" placeholder="••••••••••••••••">
+            </div>
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" role="switch" id="testMode">
+              <label class="form-check-label text-white" for="testMode">Test Mode (Sandbox)</label>
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100">Save Payment Settings</button>
+          </div>
+        </div>
+
+        <!-- Analytics Settings -->
+        <div class="col-lg-6">
+          <div class="panel-glass p-4">
+            <h5 class="fw-bold text-white mb-4"><i class="bi bi-bar-chart-line me-2 text-violet"></i>Analytics</h5>
+            <div class="form-group-v6 mb-3">
+              <label class="text-white text-opacity-50 x-small fw-bold">Google Analytics ID</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="G-XXXXXXXXXX">
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" role="switch" checked id="gaEnabled">
+              <label class="form-check-label text-white" for="gaEnabled">Enable Google Analytics</label>
+            </div>
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" role="switch" id="anonymizeIp">
+              <label class="form-check-label text-white" for="anonymizeIp">Anonymize IP Addresses</label>
+            </div>
+            <button class="btn btn-premium-emerald-v6 w-100">Save Analytics Settings</button>
+          </div>
         </div>
       </div>
     </div>

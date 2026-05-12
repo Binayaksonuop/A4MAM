@@ -42,15 +42,16 @@ import { AuthService } from '../../../services/auth.service';
             </div>
 
             <div class="demo-creds text-center mb-4 text-white text-opacity-50 small">
-              <i class="bi bi-info-circle me-1"></i> Admin Login: <strong class="text-emerald">trishna&#64;a4conserv / admin123</strong>
+              <i class="bi bi-info-circle me-1"></i> Admin Login: <strong class="text-emerald">admin&#64;a4mam.com / Admin&#64;2026</strong>
             </div>
 
             <div class="error-inline mb-4 text-center text-danger small fw-bold" *ngIf="loginError">
               <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ loginError }}
             </div>
 
-            <button type="submit" class="btn-login-ultra w-100 py-3 rounded-pill">
-              ACCESS CLINICAL CONSOLE <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+            <button type="submit" class="btn-login-ultra w-100 py-3 rounded-pill" [disabled]="isLoading">
+              <span *ngIf="!isLoading">ACCESS CLINICAL CONSOLE <i class="bi bi-arrow-right-circle-fill ms-2"></i></span>
+              <span *ngIf="isLoading"><i class="bi bi-hourglass-split anim-spin me-2"></i> AUTHENTICATING...</span>
             </button>
           </form>
           
@@ -84,6 +85,8 @@ import { AuthService } from '../../../services/auth.service';
     .cursor-pointer { cursor: pointer; transition: color 0.3s ease; }
     .eye-toggle { color: rgba(255, 255, 255, 0.5); font-size: 1.2rem; }
     .eye-toggle:hover { color: #10b981; }
+    .anim-spin { display: inline-block; animation: spin 1.5s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   `]
 
 })
@@ -93,6 +96,7 @@ export class AdminLoginComponent implements OnInit {
   password = '';
   showPassword = false;
   loginError = '';
+  isLoading = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -119,11 +123,27 @@ export class AdminLoginComponent implements OnInit {
   }
 
   handleLogin() {
-    if (this.authService.login(this.email, this.password)) {
-      this.router.navigate(['/admin/dashboard']);
-    } else {
-      this.loginError = 'Invalid admin credentials. Access denied.';
+    if (!this.email || !this.password) {
+      this.loginError = 'Please enter both email and password.';
+      return;
     }
+
+    this.isLoading = true;
+    this.loginError = '';
+
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        if (response.success) {
+          this.router.navigate(['/admin/dashboard']);
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.loginError = err.error?.message || 'Connection failed. Please check if the backend is running.';
+        console.error('Login error:', err);
+      }
+    });
   }
 
   private animateLogin() {

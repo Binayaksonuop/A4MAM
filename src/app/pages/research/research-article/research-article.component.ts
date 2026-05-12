@@ -222,69 +222,48 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private initCycleOrbitAnimations(): void {
-    const isDesktop = window.innerWidth > 991;
-    if (!isDesktop) return; // Skip complex scroll orbit on mobile, let CSS handle stack
+    const isDesktop = window.innerWidth > 1200;
+    if (!isDesktop) return;
 
-    const section = document.querySelector('.fly-through-section');
-    const wrapper = document.querySelector('.fly-zoom-wrapper');
-    const cards = gsap.utils.toArray<HTMLElement>('.fly-card');
+    const section = document.querySelector('.cycle-orbit-premium-section');
+    const cards = gsap.utils.toArray<HTMLElement>('.orbit-card-ultra');
 
-    if (!section || !wrapper || !cards.length) return;
+    if (!section || !cards.length) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2.5, // super smooth heavy scrubbing
-        snap: {
-          snapTo: [0, 1], // Snaps to fully scattered or fully assembled
-          duration: { min: 0.8, max: 2 },
-          delay: 0.1,
-          ease: 'power3.inOut'
-        }
-      }
-    });
-
-    // Set cards far back in 3D space, scattered outward, and invisible
+    // Smooth reveal animation for cards
     cards.forEach((card, i) => {
-      // Alternate starting positions to make them fly from all corners
-      const randomX = (i % 2 === 0 ? -1 : 1) * gsap.utils.random(500, 1000);
-      const randomY = (i < 3 ? -1 : 1) * gsap.utils.random(300, 800);
-
-      gsap.set(card, {
-        scale: 0.1,
-        z: -1500,
-        x: randomX,
-        y: randomY,
-        rotationZ: gsap.utils.random(-60, 60),
-        rotationX: gsap.utils.random(-45, 45),
-        rotationY: gsap.utils.random(-45, 45),
-        opacity: 0
+      gsap.set(card, { opacity: 0, scale: 0.6 });
+      
+      gsap.to(card, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        delay: i * 0.15,
+        ease: 'back.out(1.4)',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 70%'
+        }
       });
     });
 
-    // 1. Gently scale up the entire wrapper to give a feeling of flying INTO the scene
-    tl.to(wrapper, {
-      scale: 1.2,
-      duration: 1,
-      ease: 'none'
-    }, 0);
+    // Add mouse tracking for glow effects
+    this.initMouseTrackingEffects();
+  }
 
-    // 2. Pull all cards forward into their perfect absolute positions (joining together)
-    tl.to(cards, {
-      scale: 1,
-      z: 0,
-      x: 0,
-      y: 0,
-      rotationZ: 0,
-      rotationX: 0,
-      rotationY: 0,
-      opacity: 1,
-      stagger: 0.05,
-      duration: 1,
-      ease: 'power3.out'
-    }, 0);
+  private initMouseTrackingEffects(): void {
+    const cards = gsap.utils.toArray<HTMLElement>('.orbit-card-ultra');
+    
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
+      });
+    });
   }
 
   private initStatCounters(): void {

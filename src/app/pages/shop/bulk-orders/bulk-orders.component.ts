@@ -345,36 +345,44 @@ export class BulkOrdersComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.loadingText = 'Routing to Mission Partnerships Team...';
-    }, 2000);
-
-    setTimeout(() => {
-      const result = this.inquiryService.addInquiry({
+      
+      const inquiryData = {
         name: this.formData.contactPerson,
         email: this.formData.workEmail,
         organization: this.formData.orgName,
         message: `[${this.formData.category}] ${this.formData.details}`,
         type: 'Bulk Order'
-      });
+      };
 
-      this.isSubmitting = false;
-      this.isSuccess = true;
-      this.referenceId = result.id;
-      
-      setTimeout(() => {
-        gsap.fromTo('.success-state-modern', 
-          { opacity: 0, scale: 0.95, y: 10 }, 
-          { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power2.out' }
-        );
-        gsap.fromTo('.success-icon-wrap',
-          { scale: 0.5, opacity: 0, rotation: -30 },
-          { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.5)', delay: 0.1 }
-        );
-        gsap.fromTo('.reference-badge',
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.5, delay: 0.4 }
-        );
-      }, 50);
-    }, 3200);
+      this.inquiryService.addInquiry(inquiryData).subscribe({
+        next: (response: any) => {
+          if (response.success) {
+            this.isSubmitting = false;
+            this.isSuccess = true;
+            this.referenceId = response.data.referenceId || response.data._id;
+            
+            setTimeout(() => {
+              gsap.fromTo('.success-state-modern', 
+                { opacity: 0, scale: 0.95, y: 10 }, 
+                { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+              );
+              gsap.fromTo('.success-icon-wrap',
+                { scale: 0.5, opacity: 0, rotation: -30 },
+                { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.5)', delay: 0.1 }
+              );
+              gsap.fromTo('.reference-badge',
+                { opacity: 0, y: 10 },
+                { opacity: 1, y: 0, duration: 0.5, delay: 0.4 }
+              );
+            }, 50);
+          }
+        },
+        error: (err: any) => {
+          this.isSubmitting = false;
+          alert(err.error?.message || 'Failed to transmit institutional mission. Please check connection.');
+        }
+      });
+    }, 2500);
   }
 
   resetForm() {

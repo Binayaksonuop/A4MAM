@@ -20,6 +20,7 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
   errorMessage: string | null = null;
   activePlans: DonationPlan[] = [];
   private subscription: Subscription | null = null;
+  calcAmount: number = 1000;
 
   constructor(
     private cartService: CartService, 
@@ -56,6 +57,38 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
+      });
+
+
+
+      // STATS COUNT-UP
+      const statNums = document.querySelectorAll('.stat-count-animate');
+      statNums.forEach((el: any) => {
+        const target = parseInt(el.getAttribute('data-target') || '0', 10);
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target, duration: 2, ease: 'power2.out',
+          scrollTrigger: { trigger: '.impact-stats-bar', start: 'top 85%', once: true },
+          onUpdate: () => { el.textContent = prefix + Math.round(obj.val).toLocaleString('en-IN') + suffix; }
+        });
+      });
+
+      // FUND PROGRESS BAR animate on scroll
+      gsap.fromTo('.fund-progress-fill',
+        { width: '0%' },
+        { width: '36.85%', duration: 2.5, ease: 'power3.out',
+          scrollTrigger: { trigger: '.fund-progress-section', start: 'top 80%', once: true } }
+      );
+
+      // PROCESS CARDS scroll reveal
+      gsap.utils.toArray('.process-card').forEach((card: any, i: number) => {
+        gsap.fromTo(card,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: i * 0.1,
+            scrollTrigger: { trigger: '.how-it-works-section', start: 'top 80%', once: true } }
+        );
       });
     });
   }
@@ -100,5 +133,40 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
       option: 'Donation'
     });
     this.router.navigate(['/checkout']);
+  }
+
+  get calcChildrenFed(): number {
+    return Math.floor(this.calcAmount / 250);
+  }
+
+  get calcDaysOfNutrition(): number {
+    return this.calcChildrenFed * 30;
+  }
+
+  get calcMealsProvided(): number {
+    return this.calcChildrenFed;
+  }
+
+  get calcRecoveryPrograms(): string {
+    return (this.calcAmount / 1500).toFixed(2);
+  }
+
+  scrollToTiers() {
+    const tiersSection = document.querySelector('.donate-tiers-section');
+    if (tiersSection) {
+      tiersSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  onCalcAmountChange(value: string) {
+    const numValue = parseInt(value, 10);
+    if (!isNaN(numValue)) {
+      this.calcAmount = Math.max(100, Math.min(50000, numValue));
+    }
+  }
+
+  donateCalcAmount() {
+    this.customAmount = this.calcAmount;
+    this.processCustomDonation();
   }
 }

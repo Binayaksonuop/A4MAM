@@ -199,8 +199,8 @@
 
 .form-floating-modern label {
   position: absolute;
-  top: 14px; left: 16px;
-  color: rgba(255, 255, 255, 0.5);
+  top: 14px; left: 44px;
+  color: rgba(255,255,255,0.5);
   font-size: 0.95rem;
   transition: all 0.3s ease;
   pointer-events: none;
@@ -284,6 +284,235 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* --- NEW CONTACT PAGE FEATURES --- */
+
+/* Contact Grid Overlay */
+.contact-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image:
+    linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* Contact Hero Subtitle */
+.contact-hero-sub {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contact Trust Chips */
+.contact-trust-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-trust-chip:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16,185,129,0.3);
+  color: rgba(255,255,255,0.9);
+}
+
+/* Social Glass Card */
+.social-glass-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Social Icon Buttons */
+.social-icon-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon-btn:hover {
+  transform: scale(1.15);
+  color: white;
+}
+
+.social-icon-btn.linkedin:hover {
+  border-color: #0077b5;
+  color: #0077b5;
+  box-shadow: 0 0 20px rgba(0,119,181,0.3);
+}
+
+.social-icon-btn.twitter:hover {
+  border-color: #1da1f2;
+  color: #1da1f2;
+  box-shadow: 0 0 20px rgba(29,161,242,0.3);
+}
+
+.social-icon-btn.instagram:hover {
+  border-color: #e1306c;
+  color: #e1306c;
+  box-shadow: 0 0 20px rgba(225,48,108,0.3);
+}
+
+.social-icon-btn.whatsapp:hover {
+  border-color: #25d366;
+  color: #25d366;
+  box-shadow: 0 0 20px rgba(37,211,102,0.3);
+}
+
+/* Input Icon */
+.form-floating-modern .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 22px;
+  color: rgba(255,255,255,0.4);
+  font-size: 1rem;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.form-floating-modern .modern-input:focus ~ .input-icon,
+.form-floating-modern .modern-input:not(:placeholder-shown) ~ .input-icon {
+  top: 14px;
+  font-size: 0.85rem;
+  color: #34d399;
+}
+
+.form-floating-modern .modern-input {
+  padding-left: 44px;
+}
+
+/* Character Counter */
+.form-floating-modern .char-counter {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 0.7rem;
+}
+
+/* Shimmer Submit Button */
+.btn-submit-modern {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit-modern::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  animation: shimmerBtn 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmerBtn {
+  0% { left: -150%; }
+  40%, 100% { left: 200%; }
+}
+
+/* Process Steps Section */
+.cp-step-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 28px;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.cp-step-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(16,185,129,0.2);
+  background: rgba(255,255,255,0.03);
+}
+
+.cp-step-num {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981;
+  color: #020617;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: 900;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cp-step-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  border-radius: 18px;
+  background: rgba(16,185,129,0.1);
+  color: #10b981;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-reveal-contact {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Premium Contact Image */
+.contact-premium-image {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-premium-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.2) 0%, transparent 60%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.contact-premium-image img {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.contact-premium-image:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
 /* Responsive Overrides */
 @media (max-width: 768px) {
   .contact-hero h1 {
@@ -291,5 +520,8 @@
   }
   .office-premium-card, .form-premium-card {
     padding: 24px !important;
+  }
+  .contact-premium-image img {
+    max-height: 250px !important;
   }
 }

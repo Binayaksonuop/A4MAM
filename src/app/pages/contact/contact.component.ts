@@ -55,35 +55,57 @@ export class ContactComponent implements AfterViewInit {
       yoyo: true,
       ease: 'sine.inOut'
     });
+
+    // PROCESS STEPS SCROLL REVEAL (new)
+    gsap.utils.toArray('.scroll-reveal-contact').forEach((el: any, i: number) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+          delay: i * 0.12,
+          scrollTrigger: { trigger: '.contact-process-section', start: 'top 80%', once: true }
+        }
+      );
+    });
   }
 
-  async onSubmit() {
+  countChars(value: string) {
+    const counter = document.querySelector('.char-counter');
+    if (counter) counter.textContent = `${value.length} / 500`;
+  }
+
+  onSubmit() {
+    if (this.isSubmitting) return;
     this.isSubmitting = true;
     this.error = false;
     this.errorMessage = '';
 
-    // Simulate network delay for premium loading state
-    setTimeout(() => {
-      try {
-        const result = this.inquiryService.addInquiry({
-          name: this.formData.name,
-          email: this.formData.email,
-          phone: this.formData.phone,
-          organization: this.formData.organization,
-          message: this.formData.subject ? `[${this.formData.subject}] ${this.formData.message}` : this.formData.message,
-          type: 'Contact'
-        });
-        
-        this.referenceId = result.id;
+    const inquiryData = {
+      name: this.formData.name,
+      email: this.formData.email,
+      phone: this.formData.phone,
+      organization: this.formData.organization,
+      subject: this.formData.subject,
+      message: this.formData.message,
+      type: 'Contact'
+    };
+
+    this.inquiryService.addInquiry(inquiryData).subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.referenceId = response.data.referenceId || response.data._id;
+          this.submitted = true;
+          this.animateSuccess();
+          this.resetForm();
+        }
         this.isSubmitting = false;
-        this.submitted = true;
-        this.animateSuccess();
-      } catch (err) {
+      },
+      error: (err: any) => {
         this.isSubmitting = false;
         this.error = true;
-        this.errorMessage = 'Failed to submit inquiry. Please try again.';
+        this.errorMessage = err.error?.message || 'Mission protocols failed to transmit. Please check your secure connection.';
       }
-    }, 1200);
+    });
   }
 
   private animateSuccess() {

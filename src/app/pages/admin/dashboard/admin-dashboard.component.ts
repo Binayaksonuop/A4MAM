@@ -35,7 +35,7 @@ export class FilterByStatusPipe implements PipeTransform {
 })
 export class AdminDashboardComponent implements OnInit, AfterViewInit {
   private isBrowser: boolean;
-  activeAdminPanel: 'dashboard' | 'images' | 'research' | 'donations' | 'products' | 'inquiries' = 'dashboard';
+  activeAdminPanel: 'dashboard' | 'images' | 'research' | 'donations' | 'products' | 'inquiries' | 'orders' | 'settings' = 'dashboard';
   isSidebarOpen = false;
   today = new Date();
   currentTime = new Date();
@@ -63,6 +63,11 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   selectedFile: File | null = null;
   isUploading = false;
   searchTerm = '';
+  orderFilter: 'active' | 'delivered' | 'cancelled' | 'all' = 'active';
+
+  // Admin Profile
+  adminName = 'Admin';
+  adminRole = 'Chief Admin';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -83,13 +88,16 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dashboardService.getStats().subscribe(s => this.stats = s);
-    this.galleryService.getImages().subscribe(imgs => this.galleryImages = imgs);
-    this.orderService.getOrders().subscribe(ords => this.orders = ords);
-    this.inquiryService.getInquiries().subscribe(inqs => this.inquiries = inqs);
-    this.researchService.getArticles().subscribe(arts => this.articles = arts);
-    this.donationService.getPlans().subscribe(plans => this.donationPlans = plans);
-    this.productService.getProducts().subscribe(prods => this.products = prods);
+    // Sync Admin Profile
+    this.authService.getCurrentAdmin().subscribe(admin => {
+      if (admin) {
+        this.adminName = admin.name;
+        this.adminRole = admin.role === 'admin' ? 'Chief Admin' : admin.role;
+      }
+    });
+
+    // Initial Data Sync
+    this.refreshDashboardData();
 
     if (this.isBrowser) {
       this.timerHandle = setInterval(() => {
@@ -100,6 +108,16 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         this.missionTime = `${hrs}:${mins}:${secs}`;
       }, 1000);
     }
+  }
+
+  refreshDashboardData(): void {
+    this.dashboardService.getStats().subscribe(s => this.stats = s);
+    this.galleryService.getImages().subscribe(imgs => this.galleryImages = imgs);
+    this.orderService.getOrders().subscribe(ords => this.orders = ords);
+    this.inquiryService.getInquiries().subscribe(inqs => this.inquiries = inqs);
+    this.researchService.getArticles().subscribe(arts => this.articles = arts);
+    this.donationService.getPlans().subscribe(plans => this.donationPlans = plans);
+    this.productService.getProducts(true).subscribe(prods => this.products = prods);
   }
 
   ngAfterViewInit(): void {
@@ -212,6 +230,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     this.orderService.updateOrderStatus(id, status);
   }
 
+  deleteOrder(mongoId: string, customerName: string): void {
+    if (confirm(`"${customerName}" ka order permanently delete karna chahte hain?`)) {
+      this.orderService.deleteOrder(mongoId).subscribe(() => {
+        this.refreshDashboardData();
+      });
+    }
+  }
+
   // --- Research Actions ---
   saveArticle(): void {
     if (this.newArticle.title && this.newArticle.summary) {
@@ -252,10 +278,22 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   // --- Search Getters ---
   get filteredOrders() {
-    if (!this.searchTerm) return this.orders;
+    let result = this.orders;
+
+    // Status filter
+    if (this.orderFilter === 'active') {
+      result = result.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled');
+    } else if (this.orderFilter === 'delivered') {
+      result = result.filter(o => o.status === 'Delivered');
+    } else if (this.orderFilter === 'cancelled') {
+      result = result.filter(o => o.status === 'Cancelled');
+    }
+
+    // Search filter
+    if (!this.searchTerm) return result;
     const term = this.searchTerm.toLowerCase();
-    return this.orders.filter(o => 
-      o.id.toLowerCase().includes(term) || 
+    return result.filter(o =>
+      o.id.toLowerCase().includes(term) ||
       o.customerName.toLowerCase().includes(term)
     );
   }

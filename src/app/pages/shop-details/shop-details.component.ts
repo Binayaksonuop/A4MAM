@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  inject,
   AfterViewInit,
   OnDestroy,
   PLATFORM_ID,
@@ -16,6 +15,7 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Title, Meta } from '@angular/platform-browser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +48,7 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser: boolean;
   productId: string = '';
   product: ProductDetail | null = null;
+  isLoading: boolean = true;
   isAdded: boolean = false;
   selectedQty: number = 1;
   lastAddedQty: number = 1;
@@ -102,7 +103,7 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       id: 'chicky-bars',
       title: 'Chicky Bars (Kids)',
       subtitle: 'Spirulina Nutrition Bar for Kids',
-      price: 499,
+      price: 99,
       image: 'assets/images/chicky_bars_new.png',
       badge: 'Kids Favourite',
       description: 'A tasty, easy-to-eat Spirulina bar made for growing children. Packed with protein and Iron, the Chicky Bar is the perfect daily snack to support healthy growth — with no algae smell or taste.',
@@ -182,6 +183,8 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     private cartService: CartService,
     private productService: ProductService,
     private zone: NgZone,
+    private titleService: Title,
+    private metaService: Meta,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -190,21 +193,33 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const rawSlug = params['slug'] || '';
-      // Normalize slug for matching (handle spaces, %20, etc)
-      const normalizedSlug = rawSlug.trim().toLowerCase().replace(/%20| /g, '-');
-      this.productId = normalizedSlug;
+      const normalizedSlug = rawSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      this.isLoading = true;
+      
+      console.log('ShopDetails: Looking for slug:', rawSlug, 'normalized:', normalizedSlug);
       
       this.productService.getProducts().subscribe(products => {
-        const found = products.find(p => {
-          const pSlug = (p.slug || '').trim().toLowerCase().replace(/ /g, '-');
-          return pSlug === normalizedSlug || p.id === rawSlug;
-        });
+        let found: any = null;
+        
+        if (products && products.length > 0) {
+          found = products.find(p => {
+            const pSlug = (p.slug || '').toLowerCase();
+            const pNameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            return pSlug === normalizedSlug || 
+                   p.id === rawSlug || 
+                   pNameSlug === normalizedSlug ||
+                   p._id === rawSlug;
+          });
+        }
+        
+        console.log('ShopDetails: Found from API:', found);
+        
+        let localRichData = this.products[normalizedSlug] || this.products[rawSlug] || null;
         
         if (found) {
-          const localRichData = this.products[this.productId] || this.products[found.slug || ''];
-          
+          localRichData = this.products[normalizedSlug] || this.products[found.slug || ''] || this.products['chicky-bars'];
           this.product = {
-            id: found.id,
+            id: found.id || found._id,
             title: found.name,
             subtitle: localRichData?.subtitle || 'Premium Nutritional Support',
             price: found.price,
@@ -219,14 +234,37 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
             includes: localRichData?.includes || ['1x Premium Package'],
             nutrition: localRichData?.nutrition || { protein: 80, iron: 85, absorption: 90 }
           };
-
-          // Trigger entrance animation with a safe delay
-          if (this.isBrowser) {
-            setTimeout(() => this.initHeroAnimation(), 300);
-          }
+        } else if (localRichData) {
+          console.log('ShopDetails: Using local data');
+          this.product = localRichData;
         } else {
-          this.product = null;
+          // Last resort: check if slug matches any local product keys
+          const matchingKey = Object.keys(this.products).find(key => 
+            key === normalizedSlug || 
+            key.includes(normalizedSlug) || 
+            normalizedSlug.includes(key)
+          );
+          if (matchingKey) {
+            console.log('ShopDetails: Last resort match:', matchingKey);
+            this.product = this.products[matchingKey];
+          } else {
+            this.product = null;
+          }
         }
+        
+        if (this.product) {
+          this.titleService.setTitle(`${this.product.title} | A4MAM Shop`);
+          this.metaService.updateTag({ name: 'description', content: this.product.description });
+          this.metaService.updateTag({ property: 'og:title', content: this.product.title });
+          this.metaService.updateTag({ property: 'og:description', content: this.product.description });
+          this.metaService.updateTag({ property: 'og:image', content: this.product.image });
+
+          if (this.isBrowser) {
+            setTimeout(() => this.initHeroAnimation(), 50);
+          }
+        }
+        
+        this.isLoading = false;
       });
     });
   }
@@ -237,7 +275,7 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.zone.runOutsideAngular(() => {
       setTimeout(() => {
         this.initScrollAnimations();
-      }, 800);
+      }, 150);
     });
   }
 

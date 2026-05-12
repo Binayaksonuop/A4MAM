@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
+import { OrderService } from '../../../services/order.service';
 import gsap from 'gsap';
 
 @Component({
@@ -33,7 +34,6 @@ import gsap from 'gsap';
           <!-- Left: Multi-Step Form -->
           <div class="col-lg-7">
             <div class="checkout-glass-card-v6 p-4 p-md-5 reveal-v6">
-              
               <form #checkoutForm="ngForm" (ngSubmit)="placeOrder()">
                 <!-- STEP 1: PERSONAL & LOGISTICS -->
                 <div class="step-section-v6 mb-5">
@@ -41,7 +41,6 @@ import gsap from 'gsap';
                     <div class="step-num-v6">01</div>
                     <h4 class="fw-900 text-white mb-0">Distribution Logistics</h4>
                   </div>
-                  
                   <div class="row g-4 mb-4">
                     <div class="col-md-6">
                       <div class="input-group-v6">
@@ -56,17 +55,14 @@ import gsap from 'gsap';
                       </div>
                     </div>
                   </div>
-
                   <div class="input-group-v6 mb-4">
                     <label>Email Coordination</label>
                     <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Enter Email Address" required>
                   </div>
-
                   <div class="input-group-v6 mb-4">
                     <label>Operational Hub (Full Address)</label>
                     <textarea name="address" [(ngModel)]="formData.address" rows="3" placeholder="Street, Landmark, Apartment" required></textarea>
                   </div>
-
                   <div class="row g-4">
                     <div class="col-md-6">
                       <div class="input-group-v6">
@@ -89,7 +85,6 @@ import gsap from 'gsap';
                     <div class="step-num-v6">02</div>
                     <h4 class="fw-900 text-white mb-0">Selection of Channel</h4>
                   </div>
-
                   <div class="payment-grid-v6 mb-4">
                     <div class="payment-option-v6" [class.active]="paymentMethod === 'upi'" (click)="paymentMethod = 'upi'">
                       <div class="d-flex justify-content-between align-items-center">
@@ -103,7 +98,6 @@ import gsap from 'gsap';
                         <div class="pay-check-v6" [class.checked]="paymentMethod === 'upi'"></div>
                       </div>
                     </div>
-
                     <div class="payment-option-v6" [class.active]="paymentMethod === 'cod'" (click)="paymentMethod = 'cod'">
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-3">
@@ -122,8 +116,9 @@ import gsap from 'gsap';
                   <div class="upi-phase-v6 p-4 mt-4" *ngIf="paymentMethod === 'upi'">
                     <div class="row align-items-center g-4">
                       <div class="col-md-4 text-center">
-                        <div class="qr-container-v6 p-2 bg-white rounded-3 shadow-glow-qr">
+                        <div class="qr-container-v6 p-2 bg-white rounded-3 shadow-glow-qr" (click)="toggleQrLightbox()" style="cursor: zoom-in;">
                           <img src="assets/images/A4%20QR.jpeg" alt="UPI QR" class="img-fluid">
+                          <div class="qr-hint-v6"><i class="bi bi-arrows-fullscreen"></i> Tap to Enlarge</div>
                         </div>
                         <div class="mt-3 x-small text-white text-opacity-90">After completing payment in your UPI app, click the button below.</div>
                       </div>
@@ -135,7 +130,7 @@ import gsap from 'gsap';
                         <div class="upi-id-box-v6 p-3 d-flex justify-content-between align-items-center">
                           <div>
                             <span class="x-small text-white text-opacity-30 d-block">UPI ID</span>
-                            <span class="fw-800 text-emerald">mam&#64;upi</span>
+                            <span class="fw-800 text-emerald">9642437773&#64;okbizaxis</span>
                           </div>
                           <i class="bi bi-shield-lock-fill text-emerald fs-4"></i>
                         </div>
@@ -145,12 +140,12 @@ import gsap from 'gsap';
 
                   <!-- COD INFO -->
                   <div class="cod-info-v6 p-4 mt-4" *ngIf="paymentMethod === 'cod'">
-                    <div class="d-flex gap-3 align-items-start">
-                      <i class="bi bi-info-circle-fill text-blue fs-4"></i>
+                    <div class="d-flex gap-3 align-items-center">
+                      <i class="bi bi-truck text-blue fs-3"></i>
                       <div>
-                        <h6 class="fw-900 text-white mb-1">Logistics Allocation</h6>
-                        <p class="text-white text-opacity-40 small mb-0">
-                          Contribution will be completed upon delivery. Mission will be scheduled and kits reserved immediately.
+                        <h6 class="fw-900 text-white mb-1">Pay at Delivery (COD)</h6>
+                        <p class="text-white text-opacity-50 small mb-0">
+                          Secure your mission today. Contribution funds will be collected by our logistics partner upon arrival at your operation hub.
                         </p>
                       </div>
                     </div>
@@ -174,7 +169,6 @@ import gsap from 'gsap';
           <div class="col-lg-5">
             <div class="summary-glass-card-v6 p-5 sticky-top reveal-v6" style="top: 160px;">
               <h4 class="fw-950 text-white mb-4">Order <span class="text-gradient-mixed-v6">Validation</span></h4>
-              
               <div class="preview-list-v6 mb-4">
                 <div class="preview-item-v6 d-flex align-items-center gap-3 mb-3" *ngFor="let item of cartItems">
                   <div class="preview-thumb-v6">
@@ -198,7 +192,6 @@ import gsap from 'gsap';
                   <span class="label">Mission Distribution</span>
                   <span class="val text-emerald">FREE</span>
                 </div>
-
                 <div class="d-flex justify-content-between mb-4">
                   <div>
                     <span class="text-white text-opacity-40 x-small d-block mb-1">FINAL CONTRIBUTION</span>
@@ -206,7 +199,6 @@ import gsap from 'gsap';
                   </div>
                   <div class="currency-label-v6">INR</div>
                 </div>
-
                 <!-- TRUST MODULE -->
                 <div class="trust-module-v6 p-4">
                   <div class="d-flex gap-3 align-items-center mb-3">
@@ -218,13 +210,24 @@ import gsap from 'gsap';
                   </p>
                 </div>
               </div>
-
               <div class="d-flex align-items-center justify-content-center gap-4 opacity-30 grayscale-filter">
                 <i class="bi bi-shield-lock-fill fs-3"></i>
                 <i class="bi bi-patch-check-fill fs-3"></i>
                 <i class="bi bi-safe2-fill fs-3"></i>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR LIGHTBOX OVERLAY (At root of component for max z-index) -->
+      <div class="qr-lightbox-overlay" *ngIf="isQrLightboxOpen" (click)="toggleQrLightbox()">
+        <div class="lightbox-content" (click)="$event.stopPropagation()">
+          <button class="btn-close-lightbox" (click)="toggleQrLightbox()"><i class="bi bi-x-lg"></i></button>
+          <img src="assets/images/A4%20QR.jpeg" alt="UPI QR Full" class="qr-full-img">
+          <div class="lightbox-footer text-center mt-3">
+            <h5 class="text-white fw-bold mb-1">Scan & Pay</h5>
+            <p class="text-white text-opacity-50 small mb-0">A4MAM Mission Contribution</p>
           </div>
         </div>
       </div>
@@ -450,6 +453,65 @@ import gsap from 'gsap';
 
     .x-small { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; }
 
+    /* --- QR LIGHTBOX --- */
+    .qr-container-v6 { position: relative; }
+    .qr-hint-v6 {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(16, 185, 129, 0.9); color: #fff;
+      font-size: 0.65rem; font-weight: 800; padding: 4px;
+      opacity: 0; transition: 0.3s;
+    }
+    .qr-container-v6:hover .qr-hint-v6 { opacity: 1; }
+
+    .qr-lightbox-overlay {
+      position: fixed; 
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 999999; /* Max priority */
+      background: rgba(1, 4, 18, 0.92);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 30px; animation: fadeIn-v6 0.4s ease-out;
+    }
+
+    .lightbox-content {
+      position: relative; 
+      max-width: 500px; 
+      width: 95%;
+      background: #ffffff; 
+      padding: 24px; 
+      border-radius: 40px;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+      animation: zoomIn-v6 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-full-img { 
+      width: 100%; 
+      max-height: 70vh; 
+      object-fit: contain; 
+      border-radius: 20px; 
+      margin: 0 auto;
+    }
+
+    .btn-close-lightbox {
+      position: absolute; top: -50px; right: 0;
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff; width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.3s;
+    }
+    .btn-close-lightbox:hover { background: #ef4444; border-color: #ef4444; }
+
+    .lightbox-footer h5 { color: #020617 !important; }
+    .lightbox-footer p { color: rgba(2, 6, 23, 0.5) !important; }
+
+    @keyframes fadeIn-v6 { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn-v6 { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
     @media (max-width: 991px) {
       .payment-grid-v6 { grid-template-columns: 1fr; }
       .summary-glass-card-v6 { margin-top: 40px; position: relative !important; top: 0 !important; }
@@ -463,6 +525,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   paymentMethod: 'upi' | 'cod' = 'upi';
   isProcessing = false;
   hasDonation = false;
+  isQrLightboxOpen = false;
   Math = Math;
 
   formData = {
@@ -476,11 +539,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
+    private orderService: OrderService,
     private router: Router,
     private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  toggleQrLightbox(): void {
+    this.isQrLightboxOpen = !this.isQrLightboxOpen;
+    if (this.isBrowser) {
+      if (this.isQrLightboxOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
   }
 
   ngOnInit(): void {
@@ -503,30 +578,60 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   placeOrder(): void {
     if (this.isProcessing) return;
-    
+
     this.isProcessing = true;
-    
-    // Simulate complex mission allocation logic
-    setTimeout(() => {
-      const orderId = 'MAM-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-      const donationItem = this.cartItems.find((i: any) => i.option === 'Donation');
-      this.cartService.clearCart();
-      
-      this.router.navigate(['/order-success'], { 
-        queryParams: { 
-          orderId: orderId, 
-          amount: this.total,
-          method: this.paymentMethod,
-          name: this.formData.name,
-          city: this.formData.city,
-          isDonation: this.hasDonation ? 'true' : 'false',
-          planName: donationItem ? donationItem.name : ''
-        } 
-      });
-    }, 2800);
+
+    // Map cart items for backend
+    const items = this.cartItems.map(item => ({
+      productId: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity
+    }));
+
+    const orderData = {
+      customerName: this.formData.name,
+      email: this.formData.email,
+      phone: this.formData.phone,
+      address: this.formData.address,
+      city: this.formData.city,
+      state: '', // Add state if needed
+      pincode: this.formData.pincode,
+      items: items,
+      totalAmount: this.total,
+      paymentMethod: this.paymentMethod.toLowerCase(),
+      paymentStatus: this.paymentMethod === 'upi' ? 'Paid' : 'Pending'
+    };
+
+    this.orderService.placeOrder(orderData).subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          const donationItem = this.cartItems.find((i: any) => i.option === 'Donation');
+          const realOrderId = response.data.orderId;
+          this.cartService.clearCart();
+
+          this.router.navigate(['/order-success'], {
+            queryParams: {
+              orderId: realOrderId,
+              amount: this.total,
+              method: this.paymentMethod,
+              name: this.formData.name,
+              city: this.formData.city,
+              isDonation: this.hasDonation ? 'true' : 'false',
+              planName: donationItem ? donationItem.name : ''
+            }
+          });
+        }
+        this.isProcessing = false;
+      },
+      error: (err: any) => {
+        this.isProcessing = false;
+        alert(err.error?.message || 'Failed to place mission order. Please check your connection.');
+      }
+    });
   }
 }

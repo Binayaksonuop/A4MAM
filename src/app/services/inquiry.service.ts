@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map, catchError, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface AdminInquiry {
   id: string;
@@ -13,65 +15,61 @@ export interface AdminInquiry {
   type: 'Contact' | 'Bulk Order' | 'Partnership';
 }
 
+interface BackendResponse {
+  success: boolean;
+  data: any[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class InquiryService {
+  private apiUrl = `${environment.apiUrl}/admin/inquiries`;
+  private publicUrl = `${environment.apiUrl}/inquiries`;
   private inquiriesSubject = new BehaviorSubject<AdminInquiry[]>([]);
-  private storageKey = 'a4mam_admin_inquiries';
 
-  constructor() {
-    this.loadFromStorage();
-  }
-
-  private loadFromStorage(): void {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(this.storageKey);
-      if (stored) {
-        // Parse dates back to Date objects
-        const parsed = JSON.parse(stored).map((i: any) => ({ ...i, date: new Date(i.date) }));
-        this.inquiriesSubject.next(parsed);
-      } else {
-        const initialData: AdminInquiry[] = [
-          { id: 'INQ-101', name: 'NGO SaveChildren', email: 'contact@savechildren.org', message: 'Interested in bulk Chicky Bars for 500 kids.', status: 'New', date: new Date(), type: 'Bulk Order' },
-          { id: 'INQ-102', name: 'Trishna Priyadarshini', email: 'trishna@a4conserv', message: 'How can I volunteer for the next screening?', status: 'Viewed', date: new Date(), type: 'Contact' }
-        ];
-        this.inquiriesSubject.next(initialData);
-        this.saveToStorage(initialData);
-      }
-    }
-  }
-
-  private saveToStorage(inquiries: AdminInquiry[]): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(this.storageKey, JSON.stringify(inquiries));
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   getInquiries(): Observable<AdminInquiry[]> {
-    return this.inquiriesSubject.asObservable();
+    return this.http.get<BackendResponse>(this.apiUrl).pipe(
+      map(response => {
+        if (response.success) {
+          const mapped = response.data.map(item => ({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            phone: item.phone,
+            organization: item.organization,
+            message: item.message,
+            status: item.status,
+            date: new Date(item.createdAt),
+            type: item.type
+          }));
+          this.inquiriesSubject.next(mapped);
+          return mapped;
+        }
+        return [];
+      }),
+      catchError(error => {
+        console.error('Error fetching inquiries:', error);
+        return of([]);
+      })
+    );
   }
 
   updateInquiryStatus(id: string, status: AdminInquiry['status']): void {
-    const inqs = this.inquiriesSubject.getValue().map(i => i.id === id ? { ...i, status } : i);
-    this.inquiriesSubject.next(inqs);
-    this.saveToStorage(inqs);
+    this.http.patch(`${this.apiUrl}/${id}/status`, { status }).subscribe({
+      next: () => {
+        const current = this.inquiriesSubject.getValue();
+        const updated = current.map(i => i.id === id ? { ...i, status } : i);
+        this.inquiriesSubject.next(updated);
+      },
+      error: (err) => console.error('Error updating inquiry status:', err)
+    });
   }
 
-  addInquiry(inquiryData: Omit<AdminInquiry, 'id' | 'status' | 'date'>): AdminInquiry {
-    const newInquiry: AdminInquiry = {
-      ...inquiryData,
-      id: 'INQ-' + Math.floor(1000 + Math.random() * 9000),
-      status: 'New',
-      date: new Date()
-    };
-    
-    const current = this.inquiriesSubject.getValue();
-    const updated = [newInquiry, ...current];
-    this.inquiriesSubject.next(updated);
-    this.saveToStorage(updated);
-    
-    return newInquiry;
+  // Public method to submit inquiry
+  addInquiry(inquiryData: any): Observable<any> {
+    return this.http.post(this.publicUrl, inquiryData);
   }
 }
-

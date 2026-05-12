@@ -1,34 +1,90 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map, catchError, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface AdminOrder {
   id: string;
+  mongoId: string; // Store real DB ID for updates
   type: 'Product' | 'Donation';
   amount: number;
-  paymentMethod: 'UPI' | 'COD';
-  status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
+  paymentMethod: 'upi' | 'cod';
+  status: 'Processing' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled';
   date: Date;
   customerName: string;
+}
+
+interface BackendResponse {
+  success: boolean;
+  data: any[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private ordersSubject = new BehaviorSubject<AdminOrder[]>([
-    { id: 'ORD-8821', type: 'Product', amount: 1299, paymentMethod: 'UPI', status: 'Delivered', date: new Date(), customerName: 'Rajesh Kumar' },
-    { id: 'DON-9902', type: 'Donation', amount: 5000, paymentMethod: 'UPI', status: 'Delivered', date: new Date(), customerName: 'Suman Singh' },
-    { id: 'ORD-8825', type: 'Product', amount: 499, paymentMethod: 'COD', status: 'Pending', date: new Date(), customerName: 'Amit Patel' }
-  ]);
+  private apiUrl = `${environment.apiUrl}/admin/orders`;
+  private publicUrl = `${environment.apiUrl}/orders`;
+  private ordersSubject = new BehaviorSubject<AdminOrder[]>([]);
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   getOrders(): Observable<AdminOrder[]> {
-    return this.ordersSubject.asObservable();
+    return this.http.get<BackendResponse>(this.apiUrl).pipe(
+      map(response => {
+        if (response.success) {
+          const mapped: AdminOrder[] = response.data.map(item => ({
+            id: item.orderId,
+            mongoId: item._id,
+            type: 'Product', // Assuming Product orders for now
+            amount: item.totalAmount,
+            paymentMethod: item.paymentMethod,
+            status: item.orderStatus,
+            date: new Date(item.createdAt),
+            customerName: item.customerName
+          }));
+          this.ordersSubject.next(mapped);
+          return mapped;
+        }
+        return [];
+      }),
+      catchError(error => {
+        console.error('Error fetching orders:', error);
+        return of([]);
+      })
+    );
+  }
+ 
+  updateOrderStatus(id: string, status: AdminOrder['status']): void {
+    // Find mongoId from readable orderId
+    const order = this.ordersSubject.getValue().find(o => o.id === id);
+    if (!order) return;
+ 
+    this.http.patch(`${this.apiUrl}/${order.mongoId}/status`, { orderStatus: status }).subscribe({
+      next: () => {
+        const current = this.ordersSubject.getValue();
+        const updated = current.map(o => o.id === id ? { ...o, status } : o);
+        this.ordersSubject.next(updated);
+      },
+      error: (err) => console.error('Error updating order status:', err)
+    });
   }
 
-  updateOrderStatus(id: string, status: AdminOrder['status']): void {
-    const orders = this.ordersSubject.getValue().map(o => o.id === id ? { ...o, status } : o);
-    this.ordersSubject.next(orders);
+  deleteOrder(mongoId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${mongoId}`).pipe(
+      tap(() => {
+        const current = this.ordersSubject.getValue();
+        this.ordersSubject.next(current.filter(o => o.mongoId !== mongoId));
+      }),
+      catchError(error => {
+        console.error('Error deleting order:', error);
+        return of(null);
+      })
+    );
+  }
+
+  // Public method to place order
+  placeOrder(orderData: any): Observable<any> {
+    return this.http.post(this.publicUrl, orderData);
   }
 }

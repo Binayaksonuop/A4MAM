@@ -1,19 +1,52 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap, catchError, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
+
+interface Admin {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface LoginResponse {
+  success: boolean;
+  message: string;
+  token: string;
+  admin: Admin;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = `${environment.apiUrl}/admin`;
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private currentAdminSubject = new BehaviorSubject<Admin | null>(null);
+  private isBrowser: boolean;
 
-  constructor(private router: Router) {
-    if (typeof window !== 'undefined') {
-      const session = localStorage.getItem('a4mam_admin_auth');
-      if (session === 'true') {
-        this.isLoggedInSubject.next(true);
-      }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    
+    if (this.isBrowser) {
+      this.loadSession();
+    }
+  }
+
+  private loadSession(): void {
+    const token = localStorage.getItem('a4mam_admin_token');
+    const adminData = localStorage.getItem('a4mam_admin_user');
+    
+    if (token && adminData) {
+      this.isLoggedInSubject.next(true);
+      this.currentAdminSubject.next(JSON.parse(adminData));
     }
   }
 
@@ -21,18 +54,42 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable();
   }
 
-  login(email: string, password: string): boolean {
-    if (email === 'trishna@a4conserv' && password === 'admin123') {
-      localStorage.setItem('a4mam_admin_auth', 'true');
-      this.isLoggedInSubject.next(true);
-      return true;
+  getCurrentAdmin(): Observable<Admin | null> {
+    return this.currentAdminSubject.asObservable();
+  }
+
+  getToken(): string | null {
+    if (this.isBrowser) {
+      return localStorage.getItem('a4mam_admin_token');
     }
-    return false;
+    return null;
+  }
+
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
+      tap(response => {
+        if (response.success && response.token) {
+          if (this.isBrowser) {
+            localStorage.setItem('a4mam_admin_token', response.token);
+            localStorage.setItem('a4mam_admin_user', JSON.stringify(response.admin));
+          }
+          this.isLoggedInSubject.next(true);
+          this.currentAdminSubject.next(response.admin);
+        }
+      }),
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
   }
 
   logout(): void {
-    localStorage.removeItem('a4mam_admin_auth');
+    if (this.isBrowser) {
+      localStorage.removeItem('a4mam_admin_token');
+      localStorage.removeItem('a4mam_admin_user');
+    }
     this.isLoggedInSubject.next(false);
+    this.currentAdminSubject.next(null);
     this.router.navigate(['/admin']);
   }
 }

@@ -1,0 +1,97 @@
+<div class="shop-premium-listing">
+      
+  <!-- HERO BANNER (PREMIUM DARK) -->
+  <section class="shop-hero-premium position-relative overflow-hidden">
+    <div class="shop-hero-mesh"></div>
+    <div class="container position-relative z-2">
+      <div class="row min-vh-40 align-items-center py-5">
+        <div class="col-lg-8 mx-auto text-center">
+          <span class="badge-premium-emerald mb-3 d-inline-block">The A4MAM Store</span>
+          <h1 class="display-3 fw-900 text-white mb-3 letter-spacing-1">Scientific <span class="text-gradient-emerald">Nutrition</span></h1>
+          <p class="lead text-white text-opacity-70 mx-auto" style="max-width: 600px;">
+            Directly supporting the eradication of malnutrition through premium, 
+            bio-available Spirulina interventions for children and mothers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container py-5 position-relative z-2">
+    
+    <!-- Premium Filter Bar -->
+    <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap filter-container-glass p-2 rounded-pill mx-auto" style="max-width: fit-content;" *ngIf="!isLoading && products.length > 0">
+      <button class="btn filter-pill" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">All Products</button>
+      <button class="btn filter-pill" [class.active]="activeFilter === 'kids'" (click)="setFilter('kids')">For Kids</button>
+      <button class="btn filter-pill" [class.active]="activeFilter === 'maternal'" (click)="setFilter('maternal')">Maternal Care</button>
+      <button class="btn filter-pill" [class.active]="activeFilter === 'powder'" (click)="setFilter('powder')">Pure Powder</button>
+      <button class="btn filter-pill" [class.active]="activeFilter === 'kit'" (click)="setFilter('kit')">Complete Kits</button>
+    </div>
+
+    <!-- Loading State -->
+    <div class="text-center py-5" *ngIf="isLoading">
+      <div class="spinner-premium"></div>
+      <p class="text-white text-opacity-50 mt-4 letter-spacing-2">SCANNING INVENTORY...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="text-center py-5" *ngIf="!isLoading && products.length === 0">
+      <i class="bi bi-box-seam text-emerald" style="font-size: 3rem;"></i>
+      <h3 class="text-white fw-bold mt-3">No Products Available</h3>
+      <p class="text-white text-opacity-50">Please add products from the Admin Panel.</p>
+    </div>
+
+    <!-- Premium Product Grid -->
+    <div class="row g-4 mb-5" *ngIf="!isLoading && products.length > 0">
+      <div class="col-lg-4 col-md-6" *ngFor="let product of filteredProducts; trackBy: trackByProductId">
+        <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'">
+          <div class="product-img-glass-wrap position-relative">
+            <span class="product-badge-float" *ngIf="product.status === 'Out of Stock'" style="background: #ef4444;">Out of Stock</span>
+            <span class="product-badge-float" *ngIf="product.status === 'In Stock'" style="background: linear-gradient(135deg, #10b981, #059669);">In Stock</span>
+            
+            <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid product-main-img" onerror="this.src='assets/images/logo_mam.png'">
+            <div class="img-shimmer"></div>
+          </div>
+          
+          <div class="product-body-glass p-4 d-flex flex-column flex-grow-1">
+            <h4 class="text-white fw-bold mb-2">{{ product.name }}</h4>
+            <p class="text-white text-opacity-50 small mb-4 flex-grow-1 lh-base">{{ product.description || 'Premium Spirulina product for clinical intervention.' }}</p>
+            
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-white border-opacity-10 mt-auto">
+              <div class="price-wrap">
+                <span class="text-white text-opacity-40 x-small d-block mb-1">UNIT PRICE</span>
+                <span class="text-emerald fs-4 fw-900 letter-spacing-1">₹{{ product.price }}</span>
+              </div>
+              
+                <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium" [attr.aria-label]="'View details for ' + product.name">
+                  <i class="bi bi-eye"></i>
+                </a>
+                <button class="btn btn-add-premium" (click)="addToCart(product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'">
+                  <i class="bi bi-cart-plus-fill me-2"></i> Add
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk/NGO CTA Bar (PREMIUM GLASS) -->
+    <div class="bulk-order-premium-bar p-5 rounded-5 mt-5 position-relative overflow-hidden">
+      <div class="bulk-mesh"></div>
+      <div class="row align-items-center position-relative z-2">
+        <div class="col-lg-8">
+          <h2 class="display-5 fw-950 text-white mb-3">Institutional & <span class="text-gradient-emerald">Bulk Supply</span></h2>
+          <p class="lead text-white text-opacity-70 mb-0">
+            Are you an NGO, Hospital, or CSR initiative? We offer heavily 
+            subsidized rates for large-scale nutritional interventions.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <a routerLink="/shop/bulk" class="btn btn-emerald-lg px-5 py-3 rounded-pill fw-bold hover-scale">
+            Inquire for Bulk <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

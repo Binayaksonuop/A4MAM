@@ -1,0 +1,127 @@
+.bulk-page-premium {
+  background: #020617;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.py-150 { padding: 180px 0 120px; }
+.fw-950 { font-weight: 950; }
+.max-w-500 { max-width: 500px; }
+
+/* --- CINEMATIC ATMOSPHERE --- */
+.bulk-mesh-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+  z-index: 1;
+}
+
+.glow-orb-purple {
+  position: absolute; top: 10%; right: 5%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  filter: blur(100px); z-index: 1; animation: float-v6 20s infinite alternate;
+}
+
+.glow-orb-emerald {
+  position: absolute; bottom: -10%; left: -5%; width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+  filter: blur(120px); z-index: 1; animation: float-v6 25s infinite alternate-reverse;
+}
+
+@keyframes float-v6 {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge-premium-emerald-outline {
+  display: inline-flex; padding: 8px 20px; border-radius: 50px;
+  border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);
+  color: #10b981; font-weight: 800; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+}
+
+.impact-stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+
+.impact-stat-item {
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px; padding: 25px 20px; text-align: center; backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+.impact-stat-item:hover { transform: translateY(-5px); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+
+.stat-value { display: block; font-size: 2rem; font-weight: 950; color: #fff; line-height: 1; margin-bottom: 8px; }
+.stat-label { display: block; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+
+.benefit-dot { width: 8px; height: 8px; background: #10b981; border-radius: 2px; box-shadow: 0 0 10px #10b981; }
+
+/* --- GLASS CARD FORM --- */
+.inquiry-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15); padding: 50px; border-radius: 40px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+}
+
+.form-floating-premium { position: relative; margin-bottom: 5px; }
+.form-control-premium, .form-control-premium-select {
+  width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 28px 20px 10px; border-radius: 20px; color: #fff; font-size: 1rem; font-weight: 600;
+  transition: all 0.3s ease;
+}
+.form-control-premium-select { 
+  appearance: none; 
+  cursor: pointer; 
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2310b981' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  color-scheme: dark; /* Helps on some browsers to theme the dropdown list */
+}
+
+.form-control-premium-select option {
+  background-color: #0f172a;
+  color: #fff;
+  padding: 15px;
+}
+
+.form-floating-premium label {
+  position: absolute; top: 12px; left: 20px; font-size: 0.65rem; font-weight: 800;
+  color: #10b981; text-transform: uppercase; letter-spacing: 1px; pointer-events: none;
+}
+
+.form-control-premium:focus, .form-control-premium-select:focus {
+  background: rgba(255, 255, 255, 0.08); border-color: #10b981; outline: none;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+.btn-bulk-submit {
+  width: 100%; padding: 22px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none; border-radius: 20px; color: #fff; font-weight: 900; font-size: 1rem;
+  display: flex; justify-content: center; align-items: center; gap: 15px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
+}
+
+.btn-bulk-submit:hover:not(:disabled) {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-bulk-submit:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+
+@media (max-width: 991px) {
+  .inquiry-glass-card { padding: 30px; }
+  .py-150 { padding: 120px 0 80px; }
+  .impact-stats-grid { grid-template-columns: 1fr; }
+}

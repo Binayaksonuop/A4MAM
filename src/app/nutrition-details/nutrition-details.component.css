@@ -442,3 +442,175 @@
     font-size: 3rem;
   }
 }
+
+/* === New Nutrition Details Features === */
+.nutrition-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(16,185,129,0.03) 50px, rgba(16,185,129,0.03) 51px),
+    repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(16,185,129,0.03) 50px, rgba(16,185,129,0.03) 51px);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.nd-trust-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.nd-trust-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nd-trust-chip:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.06);
+}
+
+.nd-stat-strip {
+  background: rgba(15,23,42,0.4);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+.nd-stat-item {
+  text-align: center;
+}
+
+.nd-stat-num {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 950;
+}
+
+.nd-stat-num.emerald { color: #10b981; }
+.nd-stat-num.blue { color: #60a5fa; }
+.nd-stat-num.amber { color: #fbbf24; }
+.nd-stat-num.purple { color: #a855f7; }
+
+.nd-stat-lbl {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nd-stat-div {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  align-self: stretch;
+}
+
+.nd-clinical-timeline {
+  background: rgba(15,23,42,0.3);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 24px;
+  padding: 32px;
+  backdrop-filter: blur(16px);
+}
+
+.nd-timeline-track {
+  position: relative;
+  padding-top: 20px;
+}
+
+.nd-timeline-line {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+}
+
+.nd-progress-fill-track {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.nd-progress-fill-inner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #3b82f6, #10b981);
+  border-radius: 100px;
+}
+
+.nd-timeline-markers {
+  position: relative;
+  z-index: 2;
+}
+
+.nd-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.nd-marker-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  margin: 0 auto;
+}
+
+.nd-marker-dot.red {
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239,68,68,0.4);
+}
+
+.nd-marker-dot.amber {
+  background: #f59e0b;
+  box-shadow: 0 0 10px rgba(245,158,11,0.4);
+}
+
+.nd-marker-dot.blue {
+  background: #3b82f6;
+  box-shadow: 0 0 10px rgba(59,130,246,0.4);
+}
+
+.nd-marker-dot.emerald {
+  background: #10b981;
+  box-shadow: 0 0 15px rgba(16,185,129,0.5);
+}
+
+.nd-marker-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  margin-top: 8px;
+}
+
+.nd-marker-desc {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}

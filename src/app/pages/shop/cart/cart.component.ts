@@ -23,14 +23,14 @@ import gsap from 'gsap';
       <div class="container position-relative z-3 py-100">
         
         <!-- Premium Header -->
-        <div class="mb-5 reveal-v6">
+        <div class="mb-5 reveal-v6 text-center text-lg-start">
           <div class="glass-chip-v6 mb-3">
-            <span class="pulse-dot-v6"></span> MISSION SUMMARY
+            <span class="pulse-dot-v6"></span> IMPACT TRACKER v1.0
           </div>
-          <h1 class="display-3 fw-950 text-white mb-2">
+          <h1 class="display-2 fw-950 text-white mb-2 tracking-tighter">
             Your Contribution <span class="text-gradient-mixed-v6">Impact</span>
           </h1>
-          <p class="text-white text-opacity-50 fs-5">Review your nutritional intervention before finalizing support.</p>
+          <p class="text-white text-opacity-60 fs-5 fw-500">Transforming local communities through clinical-grade nutrition.</p>
         </div>
 
         <div class="row g-5" *ngIf="(cartItems$ | async) as items">
@@ -40,19 +40,22 @@ import gsap from 'gsap';
             <div class="cart-items-grid-v6">
               <div class="cart-item-glass-v6 p-4 mb-4 reveal-v6" *ngFor="let item of items">
                 <div class="row align-items-center g-4">
-                  <div class="col-3 col-md-2">
+                  <div class="col-4 col-md-2">
                     <div class="item-img-wrap-v6">
-                      <img [src]="item.image" [alt]="item.name" class="img-fluid">
+                      <img [src]="item.image" [alt]="item.name" class="img-fluid" onerror="this.src='assets/images/logo_mam.png'">
                     </div>
                   </div>
                   
-                  <div class="col-9 col-md-5">
+                  <div class="col-8 col-md-5">
                     <div class="d-flex align-items-center gap-2 mb-2">
                       <span class="badge-v6">PREMIUM GRADE</span>
                       <span class="badge-v6 emerald">BIO-AVAILABLE</span>
                     </div>
-                    <h4 class="fw-900 text-white mb-1">{{ item.name }}</h4>
-                    <p class="text-emerald fw-950 fs-5 mb-0 item-price-glow">₹{{ item.price }}</p>
+                    <h3 class="fw-950 text-white mb-1 letter-spacing-neg-1">{{ item.name }}</h3>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="text-white text-opacity-40 x-small text-uppercase">Price per unit:</span>
+                      <span class="text-emerald fw-900">₹{{ item.price }}</span>
+                    </div>
                   </div>
 
                   <div class="col-6 col-md-3">
@@ -226,72 +229,75 @@ import gsap from 'gsap';
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .text-gradient-mixed-v6 {
-      background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .tracking-tighter { letter-spacing: -2px; }
+    .letter-spacing-neg-1 { letter-spacing: -1px; }
 
     /* --- ITEM CARDS --- */
     .cart-item-glass-v6 {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 30px;
-      backdrop-filter: blur(30px);
-      transition: all 0.4s ease;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .cart-item-glass-v6:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: #10b981;
-      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(16, 185, 129, 0.5);
+      transform: scale(1.01);
     }
 
     .item-img-wrap-v6 {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 20px; padding: 10px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px; padding: 12px;
       display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
     }
 
     .badge-v6 {
-      font-size: 0.7rem; font-weight: 950; letter-spacing: 1px;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 4px 12px; border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.65rem; font-weight: 900; letter-spacing: 1px;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 10px; border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-transform: uppercase;
     }
     .badge-v6.emerald { 
       color: #10b981; 
-      background: rgba(16, 185, 129, 0.15);
-      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.2);
     }
 
     .text-emerald { color: #10b981 !important; }
     .text-blue { color: #3b82f6 !important; }
 
     .qty-stepper-v6 {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 100px; padding: 4px;
-      display: flex; align-items: center; justify-content: center;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 100px; padding: 6px;
+      display: flex; align-items: center; justify-content: space-between;
       width: 140px;
     }
     .qty-stepper-v6 button {
-      width: 34px; height: 34px; border-radius: 50%; border: none;
-      background: rgba(255, 255, 255, 0.15); color: #fff; transition: 0.3s;
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: rgba(255, 255, 255, 0.1); color: #fff; transition: 0.3s;
       display: flex; align-items: center; justify-content: center;
     }
     .qty-stepper-v6 button:hover:not(:disabled) { 
       background: #10b981; color: #020617; 
+      transform: scale(1.1);
     }
     .qty-stepper-v6 span { 
-      width: 44px; text-align: center; font-weight: 950; font-size: 1.3rem; 
-      color: #fff;
+      font-weight: 950; font-size: 1.2rem; 
+      color: #fff; font-family: 'Space Grotesk', sans-serif;
     }
 
     .item-total-v6 { 
-      font-size: 1.8rem; font-weight: 950; color: #fff;
+      font-size: 2rem; font-weight: 950; color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -1px;
     }
 
     .item-price-glow {

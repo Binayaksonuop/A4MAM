@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
       <div class="container py-5 position-relative z-2">
         
         <!-- Premium Filter Bar -->
-        <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap filter-container-glass p-2 rounded-pill mx-auto" style="max-width: fit-content;" *ngIf="products.length > 0">
+        <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap filter-container-glass p-2 rounded-pill mx-auto" style="max-width: fit-content;" *ngIf="!isLoading && products.length > 0">
           <button class="btn filter-pill" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">All Products</button>
           <button class="btn filter-pill" [class.active]="activeFilter === 'kids'" (click)="setFilter('kids')">For Kids</button>
           <button class="btn filter-pill" [class.active]="activeFilter === 'maternal'" (click)="setFilter('maternal')">Maternal Care</button>
@@ -40,15 +40,21 @@ import { Subscription } from 'rxjs';
           <button class="btn filter-pill" [class.active]="activeFilter === 'kit'" (click)="setFilter('kit')">Complete Kits</button>
         </div>
 
+        <!-- Loading State -->
+        <div class="text-center py-5" *ngIf="isLoading">
+          <div class="spinner-premium"></div>
+          <p class="text-white text-opacity-50 mt-4 letter-spacing-2">SCANNING INVENTORY...</p>
+        </div>
+
         <!-- Empty State -->
-        <div class="text-center py-5" *ngIf="products.length === 0">
+        <div class="text-center py-5" *ngIf="!isLoading && products.length === 0">
           <i class="bi bi-box-seam text-emerald" style="font-size: 3rem;"></i>
           <h3 class="text-white fw-bold mt-3">No Products Available</h3>
           <p class="text-white text-opacity-50">Please add products from the Admin Panel.</p>
         </div>
 
         <!-- Premium Product Grid -->
-        <div class="row g-4 mb-5" *ngIf="products.length > 0">
+        <div class="row g-4 mb-5" *ngIf="!isLoading && products.length > 0">
           <div class="col-lg-4 col-md-6" *ngFor="let product of filteredProducts; trackBy: trackByProductId">
             <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'">
               <div class="product-img-glass-wrap position-relative">
@@ -69,14 +75,12 @@ import { Subscription } from 'rxjs';
                     <span class="text-emerald fs-4 fw-900 letter-spacing-1">₹{{ product.price }}</span>
                   </div>
                   
-                  <div class="action-buttons d-flex gap-2">
-                    <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium">
+                    <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium" [attr.aria-label]="'View details for ' + product.name" (click)="consoleLogProduct(product)">
                       <i class="bi bi-eye"></i>
                     </a>
-                    <button class="btn btn-add-premium" (click)="addToCart(product)" [disabled]="product.status === 'Out of Stock'">
+                    <button class="btn btn-add-premium" (click)="addToCart(product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'">
                       <i class="bi bi-cart-plus-fill me-2"></i> Add
                     </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -131,21 +135,96 @@ import { Subscription } from 'rxjs';
     .hover-scale:hover { transform: scale(1.03); }
     .letter-spacing-1 { letter-spacing: 1px; }
     .x-small { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; }
+    .spinner-premium { width: 50px; height: 50px; border: 3px solid rgba(16, 185, 129, 0.1); border-top-color: #10b981; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .letter-spacing-2 { letter-spacing: 2px; font-size: 0.7rem; font-weight: 800; }
   `]
 })
 export class ShopListingComponent implements OnInit, OnDestroy {
   products: AdminProduct[] = [];
   filteredProducts: AdminProduct[] = [];
   activeFilter = 'all';
+  isLoading = true;
   private subscription: Subscription | null = null;
+
+  fallbackProducts: AdminProduct[] = [
+    {
+      id: '1',
+      _id: '1',
+      name: 'Chicky Bars',
+      slug: 'chicky-bars',
+      description: 'A nutritious and delicious snack packed with the power of Spirulina.',
+      price: 99,
+      stock: 500,
+      status: 'In Stock',
+      imageUrl: 'assets/images/chicky_s.png',
+      category: 'kids'
+    },
+    {
+      id: '2',
+      _id: '2',
+      name: 'Spirulina Capsules',
+      slug: 'capsules',
+      description: '100% Pure Pharmaceutical grade Spirulina in easy-to-consume capsules.',
+      price: 649,
+      stock: 100,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Spirulia Capsule.jpg',
+      category: 'maternal'
+    },
+    {
+      id: '3',
+      _id: '3',
+      name: 'Child Nutrition Kit',
+      slug: 'child-kit',
+      description: 'A comprehensive 30-day nutrition kit for moderate acute malnutrition recovery.',
+      price: 1299,
+      stock: 50,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Child Nutrition Kit.jpg',
+      category: 'kit'
+    },
+    {
+      id: '4',
+      _id: '4',
+      name: 'Maternal Health Kit',
+      slug: 'maternal-kit',
+      description: 'A targeted nutrition kit for pregnant and lactating mothers.',
+      price: 1599,
+      stock: 30,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Maternal Health Kit.jpg',
+      category: 'kit'
+    },
+    {
+      id: '5',
+      _id: '5',
+      name: 'Pure Spirulina Powder',
+      slug: 'powder',
+      description: '100% Pure Organic Spirulina Powder.',
+      price: 799,
+      stock: 200,
+      status: 'In Stock',
+      imageUrl: 'assets/images/spirulina_s.png',
+      category: 'powder'
+    }
+  ];
 
   constructor(private cartService: CartService, private productService: ProductService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.subscription = this.productService.getProducts().subscribe(prods => {
-      // Filter out drafts from public view
-      this.products = prods.filter(p => p.status !== 'Draft');
+      console.log('ShopListing: Received products:', prods);
+      
+      if (prods && prods.length > 0) {
+        this.products = prods.filter(p => p.status !== 'Draft');
+      } else {
+        this.products = this.fallbackProducts;
+      }
+      
       this.applyFilter();
+      this.isLoading = false;
     });
   }
 
@@ -161,17 +240,35 @@ export class ShopListingComponent implements OnInit, OnDestroy {
   }
 
   private applyFilter(): void {
+    console.log('ShopListing: Applying filter:', this.activeFilter, 'to products:', this.products);
+    
     if (this.activeFilter === 'all') {
       this.filteredProducts = this.products;
     } else {
-      this.filteredProducts = this.products.filter(p => p.category === this.activeFilter);
+      this.filteredProducts = this.products.filter(p => {
+        const pCat = (p.category || '').toLowerCase();
+        const filter = this.activeFilter.toLowerCase();
+        console.log('  Checking product:', p.name, 'category:', pCat, 'against:', filter);
+        
+        // Handle both exact match and variations
+        if (filter === 'kids') {
+          return pCat === 'kids' || pCat === 'chicky bar';
+        }
+        return pCat === filter;
+      });
     }
+    
+    console.log('ShopListing: Filtered products:', this.filteredProducts);
   }
 
   trackByProductId(index: number, product: AdminProduct): string {
     return product.id;
   }
 
+  consoleLogProduct(product: AdminProduct): void {
+    console.log('ShopListing: Clicked product:', product);
+  }
+  
   addToCart(product: AdminProduct): void {
     if (product.status === 'Out of Stock') return;
     this.cartService.addToCart({

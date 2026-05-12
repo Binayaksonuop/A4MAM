@@ -2,11 +2,32 @@
   <!-- Atmospheric background -->
   <div class="gallery-bg-premium-gradient position-fixed"></div>
   <div class="gallery-mesh-overlay position-fixed"></div>
+  <div class="gallery-grid-lines"></div>
+
+  <!-- PREMIUM GALLERY HERO BANNER -->
+  <section class="gallery-hero-banner position-relative overflow-hidden">
+    <div class="gallery-hero-bg">
+      <img src="assets/images/gallery/Gallery.png" alt="A4MAM Impact Gallery" class="w-100 h-100 object-fit-cover">
+      <div class="gallery-hero-overlay"></div>
+    </div>
+    <div class="container position-relative z-3 py-100">
+      <div class="text-center">
+        <div class="badge-premium-obsidian mb-3">MAM Digital Archive</div>
+        <h1 class="display-3 fw-950 text-white mb-4 tracking-tighter">
+          Our <span class="text-gradient-emerald-cyan">Impact</span> Chronicles
+        </h1>
+        <p class="lead text-white text-opacity-80 mb-0 max-w-2xl mx-auto">
+          A high-definition visual documentation of our science-driven intervention, capturing the journey of recovery
+          and the resilience of communities across India.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- GALLERY SECTION (PREMIUM MASONRY) -->
-  <section id="gallery" class="gallery-section-premium py-150 position-relative">
+  <section id="gallery" class="gallery-section-premium py-100 position-relative">
     <div class="container position-relative z-3">
-      <div class="row mb-5 pb-5 text-center gsap-reveal gallery-hero-text">
+      <div class="row mb-5 text-center gsap-reveal gallery-hero-text">
         <div class="col-lg-8 mx-auto">
           <div class="badge-premium-obsidian mb-3">MAM Digital Archive</div>
           <h2 class="display-3 fw-950 text-white mb-4 tracking-tighter">
@@ -16,10 +37,26 @@
             A high-definition visual documentation of our science-driven intervention, capturing the journey of recovery
             and the resilience of communities across India.
           </p>
+          <div class="gallery-count-badge">📸 <span class="fw-900">{{images.length}}</span> High-Resolution Images</div>
         </div>
       </div>
 
-      <div class="gallery-grid-masonry">
+      <div class="gallery-filter-wrap d-flex justify-content-center flex-wrap gap-2 mb-5">
+        <button class="gallery-filter-btn active" (click)="filterGallery('all')">All <span class="filter-count">{{images.length}}</span></button>
+        <button class="gallery-filter-btn" (click)="filterGallery('Impact')">Impact</button>
+        <button class="gallery-filter-btn" (click)="filterGallery('Clinical')">Clinical</button>
+        <button class="gallery-filter-btn" (click)="filterGallery('Mission')">Mission</button>
+        <button class="gallery-filter-btn" (click)="filterGallery('Action')">Action</button>
+        <button class="gallery-filter-btn" (click)="filterGallery('Research')">Research</button>
+      </div>
+
+      <div class="gallery-skeleton-grid" *ngIf="!imagesLoaded">
+        <div class="skeleton-item" *ngFor="let s of [1,2,3,4,5,6]">
+          <div class="skeleton-card shimmer"></div>
+        </div>
+      </div>
+
+      <div class="gallery-grid-masonry" *ngIf="imagesLoaded">
         <div class="gallery-item gsap-reveal" *ngFor="let img of images" 
           [ngClass]="img.class" (click)="openLightbox(img)">
           <div class="gallery-card rounded-5 overflow-hidden position-relative">
@@ -31,12 +68,44 @@
                 </p>
               </div>
             </div>
-            <img [src]="img.src" [alt]="img.title" class="w-100 h-100 object-fit-cover">
+            <img [src]="img.src" [alt]="img.title" class="w-100 h-100 object-fit-cover" 
+              [class.img-loaded]="true" (load)="onImageLoad()"
+              onerror="this.src='assets/images/logo_mam.png'">
           </div>
         </div>
       </div>
+
+      <!-- Loading/Empty State -->
+      <div class="text-center py-5" *ngIf="!images || images.length === 0">
+        <div class="spinner-border text-emerald" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-white text-opacity-50 mt-3">Synchronizing digital archive...</p>
+      </div>
     </div>
   </section>
+
+  <!-- Final Stats Row -->
+  <div class="gallery-final-stats row g-4 justify-content-center mb-5">
+    <div class="col-auto">
+      <div class="gfs-item text-center">
+        <div class="gfs-num text-white fw-900">23+</div>
+        <div class="gfs-label text-white text-opacity-40 small">Field Photos</div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="gfs-item text-center">
+        <div class="gfs-num text-emerald fw-900">5</div>
+        <div class="gfs-label text-white text-opacity-40 small">States Covered</div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="gfs-item text-center">
+        <div class="gfs-num text-warning fw-900">2026</div>
+        <div class="gfs-label text-white text-opacity-40 small">Active Campaign</div>
+      </div>
+    </div>
+  </div>
 
   <!-- CTA Section -->
   <section class="py-100 position-relative z-3">
