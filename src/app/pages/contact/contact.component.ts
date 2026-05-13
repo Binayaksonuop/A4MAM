@@ -123,7 +123,6 @@ export class ContactComponent implements AfterViewInit {
   }
 
   resetForm() {
-    this.submitted = false;
     this.formData = {
       name: '',
       email: '',
@@ -132,5 +131,6 @@ export class ContactComponent implements AfterViewInit {
       subject: '',
       message: ''
     };
+    this.submitted = false;
   }
 }
