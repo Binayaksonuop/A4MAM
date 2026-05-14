@@ -29,20 +29,16 @@ import { AuthService } from '../../../services/auth.service';
 
           <form (ngSubmit)="handleLogin()">
             <div class="form-floating-premium mb-3">
-              <input type="email" class="form-control-premium" [(ngModel)]="email" name="email" placeholder="Email" required>
+              <input type="email" class="form-control-premium" [(ngModel)]="email" name="email" placeholder="Email" required autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
               <label>Email Address</label>
             </div>
 
             <div class="form-floating-premium mb-4 position-relative">
-              <input [type]="showPassword ? 'text' : 'password'" class="form-control-premium pe-5" [(ngModel)]="password" name="password" placeholder="Passcode" required>
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control-premium pe-5" [(ngModel)]="password" name="password" placeholder="Passcode" required autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
               <label>Password</label>
               <i class="bi eye-toggle position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" 
                  [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" 
                  (click)="togglePassword()"></i>
-            </div>
-
-            <div class="demo-creds text-center mb-4 text-white text-opacity-50 small">
-              <i class="bi bi-info-circle me-1"></i> Admin Login: <strong class="text-emerald">admin&#64;a4mam.com / Admin&#64;2026</strong>
             </div>
 
             <div class="error-inline mb-4 text-center text-danger small fw-bold" *ngIf="loginError">

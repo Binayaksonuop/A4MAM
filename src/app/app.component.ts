@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isAdminPage = false;
   isAdminDashboard = false;
   cartCount = 0;
-  isLoading = false;
+  isLoading = true;
 
   // Custom Cursor
   cursorX = -100;
@@ -125,6 +125,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       this.analyticsService.init();
     }
+    
+    // Hide initial loader after delay
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 800);
     
     // Immediate initial check for SSR and first load
     this.isAdminPage = this.router.url.startsWith('/admin');
@@ -442,6 +447,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     const outline = document.querySelector('.cursor-outline') as HTMLElement;
 
     if (!dot || !outline) return;
+
+    // Set initial positions
+    gsap.set(dot, { x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    gsap.set(outline, { x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
     // Use GSAP quickSetter for ultra-performance (no frame drops)
     const xDotSetter = gsap.quickSetter(dot, "x", "px");

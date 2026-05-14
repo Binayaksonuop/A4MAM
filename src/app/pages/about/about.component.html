@@ -292,9 +292,9 @@
       </div>
 
       <!-- DELIVERY PIPELINE GRID -->
-      <div class="row g-4 delivery-pipeline-v6 align-items-center">
-        <!-- Node 1: Bio-Farming -->
-        <div class="col-lg-4 scroll-card">
+      <!-- Desktop: 3 cards in row with connectors -->
+      <div class="d-none d-lg-flex align-items-stretch gap-4 position-relative">
+        <div class="flex-1">
           <div class="pipeline-card-v6 h-100">
             <div class="p-image-wrap-v6">
               <img ngSrc="assets/images/lab_s.png" fill alt="Bio-Farming" class="p-img-v6">
@@ -311,9 +311,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Connector Arrow 1 -->
-        <div class="col-lg-auto d-none d-lg-flex pipeline-connector-arrow justify-content-center">
+        
+        <div class="pipeline-connector-arrow flex-shrink-0 align-self-center">
           <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 20 H50" stroke="rgba(16,185,129,0.4)" stroke-width="2" stroke-linecap="round"/>
             <path d="M45 15 L55 20 L45 25" stroke="rgba(16,185,129,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -322,9 +321,8 @@
             </circle>
           </svg>
         </div>
-
-        <!-- Node 2: Nutrient Lockdown -->
-        <div class="col-lg-4 scroll-card">
+        
+        <div class="flex-1">
           <div class="pipeline-card-v6 h-100">
             <div class="p-image-wrap-v6">
               <img ngSrc="assets/images/chicky_s.png" fill alt="Nutrient Lockdown" class="p-img-v6">
@@ -341,9 +339,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Connector Arrow 2 -->
-        <div class="col-lg-auto d-none d-lg-flex pipeline-connector-arrow justify-content-center">
+        
+        <div class="pipeline-connector-arrow flex-shrink-0 align-self-center">
           <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 20 H50" stroke="rgba(59,130,246,0.4)" stroke-width="2" stroke-linecap="round"/>
             <path d="M45 15 L55 20 L45 25" stroke="rgba(59,130,246,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -352,9 +349,63 @@
             </circle>
           </svg>
         </div>
+        
+        <div class="flex-1">
+          <div class="pipeline-card-v6 h-100">
+            <div class="p-image-wrap-v6">
+              <img ngSrc="assets/images/smiling_children.png" fill alt="Last-Mile Deployment" class="p-img-v6">
+              <div class="p-number-v6">03</div>
+              <div class="p-overlay-v6 amber"></div>
+            </div>
+            <div class="p-content-v6 p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="p-icon-mini-v6 amber"><i class="bi bi-truck"></i></div>
+                <h5 class="fw-900 text-white mb-0">Last-Mile Impact</h5>
+              </div>
+              <p class="text-white text-opacity-50 small mb-0">Strategic partnership with Anganwadis and health centers
+                ensures children receive their dosage with 100% adherence and monitoring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <!-- Node 3: Last-Mile Deployment -->
-        <div class="col-lg-4 scroll-card">
+      <!-- Mobile: 1 card per row -->
+      <div class="row g-4 d-lg-none">
+        <div class="col-12">
+          <div class="pipeline-card-v6 h-100">
+            <div class="p-image-wrap-v6">
+              <img ngSrc="assets/images/lab_s.png" fill alt="Bio-Farming" class="p-img-v6">
+              <div class="p-number-v6">01</div>
+              <div class="p-overlay-v6 emerald"></div>
+            </div>
+            <div class="p-content-v6 p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="p-icon-mini-v6 emerald"><i class="bi bi-tree-fill"></i></div>
+                <h5 class="fw-900 text-white mb-0">Eco-Farming</h5>
+              </div>
+              <p class="text-white text-opacity-50 small mb-0">Our Spirulina is cultivated in strictly controlled,
+                alkaline-rich environments ensuring 100% purity and zero heavy-metal contamination.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="pipeline-card-v6 h-100">
+            <div class="p-image-wrap-v6">
+              <img ngSrc="assets/images/chicky_s.png" fill alt="Nutrient Lockdown" class="p-img-v6">
+              <div class="p-number-v6">02</div>
+              <div class="p-overlay-v6 blue"></div>
+            </div>
+            <div class="p-content-v6 p-4">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="p-icon-mini-v6 blue"><i class="bi bi-box-seam"></i></div>
+                <h5 class="fw-900 text-white mb-0">Nutrient Lockdown</h5>
+              </div>
+              <p class="text-white text-opacity-50 small mb-0">The biomass is processed into "Chicky Bars" and Kits,
+                locking in micronutrients while ensuring a shelf-life that withstands rural environments.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
           <div class="pipeline-card-v6 h-100">
             <div class="p-image-wrap-v6">
               <img ngSrc="assets/images/smiling_children.png" fill alt="Last-Mile Deployment" class="p-img-v6">
@@ -408,6 +459,280 @@
             <h5 class="text-white fw-900">12,450+ Children Nourished</h5>
             <p class="text-white text-opacity-50 small">Active programs across Odisha, Telangana, Madhya Pradesh with 94% recovery rate.</p>
           </div>
+        </div>
+      </div>
+
+      <!-- UNSDF / GLOBAL STANDARDS SECTION (PREMIUM UI) -->
+      <div class="row mt-5 pt-5 justify-content-center">
+        <div class="col-lg-12">
+          <section class="unsdf-global-section" style="padding: 5rem 0; position: relative;">
+            <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden pointer-events-none">
+              <div class="floating-glow-1" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%); top: -100px; left: -100px; filter: blur(60px);"></div>
+              <div class="floating-glow-2" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%); bottom: -100px; right: -100px; filter: blur(60px);"></div>
+            </div>
+
+            <div class="text-center mb-6 pb-5 position-relative z-2">
+              <div class="premium-badge-glow mx-auto mb-4" style="display: inline-flex; padding: 8px 24px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 50px;">
+                <span class="text-blue-300 fw-700 small text-uppercase letter-spacing-2"><i class="bi bi-globe-americas me-2"></i>Global Alignment</span>
+              </div>
+              <h2 class="display-3 fw-950 text-white mb-4">Aligned with <span class="text-gradient-blue">UNSDF & Global Goals</span></h2>
+              <p class="lead text-white text-opacity-75" style="max-width: 700px; margin: 0 auto;">Our mission directly contributes to United Nations Sustainable Development Goals and the UNSDF India framework.</p>
+            </div>
+
+            <div class="row g-5 justify-content-center position-relative z-2">
+              <div class="col-lg-4 col-md-6">
+                <div class="sdg-card h-100 p-6 border-0" style="background: linear-gradient(145deg, rgba(233,66,53,0.12) 0%, rgba(2,6,23,0.8) 100%); border: 1px solid rgba(233,66,53,0.25); border-radius: 32px; backdrop-filter: blur(20px); position: relative; overflow: hidden;">
+                  <div class="premium-corner-ribbon" style="position: absolute; top: 20px; right: -30px; background: linear-gradient(135deg, #E94235 0%, #D92B1C 100%); padding: 6px 40px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: white;"></div>
+                  <div class="sdg-icon-box mb-5" style="width: 84px; height: 84px; background: linear-gradient(135deg, #E94235 0%, #D92B1C 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(233,66,53,0.3);">
+                    <span class="text-white fw-950 fs-1">2</span>
+                  </div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">SDG 2: Zero Hunger</h4>
+                  <p class="text-white text-opacity-65 mb-5" style="line-height: 1.7;">End hunger, achieve food security and improved nutrition, and promote sustainable agriculture.</p>
+                  <div class="premium-divider mb-4" style="height: 1px; background: linear-gradient(90deg, transparent, rgba(233,66,53,0.3), transparent);"></div>
+                  <ul class="sdg-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(233,66,53,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-red-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Eliminate childhood malnutrition</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(233,66,53,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-red-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Ensure access to nutrient-dense food</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6">
+                <div class="sdg-card h-100 p-6 border-0" style="background: linear-gradient(145deg, rgba(76,159,56,0.12) 0%, rgba(2,6,23,0.8) 100%); border: 1px solid rgba(76,159,56,0.25); border-radius: 32px; backdrop-filter: blur(20px); position: relative; overflow: hidden;">
+                  <div class="premium-corner-ribbon" style="position: absolute; top: 20px; right: -30px; background: linear-gradient(135deg, #4C9F38 0%, #3B7E2A 100%); padding: 6px 40px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: white;"></div>
+                  <div class="sdg-icon-box mb-5" style="width: 84px; height: 84px; background: linear-gradient(135deg, #4C9F38 0%, #3B7E2A 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(76,159,56,0.3);">
+                    <span class="text-white fw-950 fs-1">3</span>
+                  </div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">SDG 3: Good Health</h4>
+                  <p class="text-white text-opacity-65 mb-5" style="line-height: 1.7;">Ensure healthy lives and promote well-being for all at all ages.</p>
+                  <div class="premium-divider mb-4" style="height: 1px; background: linear-gradient(90deg, transparent, rgba(76,159,56,0.3), transparent);"></div>
+                  <ul class="sdg-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(76,159,56,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-green-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Reduce child mortality</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(76,159,56,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-green-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Combat nutritional deficiencies</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6">
+                <div class="sdg-card h-100 p-6 border-0" style="background: linear-gradient(145deg, rgba(0,114,188,0.12) 0%, rgba(2,6,23,0.8) 100%); border: 1px solid rgba(0,114,188,0.25); border-radius: 32px; backdrop-filter: blur(20px); position: relative; overflow: hidden;">
+                  <div class="premium-corner-ribbon" style="position: absolute; top: 20px; right: -30px; background: linear-gradient(135deg, #0072BC 0%, #005A9A 100%); padding: 6px 40px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: white;"></div>
+                  <div class="sdg-icon-box mb-5" style="width: 84px; height: 84px; background: linear-gradient(135deg, #0072BC 0%, #005A9A 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,114,188,0.3);">
+                    <i class="bi bi-globe2 fs-1 text-white"></i>
+                  </div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">UNSDF India</h4>
+                  <p class="text-white text-opacity-65 mb-5" style="line-height: 1.7;">United Nations Sustainable Development Framework for India 2023-2027.</p>
+                  <div class="premium-divider mb-4" style="height: 1px; background: linear-gradient(90deg, transparent, rgba(0,114,188,0.3), transparent);"></div>
+                  <ul class="sdg-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(0,114,188,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-blue-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Leave no one behind</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <div class="check-icon-wrapper me-3" style="width: 24px; height: 24px; background: rgba(0,114,188,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="bi bi-check-lg text-blue-400 fs-6"></i>
+                      </div>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Partnership for impact</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- SPIRULINA'S 4 TARGET AREAS -->
+      <div class="row mt-5 pt-5 justify-content-center">
+        <div class="col-lg-12">
+          <section class="target-areas-section section-padding position-relative overflow-hidden" style="padding: 4rem 0; background: transparent;">
+            <div class="container position-relative z-2">
+              <div class="row mb-5 pb-4 text-center gsap-reveal">
+                <div class="col-lg-8 mx-auto">
+                  <h6 class="badge-premium-warning-glow mb-3">Nutritional Reversal</h6>
+                  <h2 class="display-4 fw-950 text-white mb-4">Spirulina's <span class="text-gradient-gold-glow">4 Target
+                      Areas</span></h2>
+                  <p class="lead text-white text-opacity-80">Spirulina addresses malnutrition by targeting four critical
+                    physiological areas that determine a child's long-term health and survival.</p>
+                </div>
+              </div>
+
+              <div class="row g-4 perspective-container">
+                <div class="col-lg-6 col-md-6 stack-card-item">
+                  <div class="benefit-card-premium theme-physical" style="background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.2); border-radius: 24px;">
+                    <div class="benefit-icon-box" style="width: 64px; height: 64px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                      <i class="bi bi-activity text-white fs-2"></i>
+                    </div>
+                    <span class="benefit-subtitle text-emerald text-uppercase small letter-spacing-2 fw-800">Physical Growth & Development</span>
+                    <h4 class="benefit-title text-white fw-950 mt-2 mb-3">Stunting & Wasting Recovery</h4>
+                    <ul class="benefit-list">
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-emerald me-2"></i><span>High-density proteins and lipids to reverse wasting</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-emerald me-2"></i><span>Supports reversal of stunting — chronic malnutrition</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-emerald me-2"></i><span>Essential proteins as building blocks for tissue repair</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 stack-card-item">
+                  <div class="benefit-card-premium theme-brain" style="background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 24px;">
+                    <div class="benefit-icon-box" style="width: 64px; height: 64px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                      <i class="bi bi-cpu text-white fs-2"></i>
+                    </div>
+                    <span class="benefit-subtitle text-blue-300 text-uppercase small letter-spacing-2 fw-800">Brain & Cognitive Function</span>
+                    <h4 class="benefit-title text-white fw-950 mt-2 mb-3">Neural Development</h4>
+                    <ul class="benefit-list">
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-blue-300 me-2"></i><span>Lipids provide concentrated energy for early brain development</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-blue-300 me-2"></i><span>Iodine supports healthy thyroid and cognitive growth</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-blue-300 me-2"></i><span>Essential fatty acids facilitate vitamin absorption</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 stack-card-item">
+                  <div class="benefit-card-premium theme-immune" style="background: rgba(139,92,246,0.05); border: 1px solid rgba(139,92,246,0.2); border-radius: 24px;">
+                    <div class="benefit-icon-box" style="width: 64px; height: 64px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                      <i class="bi bi-shield-check text-white fs-2"></i>
+                    </div>
+                    <span class="benefit-subtitle text-purple-300 text-uppercase small letter-spacing-2 fw-800">Immune System & Metabolism</span>
+                    <h4 class="benefit-title text-white fw-950 mt-2 mb-3">Defense & Regulation</h4>
+                    <ul class="benefit-list">
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-purple-300 me-2"></i><span>Zinc & Vitamin A strengthen immune defense</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-purple-300 me-2"></i><span>Vitamin E acts as a powerful antioxidant</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-purple-300 me-2"></i><span>Vitamins support normal metabolic development</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 stack-card-item">
+                  <div class="benefit-card-premium theme-blood" style="background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 24px;">
+                    <div class="benefit-icon-box" style="width: 64px; height: 64px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                      <i class="bi bi-droplet-half text-white fs-2"></i>
+                    </div>
+                    <span class="benefit-subtitle text-amber-300 text-uppercase small letter-spacing-2 fw-800">Blood Vitality & Anemia Prevention</span>
+                    <h4 class="benefit-title text-white fw-950 mt-2 mb-3">Hemoglobin Recovery</h4>
+                    <ul class="benefit-list">
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-amber-300 me-2"></i><span>Rich in bioavailable Iron for hemoglobin formation</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-amber-300 me-2"></i><span>Increases hemoglobin to reverse anemia</span></li>
+                      <li class="text-white text-opacity-75"><i class="bi bi-check2 text-amber-300 me-2"></i><span>Iron + amino acids enhance absorption</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- PPMC RECOVERY FRAMEWORK -->(PREMIUM UI) -->
+      <div class="row mt-5 pt-5 justify-content-center">
+        <div class="col-lg-12">
+          <section class="ppmc-framework-section" style="padding: 5rem 0; position: relative;">
+            <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden pointer-events-none">
+              <div class="floating-glow-3" style="position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%); top: 0; left: 50%; transform: translateX(-50%); filter: blur(70px);"></div>
+            </div>
+
+            <div class="text-center mb-6 pb-5 position-relative z-2">
+              <div class="premium-badge-glow mx-auto mb-4" style="display: inline-flex; padding: 8px 24px; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); border-radius: 50px;">
+                <span class="text-purple-300 fw-700 small text-uppercase letter-spacing-2"><i class="bi bi-clipboard2-pulse me-2"></i>Clinical Protocol</span>
+              </div>
+              <h2 class="display-3 fw-950 text-white mb-4">PPMC Recovery Framework: <span class="text-gradient-purple">Plan → Prepare → Monitor → Control</span></h2>
+              <p class="lead text-white text-opacity-75" style="max-width: 700px; margin: 0 auto;">Our structured 4-step recovery framework ensures systematic, measurable, and sustainable improvement for every child.</p>
+            </div>
+
+            <div class="row g-5 justify-content-center position-relative z-2">
+              <div class="col-lg-3 col-md-6">
+                <div class="ppmc-card h-100 p-6" style="background: linear-gradient(145deg, rgba(139,92,246,0.15) 0%, rgba(2,6,23,0.85) 100%); border: 1px solid rgba(139,92,246,0.3); border-radius: 32px; backdrop-filter: blur(25px); position: relative; overflow: hidden;">
+                  <div class="step-number-badge mb-5" style="width: 72px; height: 72px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; font-weight: 950; box-shadow: 0 25px 60px rgba(139,92,246,0.4);">1</div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">Plan</h4>
+                  <p class="text-white text-opacity-70 mb-5" style="line-height: 1.7;">Clinical assessment and personalized nutrition plan based on anthropometric measurements.</p>
+                  <ul class="ppmc-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <i class="bi bi-check-circle-fill text-purple-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Anthropometric screening</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <i class="bi bi-check-circle-fill text-purple-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Personalized intervention plan</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="ppmc-card h-100 p-6" style="background: linear-gradient(145deg, rgba(14,165,233,0.15) 0%, rgba(2,6,23,0.85) 100%); border: 1px solid rgba(14,165,233,0.3); border-radius: 32px; backdrop-filter: blur(25px); position: relative; overflow: hidden;">
+                  <div class="step-number-badge mb-5" style="width: 72px; height: 72px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; font-weight: 950; box-shadow: 0 25px 60px rgba(14,165,233,0.4);">2</div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">Prepare</h4>
+                  <p class="text-white text-opacity-70 mb-5" style="line-height: 1.7;">Family counseling, product preparation, and setting up monitoring systems.</p>
+                  <ul class="ppmc-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <i class="bi bi-check-circle-fill text-blue-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Family orientation</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <i class="bi bi-check-circle-fill text-blue-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Monitoring setup</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="ppmc-card h-100 p-6" style="background: linear-gradient(145deg, rgba(16,185,129,0.15) 0%, rgba(2,6,23,0.85) 100%); border: 1px solid rgba(16,185,129,0.3); border-radius: 32px; backdrop-filter: blur(25px); position: relative; overflow: hidden;">
+                  <div class="step-number-badge mb-5" style="width: 72px; height: 72px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; font-weight: 950; box-shadow: 0 25px 60px rgba(16,185,129,0.4);">3</div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">Monitor</h4>
+                  <p class="text-white text-opacity-70 mb-5" style="line-height: 1.7;">Regular weight and height tracking, compliance checks, and health assessments.</p>
+                  <ul class="ppmc-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <i class="bi bi-check-circle-fill text-emerald fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Weekly tracking</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <i class="bi bi-check-circle-fill text-emerald fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Growth monitoring</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="ppmc-card h-100 p-6" style="background: linear-gradient(145deg, rgba(245,158,11,0.15) 0%, rgba(2,6,23,0.85) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 32px; backdrop-filter: blur(25px); position: relative; overflow: hidden;">
+                  <div class="step-number-badge mb-5" style="width: 72px; height: 72px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; font-weight: 950; box-shadow: 0 25px 60px rgba(245,158,11,0.4);">4</div>
+                  <h4 class="fw-950 text-white mb-3 lh-sm">Control</h4>
+                  <p class="text-white text-opacity-70 mb-5" style="line-height: 1.7;">Sustained recovery, relapse prevention, and long-term nutritional maintenance.</p>
+                  <ul class="ppmc-points mb-0">
+                    <li class="d-flex align-items-start mb-3">
+                      <i class="bi bi-check-circle-fill text-amber-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Recovery validation</span>
+                    </li>
+                    <li class="d-flex align-items-start">
+                      <i class="bi bi-check-circle-fill text-amber-400 fs-5 me-3 mt-1"></i>
+                      <span class="text-white text-opacity-85" style="line-height: 1.6;">Long-term follow-up</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
 

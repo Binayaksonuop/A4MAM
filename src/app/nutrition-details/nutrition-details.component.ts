@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone } from '@angular/core';
-import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -9,12 +10,35 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-nutrition-details',
   standalone: true,
-  imports: [NgOptimizedImage, RouterModule],
+  imports: [CommonModule, NgOptimizedImage, RouterModule, FormsModule],
   templateUrl: './nutrition-details.component.html',
   styleUrl: './nutrition-details.component.css'
 })
 export class NutritionDetailsComponent implements AfterViewInit, OnDestroy {
   private isBrowser: boolean;
+
+  // Calculator Variables
+  calcGender: string = '';
+  calcAge: number | null = null;
+  calcWeight: number | null = null;
+  calcStatus: string = '';
+  calcColor: string = '#10b981';
+  calcIcon: string = 'bi-shield-check';
+  calcDosageMg: string = '';
+  calcRecommendation: string = '';
+  calcResultClass: string = '';
+  calcZScore: number | null = null;
+
+  // WHO Weight-for-Age (WAZ) metrics (simplified for 6-60 months)
+  private whoWeightTable: { [key: number]: { m: number; s: number } } = {
+    6: { m: 7.9, s: 0.9 },
+    12: { m: 9.6, s: 1.0 },
+    18: { m: 11.0, s: 1.1 },
+    24: { m: 12.2, s: 1.2 },
+    36: { m: 14.3, s: 1.4 },
+    48: { m: 16.3, s: 1.6 },
+    60: { m: 18.3, s: 1.8 }
+  };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -159,5 +183,72 @@ export class NutritionDetailsComponent implements AfterViewInit, OnDestroy {
     });
 
     ScrollTrigger.refresh();
+  }
+
+  private getWhoMetrics(ageMonths: number): { m: number; s: number } {
+    const table = this.whoWeightTable;
+    const keys = Object.keys(table).map(Number).sort((a, b) => a - b);
+
+    if (ageMonths <= keys[0]) return table[keys[0]];
+    if (ageMonths >= keys[keys.length - 1]) return table[keys[keys.length - 1]];
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      const low = keys[i];
+      const high = keys[i + 1];
+
+      if (ageMonths >= low && ageMonths <= high) {
+        const t = (ageMonths - low) / (high - low);
+        return {
+          m: table[low].m + t * (table[high].m - table[low].m),
+          s: table[low].s + t * (table[high].s - table[low].s)
+        };
+      }
+    }
+
+    return table[keys[keys.length - 1]];
+  }
+
+  calculateDosage(): void {
+    const age = Number(this.calcAge);
+    const weight = Number(this.calcWeight);
+
+    if (!age || !weight || age < 6 || age > 60 || weight <= 0) {
+      this.calcStatus = '';
+      this.calcResultClass = '';
+      this.calcZScore = null;
+      return;
+    }
+
+    const metrics = this.getWhoMetrics(age);
+    const waz = (weight - metrics.m) / metrics.s;
+
+    this.calcZScore = Math.round(waz * 100) / 100;
+    this.calcResultClass = 'active';
+
+    if (waz >= -1) {
+      this.calcStatus = 'Normal / Healthy';
+      this.calcColor = '#10b981';
+      this.calcIcon = 'bi-shield-check';
+      this.calcDosageMg = '1.0g / day';
+      this.calcRecommendation = 'Maintain current nutrition. 1g daily Spirulina for preventive immunity support.';
+    } else if (waz >= -2) {
+      this.calcStatus = 'At Risk (Mildly Underweight)';
+      this.calcColor = '#06b6d4';
+      this.calcIcon = 'bi-exclamation-circle';
+      this.calcDosageMg = '2.0g / day';
+      this.calcRecommendation = 'Nutritional support needed. 2g daily Spirulina to prevent progression to MAM.';
+    } else if (waz >= -3) {
+      this.calcStatus = 'Moderate Acute Malnutrition (MAM)';
+      this.calcColor = '#f59e0b';
+      this.calcIcon = 'bi-exclamation-triangle';
+      this.calcDosageMg = '3.0g - 5.0g / day';
+      this.calcRecommendation = 'Therapeutic intervention required. High-dose Spirulina (Chicky Bars) plus balanced diet.';
+    } else {
+      this.calcStatus = 'Severe Acute Malnutrition (SAM)';
+      this.calcColor = '#ef4444';
+      this.calcIcon = 'bi-hospital';
+      this.calcDosageMg = 'Immediate Clinical Action';
+      this.calcRecommendation = 'CRITICAL: Requires immediate referral to a Nutrition Rehabilitation Center (NRC).';
+    }
   }
 }

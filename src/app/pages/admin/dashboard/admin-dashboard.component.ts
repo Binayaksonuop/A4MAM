@@ -41,6 +41,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   currentTime = new Date();
   missionTime: string = '00:00:00';
   private timerHandle: any;
+  isDarkTheme = true;
 
   // Gallery State
   galleryImages: GalleryImage[] = [];
@@ -142,6 +143,10 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  toggleTheme(): void {
+    this.isDarkTheme = !this.isDarkTheme;
+  }
+
   logout(): void {
     this.authService.logout();
   }
@@ -231,7 +236,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   deleteOrder(mongoId: string, customerName: string): void {
-    if (confirm(`"${customerName}" ka order permanently delete karna chahte hain?`)) {
+    if (confirm(`Are you sure you want to permanently delete "${customerName}"'s order?`)) {
       this.orderService.deleteOrder(mongoId).subscribe(() => {
         this.refreshDashboardData();
       });
