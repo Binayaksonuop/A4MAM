@@ -16,18 +16,14 @@ connectDB();
 // Middleware
 const allowedOrigins = [
   'http://localhost:4200',
-  'https://a4mam.com', // Future production domain
-  'https://spirulina-mam.vercel.app' // Example frontend deployment
+  'https://a4mam.com',
+  'https://spirulina-mam.vercel.app',
+  'https://a4mam.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1 && process.env.NODE_ENV === 'production') {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
     return callback(null, true);
   },
   credentials: true
