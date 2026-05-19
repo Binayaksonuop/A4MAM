@@ -2,7 +2,7 @@
   "version": 2,
   "framework": "angular",
   "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/spirulina-mam/browser",
+  "outputDirectory": "dist/mam",
   "rewrites": [
     {
       "source": "/(.*)",
