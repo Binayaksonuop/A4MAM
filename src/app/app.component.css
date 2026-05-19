@@ -455,13 +455,13 @@ p.lead {
 }
 
 .shop-menu-glass {
-  background: rgba(15, 23, 42, 0.85) !important;
+  background: #0f172a !important;
+  background-color: #0f172a !important;
   backdrop-filter: blur(30px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 24px !important;
   min-width: 280px;
   margin-top: 10px !important;
-  /* Reduced margin */
   padding: 10px !important;
   opacity: 0;
   visibility: hidden;
@@ -469,6 +469,16 @@ p.lead {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: block !important;
   pointer-events: none;
+}
+
+.dropdown-menu {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+}
+
+.dropdown-menu.show {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
 }
 
 /* BRIDGE PSEUDO-ELEMENT TO PREVENT HOVER GAP */
