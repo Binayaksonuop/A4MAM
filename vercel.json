@@ -1,12 +1,18 @@
 {
   "version": 2,
-  "framework": "angular",
-  "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/mam/browser",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/mam/browser"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
