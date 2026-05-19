@@ -1,18 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/mam/browser"
-      }
+  "experimentalServices": {
+    "frontend": {
+      "routePrefix": "/",
+      "framework": "angular"
     }
-  ],
-  "routes": [
+  },
+  "outputDirectory": "dist/mam/browser",
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
