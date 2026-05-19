@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initStackedCardAnimations();
         this.initJourneyAnimations();
         this.initMouseParallax();
+        this.initRootCausesAnimations();
         ScrollTrigger.refresh();
       }, 300);
     });
@@ -109,11 +110,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const heroContent = document.querySelector('.hero-content-v11');
     const auroraGlow = document.querySelector('.aurora-glow-v11');
     const meshGradient = document.querySelector('.mesh-gradient-v11');
+    
+    // 3D Motion Graphics Elements
+    const orbitalRings = document.querySelectorAll('.orbital-ring-3d');
+    const glowOrbs = document.querySelectorAll('.glow-orb-3d');
+    const geoShapes = document.querySelectorAll('.geo-shape-3d');
 
     if (visualWrapper) {
       gsap.to(visualWrapper, {
-        rotateY: -18 + (this.mouseX * 10),
-        rotateX: 8 - (this.mouseY * 8),
+        rotateY: -18 + (this.mouseX * 15),
+        rotateX: 8 - (this.mouseY * 12),
         duration: 0.6,
         ease: 'power2.out'
       });
@@ -121,8 +127,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (heroContent) {
       gsap.to(heroContent, {
-        x: -this.mouseX * 30,
-        y: -this.mouseY * 20,
+        x: -this.mouseX * 40,
+        y: -this.mouseY * 25,
         duration: 0.6,
         ease: 'power2.out'
       });
@@ -130,8 +136,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (auroraGlow) {
       gsap.to(auroraGlow, {
-        x: this.mouseX * 80,
-        y: this.mouseY * 60,
+        x: this.mouseX * 100,
+        y: this.mouseY * 80,
         duration: 0.8,
         ease: 'power2.out'
       });
@@ -139,12 +145,47 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (meshGradient) {
       gsap.to(meshGradient, {
-        x: -this.mouseX * 40,
-        y: -this.mouseY * 30,
+        x: -this.mouseX * 50,
+        y: -this.mouseY * 40,
         duration: 0.8,
         ease: 'power2.out'
       });
     }
+
+    // Animate Orbital Rings with 3D Parallax
+    orbitalRings.forEach((ring, index) => {
+      const multiplier = (index + 1) * 0.5;
+      gsap.to(ring, {
+        x: this.mouseX * (30 * multiplier),
+        y: this.mouseY * (20 * multiplier),
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    });
+
+    // Animate Glowing Orbs with 3D Parallax
+    glowOrbs.forEach((orb, index) => {
+      const multiplier = (index + 1) * 0.4;
+      gsap.to(orb, {
+        x: this.mouseX * (50 * multiplier),
+        y: this.mouseY * (40 * multiplier),
+        scale: 1 + (Math.abs(this.mouseX) * 0.2),
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    });
+
+    // Animate Geometric Shapes with 3D Parallax
+    geoShapes.forEach((shape, index) => {
+      const multiplier = (index + 1) * 0.6;
+      gsap.to(shape, {
+        x: this.mouseX * (60 * multiplier),
+        y: this.mouseY * (50 * multiplier),
+        rotateZ: this.mouseX * 20,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    });
 
     this.animationFrameId = undefined;
   }
@@ -172,6 +213,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Line-by-line text reveal setup
     gsap.set('.hero-line-inner', { y: '110%', skewY: 8, opacity: 0, display: 'block' });
+
+    // 3D Motion Graphics setup
+    gsap.set('.orbital-ring-3d', { opacity: 0, scale: 0.5 });
+    gsap.set('.glow-orb-3d', { opacity: 0, scale: 0.3 });
+    gsap.set('.geo-shape-3d', { opacity: 0, y: 50, rotateX: 45, rotateY: 45 });
+    gsap.set('.depth-layer-3d', { opacity: 0 });
 
     const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.6 } });
 
@@ -212,6 +259,42 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       { opacity: 1, scale: 1, y: 0, stagger: 0.3, duration: 1.5, ease: 'back.out(1.4)' },
       1.2
     );
+
+    // 3D Orbital Rings Entrance
+    tl.to('.orbital-ring-3d', {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      stagger: 0.2,
+      ease: 'expo.out'
+    }, 0.3);
+
+    // Premium Glowing Orbs Entrance
+    tl.to('.glow-orb-3d', {
+      opacity: 1,
+      scale: 1,
+      duration: 2.2,
+      stagger: 0.15,
+      ease: 'back.out(1.2)'
+    }, 0.5);
+
+    // 3D Geometric Shapes Entrance
+    tl.to('.geo-shape-3d', {
+      opacity: 0.15,
+      y: 0,
+      rotateX: 0,
+      rotateY: 0,
+      duration: 1.8,
+      stagger: 0.25,
+      ease: 'power3.out'
+    }, 0.7);
+
+    // Depth Layer Entrance
+    tl.to('.depth-layer-3d', {
+      opacity: 1,
+      duration: 2,
+      ease: 'power2.out'
+    }, 0.4);
   }
 
   private initRevealAnimations(): void {
@@ -388,6 +471,134 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       );
+    });
+  }
+
+  private initRootCausesAnimations(): void {
+    const section = document.querySelector('.malnutrition-reasons-section');
+    if (!section) return;
+
+    // Animate background elements
+    gsap.set('.reasons-orbital-v11', { opacity: 0, scale: 0.5 });
+    gsap.set('.reasons-glow-orb', { opacity: 0, scale: 0.3 });
+    
+    // Animate cards with 3D effect
+    gsap.utils.toArray<HTMLElement>('.reason-card-premium-v11').forEach((card, index) => {
+      gsap.fromTo(card,
+        { 
+          opacity: 0, 
+          y: 60, 
+          rotateX: 20, 
+          scale: 0.9,
+          transformOrigin: 'center bottom'
+        },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          scale: 1,
+          duration: 1.4,
+          ease: 'power3.out',
+          delay: index * 0.2,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // Animate feature items inside card
+      const featureItems = card.querySelectorAll('.feature-item-v11');
+      gsap.fromTo(featureItems,
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+
+    // Animate icon boxes
+    gsap.utils.toArray<HTMLElement>('.reason-icon-box-v11').forEach((iconBox, index) => {
+      gsap.fromTo(iconBox,
+        { 
+          opacity: 0, 
+          scale: 0.5, 
+          rotate: -15,
+          y: 20
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          rotate: 0,
+          y: 0,
+          duration: 1,
+          ease: 'back.out(1.5)',
+          delay: 0.3 + index * 0.2,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+
+    // Background elements entrance
+    gsap.to('.reasons-orbital-v11', {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      stagger: 0.3,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    gsap.to('.reasons-glow-orb', {
+      opacity: 1,
+      scale: 1,
+      duration: 2.2,
+      stagger: 0.2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    // Add hover interactions for cards
+    gsap.utils.toArray<HTMLElement>('.reason-card-premium-v11').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card.querySelectorAll('.feature-item-v11'), {
+          x: 5,
+          duration: 0.3,
+          stagger: 0.05,
+          ease: 'power2.out'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card.querySelectorAll('.feature-item-v11'), {
+          x: 0,
+          duration: 0.3,
+          stagger: 0.05,
+          ease: 'power2.out'
+        });
+      });
     });
   }
 
