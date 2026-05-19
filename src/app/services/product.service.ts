@@ -29,6 +29,69 @@ export class ProductService {
   private publicApiUrl = `${environment.apiUrl}/products`;
   private productsSubject = new BehaviorSubject<AdminProduct[]>([]);
 
+  fallbackProducts: AdminProduct[] = [
+    {
+      id: '1',
+      _id: '1',
+      name: 'Chicky Bars',
+      slug: 'chicky-bars',
+      description: 'A nutritious and delicious snack packed with the power of Spirulina.',
+      price: 99,
+      stock: 500,
+      status: 'In Stock',
+      imageUrl: 'assets/images/chicky_s.png',
+      category: 'kids'
+    },
+    {
+      id: '2',
+      _id: '2',
+      name: 'Spirulina Capsules',
+      slug: 'capsules',
+      description: '100% Pure Pharmaceutical grade Spirulina in easy-to-consume capsules.',
+      price: 649,
+      stock: 100,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Spirulia Capsule.jpg',
+      category: 'maternal'
+    },
+    {
+      id: '3',
+      _id: '3',
+      name: 'Child Nutrition Kit',
+      slug: 'child-kit',
+      description: 'A comprehensive 30-day nutrition kit for moderate acute malnutrition recovery.',
+      price: 1299,
+      stock: 50,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Child Nutrition Kit.jpg',
+      category: 'kit'
+    },
+    {
+      id: '4',
+      _id: '4',
+      name: 'Maternal Health Kit',
+      slug: 'maternal-kit',
+      description: 'A targeted nutrition kit for pregnant and lactating mothers.',
+      price: 1599,
+      stock: 30,
+      status: 'In Stock',
+      imageUrl: 'assets/images/Maternal Health Kit.jpg',
+      category: 'kit'
+    },
+    {
+      id: '5',
+      _id: '5',
+      name: 'Pure Spirulina Powder',
+      slug: 'powder',
+      description: '100% Pure Organic Spirulina Powder.',
+      price: 799,
+      stock: 200,
+      status: 'In Stock',
+      imageUrl: 'assets/images/spirulina_s.png',
+      category: 'powder'
+    }
+  ];
+
   constructor(private http: HttpClient) {}
 
   getProducts(isAdmin: boolean = false): Observable<AdminProduct[]> {
@@ -38,7 +101,7 @@ export class ProductService {
     return this.http.get<BackendResponse>(apiUrl).pipe(
       map(response => {
         console.log('ProductService: Raw API response:', response);
-        if (response.success) {
+        if (response.success && response.data && response.data.length > 0) {
           const mapped = response.data.map(item => ({
             id: item._id,
             _id: item._id,
@@ -55,11 +118,11 @@ export class ProductService {
           this.productsSubject.next(mapped);
           return mapped;
         }
-        return [];
+        return this.fallbackProducts;
       }),
       catchError(error => {
         console.error('Error fetching products:', error);
-        return of([]);
+        return of(this.fallbackProducts);
       })
     );
   }
