@@ -117,7 +117,7 @@ import gsap from 'gsap';
                     <div class="row align-items-center g-4">
                       <div class="col-md-4 text-center">
                         <div class="qr-container-v6 p-2 bg-white rounded-3 shadow-glow-qr" (click)="toggleQrLightbox()" style="cursor: zoom-in;">
-                          <img src="assets/images/A4%20QR.jpeg" alt="UPI QR" class="img-fluid">
+                          <img src="assets/images/upi_qr.jpeg" alt="UPI QR" class="img-fluid">
                           <div class="qr-hint-v6"><i class="bi bi-arrows-fullscreen"></i> Tap to Enlarge</div>
                         </div>
                         <div class="mt-3 x-small text-white text-opacity-90">After completing payment in your UPI app, click the button below.</div>
@@ -224,7 +224,7 @@ import gsap from 'gsap';
       <div class="qr-lightbox-overlay" *ngIf="isQrLightboxOpen" (click)="toggleQrLightbox()">
         <div class="lightbox-content" (click)="$event.stopPropagation()">
           <button class="btn-close-lightbox" (click)="toggleQrLightbox()"><i class="bi bi-x-lg"></i></button>
-          <img src="assets/images/A4%20QR.jpeg" alt="UPI QR Full" class="qr-full-img">
+          <img src="assets/images/upi_qr.jpeg" alt="UPI QR Full" class="qr-full-img">
           <div class="lightbox-footer text-center mt-3">
             <h5 class="text-white fw-bold mb-1">Scan & Pay</h5>
             <p class="text-white text-opacity-50 small mb-0">A4MAM Mission Contribution</p>
