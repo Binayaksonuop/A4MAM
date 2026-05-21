@@ -4003,7 +4003,7 @@ p.lead {
    ========================================================================== */
 
 .impact-section-premium {
-  background: #fdfdfd;
+  background: radial-gradient(circle at 50% 50%, #01241c 0%, #011410 100%);
   position: relative;
   overflow: hidden;
   padding: 160px 0;
@@ -4036,11 +4036,13 @@ p.lead {
 }
 
 .impact-card-modern {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 80px 45px;
   border-radius: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -4051,18 +4053,18 @@ p.lead {
   z-index: 1;
 }
 
-/* Eye-catching Gradient Cards - Ultra Premium */
+/* Eye-catching Gradient Cards - Dark Glassmorphic */
 .impact-card-modern {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 45px;
   padding: 60px 40px;
   transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
 
@@ -4081,9 +4083,9 @@ p.lead {
 
 .impact-card-modern:hover {
   transform: translateY(-20px) scale(1.03) perspective(1000px) rotateX(4deg);
-  background: #ffffff;
-  box-shadow: 0 45px 90px rgba(0, 0, 0, 0.1);
-  border-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 45px 90px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .impact-card-modern.card-2:hover {
@@ -4127,7 +4129,7 @@ p.lead {
 
 .stat-label-modern {
   font-size: 1.15rem;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 800;
   letter-spacing: 0.12em;
   line-height: 1.4;
@@ -4182,7 +4184,7 @@ p.lead {
 }
 
 .highlight-line-premium {
-  color: #0a2540;
+  color: rgba(255, 255, 255, 0.95);
   letter-spacing: -0.03em;
   word-spacing: 15px;
 }
@@ -4203,14 +4205,15 @@ p.lead {
 
 .badge-premium-emerald-light {
   background: rgba(16, 185, 129, 0.1);
-  color: #059669;
+  color: #34d399;
   padding: 10px 30px;
   border-radius: 100px;
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-size: 0.85rem;
-  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 
@@ -9506,8 +9509,8 @@ img {
    IMPACT SECTION (HIGH-END PREMIUM)
    ========================================================================== */
 .impact-section-premium {
-  padding: 140px 0;
-  background: #ffffff;
+  padding: 160px 0;
+  background: radial-gradient(circle at 50% 50%, #01241c 0%, #011410 100%);
 }
 
 .impact-mesh-gradient-light {
@@ -9533,21 +9536,24 @@ img {
 }
 
 .impact-card-modern {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 32px;
-  padding: 50px 30px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 45px;
+  padding: 60px 40px;
   position: relative;
   overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   height: 100%;
 }
 
 .impact-card-modern:hover {
-  transform: translateY(-15px);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
-  border-color: rgba(16, 185, 129, 0.2);
+  transform: translateY(-20px) scale(1.03) perspective(1000px) rotateX(4deg);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 45px 90px rgba(0, 0, 0, 0.5);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .stat-visual-container {
@@ -9555,8 +9561,9 @@ img {
 }
 
 .stat-number-modern {
-  font-size: 4rem;
-  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  font-size: 6rem;
+  font-weight: 950;
+  letter-spacing: -0.06em;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -9571,11 +9578,11 @@ img {
 }
 
 .stat-label-modern {
-  font-size: 0.85rem;
+  font-size: 1.15rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #64748b;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .stat-card-glow {

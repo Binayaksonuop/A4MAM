@@ -24,8 +24,8 @@ interface LoginResponse {
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/admin`;
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  private currentAdminSubject = new BehaviorSubject<Admin | null>(null);
+  private isLoggedInSubject: BehaviorSubject<boolean>;
+  private currentAdminSubject: BehaviorSubject<Admin | null>;
   private isBrowser: boolean;
 
   constructor(
@@ -35,19 +35,20 @@ export class AuthService {
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     
-    if (this.isBrowser) {
-      this.loadSession();
-    }
-  }
-
-  private loadSession(): void {
-    const token = localStorage.getItem('a4mam_admin_token');
-    const adminData = localStorage.getItem('a4mam_admin_user');
+    let initialIsLoggedIn = false;
+    let initialAdmin: Admin | null = null;
     
-    if (token && adminData) {
-      this.isLoggedInSubject.next(true);
-      this.currentAdminSubject.next(JSON.parse(adminData));
+    if (this.isBrowser) {
+      const token = localStorage.getItem('a4mam_admin_token');
+      const adminData = localStorage.getItem('a4mam_admin_user');
+      if (token && adminData) {
+        initialIsLoggedIn = true;
+        initialAdmin = JSON.parse(adminData);
+      }
     }
+    
+    this.isLoggedInSubject = new BehaviorSubject<boolean>(initialIsLoggedIn);
+    this.currentAdminSubject = new BehaviorSubject<Admin | null>(initialAdmin);
   }
 
   isLoggedIn(): Observable<boolean> {

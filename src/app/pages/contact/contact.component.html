@@ -151,7 +151,7 @@
                   <div class="col-md-6">
                     <div class="form-floating-modern">
                       <i class="bi bi-person input-icon"></i>
-                      <input type="text" name="name" class="modern-input" placeholder=" " id="nameInput" [(ngModel)]="formData.name" required #name="ngModel">
+                      <input type="text" name="name" class="modern-input" placeholder=" " id="nameInput" [(ngModel)]="formData.name" required #name="ngModel" autocomplete="name">
                       <label for="nameInput">Full Name</label>
                       <div class="input-focus-line"></div>
                     </div>
@@ -159,7 +159,7 @@
                   <div class="col-md-6">
                     <div class="form-floating-modern">
                       <i class="bi bi-envelope input-icon"></i>
-                      <input type="email" name="email" class="modern-input" placeholder=" " id="emailInput" [(ngModel)]="formData.email" required #email="ngModel">
+                      <input type="email" name="email" class="modern-input" placeholder=" " id="emailInput" [(ngModel)]="formData.email" required #email="ngModel" autocomplete="email">
                       <label for="emailInput">Email Address</label>
                       <div class="input-focus-line"></div>
                     </div>
@@ -167,7 +167,7 @@
                   <div class="col-md-6">
                     <div class="form-floating-modern">
                       <i class="bi bi-telephone input-icon"></i>
-                      <input type="text" name="phone" class="modern-input" placeholder=" " id="phoneInput" [(ngModel)]="formData.phone">
+                      <input type="text" name="phone" class="modern-input" placeholder=" " id="phoneInput" [(ngModel)]="formData.phone" autocomplete="tel">
                       <label for="phoneInput">Phone Number</label>
                       <div class="input-focus-line"></div>
                     </div>
@@ -175,7 +175,7 @@
                   <div class="col-md-6">
                     <div class="form-floating-modern">
                       <i class="bi bi-building input-icon"></i>
-                      <input type="text" name="organization" class="modern-input" placeholder=" " id="orgInput" [(ngModel)]="formData.organization">
+                      <input type="text" name="organization" class="modern-input" placeholder=" " id="orgInput" [(ngModel)]="formData.organization" autocomplete="organization">
                       <label for="orgInput">Organization (Optional)</label>
                       <div class="input-focus-line"></div>
                     </div>
@@ -183,7 +183,7 @@
                   <div class="col-12">
                     <div class="form-floating-modern">
                       <i class="bi bi-chat-dots input-icon"></i>
-                      <input type="text" name="subject" class="modern-input" placeholder=" " id="subjectInput" [(ngModel)]="formData.subject" required>
+                      <input type="text" name="subject" class="modern-input" placeholder=" " id="subjectInput" [(ngModel)]="formData.subject" required autocomplete="off">
                       <label for="subjectInput">Subject of Inquiry</label>
                       <div class="input-focus-line"></div>
                     </div>
@@ -191,7 +191,7 @@
                   <div class="col-12">
                     <div class="form-floating-modern">
                       <i class="bi bi-pencil input-icon"></i>
-                      <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput" rows="5" [(ngModel)]="formData.message" (ngModelChange)="countChars($event)" required #message="ngModel"></textarea>
+                      <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput" rows="5" [(ngModel)]="formData.message" (ngModelChange)="countChars($event)" required #message="ngModel" autocomplete="off"></textarea>
                       <label for="messageInput">How can we collaborate?</label>
                       <div class="input-focus-line"></div>
                       <span class="char-counter text-white text-opacity-30 small">0 / 500</span>

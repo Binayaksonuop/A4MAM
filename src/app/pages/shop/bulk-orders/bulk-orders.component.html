@@ -65,28 +65,28 @@
               <div class="row g-3">
                 <div class="col-12">
                   <div class="form-floating-premium">
-                    <input type="text" class="form-control-premium" name="orgName" [(ngModel)]="formData.orgName" placeholder="Organization Name" required #orgName="ngModel" [class.is-invalid]="submitted && orgName.invalid">
-                    <label>Organization Name</label>
+                    <input type="text" id="bulkOrgName" class="form-control-premium" name="orgName" [(ngModel)]="formData.orgName" placeholder="Organization Name" required #orgName="ngModel" [class.is-invalid]="submitted && orgName.invalid" autocomplete="organization">
+                    <label for="bulkOrgName">Organization Name</label>
                     <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && orgName.invalid">Organization name is required</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating-premium">
-                    <input type="text" class="form-control-premium" name="contactPerson" [(ngModel)]="formData.contactPerson" placeholder="Contact Person" required #contactPerson="ngModel" [class.is-invalid]="submitted && contactPerson.invalid">
-                    <label>Contact Person</label>
+                    <input type="text" id="bulkContactPerson" class="form-control-premium" name="contactPerson" [(ngModel)]="formData.contactPerson" placeholder="Contact Person" required #contactPerson="ngModel" [class.is-invalid]="submitted && contactPerson.invalid" autocomplete="name">
+                    <label for="bulkContactPerson">Contact Person</label>
                     <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && contactPerson.invalid">Required</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating-premium">
-                    <input type="email" class="form-control-premium" name="workEmail" [(ngModel)]="formData.workEmail" placeholder="Work Email" required #workEmail="ngModel" [class.is-invalid]="submitted && workEmail.invalid">
-                    <label>Work Email</label>
+                    <input type="email" id="bulkWorkEmail" class="form-control-premium" name="workEmail" [(ngModel)]="formData.workEmail" placeholder="Work Email" required #workEmail="ngModel" [class.is-invalid]="submitted && workEmail.invalid" autocomplete="email">
+                    <label for="bulkWorkEmail">Work Email</label>
                     <div class="text-danger mt-1 ms-2" style="font-size: 0.75rem" *ngIf="submitted && workEmail.invalid">Valid email required</div>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-floating-premium">
-                    <select class="form-control-premium-select" name="category" [(ngModel)]="formData.category">
+                    <select id="bulkCategory" class="form-control-premium-select" name="category" [(ngModel)]="formData.category" autocomplete="off">
                       <option value="School Feeding Program">School Feeding & Mid-Day Meal</option>
                       <option value="Government Health Program">Govt Health Program (NHM/ICDS)</option>
                       <option value="Community Health Center">Community Health Center</option>
@@ -94,13 +94,13 @@
                       <option value="NGO / Relief Op">NGO / Disaster Relief Intervention</option>
                       <option value="Clinical Research">Clinical Research / Trials</option>
                     </select>
-                    <label>Intervention Category</label>
+                    <label for="bulkCategory">Intervention Category</label>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-floating-premium">
-                    <textarea class="form-control-premium" name="details" [(ngModel)]="formData.details" placeholder="Project Details" style="height: 120px;"></textarea>
-                    <label>Project Details & Estimated Volume</label>
+                    <textarea id="bulkDetails" class="form-control-premium" name="details" [(ngModel)]="formData.details" placeholder="Project Details" style="height: 120px;" autocomplete="off"></textarea>
+                    <label for="bulkDetails">Project Details & Estimated Volume</label>
                   </div>
                 </div>
               </div>

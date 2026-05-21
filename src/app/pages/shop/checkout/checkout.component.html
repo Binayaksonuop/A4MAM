@@ -31,36 +31,36 @@
               <div class="row g-4 mb-4">
                 <div class="col-md-6">
                   <div class="input-group-v6">
-                    <label>Recipient Name</label>
-                    <input type="text" name="name" [(ngModel)]="formData.name" placeholder="Enter Full Name" required>
+                    <label for="checkoutName">Recipient Name</label>
+                    <input type="text" id="checkoutName" name="name" [(ngModel)]="formData.name" placeholder="Enter Full Name" required autocomplete="name">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group-v6">
-                    <label>Contact Coordination (Phone)</label>
-                    <input type="tel" name="phone" [(ngModel)]="formData.phone" placeholder="Enter Mobile Number" required>
+                    <label for="checkoutPhone">Contact Coordination (Phone)</label>
+                    <input type="tel" id="checkoutPhone" name="phone" [(ngModel)]="formData.phone" placeholder="Enter Mobile Number" required autocomplete="tel">
                   </div>
                 </div>
               </div>
               <div class="input-group-v6 mb-4">
-                <label>Email Coordination</label>
-                <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Enter Email Address" required>
+                <label for="checkoutEmail">Email Coordination</label>
+                <input type="email" id="checkoutEmail" name="email" [(ngModel)]="formData.email" placeholder="Enter Email Address" required autocomplete="email">
               </div>
               <div class="input-group-v6 mb-4">
-                <label>Operational Hub (Full Address)</label>
-                <textarea name="address" [(ngModel)]="formData.address" rows="3" placeholder="Street, Landmark, Apartment" required></textarea>
+                <label for="checkoutAddress">Operational Hub (Full Address)</label>
+                <textarea id="checkoutAddress" name="address" [(ngModel)]="formData.address" rows="3" placeholder="Street, Landmark, Apartment" required autocomplete="street-address"></textarea>
               </div>
               <div class="row g-4">
                 <div class="col-md-6">
                   <div class="input-group-v6">
-                    <label>City / Region</label>
-                    <input type="text" name="city" [(ngModel)]="formData.city" placeholder="Enter City" required>
+                    <label for="checkoutCity">City / Region</label>
+                    <input type="text" id="checkoutCity" name="city" [(ngModel)]="formData.city" placeholder="Enter City" required autocomplete="address-level2">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group-v6">
-                    <label>Sector Code (Pincode)</label>
-                    <input type="text" name="pincode" [(ngModel)]="formData.pincode" placeholder="Enter Pincode" required>
+                    <label for="checkoutPincode">Sector Code (Pincode)</label>
+                    <input type="text" id="checkoutPincode" name="pincode" [(ngModel)]="formData.pincode" placeholder="Enter Pincode" required autocomplete="postal-code">
                   </div>
                 </div>
               </div>

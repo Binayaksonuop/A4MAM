@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import * as THREE from 'three';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,6 +30,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private mouseX = 0;
   private mouseY = 0;
   private animationFrameId?: number;
+
+  // Three.js
+  private threeScene?: THREE.Scene;
+  private threeCamera?: THREE.PerspectiveCamera;
+  private threeRenderer?: THREE.WebGLRenderer;
+  private spiralGroup?: THREE.Group;
+  private threeAnimId?: number;
+  private threeMouseX = 0;
+  private threeMouseY = 0;
+  private threeResizeHandler?: () => void;
+  private threeMouseHandler?: (e: MouseEvent) => void;
 
   childrenSupported = 0;
   nutritionImprovement = 0;
@@ -84,6 +96,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initJourneyAnimations();
         this.initMouseParallax();
         this.initRootCausesAnimations();
+        this.initThreeJsSpiral();
         ScrollTrigger.refresh();
       }, 300);
     });
@@ -195,7 +208,188 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
+    if (this.threeAnimId) {
+      cancelAnimationFrame(this.threeAnimId);
+    }
+    if (this.threeRenderer) {
+      this.threeRenderer.dispose();
+    }
+    if (this.threeResizeHandler) {
+      window.removeEventListener('resize', this.threeResizeHandler);
+    }
+    if (this.threeMouseHandler) {
+      window.removeEventListener('mousemove', this.threeMouseHandler);
+    }
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  }
+
+  private initThreeJsSpiral(): void {
+    const canvas = document.getElementById('spirulina-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    // Scene
+    const scene = new THREE.Scene();
+    this.threeScene = scene;
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 18);
+    this.threeCamera = camera;
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    this.threeRenderer = renderer;
+
+    // Group to hold everything
+    const group = new THREE.Group();
+    this.spiralGroup = group;
+    scene.add(group);
+
+    // --- HELIX 1 (Emerald) ---
+    const helix1Geo = new THREE.BufferGeometry();
+    const ambientGeo = new THREE.BufferGeometry();
+
+    const HELIX_POINTS = 800;
+    const AMBIENT_POINTS = 300;
+    const helix1Pos: number[] = [];
+    const ambientPos: number[] = [];
+    const helix1Colors: number[] = [];
+    const ambientColors: number[] = [];
+    const helix1Sizes: number[] = [];
+    const ambientSizes: number[] = [];
+
+    const emerald = new THREE.Color(0x10b981);
+    const lightEmerald = new THREE.Color(0x6ee7b7);
+    const white = new THREE.Color(0xffffff);
+
+    for (let i = 0; i < HELIX_POINTS; i++) {
+      const t = (i / HELIX_POINTS) * Math.PI * 10 - Math.PI * 5;
+      const radius = 3.5;
+      const verticalStretch = 0.7;
+
+      // Helix 1
+      helix1Pos.push(
+        Math.cos(t) * radius,
+        t * verticalStretch,
+        Math.sin(t) * radius
+      );
+
+      // Gradient along helix: emerald -> lightEmerald -> emerald
+      const mixRatio = (Math.sin(t * 0.3) + 1) / 2;
+      const c1 = emerald.clone().lerp(lightEmerald, mixRatio);
+
+      helix1Colors.push(c1.r, c1.g, c1.b);
+
+      // Varying sizes for sparkle effect
+      helix1Sizes.push(0.06 + Math.random() * 0.06);
+    }
+
+    // Ambient floating particles
+    for (let i = 0; i < AMBIENT_POINTS; i++) {
+      ambientPos.push(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 18,
+        (Math.random() - 0.5) * 10
+      );
+      const c = emerald.clone().lerp(white, Math.random() * 0.6);
+      ambientColors.push(c.r, c.g, c.b);
+      ambientSizes.push(0.02 + Math.random() * 0.04);
+    }
+
+    helix1Geo.setAttribute('position', new THREE.Float32BufferAttribute(helix1Pos, 3));
+    helix1Geo.setAttribute('color', new THREE.Float32BufferAttribute(helix1Colors, 3));
+    ambientGeo.setAttribute('position', new THREE.Float32BufferAttribute(ambientPos, 3));
+    ambientGeo.setAttribute('color', new THREE.Float32BufferAttribute(ambientColors, 3));
+
+    // Glowing circular sprite texture
+    const makeGlowTexture = (color: string, size = 64) => {
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      const ctx = c.getContext('2d')!;
+      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+      grad.addColorStop(0, color);
+      grad.addColorStop(0.35, color.replace('1)', '0.6)'));
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+      return new THREE.CanvasTexture(c);
+    };
+
+    const helix1Mat = new THREE.PointsMaterial({
+      size: 0.12,
+      vertexColors: true,
+      map: makeGlowTexture('rgba(16,185,129,1)'),
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const ambientMat = new THREE.PointsMaterial({
+      size: 0.07,
+      vertexColors: true,
+      map: makeGlowTexture('rgba(110,231,183,1)'),
+      transparent: true,
+      opacity: 0.4,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const helix1Mesh = new THREE.Points(helix1Geo, helix1Mat);
+    const ambientMesh = new THREE.Points(ambientGeo, ambientMat);
+
+    group.add(helix1Mesh);
+    group.add(ambientMesh);
+
+    // Mouse interaction
+    let targetRotX = 0, targetRotY = 0;
+    this.threeMouseHandler = (e: MouseEvent) => {
+      this.threeMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      this.threeMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      targetRotX = this.threeMouseY * 0.3;
+      targetRotY = this.threeMouseX * 0.5;
+    };
+    window.addEventListener('mousemove', this.threeMouseHandler);
+
+    // Resize
+    this.threeResizeHandler = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', this.threeResizeHandler);
+
+    // Fade in
+    gsap.fromTo(canvas, { opacity: 0 }, { opacity: 0.85, duration: 3, delay: 1, ease: 'power2.out' });
+
+    // Animation loop
+    const clock = new THREE.Clock();
+    const animate = () => {
+      this.threeAnimId = requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+
+      // Continuous slow rotation
+      group.rotation.y = elapsed * 0.12 + targetRotY;
+      group.rotation.x += (targetRotX - group.rotation.x) * 0.05;
+
+      // Gentle breathing scale
+      const breathe = 1 + Math.sin(elapsed * 0.5) * 0.02;
+      group.scale.setScalar(breathe);
+
+      // Ambient particles drift
+      const positions = ambientGeo.attributes['position'] as THREE.BufferAttribute;
+      for (let i = 0; i < AMBIENT_POINTS; i++) {
+        const y = positions.getY(i) + 0.008;
+        positions.setY(i, y > 9 ? -9 : y);
+      }
+      positions.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    };
+    animate();
   }
 
   private animateHero(): void {

@@ -79,7 +79,7 @@
 
         <div class="admin-search-box d-none d-md-flex align-items-center px-3 py-2 rounded-pill">
           <i class="bi bi-search text-white text-opacity-30 me-2"></i>
-          <input type="text" placeholder="Search mission data..." class="bg-transparent border-0 text-white small" [(ngModel)]="searchTerm">
+          <input type="text" id="searchTerm" name="searchTerm" placeholder="Search mission data..." class="bg-transparent border-0 text-white small" [(ngModel)]="searchTerm" autocomplete="off">
         </div>
 
         <!-- Theme Toggle -->
@@ -635,16 +635,16 @@
           <div class="panel-glass p-4">
             <h5 class="fw-bold text-white mb-4"><i class="bi bi-globe me-2 text-emerald"></i>General Settings</h5>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Site Name</label>
-              <input type="text" class="form-control bg-dark text-white border-secondary" value="A4MAM - Mission Against Malnutrition">
+              <label for="siteName" class="text-white text-opacity-50 x-small fw-bold">Site Name</label>
+              <input type="text" id="siteName" name="siteName" class="form-control bg-dark text-white border-secondary" value="A4MAM - Mission Against Malnutrition" autocomplete="organization">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Site URL</label>
-              <input type="text" class="form-control bg-dark text-white border-secondary" value="https://a4mam.com">
+              <label for="siteUrl" class="text-white text-opacity-50 x-small fw-bold">Site URL</label>
+              <input type="text" id="siteUrl" name="siteUrl" class="form-control bg-dark text-white border-secondary" value="https://a4mam.com" autocomplete="url">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Contact Email</label>
-              <input type="email" class="form-control bg-dark text-white border-secondary" value="contact@a4mam.com">
+              <label for="contactEmail" class="text-white text-opacity-50 x-small fw-bold">Contact Email</label>
+              <input type="email" id="contactEmail" name="contactEmail" class="form-control bg-dark text-white border-secondary" value="contact@a4mam.com" autocomplete="email">
             </div>
             <button class="btn btn-premium-emerald-v6 w-100">Save General Settings</button>
           </div>
@@ -655,23 +655,23 @@
           <div class="panel-glass p-4">
             <h5 class="fw-bold text-white mb-4"><i class="bi bi-envelope-at me-2 text-blue"></i>Email Notifications</h5>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Host</label>
-              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="smtp.gmail.com">
+              <label for="smtpHost" class="text-white text-opacity-50 x-small fw-bold">SMTP Host</label>
+              <input type="text" id="smtpHost" name="smtpHost" class="form-control bg-dark text-white border-secondary" placeholder="smtp.gmail.com" autocomplete="off">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Port</label>
-              <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="587">
+              <label for="smtpPort" class="text-white text-opacity-50 x-small fw-bold">SMTP Port</label>
+              <input type="number" id="smtpPort" name="smtpPort" class="form-control bg-dark text-white border-secondary" placeholder="587" autocomplete="off">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Username</label>
-              <input type="email" class="form-control bg-dark text-white border-secondary" placeholder="noreply@a4mam.org">
+              <label for="smtpUsername" class="text-white text-opacity-50 x-small fw-bold">SMTP Username</label>
+              <input type="email" id="smtpUsername" name="smtpUsername" class="form-control bg-dark text-white border-secondary" placeholder="noreply@a4mam.org" autocomplete="email">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">SMTP Password</label>
-              <input type="password" class="form-control bg-dark text-white border-secondary" placeholder="••••••••">
+              <label for="smtpPassword" class="text-white text-opacity-50 x-small fw-bold">SMTP Password</label>
+              <input type="password" id="smtpPassword" name="smtpPassword" class="form-control bg-dark text-white border-secondary" placeholder="••••••••" autocomplete="new-password">
             </div>
             <div class="form-check form-switch mb-4">
-              <input class="form-check-input" type="checkbox" role="switch" checked id="emailNotifications">
+              <input class="form-check-input" type="checkbox" role="switch" checked id="emailNotifications" name="emailNotifications">
               <label class="form-check-label text-white" for="emailNotifications">Enable Email Notifications</label>
             </div>
             <button class="btn btn-outline-emerald w-100 mb-2">Test Email Connection</button>
@@ -684,15 +684,15 @@
           <div class="panel-glass p-4">
             <h5 class="fw-bold text-white mb-4"><i class="bi bi-credit-card-2-front me-2 text-amber"></i>Payment Gateway</h5>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Razorpay Key ID</label>
-              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="rzp_test_••••••••••••">
+              <label for="razorpayKeyId" class="text-white text-opacity-50 x-small fw-bold">Razorpay Key ID</label>
+              <input type="text" id="razorpayKeyId" name="razorpayKeyId" class="form-control bg-dark text-white border-secondary" placeholder="rzp_test_••••••••••••" autocomplete="off">
             </div>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Razorpay Secret Key</label>
-              <input type="password" class="form-control bg-dark text-white border-secondary" placeholder="••••••••••••••••">
+              <label for="razorpayKeySecret" class="text-white text-opacity-50 x-small fw-bold">Razorpay Secret Key</label>
+              <input type="password" id="razorpayKeySecret" name="razorpayKeySecret" class="form-control bg-dark text-white border-secondary" placeholder="••••••••••••••••" autocomplete="new-password">
             </div>
             <div class="form-check form-switch mb-4">
-              <input class="form-check-input" type="checkbox" role="switch" id="testMode">
+              <input class="form-check-input" type="checkbox" role="switch" id="testMode" name="testMode">
               <label class="form-check-label text-white" for="testMode">Test Mode (Sandbox)</label>
             </div>
             <button class="btn btn-premium-emerald-v6 w-100">Save Payment Settings</button>
@@ -704,15 +704,15 @@
           <div class="panel-glass p-4">
             <h5 class="fw-bold text-white mb-4"><i class="bi bi-bar-chart-line me-2 text-violet"></i>Analytics</h5>
             <div class="form-group-v6 mb-3">
-              <label class="text-white text-opacity-50 x-small fw-bold">Google Analytics ID</label>
-              <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="G-XXXXXXXXXX">
+              <label for="googleAnalyticsId" class="text-white text-opacity-50 x-small fw-bold">Google Analytics ID</label>
+              <input type="text" id="googleAnalyticsId" name="googleAnalyticsId" class="form-control bg-dark text-white border-secondary" placeholder="G-XXXXXXXXXX" autocomplete="off">
             </div>
             <div class="form-check form-switch mb-3">
-              <input class="form-check-input" type="checkbox" role="switch" checked id="gaEnabled">
+              <input class="form-check-input" type="checkbox" role="switch" checked id="gaEnabled" name="gaEnabled">
               <label class="form-check-label text-white" for="gaEnabled">Enable Google Analytics</label>
             </div>
             <div class="form-check form-switch mb-4">
-              <input class="form-check-input" type="checkbox" role="switch" id="anonymizeIp">
+              <input class="form-check-input" type="checkbox" role="switch" id="anonymizeIp" name="anonymizeIp">
               <label class="form-check-label text-white" for="anonymizeIp">Anonymize IP Addresses</label>
             </div>
             <button class="btn btn-premium-emerald-v6 w-100">Save Analytics Settings</button>
