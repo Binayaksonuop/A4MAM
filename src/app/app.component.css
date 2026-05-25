@@ -10171,31 +10171,38 @@ section {
 @media (max-width: 991px) {
   .navbar-premium-bridge {
     border-radius: 24px !important;
-    padding: 8px 16px !important;
-    flex-wrap: wrap;
+    padding: 10px 20px !important;
+  }
+
+  .navbar-collapse {
+    width: 100%;
   }
 
   #navbarNav {
     background: rgba(15, 23, 42, 0.98) !important;
     backdrop-filter: blur(30px) !important;
     -webkit-backdrop-filter: blur(30px) !important;
-    margin-top: 10px;
-    border-radius: 20px;
-    padding: 16px;
+    margin-top: 12px;
+    border-radius: 24px;
+    padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    max-height: 70vh;
+    max-height: 75vh;
     overflow-y: auto;
   }
 
   .navbar-nav {
-    gap: 8px !important;
+    gap: 12px !important;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item {
     width: 100%;
   }
 
   .navbar-nav .nav-link {
-    font-size: 0.9rem !important;
-    padding: 10px 14px !important;
-    border-radius: 12px;
+    font-size: 0.95rem !important;
+    padding: 14px 18px !important;
+    border-radius: 16px;
     width: 100%;
   }
 
@@ -10203,10 +10210,14 @@ section {
     width: 100%;
   }
 
+  .dropdown-toggle {
+    width: 100%;
+  }
+
   .shop-menu-glass {
-    position: static !important;
-    margin-top: 6px !important;
-    margin-bottom: 6px !important;
+    position: relative !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
     min-width: 100% !important;
     max-width: 100% !important;
     width: 100% !important;
@@ -10214,33 +10225,44 @@ section {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    background: rgba(30, 41, 59, 0.95) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    transition: all 0.3s ease !important;
-    box-shadow: none !important;
+    background: rgba(30, 41, 59, 0.98) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 20px !important;
+    transition: all 0.35s ease !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
   }
 
   .shop-menu-glass.show {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
-    position: static !important;
-    margin-top: 6px !important;
-    margin-bottom: 6px !important;
+    position: relative !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
   }
 
   .shop-menu-glass::before {
     display: none !important;
   }
 
+  .shop-menu-inner {
+    padding: 12px !important;
+  }
+
+  .shop-item {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+  }
+
   .nav-cta-wrapper {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 16px;
   }
 
   .btn-premium-nav-ultra {
     width: 100%;
     justify-content: center;
+    padding: 14px 24px !important;
   }
 
   .nav-cart-wrapper {
