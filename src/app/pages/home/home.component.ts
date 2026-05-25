@@ -93,7 +93,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initComparisonAnimations();
         this.initChickyBarAnimations();
         this.initStackedCardAnimations();
-        this.initJourneyAnimations();
         this.initMouseParallax();
         this.initRootCausesAnimations();
         this.initThreeJsSpiral();
@@ -124,7 +123,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const auroraGlow = document.querySelector('.aurora-glow-v11');
     const meshGradient = document.querySelector('.mesh-gradient-v11');
     
-    // 3D Motion Graphics Elements
+    // 3D Motion Graphics Elements (only if they exist)
     const orbitalRings = document.querySelectorAll('.orbital-ring-3d');
     const glowOrbs = document.querySelectorAll('.glow-orb-3d');
     const geoShapes = document.querySelectorAll('.geo-shape-3d');
@@ -165,40 +164,46 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
 
-    // Animate Orbital Rings with 3D Parallax
-    orbitalRings.forEach((ring, index) => {
-      const multiplier = (index + 1) * 0.5;
-      gsap.to(ring, {
-        x: this.mouseX * (30 * multiplier),
-        y: this.mouseY * (20 * multiplier),
-        duration: 0.8,
-        ease: 'power2.out'
+    // Animate Orbital Rings with 3D Parallax (only if they exist)
+    if (orbitalRings.length > 0) {
+      orbitalRings.forEach((ring, index) => {
+        const multiplier = (index + 1) * 0.5;
+        gsap.to(ring, {
+          x: this.mouseX * (30 * multiplier),
+          y: this.mouseY * (20 * multiplier),
+          duration: 0.8,
+          ease: 'power2.out'
+        });
       });
-    });
+    }
 
-    // Animate Glowing Orbs with 3D Parallax
-    glowOrbs.forEach((orb, index) => {
-      const multiplier = (index + 1) * 0.4;
-      gsap.to(orb, {
-        x: this.mouseX * (50 * multiplier),
-        y: this.mouseY * (40 * multiplier),
-        scale: 1 + (Math.abs(this.mouseX) * 0.2),
-        duration: 0.8,
-        ease: 'power2.out'
+    // Animate Glowing Orbs with 3D Parallax (only if they exist)
+    if (glowOrbs.length > 0) {
+      glowOrbs.forEach((orb, index) => {
+        const multiplier = (index + 1) * 0.4;
+        gsap.to(orb, {
+          x: this.mouseX * (50 * multiplier),
+          y: this.mouseY * (40 * multiplier),
+          scale: 1 + (Math.abs(this.mouseX) * 0.2),
+          duration: 0.8,
+          ease: 'power2.out'
+        });
       });
-    });
+    }
 
-    // Animate Geometric Shapes with 3D Parallax
-    geoShapes.forEach((shape, index) => {
-      const multiplier = (index + 1) * 0.6;
-      gsap.to(shape, {
-        x: this.mouseX * (60 * multiplier),
-        y: this.mouseY * (50 * multiplier),
-        rotateZ: this.mouseX * 20,
-        duration: 0.8,
-        ease: 'power2.out'
+    // Animate Geometric Shapes with 3D Parallax (only if they exist)
+    if (geoShapes.length > 0) {
+      geoShapes.forEach((shape, index) => {
+        const multiplier = (index + 1) * 0.6;
+        gsap.to(shape, {
+          x: this.mouseX * (60 * multiplier),
+          y: this.mouseY * (50 * multiplier),
+          rotateZ: this.mouseX * 20,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
       });
-    });
+    }
 
     this.animationFrameId = undefined;
   }
@@ -224,6 +229,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initThreeJsSpiral(): void {
+    if (window.innerWidth < 768) return;
+    
     const canvas = document.getElementById('spirulina-canvas') as HTMLCanvasElement;
     if (!canvas) return;
 
@@ -366,10 +373,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     gsap.fromTo(canvas, { opacity: 0 }, { opacity: 0.85, duration: 3, delay: 1, ease: 'power2.out' });
 
     // Animation loop
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
     const animate = () => {
       this.threeAnimId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = timer.getElapsed();
 
       // Continuous slow rotation
       group.rotation.y = elapsed * 0.12 + targetRotY;
@@ -399,96 +406,133 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       '.hero-reveal-3',
       '.hero-reveal-4',
       '.hero-reveal-5'
-    ];
+    ].filter(selector => document.querySelector(selector));
 
-    gsap.set(heroTargets, { opacity: 0, y: 40 });
-    gsap.set(['.visual-3d-wrapper-v11', '.aurora-glow-v11'], { opacity: 0, scale: 0.95 });
-    gsap.set('.visual-3d-wrapper-v11', { rotateY: -25, rotateX: 12 });
+    if (heroTargets.length > 0) {
+      gsap.set(heroTargets, { opacity: 0, y: 40 });
+    }
+
+    const visualWrapper = document.querySelector('.visual-3d-wrapper-v11');
+    const auroraGlow = document.querySelector('.aurora-glow-v11');
+    
+    if (visualWrapper || auroraGlow) {
+      gsap.set([visualWrapper, auroraGlow].filter(Boolean), { opacity: 0, scale: 0.95 });
+      if (visualWrapper) {
+        gsap.set(visualWrapper, { rotateY: -25, rotateX: 12 });
+      }
+    }
 
     // Line-by-line text reveal setup
-    gsap.set('.hero-line-inner', { y: '110%', skewY: 8, opacity: 0, display: 'block' });
+    const heroLineInner = document.querySelector('.hero-line-inner');
+    if (heroLineInner) {
+      gsap.set('.hero-line-inner', { y: '110%', skewY: 8, opacity: 0, display: 'block' });
+    }
 
-    // 3D Motion Graphics setup
-    gsap.set('.orbital-ring-3d', { opacity: 0, scale: 0.5 });
-    gsap.set('.glow-orb-3d', { opacity: 0, scale: 0.3 });
-    gsap.set('.geo-shape-3d', { opacity: 0, y: 50, rotateX: 45, rotateY: 45 });
-    gsap.set('.depth-layer-3d', { opacity: 0 });
+    // 3D Motion Graphics setup (only if elements exist)
+    const orbitalRings = document.querySelectorAll('.orbital-ring-3d');
+    const glowOrbs = document.querySelectorAll('.glow-orb-3d');
+    const geoShapes = document.querySelectorAll('.geo-shape-3d');
+    const depthLayers = document.querySelectorAll('.depth-layer-3d');
+    
+    if (orbitalRings.length > 0) gsap.set('.orbital-ring-3d', { opacity: 0, scale: 0.5 });
+    if (glowOrbs.length > 0) gsap.set('.glow-orb-3d', { opacity: 0, scale: 0.3 });
+    if (geoShapes.length > 0) gsap.set('.geo-shape-3d', { opacity: 0, y: 50, rotateX: 45, rotateY: 45 });
+    if (depthLayers.length > 0) gsap.set('.depth-layer-3d', { opacity: 0 });
 
     const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.6 } });
 
-    tl.to(heroTargets, {
-      opacity: 1,
-      y: 0,
-      stagger: 0.15,
-      delay: 0.3
-    }, 0);
+    if (heroTargets.length > 0) {
+      tl.to(heroTargets, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        delay: 0.3
+      }, 0);
+    }
 
     // Staggered line-by-line text reveal
-    tl.to('.hero-line-inner', {
-      y: '0%',
-      skewY: 0,
-      opacity: 1,
-      duration: 1.4,
-      stagger: 0.18,
-      ease: 'expo.out'
-    }, 0.5);
+    if (heroLineInner) {
+      tl.to('.hero-line-inner', {
+        y: '0%',
+        skewY: 0,
+        opacity: 1,
+        duration: 1.4,
+        stagger: 0.18,
+        ease: 'expo.out'
+      }, 0.5);
+    }
 
-    tl.to(['.visual-3d-wrapper-v11', '.aurora-glow-v11'], {
-      opacity: 1,
-      scale: 1,
-      duration: 2.5,
-      ease: 'expo.out'
-    }, 0.5);
+    if (visualWrapper || auroraGlow) {
+      tl.to([visualWrapper, auroraGlow].filter(Boolean), {
+        opacity: 1,
+        scale: 1,
+        duration: 2.5,
+        ease: 'expo.out'
+      }, 0.5);
 
-    tl.to('.visual-3d-wrapper-v11', {
-      rotateY: -18,
-      rotateX: 8,
-      duration: 2.8,
-      ease: 'expo.out'
-    }, 0.5);
+      if (visualWrapper) {
+        tl.to('.visual-3d-wrapper-v11', {
+          rotateY: -18,
+          rotateX: 8,
+          duration: 2.8,
+          ease: 'expo.out'
+        }, 0.5);
+      }
+    }
 
-    // Initial entrance for floating dashboards
-    tl.fromTo('.glass-dashboard-v11',
-      { opacity: 0, scale: 0.8, y: 30 },
-      { opacity: 1, scale: 1, y: 0, stagger: 0.3, duration: 1.5, ease: 'back.out(1.4)' },
-      1.2
-    );
+    // Initial entrance for floating dashboards (only if they exist)
+    const glassDashboards = document.querySelectorAll('.glass-dashboard-v11');
+    if (glassDashboards.length > 0) {
+      tl.fromTo('.glass-dashboard-v11',
+        { opacity: 0, scale: 0.8, y: 30 },
+        { opacity: 1, scale: 1, y: 0, stagger: 0.3, duration: 1.5, ease: 'back.out(1.4)' },
+        1.2
+      );
+    }
 
-    // 3D Orbital Rings Entrance
-    tl.to('.orbital-ring-3d', {
-      opacity: 1,
-      scale: 1,
-      duration: 2,
-      stagger: 0.2,
-      ease: 'expo.out'
-    }, 0.3);
+    // 3D Orbital Rings Entrance (only if exist)
+    if (orbitalRings.length > 0) {
+      tl.to('.orbital-ring-3d', {
+        opacity: 1,
+        scale: 1,
+        duration: 2,
+        stagger: 0.2,
+        ease: 'expo.out'
+      }, 0.3);
+    }
 
-    // Premium Glowing Orbs Entrance
-    tl.to('.glow-orb-3d', {
-      opacity: 1,
-      scale: 1,
-      duration: 2.2,
-      stagger: 0.15,
-      ease: 'back.out(1.2)'
-    }, 0.5);
+    // Premium Glowing Orbs Entrance (only if exist)
+    if (glowOrbs.length > 0) {
+      tl.to('.glow-orb-3d', {
+        opacity: 1,
+        scale: 1,
+        duration: 2.2,
+        stagger: 0.15,
+        ease: 'back.out(1.2)'
+      }, 0.5);
+    }
 
-    // 3D Geometric Shapes Entrance
-    tl.to('.geo-shape-3d', {
-      opacity: 0.15,
-      y: 0,
-      rotateX: 0,
-      rotateY: 0,
-      duration: 1.8,
-      stagger: 0.25,
-      ease: 'power3.out'
-    }, 0.7);
+    // 3D Geometric Shapes Entrance (only if exist)
+    if (geoShapes.length > 0) {
+      tl.to('.geo-shape-3d', {
+        opacity: 0.15,
+        y: 0,
+        rotateX: 0,
+        rotateY: 0,
+        duration: 1.8,
+        stagger: 0.25,
+        ease: 'power3.out'
+      }, 0.7);
+    }
 
-    // Depth Layer Entrance
-    tl.to('.depth-layer-3d', {
-      opacity: 1,
-      duration: 2,
-      ease: 'power2.out'
-    }, 0.4);
+    // Depth Layer Entrance (only if exist)
+    if (depthLayers.length > 0) {
+      tl.to('.depth-layer-3d', {
+        opacity: 1,
+        duration: 2,
+        ease: 'power2.out'
+      }, 0.4);
+    }
   }
 
   private initRevealAnimations(): void {
@@ -564,68 +608,83 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const section = document.querySelector('.chicky-showcase-v11');
     if (!section) return;
 
-    gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: 'top 75%',
         toggleActions: 'play none none reverse'
       }
-    })
-      .fromTo(
+    });
+
+    const chickyFrame = document.querySelector('.chicky-3d-frame-v11');
+    if (chickyFrame) {
+      tl.fromTo(
         '.chicky-3d-frame-v11',
         { scale: 0.9, opacity: 0, rotateY: 25 },
         { scale: 1, opacity: 1, rotateY: 15, duration: 1.5, ease: 'expo.out' }
-      )
-      .fromTo(
+      );
+    }
+
+    const floatingAnalytics = document.querySelectorAll('.floating-analytics-v11');
+    if (floatingAnalytics.length > 0) {
+      tl.fromTo(
         '.floating-analytics-v11',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, stagger: 0.3, ease: 'back.out(1.7)' },
         '-=0.8'
-      )
-      .fromTo(
+      );
+    }
+
+    const featureCards = document.querySelectorAll('.feature-glass-card-v11');
+    if (featureCards.length > 0) {
+      tl.fromTo(
         '.feature-glass-card-v11',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
         '-=0.5'
       );
+    }
 
-    const metrics = { p: 0, a: 0, m: 0 };
+    const metricsPanel = document.querySelector('.metrics-panel-v11');
+    if (metricsPanel) {
+      const metrics = { p: 0, a: 0, m: 0 };
 
-    gsap.to(metrics, {
-      p: 85,
-      a: 95,
-      m: 70,
-      duration: 2.5,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.metrics-panel-v11',
-        start: 'top 85%',
-        once: true
-      },
-      onUpdate: () => {
-        this.zone.run(() => {
-          this.proteinDensity = Math.round(metrics.p);
-          this.absorptionRate = Math.round(metrics.a);
-          this.micronutrientLevel = Math.round(metrics.m);
-        });
+      gsap.to(metrics, {
+        p: 85,
+        a: 95,
+        m: 70,
+        duration: 2.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.metrics-panel-v11',
+          start: 'top 85%',
+          once: true
+        },
+        onUpdate: () => {
+          this.zone.run(() => {
+            this.proteinDensity = Math.round(metrics.p);
+            this.absorptionRate = Math.round(metrics.a);
+            this.micronutrientLevel = Math.round(metrics.m);
+          });
 
-        const pEl = document.getElementById('protein-val-v11');
-        const aEl = document.getElementById('absorption-val-v11');
-        const mEl = document.getElementById('micronutrient-val-v11');
+          const pEl = document.getElementById('protein-val-v11');
+          const aEl = document.getElementById('absorption-val-v11');
+          const mEl = document.getElementById('micronutrient-val-v11');
 
-        if (pEl) pEl.textContent = Math.round(metrics.p) + '%';
-        if (aEl) aEl.textContent = Math.round(metrics.a) + '%';
-        if (mEl) mEl.textContent = Math.round(metrics.m) + '%';
+          if (pEl) pEl.textContent = Math.round(metrics.p) + '%';
+          if (aEl) aEl.textContent = Math.round(metrics.a) + '%';
+          if (mEl) mEl.textContent = Math.round(metrics.m) + '%';
 
-        document.querySelectorAll<SVGPathElement>('.progress-ring-bar').forEach(ring => {
-          const target = ring.getAttribute('data-target');
-          if (target) {
-            const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
-            ring.setAttribute('stroke-dasharray', `${current}, 100`);
-          }
-        });
-      }
-    });
+          document.querySelectorAll<SVGPathElement>('.progress-ring-bar').forEach(ring => {
+            const target = ring.getAttribute('data-target');
+            if (target) {
+              const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
+              ring.setAttribute('stroke-dasharray', `${current}, 100`);
+            }
+          });
+        }
+      });
+    }
   }
 
   private initStackedCardAnimations(): void {
@@ -646,27 +705,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  private initJourneyAnimations(): void {
-    const journeyItems = document.querySelectorAll('.journey-step-wrapper');
-    if (!journeyItems.length) return;
 
-    journeyItems.forEach((item, index) => {
-      const tilt = index % 2 === 0 ? -12 : 12;
-
-      gsap.fromTo(item.querySelector('.journey-node-card'),
-        { opacity: 0, y: 40, rotateY: tilt, scale: 0.95 },
-        {
-          opacity: 1, y: 0, rotateY: 0, scale: 1, duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-    });
-  }
 
   private initRootCausesAnimations(): void {
     const section = document.querySelector('.malnutrition-reasons-section');
