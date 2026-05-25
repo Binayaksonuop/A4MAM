@@ -129,7 +129,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     // Hide initial loader after delay
     setTimeout(() => {
       this.isLoading = false;
-    }, 800);
+    }, 1500);
     
     // Immediate initial check for SSR and first load
     this.isAdminPage = this.router.url.startsWith('/admin');
@@ -185,10 +185,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
         
-        // Hide loader after a short delay (minimum 600ms for cinematic feel)
+        // Hide loader after a short delay (minimum 800ms for cinematic feel)
         setTimeout(() => {
           this.isLoading = false;
-        }, 600);
+        }, 1000);
       }
     });
 
