@@ -14323,7 +14323,7 @@
 }
 
 /* --- Fix 3: Challenge Section Floating Stats Overflow */
-@media (max-width: 991px) {
+@media (max-width: 768px) {
   .floating-stat-card {
     position: relative !important;
     transform: none !important;
@@ -14451,23 +14451,6 @@
   }
 }
 
-/* --- Fix Challenge Section Cards Visibility */
-@media (max-width: 991px) {
-  .mam-impact-card-3d-light {
-    position: relative !important;
-    z-index: 10 !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-}
-
-@media (max-width: 768px) {
-  /* Change to 1 per row on small mobile */
-  .mam-impact-card-3d-light {
-    width: 100%;
-  }
-}
-
 /* --- Extra Small Screens (320px+) */
 @media (max-width: 576px) {
   section {
@@ -14481,6 +14464,21 @@
   .lead {
     font-size: 1rem;
   }
+}
+
+/* --- Reduce Challenge Section Top Padding */
+#mam-challenge.challenge-section-premium {
+  padding-top: 3rem !important;
+  margin-top: 0 !important;
+}
+
+/* --- Reduce Quote Container Margin */
+#mam-challenge .container.position-relative.z-3 {
+  margin-bottom: 1.5rem !important;
+}
+
+#mam-challenge .quote-wrapper {
+  margin-bottom: 1.5rem !important;
 }
 
 
