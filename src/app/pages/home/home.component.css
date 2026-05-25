@@ -6791,13 +6791,13 @@
 }
 
 .mam-impact-card-3d-light {
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   backdrop-filter: blur(20px);
-  padding: 35px 25px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 28px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(255,255,255,0.8) inset;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
   height: 100%;
@@ -6806,10 +6806,10 @@
 }
 
 .mam-impact-card-3d-light:hover {
-  transform: translateY(-12px) perspective(1000px) rotateX(5deg);
+  transform: translateY(-8px) scale(1.02);
   background: #ffffff;
-  box-shadow: 0 30px 60px rgba(99, 102, 241, 0.15);
-  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  border-color: rgba(148, 163, 184, 0.4);
 }
 
 .card-3d-glow-light {
@@ -6873,6 +6873,25 @@
 
 .mam-impact-card-3d-light:hover .card-edge-glow-light {
   transform: scaleX(1);
+}
+
+/* Typography for malnutrition cards */
+.mam-impact-card-3d-light h5 {
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.mam-impact-card-3d-light p.small.fw-bold {
+  font-size: 0.9rem;
+  color: #475569 !important;
+  margin-bottom: 0.75rem;
+}
+
+.mam-impact-card-3d-light p.x-small {
+  font-size: 0.8rem;
+  color: #64748b !important;
+  line-height: 1.6;
 }
 
 .comparison-dashboard-3d {
@@ -14052,6 +14071,24 @@
 /* =========================================
    MOBILE RESPONSIVE FOR BEFORE/AFTER CARD
    ========================================= */
+@media (max-width: 768px) {
+  .ba-comparison {
+    flex-direction: column;
+  }
+  
+  .ba-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .ba-footer .badge {
+    font-size: 0.75rem !important;
+    padding: 10px 16px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+  }
+}
 @media (max-width: 991px) {
   .ba-comparison {
     flex-direction: column;
@@ -14065,6 +14102,15 @@
   
   .ba-item {
     width: 100%;
+  }
+  
+  .ba-footer .badge {
+    font-size: 0.78rem !important;
+    padding: 10px 14px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
   }
 }
 
@@ -14083,6 +14129,15 @@
   
   .ba-desc {
     font-size: 0.8rem;
+  }
+  
+  .ba-footer .badge {
+    font-size: 0.7rem !important;
+    padding: 8px 12px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
   }
 }
 
@@ -14179,8 +14234,84 @@
   color: #059669;
 }
 
-.partner-logo-card:hover .text-slate-400 {
+.partner-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* WHO - Emerald Green */
+.partner-who .partner-icon {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06));
   color: #059669;
+}
+.partner-who:hover .partner-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+}
+.partner-who:hover .partner-name {
+  color: #059669;
+}
+
+/* FSSAI - Amber/Yellow */
+.partner-fssai .partner-icon {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.06));
+  color: #d97706;
+}
+.partner-fssai:hover .partner-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
+}
+.partner-fssai:hover .partner-name {
+  color: #d97706;
+}
+
+/* NASA - Blue */
+.partner-nasa .partner-icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
+  color: #2563eb;
+}
+.partner-nasa:hover .partner-icon {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+}
+.partner-nasa:hover .partner-name {
+  color: #2563eb;
+}
+
+/* CII - Indigo/Purple */
+.partner-cii .partner-icon {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.06));
+  color: #4f46e5;
+}
+.partner-cii:hover .partner-icon {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+.partner-cii:hover .partner-name {
+  color: #4f46e5;
+}
+
+/* ICMR - Red/Pink */
+.partner-icmr .partner-icon {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.06));
+  color: #dc2626;
+}
+.partner-icmr:hover .partner-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35);
+}
+.partner-icmr:hover .partner-name {
+  color: #dc2626;
 }
 
 /* =========================================
