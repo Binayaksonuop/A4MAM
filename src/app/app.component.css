@@ -10172,6 +10172,7 @@ section {
   .navbar-premium-bridge {
     border-radius: 24px !important;
     padding: 10px 20px !important;
+    flex-wrap: wrap;
   }
 
   #navbarNav {
@@ -10182,16 +10183,20 @@ section {
     border-radius: 24px;
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 70vh;
+    overflow-y: auto;
   }
 
   .navbar-nav {
     gap: 10px !important;
+    width: 100%;
   }
 
   .navbar-nav .nav-link {
     font-size: 0.9rem !important;
     padding: 12px 16px !important;
     border-radius: 12px;
+    width: 100%;
   }
 
   .premium-shop-dropdown {
@@ -10199,9 +10204,12 @@ section {
   }
 
   .shop-menu-glass {
-    position: relative !important;
-    margin-top: 10px !important;
+    position: static !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
     min-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
     transform: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -10209,12 +10217,16 @@ section {
     background: rgba(30, 41, 59, 0.95) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     transition: all 0.3s ease !important;
+    box-shadow: none !important;
   }
 
   .shop-menu-glass.show {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+    position: static !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
   }
 
   .shop-menu-glass::before {
