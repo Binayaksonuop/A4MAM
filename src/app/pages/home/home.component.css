@@ -13734,20 +13734,20 @@
 }
 
 .floating-stat-card.stat-1 {
-  top: 5%;
-  right: -10%;
+  top: 10%;
+  left: -8%;
   animation-delay: 0s;
 }
 
 .floating-stat-card.stat-2 {
-  top: 45%;
-  right: -15%;
+  top: 40%;
+  right: -5%;
   animation-delay: 1.5s;
 }
 
 .floating-stat-card.stat-3 {
-  bottom: 10%;
-  right: -5%;
+  bottom: 5%;
+  right: 15%;
   animation-delay: 3s;
 }
 
@@ -14613,3 +14613,293 @@
 }
 
 
+
+/* ==========================================================================
+   ULTRA-PREMIUM UX/UI MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* 1. Hero Scroll Down Indicator */
+.scroll-down-indicator-premium {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-down-indicator-premium:hover {
+  opacity: 1;
+}
+
+.mouse-icon {
+  width: 24px;
+  height: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.mouse-wheel {
+  width: 4px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollWheel 2s infinite;
+  box-shadow: 0 0 8px #10b981;
+}
+
+@keyframes scrollWheel {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 12px); opacity: 0; }
+}
+
+/* 2. Mission Flow Glowing Lines */
+.mission-flow-container:hover .mission-flow-arrow i {
+  color: #10b981 !important;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+.mission-flow-step {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mission-flow-step:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* 3. Floating Tooltip for 1000 Days */
+.floating-tooltip-premium {
+  position: absolute;
+  top: 20%;
+  right: -20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  transform: translateY(0);
+  animation: floatTooltip 4s ease-in-out infinite;
+  max-width: 200px;
+  z-index: 10;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.floating-tooltip-premium:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
+}
+
+@keyframes floatTooltip {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 4. 3D Tilt Hover Effects for Cards */
+.feature-glass-card-v11, .reason-card-premium-v11, .trust-badge-card {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.feature-glass-card-v11:hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15) !important;
+}
+
+.reason-card-premium-v11:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1) !important;
+}
+
+.reason-card-premium-v11:hover .icon-pulse-ring {
+  animation: pulse-ring-fast 1s infinite;
+}
+
+/* 5. Trust Badges Grayscale to Color */
+.trust-badge-card {
+  filter: grayscale(80%) opacity(0.8);
+}
+
+.trust-badge-card:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: translateY(-10px);
+}
+
+/* 6. Scientific Comparison Interactive Tooltips (CSS Only) */
+.comparison-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.comparison-item::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #1e293b;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 20;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.comparison-item:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.comparison-item::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #1e293b transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 21;
+}
+
+.comparison-item:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* 7. Clinical Guidelines Button Pulse Glow */
+.btn-clinical-download {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-clinical-download::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shineBtn 3s infinite;
+}
+
+@keyframes shineBtn {
+  0% { left: -100%; }
+  20%, 100% { left: 100%; }
+}
+
+/* Premium Transition Texts */
+.premium-transition-container {
+  padding: 60px 0 20px 0;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+.premium-transition-text-1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0f172a, #334155);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+.premium-transition-subtext-1 {
+  font-size: 1.1rem;
+  color: #10b981;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.premium-transition-text-2 {
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.4;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.premium-transition-subtext-2 {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-top: 15px;
+}
+.transition-glow-line {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #10b981, transparent);
+  margin: 30px auto;
+  border-radius: 2px;
+}
+
+/* Premium Transition Texts */
+.premium-transition-container {
+  padding: 60px 0 20px 0;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+.premium-transition-text-1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0f172a, #334155);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+.premium-transition-subtext-1 {
+  font-size: 1.1rem;
+  color: #10b981;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.premium-transition-text-2 {
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.4;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.premium-transition-subtext-2 {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-top: 15px;
+}
+.transition-glow-line {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #10b981, transparent);
+  margin: 30px auto;
+  border-radius: 2px;
+}

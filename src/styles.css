@@ -1,11 +1,22 @@
-body {
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   background-color: var(--color-bg-deep) !important;
   color: var(--color-text-pro);
   font-family: var(--font-display);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+}
+
+app-root, main {
+  width: 100%;
+  max-width: 100%;
   margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* ULTRA-PREMIUM V3 HERO SYSTEM */
