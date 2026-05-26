@@ -207,25 +207,26 @@ p.lead {
 /* Base navbar container */
 .navbar {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  padding: 16px 0;
+  padding: 0;
+  top: 25px;
   z-index: 99999 !important;
   background: transparent !important;
 }
 
 .navbar.scrolled {
-  padding: 8px 0;
+  top: 15px;
 }
 
 /* ── Floating pill bridge ── */
 .navbar-premium-bridge {
-  width: 94%;
-  max-width: 1700px;
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
-  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 90%;
+  max-width: 1400px;
+  background: rgba(10, 15, 25, 0.6);
+  backdrop-filter: blur(60px) saturate(250%) brightness(1.2);
+  -webkit-backdrop-filter: blur(60px) saturate(250%) brightness(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 100px;
-  padding: 6px 40px;
+  padding: 8px 30px;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: visible !important;
@@ -240,11 +241,11 @@ p.lead {
 }
 
 .navbar.scrolled .navbar-premium-bridge {
-  background: rgba(15, 23, 42, 0.92);
-  width: 96%;
-  padding: 4px 45px;
+  background: rgba(10, 15, 25, 0.85);
+  width: 94%;
+  padding: 6px 35px;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
-  border-color: rgba(16, 185, 129, 0.4);
+  border-color: rgba(16, 185, 129, 0.5);
 }
 
 /* Scanner line animation */
@@ -338,11 +339,12 @@ p.lead {
 /* ── Navigation links ── */
 .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.7) !important;
-  font-weight: 800;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 10px 20px !important;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  padding: 10px 18px !important;
+  border-radius: 100px;
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   display: flex !important;
   align-items: center;
@@ -352,16 +354,15 @@ p.lead {
 
 .navbar-nav .nav-link:hover {
   color: #fff !important;
-  transform: translateY(-3px) scale(1.05);
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 4px;
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Active link glow */
 .nav-link.active-link {
   color: #fff !important;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 100px;
 }
 
@@ -9905,15 +9906,42 @@ section {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
 
 .premium-spin-loader .loader-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  text-shadow: 0 0 30px rgba(255,255,255,0.5);
+}
+
+/* Progress track */
+.premium-spin-loader .loader-progress-track {
+  width: 180px;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.premium-spin-loader .loader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399, #facc15);
+  border-radius: 100px;
+  animation: progress-shimmer 2s cubic-bezier(0.4,0,0.2,1) infinite;
+  box-shadow: 0 0 15px rgba(16,185,129,0.6);
+}
+
+@keyframes progress-shimmer {
+  0%   { width: 0%;   opacity: 1; }
+  80%  { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
 }
 
 .premium-spin-loader .loader-dots {
@@ -9922,11 +9950,11 @@ section {
 }
 
 .premium-spin-loader .loader-dots span {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+  background: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
   animation: dot-bounce 1.5s ease-in-out infinite;
 }
 
@@ -9945,10 +9973,10 @@ section {
 @keyframes dot-bounce {
   0%, 80%, 100% {
     transform: translateY(0);
-    opacity: 0.5;
+    opacity: 0.4;
   }
   40% {
-    transform: translateY(-12px);
+    transform: translateY(-10px);
     opacity: 1;
   }
 }
