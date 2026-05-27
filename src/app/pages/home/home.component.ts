@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   calcIcon = '';
   calcRecommendation = '';
   calcDosageMg = '';
+  showCalculator = false;
 
   private whoDataMale: Record<number, { m: number, s: number }> = {
     6: { m: 7.9, s: 0.8 }, 9: { m: 8.9, s: 0.9 }, 12: { m: 9.6, s: 1.0 }, 15: { m: 10.3, s: 1.1 }, 18: { m: 10.9, s: 1.2 },
@@ -95,6 +96,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initStackedCardAnimations();
         this.initMouseParallax();
         this.initRootCausesAnimations();
+        this.initQuoteBannerScrollAnimation();
         this.initThreeJsSpiral();
         ScrollTrigger.refresh();
       }, 300);
@@ -110,7 +112,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const rect = heroSection.getBoundingClientRect();
       this.mouseX = (mouseEvent.clientX - rect.left) / rect.width - 0.5;
       this.mouseY = (mouseEvent.clientY - rect.top) / rect.height - 0.5;
-      
+
       if (!this.animationFrameId) {
         this.animationFrameId = requestAnimationFrame(() => this.updateParallax());
       }
@@ -122,7 +124,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const heroContent = document.querySelector('.hero-content-v11');
     const auroraGlow = document.querySelector('.aurora-glow-v11');
     const meshGradient = document.querySelector('.mesh-gradient-v11');
-    
+
     // 3D Motion Graphics Elements (only if they exist)
     const orbitalRings = document.querySelectorAll('.orbital-ring-3d');
     const glowOrbs = document.querySelectorAll('.glow-orb-3d');
@@ -230,7 +232,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initThreeJsSpiral(): void {
     if (window.innerWidth < 768) return;
-    
+
     const canvas = document.getElementById('spirulina-canvas') as HTMLCanvasElement;
     if (!canvas) return;
 
@@ -316,7 +318,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const c = document.createElement('canvas');
       c.width = size; c.height = size;
       const ctx = c.getContext('2d')!;
-      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+      const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
       grad.addColorStop(0, color);
       grad.addColorStop(0.35, color.replace('1)', '0.6)'));
       grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -376,6 +378,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const timer = new THREE.Timer();
     const animate = () => {
       this.threeAnimId = requestAnimationFrame(animate);
+      
+      // OPTIMIZATION: Skip rendering if hero section is out of view
+      if (window.scrollY > window.innerHeight + 100) return;
+
       const elapsed = timer.getElapsed();
 
       // Continuous slow rotation
@@ -414,7 +420,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const visualWrapper = document.querySelector('.visual-3d-wrapper-v11');
     const auroraGlow = document.querySelector('.aurora-glow-v11');
-    
+
     if (visualWrapper || auroraGlow) {
       gsap.set([visualWrapper, auroraGlow].filter(Boolean), { opacity: 0, scale: 0.95 });
       if (visualWrapper) {
@@ -433,7 +439,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const glowOrbs = document.querySelectorAll('.glow-orb-3d');
     const geoShapes = document.querySelectorAll('.geo-shape-3d');
     const depthLayers = document.querySelectorAll('.depth-layer-3d');
-    
+
     if (orbitalRings.length > 0) gsap.set('.orbital-ring-3d', { opacity: 0, scale: 0.5 });
     if (glowOrbs.length > 0) gsap.set('.glow-orb-3d', { opacity: 0, scale: 0.3 });
     if (geoShapes.length > 0) gsap.set('.geo-shape-3d', { opacity: 0, y: 50, rotateX: 45, rotateY: 45 });
@@ -536,7 +542,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initRevealAnimations(): void {
-    gsap.utils.toArray<HTMLElement>('.gsap-reveal').forEach(el => {
+    gsap.utils.toArray<HTMLElement>('.gsap-reveal, .gsap-cta-reveal').forEach(el => {
       gsap.fromTo(
         el,
         { y: 55, opacity: 0 },
@@ -661,11 +667,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           once: true
         },
         onUpdate: () => {
-          this.zone.run(() => {
-            this.proteinDensity = Math.round(metrics.p);
-            this.absorptionRate = Math.round(metrics.a);
-            this.micronutrientLevel = Math.round(metrics.m);
-          });
+          this.proteinDensity = Math.round(metrics.p);
+          this.absorptionRate = Math.round(metrics.a);
+          this.micronutrientLevel = Math.round(metrics.m);
 
           const pEl = document.getElementById('protein-val-v11');
           const aEl = document.getElementById('absorption-val-v11');
@@ -681,6 +685,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
               const current = target === '85' ? metrics.p : target === '95' ? metrics.a : metrics.m;
               ring.setAttribute('stroke-dasharray', `${current}, 100`);
             }
+          });
+        },
+        onComplete: () => {
+          this.zone.run(() => {
+            this.proteinDensity = 85;
+            this.absorptionRate = 95;
+            this.micronutrientLevel = 70;
           });
         }
       });
@@ -714,14 +725,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // Animate background elements
     gsap.set('.reasons-orbital-v11', { opacity: 0, scale: 0.5 });
     gsap.set('.reasons-glow-orb', { opacity: 0, scale: 0.3 });
-    
+
     // Animate cards with 3D effect
     gsap.utils.toArray<HTMLElement>('.reason-card-premium-v11').forEach((card, index) => {
       gsap.fromTo(card,
-        { 
-          opacity: 0, 
-          y: 60, 
-          rotateX: 20, 
+        {
+          opacity: 0,
+          y: 60,
+          rotateX: 20,
           scale: 0.9,
           transformOrigin: 'center bottom'
         },
@@ -763,9 +774,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // Animate icon boxes
     gsap.utils.toArray<HTMLElement>('.reason-icon-box-v11').forEach((iconBox, index) => {
       gsap.fromTo(iconBox,
-        { 
-          opacity: 0, 
-          scale: 0.5, 
+        {
+          opacity: 0,
+          scale: 0.5,
           rotate: -15,
           y: 20
         },
@@ -900,6 +911,60 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.calcIcon = 'bi-hospital';
       this.calcDosageMg = 'Immediate Clinical Action';
       this.calcRecommendation = 'CRITICAL: Requires immediate referral to a Nutrition Rehabilitation Center (NRC).';
+    }
+  }
+
+  private initQuoteBannerScrollAnimation(): void {
+    const banner = document.querySelector('.luxurious-quote-banner');
+    if (!banner) return;
+
+    const quoteIcon = banner.querySelector('.quote-icon-top');
+    const quoteText = banner.querySelector('.premium-transition-text-2');
+    const glowEmerald = banner.querySelector('.quote-bg-glow-emerald');
+    const glowIndigo = banner.querySelector('.quote-bg-glow-indigo');
+    const glowRose = banner.querySelector('.quote-bg-glow-rose');
+    const glowGold = banner.querySelector('.quote-bg-glow-gold');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: banner,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.5 // High response, hardware-accelerated scroll
+      }
+    });
+
+    // Scale banner using GPU transform
+    tl.fromTo(banner, 
+      { scale: 0.97 }, 
+      { scale: 1.03, ease: 'none', duration: 1 }, 
+      0
+    );
+
+    // Dynamic gradient shifts by translating background position (highly performant)
+    if (quoteText) {
+      tl.fromTo(quoteText, 
+        { backgroundPosition: '0% 50%' }, 
+        { backgroundPosition: '100% 50%', ease: 'none', duration: 1 }, 
+        0
+      );
+    }
+
+    // Dynamic giant floating quote symbol rotation
+    if (quoteIcon) {
+      tl.fromTo(quoteIcon, 
+        { scale: 0.85, rotation: -12, y: 0 }, 
+        { scale: 1.3, rotation: 18, y: -20, ease: 'none', duration: 1 }, 
+        0
+      );
+    }
+
+    // High performance Opacity blending of pre-rendered glows instead of color recalculations
+    if (glowEmerald && glowIndigo && glowRose && glowGold) {
+      tl.fromTo(glowEmerald, { opacity: 0.8 }, { opacity: 0, ease: 'none', duration: 1 }, 0);
+      tl.fromTo(glowIndigo, { opacity: 0.7 }, { opacity: 0, ease: 'none', duration: 1 }, 0);
+      tl.fromTo(glowRose, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 1 }, 0);
+      tl.fromTo(glowGold, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 1 }, 0);
     }
   }
 }

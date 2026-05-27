@@ -116,12 +116,15 @@ p.lead {
   width: 8px;
   height: 8px;
   background-color: #10b981;
+  box-shadow: 0 0 10px #10b981, 0 0 5px #ffffff;
 }
 
 .cursor-outline {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(15, 157, 88, 0.3);
+  width: 44px;
+  height: 44px;
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  background: transparent;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.25), inset 0 0 8px rgba(16, 185, 129, 0.15);
 }
 
 /* ==========================================================================
@@ -242,8 +245,6 @@ p.lead {
 
 .navbar.scrolled .navbar-premium-bridge {
   background: rgba(10, 15, 25, 0.85);
-  width: 94%;
-  padding: 6px 35px;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
   border-color: rgba(16, 185, 129, 0.5);
 }
@@ -253,18 +254,19 @@ p.lead {
   content: '';
   position: absolute;
   bottom: 0;
-  left: -100%;
+  left: 0;
   width: 50%;
   height: 2px;
   background: linear-gradient(90deg, transparent, #22d3ee, #10b981, transparent);
   animation: bridge-scanner 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   opacity: 0.8;
   filter: blur(1px);
+  will-change: transform;
 }
 
 @keyframes bridge-scanner {
-  0%   { left: -50%; }
-  100% { left: 100%; }
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
 }
 
 /* ── Brand ── */
@@ -350,20 +352,19 @@ p.lead {
   align-items: center;
   gap: 8px;
   position: relative;
+  white-space: nowrap;
 }
 
 .navbar-nav .nav-link:hover {
   color: #fff !important;
   transform: translateY(-2px);
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Active link glow */
 .nav-link.active-link {
   color: #fff !important;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 100px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .nav-link:hover,
@@ -694,6 +695,7 @@ p.lead {
 
   .shop-menu-glass {
     position: relative !important;
+    display: none !important;
     background: rgba(30, 41, 59, 0.98) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
@@ -713,6 +715,7 @@ p.lead {
   }
 
   .shop-menu-glass.show {
+    display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;

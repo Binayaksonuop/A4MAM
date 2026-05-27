@@ -1094,3 +1094,13 @@ app-root, main {
     max-width: 100%;
   }
 }
+
+/* GLOBAL PERFORMANCE OPTIMIZATIONS */
+[class*="glass"], [class*="premium"], [class*="blur"], .mam-impact-card-3d-light, .reason-card-premium-v11 {
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
+}
+
+img {
+  content-visibility: auto;
+}
