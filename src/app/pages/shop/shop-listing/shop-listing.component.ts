@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, HostListener, PLATFORM_ID, Inject, NgZone } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { ProductService, AdminProduct } from '../../../services/product.service';
 import { Subscription } from 'rxjs';
+import gsap from 'gsap';
 
 @Component({
   selector: 'app-shop-listing',
@@ -54,9 +55,9 @@ import { Subscription } from 'rxjs';
         </div>
 
         <!-- Premium Product Grid -->
-        <div class="row g-4 mb-5" *ngIf="!isLoading && products.length > 0">
-          <div class="col-lg-4 col-md-6" *ngFor="let product of filteredProducts; trackBy: trackByProductId">
-            <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'">
+        <div class="row g-4 mb-5 product-grid-container" *ngIf="!isLoading && products.length > 0">
+          <div class="col-lg-4 col-md-6 tilt-wrapper" *ngFor="let product of filteredProducts; trackBy: trackByProductId">
+            <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'" (mouseenter)="onCardEnter($event)" (mousemove)="onCardMove($event)" (mouseleave)="onCardLeave($event)">
               <div class="product-img-glass-wrap position-relative">
                 <span class="product-badge-float" *ngIf="product.status === 'Out of Stock'" style="background: #ef4444;">Out of Stock</span>
                 <span class="product-badge-float" *ngIf="product.status === 'In Stock'" style="background: linear-gradient(135deg, #10b981, #059669);">In Stock</span>
@@ -78,8 +79,9 @@ import { Subscription } from 'rxjs';
                     <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium" [attr.aria-label]="'View details for ' + product.name" (click)="consoleLogProduct(product)">
                       <i class="bi bi-eye"></i>
                     </a>
-                    <button class="btn btn-add-premium" (click)="addToCart(product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'">
-                      <i class="bi bi-cart-plus-fill me-2"></i> Add
+                    <button class="btn btn-add-premium add-to-cart-btn" (click)="addToCart($event, product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'" [attr.data-id]="product.id">
+                      <span *ngIf="!addedStates[product.id]"><i class="bi bi-cart-plus-fill me-2"></i> Add</span>
+                      <span *ngIf="addedStates[product.id]"><i class="bi bi-check-circle-fill me-2"></i> Added</span>
                     </button>
                 </div>
               </div>
@@ -117,8 +119,9 @@ import { Subscription } from 'rxjs';
     .filter-pill { border: none; padding: 10px 24px; border-radius: 50px; color: rgba(255, 255, 255, 0.6); font-weight: 700; font-size: 0.85rem; transition: all 0.3s ease; }
     .filter-pill.active { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
     .filter-pill:hover:not(.active) { background: rgba(255, 255, 255, 0.1); color: white; }
-    .product-glass-card { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; overflow: hidden; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); backdrop-filter: blur(12px); }
-    .product-glass-card:hover { transform: translateY(-12px); border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+    .tilt-wrapper { perspective: 1000px; }
+    .product-glass-card { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; overflow: hidden; transition: box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); backdrop-filter: blur(12px); transform-style: preserve-3d; will-change: transform; }
+    .product-glass-card:hover { border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.1) inset; }
     .product-img-glass-wrap { height: 240px; background: rgba(255, 255, 255, 0.02); display: flex; align-items: center; justify-content: center; padding: 30px; overflow: hidden; }
     .product-main-img { max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); transition: transform 0.5s ease; }
     .product-glass-card:hover .product-main-img { transform: scale(1.1) rotate(2deg); }
@@ -146,6 +149,8 @@ export class ShopListingComponent implements OnInit, OnDestroy {
   activeFilter = 'all';
   isLoading = true;
   private subscription: Subscription | null = null;
+  private isBrowser: boolean;
+  addedStates: { [key: string]: boolean } = {};
 
   fallbackProducts: AdminProduct[] = [
     {
@@ -210,7 +215,14 @@ export class ShopListingComponent implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(private cartService: CartService, private productService: ProductService) {}
+  constructor(
+    private cartService: CartService, 
+    private productService: ProductService,
+    private zone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -240,25 +252,98 @@ export class ShopListingComponent implements OnInit, OnDestroy {
   }
 
   private applyFilter(): void {
-    console.log('ShopListing: Applying filter:', this.activeFilter, 'to products:', this.products);
-    
+    if (!this.isBrowser) {
+      this.updateFilteredArray();
+      return;
+    }
+
+    // GSAP Filter Animation
+    const cards = gsap.utils.toArray('.tilt-wrapper');
+    if (cards.length > 0) {
+      gsap.to(cards, {
+        opacity: 0,
+        scale: 0.9,
+        y: 20,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: 'power2.in',
+        onComplete: () => {
+          this.zone.run(() => {
+            this.updateFilteredArray();
+            
+            // Wait for Angular to update DOM
+            setTimeout(() => {
+              const newCards = gsap.utils.toArray('.tilt-wrapper');
+              gsap.fromTo(newCards, 
+                { opacity: 0, scale: 0.9, y: 20 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
+              );
+            }, 50);
+          });
+        }
+      });
+    } else {
+      this.updateFilteredArray();
+    }
+  }
+
+  private updateFilteredArray(): void {
     if (this.activeFilter === 'all') {
-      this.filteredProducts = this.products;
+      this.filteredProducts = [...this.products];
     } else {
       this.filteredProducts = this.products.filter(p => {
         const pCat = (p.category || '').toLowerCase();
         const filter = this.activeFilter.toLowerCase();
-        console.log('  Checking product:', p.name, 'category:', pCat, 'against:', filter);
-        
-        // Handle both exact match and variations
         if (filter === 'kids') {
           return pCat === 'kids' || pCat === 'chicky bar';
         }
         return pCat === filter;
       });
     }
+  }
+
+  private activeCardRect: DOMRect | null = null;
+  private animationFrameId: number | null = null;
+
+  onCardEnter(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992) return;
+    const card = e.currentTarget as HTMLElement;
+    this.activeCardRect = card.getBoundingClientRect();
+  }
+
+  onCardMove(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992 || !this.activeCardRect) return;
+
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+
+    this.animationFrameId = requestAnimationFrame(() => {
+      this.zone.runOutsideAngular(() => {
+        const card = e.currentTarget as HTMLElement;
+        const rect = this.activeCardRect!;
+        const cardX = rect.left + rect.width / 2;
+        const cardY = rect.top + rect.height / 2;
+        
+        const distX = e.clientX - cardX;
+        const distY = e.clientY - cardY;
+
+        const rotateX = (distY / (rect.height / 2)) * -10; 
+        const rotateY = (distX / (rect.width / 2)) * 10;
+        gsap.to(card, { rotationX: rotateX, rotationY: rotateY, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+      });
+    });
+  }
+
+  onCardLeave(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992) return;
+    this.activeCardRect = null;
+    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
     
-    console.log('ShopListing: Filtered products:', this.filteredProducts);
+    this.zone.runOutsideAngular(() => {
+      const card = e.currentTarget as HTMLElement;
+      gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
+    });
   }
 
   trackByProductId(index: number, product: AdminProduct): string {
@@ -269,8 +354,12 @@ export class ShopListingComponent implements OnInit, OnDestroy {
     console.log('ShopListing: Clicked product:', product);
   }
   
-  addToCart(product: AdminProduct): void {
+  addToCart(event: Event, product: AdminProduct): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
     if (product.status === 'Out of Stock') return;
+    
     this.cartService.addToCart({
       id: product.id,
       name: product.name,
@@ -278,5 +367,20 @@ export class ShopListingComponent implements OnInit, OnDestroy {
       image: product.imageUrl,
       quantity: 1
     });
+
+    this.addedStates[product.id] = true;
+    
+    // Micro-animation for the button
+    const btn = event.currentTarget as HTMLElement;
+    if (this.isBrowser) {
+      gsap.fromTo(btn, 
+        { scale: 0.9 },
+        { scale: 1, duration: 0.4, ease: 'back.out(1.5)' }
+      );
+    }
+
+    setTimeout(() => {
+      this.addedStates[product.id] = false;
+    }, 2000);
   }
 }

@@ -23,7 +23,7 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
   calcAmount: number = 1000;
 
   constructor(
-    private cartService: CartService, 
+    private cartService: CartService,
     private router: Router,
     private donationService: DonationService,
     private zone: NgZone,
@@ -43,7 +43,7 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zone.runOutsideAngular(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } });
-      
+
       tl.from('.badge-donate-pill', { y: 20, opacity: 0, delay: 0.3 })
         .from('h1', { y: 30, opacity: 0 }, '-=0.7')
         .from('.lead', { y: 20, opacity: 0 }, '-=0.7')
@@ -78,16 +78,20 @@ export class DonateComponent implements OnInit, AfterViewInit, OnDestroy {
       // FUND PROGRESS BAR animate on scroll
       gsap.fromTo('.fund-progress-fill',
         { width: '0%' },
-        { width: '36.85%', duration: 2.5, ease: 'power3.out',
-          scrollTrigger: { trigger: '.fund-progress-section', start: 'top 80%', once: true } }
+        {
+          width: '36.85%', duration: 2.5, ease: 'power3.out',
+          scrollTrigger: { trigger: '.fund-progress-section', start: 'top 80%', once: true }
+        }
       );
 
       // PROCESS CARDS scroll reveal
       gsap.utils.toArray('.process-card').forEach((card: any, i: number) => {
         gsap.fromTo(card,
           { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: i * 0.1,
-            scrollTrigger: { trigger: '.how-it-works-section', start: 'top 80%', once: true } }
+          {
+            opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: i * 0.1,
+            scrollTrigger: { trigger: '.how-it-works-section', start: 'top 80%', once: true }
+          }
         );
       });
     });

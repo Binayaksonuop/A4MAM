@@ -378,7 +378,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const timer = new THREE.Timer();
     const animate = () => {
       this.threeAnimId = requestAnimationFrame(animate);
-      
+
       // OPTIMIZATION: Skip rendering if hero section is out of view
       if (window.scrollY > window.innerHeight + 100) return;
 
@@ -935,26 +935,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     // Scale banner using GPU transform
-    tl.fromTo(banner, 
-      { scale: 0.97 }, 
-      { scale: 1.03, ease: 'none', duration: 1 }, 
+    tl.fromTo(banner,
+      { scale: 0.97 },
+      { scale: 1.03, ease: 'none', duration: 1 },
       0
     );
 
     // Dynamic gradient shifts by translating background position (highly performant)
     if (quoteText) {
-      tl.fromTo(quoteText, 
-        { backgroundPosition: '0% 50%' }, 
-        { backgroundPosition: '100% 50%', ease: 'none', duration: 1 }, 
+      tl.fromTo(quoteText,
+        { backgroundPosition: '0% 50%' },
+        { backgroundPosition: '100% 50%', ease: 'none', duration: 1 },
         0
       );
     }
 
     // Dynamic giant floating quote symbol rotation
     if (quoteIcon) {
-      tl.fromTo(quoteIcon, 
-        { scale: 0.85, rotation: -12, y: 0 }, 
-        { scale: 1.3, rotation: 18, y: -20, ease: 'none', duration: 1 }, 
+      tl.fromTo(quoteIcon,
+        { scale: 0.85, rotation: -12, y: 0 },
+        { scale: 1.3, rotation: 18, y: -20, ease: 'none', duration: 1 },
         0
       );
     }

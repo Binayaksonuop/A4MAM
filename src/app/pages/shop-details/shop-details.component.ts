@@ -304,6 +304,15 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       ease: 'power2.out',
       clearProps: 'all' // Crucial: remove GSAP styles after animation
     });
+
+    // Levitation Animation
+    gsap.to('.product-img-v6', {
+      y: -15,
+      duration: 2.5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
   }
 
   private initScrollAnimations(): void {
@@ -360,28 +369,36 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  private animationFrameId: number | null = null;
+
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e: MouseEvent): void {
     if (!this.isBrowser || window.innerWidth < 992) return;
 
-    this.zone.runOutsideAngular(() => {
-      const x = (e.clientX - window.innerWidth / 2) / 40;
-      const y = (e.clientY - window.innerHeight / 2) / 40;
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
 
-      gsap.to('.product-frame-3d-v6', {
-        rotateY: x,
-        rotateX: -y,
-        duration: 1.2,
-        ease: 'power2.out',
-        overwrite: 'auto'
-      });
+    this.animationFrameId = requestAnimationFrame(() => {
+      this.zone.runOutsideAngular(() => {
+        const x = (e.clientX - window.innerWidth / 2) / 40;
+        const y = (e.clientY - window.innerHeight / 2) / 40;
 
-      gsap.to('.hero-mesh-glow-v6', {
-        x: x * 2,
-        y: y * 2,
-        duration: 2,
-        ease: 'power1.out',
-        overwrite: 'auto'
+        gsap.to('.product-frame-3d-v6', {
+          rotateY: x,
+          rotateX: -y,
+          duration: 1.2,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+
+        gsap.to('.hero-mesh-glow-v6', {
+          x: x * 2,
+          y: y * 2,
+          duration: 2,
+          ease: 'power1.out',
+          overwrite: 'auto'
+        });
       });
     });
   }
@@ -403,6 +420,15 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.isAdded = true;
+      
+      // Bounce animation for the main CTA button
+      if (this.isBrowser) {
+        gsap.fromTo('.btn-cta-v6:not(.sticky-cta-v6 .btn-cta-v6)', 
+          { scale: 0.95 }, 
+          { scale: 1, duration: 0.5, ease: 'back.out(1.5)' }
+        );
+      }
+
       setTimeout(() => {
         this.isAdded = false;
       }, 2500);

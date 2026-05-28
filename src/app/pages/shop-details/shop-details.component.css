@@ -310,9 +310,9 @@
   transition: stroke-dasharray 1s ease;
 }
 
-.circular-chart-v6.emerald .circle-v6 { stroke: #10b981; }
-.circular-chart-v6.blue .circle-v6 { stroke: #3b82f6; }
-.circular-chart-v6.gold .circle-v6 { stroke: #f59e0b; }
+.circular-chart-v6.emerald .circle-v6 { stroke: #10b981; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8)); }
+.circular-chart-v6.blue .circle-v6 { stroke: #3b82f6; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8)); }
+.circular-chart-v6.gold .circle-v6 { stroke: #f59e0b; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8)); }
 
 .ring-val-v6 {
   position: absolute;

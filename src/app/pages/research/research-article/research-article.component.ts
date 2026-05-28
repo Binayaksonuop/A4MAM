@@ -60,6 +60,7 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     if (this.isBrowser) {
       setTimeout(() => {
+        this.initReadingProgressAnimation();
         this.initRevealAnimations();
         this.initStickyStackAnimations();
         this.initAnthropoSliderAnimations();
@@ -98,6 +99,23 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
         }
       );
     });
+  }
+
+  private initReadingProgressAnimation(): void {
+    const progressBar = document.querySelector('.reading-progress-bar');
+    const articleBody = document.querySelector('.journal-entry');
+    if (progressBar && articleBody) {
+      gsap.to(progressBar, {
+        width: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: articleBody,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true
+        }
+      });
+    }
   }
 
   private initStickyStackAnimations(): void {
@@ -249,6 +267,25 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
 
     // Add mouse tracking for glow effects
     this.initMouseTrackingEffects();
+
+    // CYCLE CARDS REVEAL (from implementation plan)
+    const cycleSection = document.querySelector('.cycle-simple-section');
+    const cycleCards = gsap.utils.toArray<HTMLElement>('.cycle-card');
+    if (cycleSection && cycleCards.length) {
+      gsap.fromTo(cycleCards, 
+        { opacity: 0, y: 30, scale: 0.95 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: cycleSection,
+            start: 'top 75%'
+          }
+        }
+      );
+    }
   }
 
   private initMouseTrackingEffects(): void {

@@ -145,6 +145,22 @@ export class AboutComponent implements AfterViewInit {
       );
     });
 
+    // TIMELINE PROGRESS BAR (new)
+    const timelineWrap = document.querySelector('.about-timeline-wrap');
+    const timelineProgress = document.querySelector('.timeline-progress-fill');
+    if (timelineWrap && timelineProgress) {
+      gsap.to(timelineProgress, {
+        height: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: timelineWrap,
+          start: 'top 50%',
+          end: 'bottom 80%',
+          scrub: true
+        }
+      });
+    }
+
     ScrollTrigger.refresh();
   }
 
@@ -162,12 +178,57 @@ export class AboutComponent implements AfterViewInit {
     if (!this.isBrowser) return;
 
     this.zone.runOutsideAngular(() => {
+      // Ambient glow mouse tracking
       const glows = document.querySelectorAll('.ambient-glow');
       if (glows.length) {
         const x = (e.clientX - window.innerWidth / 2) / 50;
         const y = (e.clientY - window.innerHeight / 2) / 50;
         gsap.to('.ambient-glow', { x: x, y: y, duration: 1.5, ease: 'power2.out', overwrite: 'auto' });
       }
+    });
+  }
+
+  private activeCardRect: DOMRect | null = null;
+  private animationFrameId: number | null = null;
+
+  onCardEnter(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992) return;
+    const card = e.currentTarget as HTMLElement;
+    this.activeCardRect = card.getBoundingClientRect();
+  }
+
+  onCardMove(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992 || !this.activeCardRect) return;
+
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+
+    this.animationFrameId = requestAnimationFrame(() => {
+      this.zone.runOutsideAngular(() => {
+        const card = e.currentTarget as HTMLElement;
+        const rect = this.activeCardRect!;
+        const cardX = rect.left + rect.width / 2;
+        const cardY = rect.top + rect.height / 2;
+        
+        const distX = e.clientX - cardX;
+        const distY = e.clientY - cardY;
+
+        const rotateX = (distY / (rect.height / 2)) * -10; 
+        const rotateY = (distX / (rect.width / 2)) * 10;
+        gsap.to(card, { rotationX: rotateX, rotationY: rotateY, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+      });
+    });
+  }
+
+  onCardLeave(e: MouseEvent) {
+    if (!this.isBrowser || window.innerWidth < 992) return;
+    this.activeCardRect = null;
+    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+    
+    this.zone.runOutsideAngular(() => {
+      const card = e.currentTarget as HTMLElement;
+      gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
     });
   }
 }
