@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { DonationService, DonationPlan } from '../../services/donation.service';
 import { Subscription } from 'rxjs';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-donate',

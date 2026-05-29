@@ -260,7 +260,10 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.metaService.updateTag({ property: 'og:image', content: this.product.image });
 
           if (this.isBrowser) {
-            setTimeout(() => this.initHeroAnimation(), 50);
+            setTimeout(() => {
+              this.initHeroAnimation();
+              this.initScrollAnimations();
+            }, 100);
           }
         }
         
@@ -270,13 +273,7 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (!this.isBrowser) return;
-
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.initScrollAnimations();
-      }, 150);
-    });
+    // Scroll animations are now initialized after data loads
   }
 
   ngOnDestroy(): void {
