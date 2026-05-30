@@ -19,6 +19,14 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  subtitle: {
+    type: String,
+    default: ''
+  },
+  badge: {
+    type: String,
+    default: ''
+  },
   price: {
     type: Number,
     required: [true, 'Price is required'],
@@ -53,6 +61,12 @@ const productSchema = new mongoose.Schema({
   tags: [{ type: String }],
   weight: { type: String, default: '' },
   benefits: [{ type: String }],
+  includes: [{ type: String }],
+  nutrition: {
+    protein: { type: Number, default: 0 },
+    iron: { type: Number, default: 0 },
+    absorption: { type: Number, default: 0 }
+  },
   isFeatured: {
     type: Boolean,
     default: false
@@ -65,7 +79,7 @@ const productSchema = new mongoose.Schema({
 
 // Auto-generate slug from name
 productSchema.pre('save', function (next) {
-  if (this.isModified('name') || this.isNew) {
+  if ((this.isModified('name') || this.isNew) && !this.slug) {
     this.slug = this.name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')

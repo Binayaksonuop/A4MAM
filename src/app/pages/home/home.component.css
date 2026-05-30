@@ -1200,13 +1200,19 @@
   font-weight: 300;
 }
 
+@keyframes text-breathe-v11 {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.2)); }
+  50% { filter: drop-shadow(0 0 45px rgba(16, 185, 129, 0.6)); }
+}
+
 .emerald-glow-text-v11 {
   background: linear-gradient(135deg, #6ee7b7 0%, #10b981 50%, #047857 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.4));
+  animation: text-breathe-v11 4s ease-in-out infinite;
   font-weight: 950;
+  display: inline-block;
 }
 
 .hero-paragraph-v11 {
@@ -1635,11 +1641,14 @@
   }
 }
 
+@keyframes button-glow-pulse-v11 {
+  0%, 100% { box-shadow: 0 30px 70px rgba(16, 185, 129, 0.55), 0 0 40px rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 40px 90px rgba(16, 185, 129, 0.8), 0 0 60px rgba(16, 185, 129, 0.4); }
+}
+
 .btn-v11-donate-shimmer:hover {
   transform: translateY(-6px) scale(1.04);
-  box-shadow:
-    0 30px 70px rgba(16, 185, 129, 0.55),
-    0 0 40px rgba(16, 185, 129, 0.2);
+  animation: button-glow-pulse-v11 2s infinite ease-in-out;
   color: #fff;
 }
 
@@ -8044,20 +8053,44 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
 }
 
+.mission-flow-step.step-emerald {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.02) 100%);
+  border-color: rgba(16, 185, 129, 0.15);
+}
 .mission-flow-step.step-emerald:hover {
-  border-color: rgba(16, 185, 129, 0.3);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.04) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
 }
 
+.mission-flow-step.step-blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%);
+  border-color: rgba(59, 130, 246, 0.15);
+}
 .mission-flow-step.step-blue:hover {
-  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.04) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15);
 }
 
+.mission-flow-step.step-amber {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.02) 100%);
+  border-color: rgba(245, 158, 11, 0.15);
+}
 .mission-flow-step.step-amber:hover {
-  border-color: rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.04) 100%);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.15);
 }
 
+.mission-flow-step.step-purple {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.02) 100%);
+  border-color: rgba(139, 92, 246, 0.15);
+}
 .mission-flow-step.step-purple:hover {
-  border-color: rgba(139, 92, 246, 0.3);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.04) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.15);
 }
 
 .mission-flow-icon {

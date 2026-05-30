@@ -38,7 +38,7 @@
   <div class="navbar-premium-bridge d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-between mx-auto">
 
     <!-- LEFT: BRANDING -->
-    <a class="navbar-brand m-0 p-0 d-flex align-items-center" routerLink="/">
+    <a class="navbar-brand m-0 p-0 d-flex align-items-center" routerLink="/" (click)="scrollToTop()">
       <div class="brand-logo-glow">
         <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="nav-logo me-2" style="width: 48px; height: 48px;">
       </div>
@@ -224,14 +224,14 @@
 </div>
 
 <!-- FOOTER (ULTRA-PREMIUM EYE-CATCHING) -->
-<footer id="contact" *ngIf="!isAdminPage" class="footer-premium position-relative overflow-hidden pt-5">
+<footer id="contact" *ngIf="!isAdminPage" class="footer-premium position-relative overflow-hidden pt-4 pb-1">
   <div class="footer-mesh-gradient-ultra"></div>
   <div class="footer-glow-center"></div>
 
   <div class="container position-relative z-3 pt-2">
-    <div class="row g-4 mb-4 pb-3">
+    <div class="row g-4 mb-3 pb-2">
       <!-- Column 1: Brand & Vision -->
-      <div class="col-lg-4 col-md-12 gsap-footer-reveal">
+      <div class="col-lg-3 col-md-12 gsap-footer-reveal">
         <div class="footer-brand-ultra-modern mb-3">
           <div class="logo-glow-container me-3">
             <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="footer-logo-ultra" width="40" height="40">
@@ -279,38 +279,68 @@
         </ul>
       </div>
 
-      <!-- Column 4: Reach Out -->
-      <div class="col-lg-4 col-md-4 gsap-footer-reveal">
-        <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 fs-6">Reach Out</h6>
-        <ul class="list-unstyled footer-compact-contact">
-          <li class="d-flex align-items-start gap-3 mb-3">
-            <i class="bi bi-geo-alt-fill text-emerald mt-1"></i>
-            <div>
-              <strong class="d-block text-white mb-1 small">Head Office</strong>
-              <span class="text-white text-opacity-50" style="font-size: 0.8rem; line-height: 1.4;">B#317, ARK Towers,
-                Mayuri Nagar,<br>Miyapur, Hyderabad - 500049,<br>Telangana, INDIA</span>
+      <!-- Column 4: Reach Out (Premium Glass Card) -->
+      <div class="col-lg-5 col-md-12 gsap-footer-reveal">
+        <div class="p-4 rounded-4 position-relative overflow-hidden h-100 d-flex flex-column" style="background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(12px);">
+          <!-- Decorative glow inside the card -->
+          <div class="position-absolute rounded-circle" style="width: 120px; height: 120px; background: rgba(16, 185, 129, 0.15); top: -30px; right: -30px; filter: blur(40px); pointer-events: none;"></div>
+          
+          <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-4 fs-6 position-relative z-1 d-flex align-items-center gap-2">
+            <i class="bi bi-headset text-emerald fs-5"></i> Reach Out
+          </h6>
+          
+          <div class="row g-4 position-relative z-1 flex-grow-1">
+            <!-- Left Side: Head Office & Contact -->
+            <div class="col-sm-6 d-flex flex-column">
+              <div class="d-flex align-items-start gap-3 mb-4">
+                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div>
+                  <strong class="d-block text-white mb-1 small fw-600">Head Office</strong>
+                  <span class="text-white text-opacity-60" style="font-size: 0.75rem; line-height: 1.5;">B#317, ARK Towers, Mayuri Nagar,<br>Miyapur, Hyd - 500049</span>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-start gap-3 mt-auto">
+                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                  <i class="bi bi-envelope-at-fill"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <strong class="d-block text-white mb-1 small fw-600">Connect</strong>
+                  <a href="mailto:info@a4conserv.com" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem;">info&#64;a4conserv.com</a>
+                  <a href="tel:+919642437773" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all mt-1" style="font-size: 0.75rem;">+91 9642437773</a>
+                </div>
+              </div>
             </div>
-          </li>
-          <li class="d-flex align-items-start gap-3 mb-3">
-            <i class="bi bi-buildings-fill text-emerald mt-1"></i>
-            <div>
-              <strong class="d-block text-white mb-1 small">Branch Office</strong>
-              <span class="text-white text-opacity-50" style="font-size: 0.8rem; line-height: 1.4;">F-1, CII (Centre for
-                Innovation and Incubation),<br>Utkal University, Vani Vihar,<br>Bhubaneswar - 751004, Odisha,
-                INDIA</span>
+
+            <!-- Right Side: Branch Office + Map -->
+            <div class="col-sm-6 d-flex flex-column h-100">
+              <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                  <i class="bi bi-buildings-fill"></i>
+                </div>
+                <div class="w-100">
+                  <strong class="d-block text-white mb-1 small fw-600">Branch Office</strong>
+                  <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="text-white text-opacity-60 d-block text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem; line-height: 1.5;">
+                    F-1, CII (Incubation Centre),<br>Utkal Univ, Vani Vihar,<br>Bhubaneswar - 751004
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Ultra Premium Mini Map Embed (Clickable) -->
+              <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="map-wrapper rounded-3 overflow-hidden mt-auto position-relative shadow-lg d-block" style="height: 85px; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">
+                <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)); z-index: 2;"></div>
+                <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 3;">
+                  <div class="bg-dark bg-opacity-50 text-white px-3 py-1 rounded-pill small fw-600 border border-white border-opacity-25 d-flex align-items-center gap-2" style="backdrop-filter: blur(4px);">
+                    <i class="bi bi-geo-alt-fill text-emerald"></i> View Map
+                  </div>
+                </div>
+                <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=CII%20Centre%20for%20Innovation%20and%20Incubation%20Utkal%20University&t=&z=15&ie=UTF8&iwloc=&output=embed" style="filter: grayscale(30%) contrast(1.1) brightness(0.9); pointer-events: none; display: block;"></iframe>
+              </a>
             </div>
-          </li>
-          <li class="d-flex align-items-start gap-3">
-            <i class="bi bi-envelope-at-fill text-emerald mt-1"></i>
-            <div class="d-flex flex-column">
-              <strong class="d-block text-white mb-1 small">Direct Communication</strong>
-              <a href="mailto:info@a4conserv.com" class="text-white text-opacity-50 text-decoration-none hover-emerald"
-                style="font-size: 0.8rem;">info&#64;a4conserv.com</a>
-              <a href="tel:+919642437773" class="text-white text-opacity-50 text-decoration-none hover-emerald"
-                style="font-size: 0.8rem;">+91 9642437773</a>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
 

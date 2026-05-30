@@ -33,7 +33,11 @@ const seedData = async () => {
         status: 'Active',
         imageUrl: 'assets/images/chicky_s.png',
         isFeatured: true,
-        benefits: ['High Protein', 'Rich in Iron', 'Kids Love It']
+        subtitle: 'Spirulina Nutrition Bar for Kids',
+        badge: 'Kids Favourite',
+        benefits: ['12g protein per bar — supports daily growth needs.', 'Great taste kids love — no algae smell or flavor.', 'Quick energy for active, growing kids.'],
+        includes: ['Pack of 15 Chicky Bars'],
+        nutrition: { protein: 65, iron: 45, absorption: 95 }
       },
       {
         name: 'Spirulina Capsules',
@@ -46,7 +50,11 @@ const seedData = async () => {
         status: 'Active',
         imageUrl: 'assets/images/Spirulia Capsule.jpg',
         isFeatured: true,
-        benefits: ['Immunity Booster', 'Detoxification', 'Energy Support']
+        subtitle: 'Daily Immunity & Energy Support',
+        badge: 'Daily Use',
+        benefits: ['No preparation needed — one capsule a day.', 'Precise daily dose of Iron, Protein, and B-Vitamins.', 'Boosts immunity and reduces chronic fatigue.'],
+        includes: ['90x Spirulina Capsules (500mg each)', '1x Daily Dosage Reference Card'],
+        nutrition: { protein: 60, iron: 90, absorption: 95 }
       },
       {
         name: 'Child Nutrition Kit',
@@ -58,7 +66,12 @@ const seedData = async () => {
         stock: 50,
         status: 'Active',
         imageUrl: 'assets/images/Child Nutrition Kit.jpg',
-        isFeatured: true
+        isFeatured: true,
+        subtitle: '30-Day Complete Recovery Plan',
+        badge: 'Bestseller',
+        benefits: ['Supports healthy weight gain and growth in children.', 'Provides Iron, Protein, and Vitamins essential for brain development.', 'Easy daily pre-dosed packets — no preparation needed.'],
+        includes: ['30x Spirulina Chicky Bars (Protein + Iron)', '1x Caregiver Progress Tracker Diary', '1x Bio-fortified Multivitamin Drops'],
+        nutrition: { protein: 85, iron: 92, absorption: 95 }
       },
       {
         name: 'Maternal Health Kit',
@@ -70,7 +83,12 @@ const seedData = async () => {
         stock: 30,
         status: 'Active',
         imageUrl: 'assets/images/Maternal Health Kit.jpg',
-        isFeatured: true
+        isFeatured: true,
+        subtitle: 'Pregnancy & Lactation Support',
+        badge: 'Essential',
+        benefits: ['Helps prevent iron-deficiency anemia during pregnancy.', 'Supports healthy milk production for lactating mothers.', 'Reduces the risk of low birth weight in newborns.'],
+        includes: ['60x Pure Spirulina Prenatal Capsules', '1x Maternal Diet Chart (Local Cuisine)', '1x Iron & Folic Acid Booster Pack'],
+        nutrition: { protein: 70, iron: 98, absorption: 90 }
       },
       {
         name: 'Pure Spirulina Powder',
@@ -82,7 +100,29 @@ const seedData = async () => {
         stock: 200,
         status: 'Active',
         imageUrl: 'assets/images/spirulina_s.png',
-        isFeatured: true
+        isFeatured: true,
+        subtitle: '100% Pure Organic Spirulina',
+        badge: 'Pure',
+        benefits: ['65% complete plant protein with all essential amino acids.', 'Rich in Vitamin B12 and highly bioavailable Iron.', 'No artificial additives, colors, or preservatives.'],
+        includes: ['250g Pure Spirulina Powder Jar', 'Measuring Spoon'],
+        nutrition: { protein: 95, iron: 88, absorption: 92 }
+      },
+      {
+        name: 'Nutrition Outreach Kit',
+        slug: 'outreach-kit',
+        description: 'A comprehensive nutritional response kit designed for clinical outreach. Contains fortified Spirulina supplements, high-protein energy bars, and diagnostic tracking tools for field healthcare workers.',
+        price: 2500,
+        originalPrice: 3000,
+        category: 'kit',
+        stock: 15,
+        status: 'Active',
+        imageUrl: 'assets/images/outreach_kit_s.png',
+        isFeatured: true,
+        subtitle: 'Institutional Intervention Supply',
+        badge: 'B2B / NGO',
+        benefits: ['Designed for high-impact moderate acute malnutrition (MAM) recovery.', 'Supports 50+ children per kit for initial intervention.', 'Includes field-tested diagnostic MUAC tapes and tracking logs.'],
+        includes: ['100x Fortified Spirulina Sachet Units', '25x High-Density Chicky Bars', '10x Field Diagnostic Kits', 'Institutional Logistics Support'],
+        nutrition: { protein: 90, iron: 95, absorption: 98 }
       }
     ]);
     console.log(`✅ ${products.length} products created`);
