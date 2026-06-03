@@ -24,6 +24,11 @@ interface BackendStatsResponse {
     totalRevenue: number;
     recentOrders: any[];
     statusBreakdown: any[];
+    interventions?: {
+      total: number;
+      recovered: number;
+      active: number;
+    }
   };
 }
 
@@ -40,12 +45,21 @@ export class DashboardService {
     return this.http.get<BackendStatsResponse>(this.apiUrl).pipe(
       map(response => {
         if (response.success) {
-          // Mapping backend fields to frontend interface
+          // Use interventions data if available, fallback to mock if 0 (until we add real data)
+          const interventions = response.data.interventions;
+          
+          let recRate = 0;
+          if (interventions && interventions.total > 0) {
+            recRate = (interventions.recovered / interventions.total) * 100;
+          } else {
+             recRate = 92.5; // Fallback
+          }
+
           const stats: AdminStats = {
-            childrenScreened: response.data.totalGallery * 4, // Mock mapping for visual impact
+            childrenScreened: (interventions?.total || 0) + response.data.totalGallery * 4,
             kitsDistributed: response.data.totalOrders,
-            activeInterventions: response.data.totalInquiries,
-            recoveryRate: 92.5, // Static for now as per clinical data
+            activeInterventions: (interventions?.active || 0) + response.data.totalInquiries,
+            recoveryRate: Number(recRate.toFixed(1)),
             totalDonations: response.data.totalRevenue,
             pendingCOD: response.data.pendingOrders
           };

@@ -23,19 +23,18 @@
 
           <h1 class="hero-heading-v11 hero-reveal-2">
             <div class="hero-line-reveal">
-              <span class="hero-line-inner"><span class="gradient-text-v11">Fighting</span></span>
+              <span class="hero-line-inner"><span class="gradient-text-v11">{{ pageData?.hero?.titleLine1 || 'Fighting' }}</span></span>
             </div>
             <div class="hero-line-reveal">
-              <span class="hero-line-inner"><span class="emerald-glow-text-v11">Malnutrition</span></span>
+              <span class="hero-line-inner"><span class="emerald-glow-text-v11">{{ pageData?.hero?.titleLine2 || 'Malnutrition' }}</span></span>
             </div>
             <div class="hero-line-reveal">
-              <span class="hero-line-inner"><span class="emerald-glow-text-v11">with Spirulina</span></span>
+              <span class="hero-line-inner"><span class="emerald-glow-text-v11">{{ pageData?.hero?.titleLine3 || 'with Spirulina' }}</span></span>
             </div>
           </h1>
 
           <p class="hero-paragraph-v11 hero-reveal-3">
-            Driven by impact and accountability, we work relentlessly to
-            ensure sustainable nutrition and healthier futures for every child.
+            {{ pageData?.hero?.body || 'Driven by impact and accountability, we work relentlessly to ensure sustainable nutrition and healthier futures for every child.' }}
           </p>
 
           <div class="hero-cta-group-v11 hero-reveal-4">
@@ -82,7 +81,7 @@
         <div class="hero-visual-v11 hero-reveal-5">
           <div class="visual-3d-wrapper-v11">
             <div class="main-image-frame-v11">
-              <img src="assets/images/hero_s.png" alt="MAM Impact">
+              <img [src]="pageData?.hero?.image || 'assets/images/hero_s.png'" alt="MAM Impact">
               <div class="image-overlay-v11"></div>
               <!-- Clinical Scan Line -->
               <div class="clinical-scan-line-v11"></div>
@@ -123,10 +122,9 @@
         </div>
         <h2 class="display-3 fw-950 text-slate-800 mb-4 lh-sm">Breaking the <span
             class="text-gradient-emerald-glow">Intergenerational Cycle</span><br>of Malnutrition</h2>
-        <p class="lead text-slate-600 mx-auto" style="max-width: 700px;">
-          Focusing on <strong class="text-emerald">lactating mothers</strong> and infants during the critical first 1000
-          days, we provide a structured approach to break the cycle of malnutrition across India.
-        </p>
+        <div class="lead text-slate-600 mx-auto" style="max-width: 700px;"
+          [innerHTML]="pageData?.missionContent?.body || '<p>Focusing on <strong class=\'text-emerald\'>lactating mothers</strong> and infants during the critical first 1000 days, we provide a structured approach to break the cycle of malnutrition across India.</p>'">
+        </div>
       </div>
     </div>
 

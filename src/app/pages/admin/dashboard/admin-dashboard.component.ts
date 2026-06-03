@@ -9,8 +9,13 @@ import { InquiryService, AdminInquiry } from '../../../services/inquiry.service'
 import { ImageService } from '../../../services/image.service';
 import { LightboxService } from '../../../services/lightbox.service';
 import { ResearchService, ResearchArticle } from '../../../services/research.service';
-import { DonationService, DonationPlan } from '../../../services/donation.service';
 import { ProductService, AdminProduct } from '../../../services/product.service';
+import { DonationService, DonationPlan } from '../../../services/donation.service';
+import { TestimonialService, Testimonial } from '../../../services/testimonial.service';
+import { SuccessStoryService, SuccessStory } from '../../../services/success-story.service';
+import { FaqService, FAQ } from '../../../services/faq.service';
+import { PageService, CMSPage } from '../../../services/page.service';
+import { SiteSettingsService, SiteSettings } from '../../../services/site-settings.service';
 import { FormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
 import gsap from 'gsap';
@@ -35,7 +40,7 @@ export class FilterByStatusPipe implements PipeTransform {
 })
 export class AdminDashboardComponent implements OnInit, AfterViewInit {
   private isBrowser: boolean;
-  activeAdminPanel: 'dashboard' | 'images' | 'research' | 'donations' | 'products' | 'inquiries' | 'orders' | 'settings' = 'dashboard';
+  activeAdminPanel: 'dashboard' | 'images' | 'research' | 'donations' | 'products' | 'inquiries' | 'orders' | 'settings' | 'pages' | 'testimonials' | 'success-stories' | 'faqs' = 'dashboard';
   isSidebarOpen = false;
   today = new Date();
   currentTime = new Date();
@@ -53,10 +58,18 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   articles: ResearchArticle[] = [];
   donationPlans: DonationPlan[] = [];
   products: AdminProduct[] = [];
+  testimonials: Testimonial[] = [];
+  successStories: SuccessStory[] = [];
+  cmsPages: CMSPage[] = [];
+  faqs: FAQ[] = [];
+  siteSettings: SiteSettings = {};
 
   // Form states
-  newArticle: Partial<ResearchArticle> = { title: '', category: 'Clinical Study', summary: '', status: 'Draft' };
+  newArticle: Partial<ResearchArticle> = { title: '', slug: '', category: 'Clinical Study', summary: '', status: 'Draft' };
   newProduct: Partial<AdminProduct> = { name: '', price: 0, stock: 0, status: 'Draft', imageUrl: 'assets/images/spirulina_s.png' };
+  newTestimonial: Partial<Testimonial> = { name: '', role: '', quote: '', rating: 5, status: 'Draft' };
+  newStory: Partial<SuccessStory> = { title: '', slug: '', summary: '', body: '', status: 'Draft' };
+  newFaq: Partial<FAQ> = { question: '', answer: '', category: 'General', sortOrder: 0, status: 'Draft' };
 
   // Gallery Upload State
   newImage = { title: '', location: '', description: '', category: 'Field Data' };
@@ -83,6 +96,11 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     private researchService: ResearchService,
     private donationService: DonationService,
     private productService: ProductService,
+    private testimonialService: TestimonialService,
+    private successStoryService: SuccessStoryService,
+    private faqService: FaqService,
+    private pageService: PageService,
+    private siteSettingsService: SiteSettingsService,
     private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -116,9 +134,42 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     this.galleryService.getImages().subscribe(imgs => this.galleryImages = imgs);
     this.orderService.getOrders().subscribe(ords => this.orders = ords);
     this.inquiryService.getInquiries().subscribe(inqs => this.inquiries = inqs);
-    this.researchService.getArticles().subscribe(arts => this.articles = arts);
+    this.researchService.getAdminArticles().subscribe(res => {
+      if (res.success && res.data) {
+        this.articles = res.data;
+      }
+    });
     this.donationService.getPlans().subscribe(plans => this.donationPlans = plans);
     this.productService.getProducts(true).subscribe(prods => this.products = prods);
+    this.testimonialService.getTestimonials().subscribe(res => {
+      if (res.success && res.data) {
+        this.testimonials = res.data;
+      }
+    });
+    this.successStoryService.getStories().subscribe(res => {
+      if (res.success && res.data) {
+        this.successStories = res.data;
+      }
+    });
+    this.pageService.getAllPages().subscribe(res => {
+      if (res.success && res.data) {
+        this.cmsPages = res.data;
+      }
+    });
+    this.faqService.getFaqs().subscribe(res => {
+      if (res.success && res.data) {
+        this.faqs = res.data;
+      }
+    });
+    this.siteSettingsService.getSettings().subscribe(res => {
+      if (res.success && res.data) {
+        this.siteSettings = res.data;
+        if (!this.siteSettings.branding) this.siteSettings.branding = {};
+        if (!this.siteSettings.contact) this.siteSettings.contact = {};
+        if (!this.siteSettings.social) this.siteSettings.social = {};
+        if (!this.siteSettings.marquee) this.siteSettings.marquee = [];
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -243,16 +294,20 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // --- Research Actions ---
+  // --- Research Articles ---
   saveArticle(): void {
     if (this.newArticle.title && this.newArticle.summary) {
-      this.researchService.addArticle(this.newArticle as Omit<ResearchArticle, 'id'>);
-      this.newArticle = { title: '', category: 'Clinical Study', summary: '', status: 'Draft' };
+      this.researchService.addArticle(this.newArticle).subscribe(() => {
+        this.refreshDashboardData();
+        this.newArticle = { title: '', slug: '', category: 'Clinical Study', summary: '', status: 'Draft' };
+      });
     }
   }
 
   deleteArticle(id: string): void {
-    if (confirm('Delete this article?')) this.researchService.deleteArticle(id);
+    if (confirm('Delete this article?')) {
+      this.researchService.deleteArticle(id).subscribe(() => this.refreshDashboardData());
+    }
   }
 
   // --- Donation Plans Actions ---
@@ -262,14 +317,91 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   // --- Product Actions ---
   saveProduct(): void {
-    if (this.newProduct.name) {
-      this.productService.addProduct(this.newProduct as Omit<AdminProduct, 'id'>);
-      this.newProduct = { name: '', price: 0, stock: 0, status: 'Draft', imageUrl: 'assets/images/spirulina_s.png' };
+    if (this.newProduct.name && this.newProduct.price) {
+      this.productService.addProduct(this.newProduct as AdminProduct).subscribe(() => {
+        this.refreshDashboardData();
+        this.newProduct = { name: '', price: 0, stock: 0, status: 'Draft', imageUrl: 'assets/images/spirulina_s.png' };
+      });
     }
   }
 
-  deleteProduct(id: string): void {
-    if (confirm('Delete this product?')) this.productService.deleteProduct(id);
+  deleteProduct(id: string | undefined): void {
+    if (!id) return;
+    if (confirm('Delete this product?')) {
+      this.productService.deleteProduct(id).subscribe(() => {
+        this.refreshDashboardData();
+      });
+    }
+  }
+
+  // --- CMS Actions ---
+  saveTestimonial(): void {
+    if (this.newTestimonial.name && this.newTestimonial.quote) {
+      this.testimonialService.createTestimonial(this.newTestimonial).subscribe(() => {
+        this.refreshDashboardData();
+        this.newTestimonial = { name: '', role: '', quote: '', rating: 5, status: 'Draft' };
+      });
+    }
+  }
+
+  deleteTestimonial(id: string): void {
+    if (confirm('Delete this testimonial?')) {
+      this.testimonialService.deleteTestimonial(id).subscribe(() => this.refreshDashboardData());
+    }
+  }
+
+  saveStory(): void {
+    if (this.newStory.title && this.newStory.slug && this.newStory.summary) {
+      this.successStoryService.createStory(this.newStory).subscribe(() => {
+        this.refreshDashboardData();
+        this.newStory = { title: '', slug: '', summary: '', body: '', status: 'Draft' };
+      });
+    }
+  }
+
+  deleteStory(id: string): void {
+    if (confirm('Delete this success story?')) {
+      this.successStoryService.deleteStory(id).subscribe(() => this.refreshDashboardData());
+    }
+  }
+
+  saveFaq(): void {
+    if (this.newFaq.question && this.newFaq.answer) {
+      this.faqService.createFaq(this.newFaq).subscribe(() => {
+        // Not refreshing all data to avoid unnecessary calls, could do specific refresh
+        window.location.reload(); // Simple approach for now
+      });
+    }
+  }
+
+  deleteFaq(id: string): void {
+    if (confirm('Delete this FAQ?')) {
+      this.faqService.deleteFaq(id).subscribe(() => {
+        window.location.reload();
+      });
+    }
+  }
+
+  // --- Site Settings ---
+  saveSiteSettings(): void {
+    this.siteSettingsService.updateSettings(this.siteSettings).subscribe(res => {
+      if (res.success) {
+        alert('Site settings updated successfully!');
+      }
+    });
+  }
+
+  addMarqueeItem(): void {
+    if (!this.siteSettings.marquee) {
+      this.siteSettings.marquee = [];
+    }
+    this.siteSettings.marquee.push({ text: '', icon: 'bi-star-fill' });
+  }
+
+  removeMarqueeItem(index: number): void {
+    if (this.siteSettings.marquee) {
+      this.siteSettings.marquee.splice(index, 1);
+    }
   }
 
   ngOnDestroy(): void {

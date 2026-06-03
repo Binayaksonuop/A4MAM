@@ -1,23 +1,25 @@
 <!-- ULTRA-LUXURIOUS PREMIUM LOADER -->
-<div class="premium-spin-loader" *ngIf="isLoading">
-  <div class="loader-bg"></div>
-  <div class="loader-container">
-    <div class="loader-spinner-ring"></div>
-    <div class="loader-spinner-ring-2"></div>
-    <div class="logo-wrapper">
-      <img src="assets/images/logo_mam.png" alt="A4MAM" class="loader-logo">
+@if (isLoading) {
+  <div class="premium-spin-loader">
+    <div class="loader-bg"></div>
+    <div class="loader-container">
+      <div class="loader-spinner-ring"></div>
+      <div class="loader-spinner-ring-2"></div>
+      <div class="logo-wrapper">
+        <img src="assets/images/logo_mam.png" alt="A4MAM" class="loader-logo" width="100" height="100" priority>
+      </div>
+    </div>
+    <div class="loader-text">
+      <span class="loader-title">Nourish to Flourish</span>
+      <div class="loader-progress-track">
+        <div class="loader-progress-bar"></div>
+      </div>
+      <span class="loader-dots">
+        <span></span><span></span><span></span>
+      </span>
     </div>
   </div>
-  <div class="loader-text">
-    <span class="loader-title">Nourish to Flourish</span>
-    <div class="loader-progress-track">
-      <div class="loader-progress-bar"></div>
-    </div>
-    <span class="loader-dots">
-      <span></span><span></span><span></span>
-    </span>
-  </div>
-</div>
+}
 
 
 <!-- Scroll to Top (Ultra Premium) -->
@@ -40,7 +42,7 @@
     <!-- LEFT: BRANDING -->
     <a class="navbar-brand m-0 p-0 d-flex align-items-center" routerLink="/" (click)="scrollToTop()">
       <div class="brand-logo-glow">
-        <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="nav-logo me-2" style="width: 48px; height: 48px;">
+        <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="nav-logo me-2" width="48" height="48" priority>
       </div>
       <span class="brand-text">A4MAM<span class="text-emerald fs-6 ms-1">///</span></span>
     </a>
@@ -63,7 +65,7 @@
 
         <!-- SHOP DROPDOWN -->
         <li class="nav-item dropdown premium-shop-dropdown">
-          <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="shopDropdown" role="button"
+          <a class="nav-link dropdown-toggle" href="#" (click)="$event.preventDefault()" id="shopDropdown" role="button"
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bag nav-icon-pulse"></i> Shop <i class="bi bi-chevron-down ms-1 dropdown-chevron"></i>
           </a>
@@ -118,7 +120,7 @@
 
         <!-- RESEARCH DROPDOWN -->
         <li class="nav-item dropdown premium-shop-dropdown">
-          <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="researchDropdown" role="button"
+          <a class="nav-link dropdown-toggle" href="#" (click)="$event.preventDefault()" id="researchDropdown" role="button"
             data-bs-toggle="dropdown" aria-expanded="false" routerLinkActive="active-link">
             <i class="bi bi-journal-medical nav-icon-pulse"></i> Research <i class="bi bi-chevron-down ms-1 dropdown-chevron"></i>
           </a>
@@ -152,7 +154,9 @@
         <div class="nav-cart-wrapper position-relative me-2">
           <a routerLink="/cart" class="nav-cart-link" (click)="closeNavbar()">
             <i class="bi bi-cart3 fs-4 text-white"></i>
-            <span class="cart-badge-premium" *ngIf="cartCount > 0">{{ cartCount }}</span>
+            @if (cartCount > 0) {
+              <span class="cart-badge-premium">{{ cartCount }}</span>
+            }
           </a>
         </div>
 
@@ -177,215 +181,196 @@
 <router-outlet></router-outlet>
 
 <!-- PREMIUM MARQUEE ANNOUNCEMENT BAR -->
-<div class="premium-marquee-bar">
-  <div class="premium-marquee-container">
-    <div class="premium-marquee-content">
-      <div class="marquee-item">
-        <i class="bi bi-heart-fill text-rose-500"></i>
-        <span>1.5L+ Children Nourished</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-geo-alt-fill text-blue-500"></i>
-        <span>500+ Villages Covered</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-award-fill text-amber-500"></i>
-        <span>WHO & FSSAI Certified</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-rocket-takeoff-fill text-emerald-500"></i>
-        <span>Join Our Mission Today</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-heart-fill text-rose-500"></i>
-        <span>1.5L+ Children Nourished</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-geo-alt-fill text-blue-500"></i>
-        <span>500+ Villages Covered</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-award-fill text-amber-500"></i>
-        <span>WHO & FSSAI Certified</span>
-      </div>
-      <div class="marquee-dot"></div>
-      <div class="marquee-item">
-        <i class="bi bi-rocket-takeoff-fill text-emerald-500"></i>
-        <span>Join Our Mission Today</span>
+@if (globalSettings.settings(); as settings) {
+  <div class="premium-marquee-bar">
+    <div class="premium-marquee-container">
+      <div class="premium-marquee-content">
+        @for (item of settings.marquee; track $index) {
+          <div class="marquee-item">
+            <i class="bi {{ item.icon }} text-emerald-500"></i>
+            <span>{{ item.text }}</span>
+          </div>
+          <div class="marquee-dot"></div>
+        }
+        <!-- Duplicate for smooth infinite scroll -->
+        @for (item of settings.marquee; track $index + 'dup') {
+          <div class="marquee-item">
+            <i class="bi {{ item.icon }} text-emerald-500"></i>
+            <span>{{ item.text }}</span>
+          </div>
+          <div class="marquee-dot"></div>
+        }
       </div>
     </div>
   </div>
-</div>
+}
 
 <!-- FOOTER (ULTRA-PREMIUM EYE-CATCHING) -->
-<footer id="contact" *ngIf="!isAdminPage" class="footer-premium position-relative overflow-hidden pt-4 pb-1">
-  <div class="footer-mesh-gradient-ultra"></div>
-  <div class="footer-glow-center"></div>
-
-  <div class="container position-relative z-3 pt-2">
-    <div class="row g-4 mb-3 pb-2">
-      <!-- Column 1: Brand & Vision -->
-      <div class="col-lg-3 col-md-12 gsap-footer-reveal">
-        <div class="footer-brand-ultra-modern mb-3">
-          <div class="logo-glow-container me-3">
-            <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="footer-logo-ultra" width="40" height="40">
-          </div>
-          <div class="brand-text-ultra">
-            <h3 class="fw-900 text-white mb-0 letter-spacing-neg-1">A4MAM</h3>
-            <span class="text-gradient-emerald small fw-700 text-uppercase letter-spacing-1"
+@if (!isAdminPage) {
+  <footer id="contact" class="footer-premium position-relative overflow-hidden pt-4 pb-1">
+    <div class="footer-mesh-gradient-ultra"></div>
+    <div class="footer-glow-center"></div>
+    <div class="container position-relative z-3 pt-2">
+      <div class="row g-4 mb-3 pb-2">
+        <!-- Column 1: Brand & Vision -->
+        <div class="col-lg-3 col-md-12 gsap-footer-reveal">
+          <div class="footer-brand-ultra-modern mb-3">
+            <div class="logo-glow-container me-3">
+              <img src="assets/images/logo_mam.png" alt="A4MAM Logo" class="footer-logo-ultra" width="40" height="40" loading="lazy">
+            </div>
+            <div class="brand-text-ultra">
+              <h3 class="fw-900 text-white mb-0 letter-spacing-neg-1">A4MAM</h3>
+              <span class="text-gradient-emerald small fw-700 text-uppercase letter-spacing-1"
               style="font-size: 0.7rem;">Nourish to Flourish</span>
-          </div>
-        </div>
-        <p class="footer-about-text-ultra mb-4 text-white text-opacity-60 fs-7 lh-sm" style="font-size: 0.85rem;">
-          Empowering communities through nutrition, innovation, and care. Our mission is to systematically eliminate
-          child malnutrition worldwide with science-driven solutions.
-        </p>
-        <div class="footer-social-premium d-flex gap-3">
-          <a href="javascript:void(0)" class="social-btn-ultra x-social"><i class="bi bi-twitter-x"></i></a>
-          <a href="javascript:void(0)" class="social-btn-ultra insta"><i class="bi bi-instagram"></i></a>
-          <a href="javascript:void(0)" class="social-btn-ultra linkin"><i class="bi bi-linkedin"></i></a>
-          <a href="javascript:void(0)" class="social-btn-ultra face"><i class="bi bi-facebook"></i></a>
-        </div>
-      </div>
-
-      <!-- Column 2: Quick Links -->
-      <div class="col-lg-2 col-md-4 col-6 gsap-footer-reveal">
-        <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 fs-6">Quick Links</h6>
-        <ul class="footer-links-list list-unstyled">
-          <li><a routerLink="/"><span class="link-dot"></span>Home</a></li>
-          <li><a routerLink="/about"><span class="link-dot"></span>Mission</a></li>
-          <li><a routerLink="/nutrition-details"><span class="link-dot"></span>Nutrition Details</a></li>
-          <li><a routerLink="/gallery"><span class="link-dot"></span>Gallery</a></li>
-          <li><a routerLink="/research/intergenerational-malnutrition"><span class="link-dot"></span>Research</a></li>
-          <li><a routerLink="/contact"><span class="link-dot"></span>Contact</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 3: Resources -->
-      <div class="col-lg-2 col-md-4 col-6 gsap-footer-reveal">
-        <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 fs-6">Resources</h6>
-        <ul class="footer-links-list list-unstyled">
-          <li><a routerLink="/shop"><span class="link-dot"></span>Shop Listing</a></li>
-          <li><a routerLink="/donate"><span class="link-dot"></span>Donate Now</a></li>
-          <li><a href="javascript:void(0)"><span class="link-dot"></span>Clinical Protocol</a></li>
-          <li><a href="javascript:void(0)"><span class="link-dot"></span>Case Studies</a></li>
-          <li><a href="javascript:void(0)"><span class="link-dot"></span>Impact Report</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 4: Reach Out (Premium Glass Card) -->
-      <div class="col-lg-5 col-md-12 gsap-footer-reveal">
-        <div class="p-4 rounded-4 position-relative overflow-hidden h-100 d-flex flex-column" style="background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(12px);">
-          <!-- Decorative glow inside the card -->
-          <div class="position-absolute rounded-circle" style="width: 120px; height: 120px; background: rgba(16, 185, 129, 0.15); top: -30px; right: -30px; filter: blur(40px); pointer-events: none;"></div>
-          
-          <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-4 fs-6 position-relative z-1 d-flex align-items-center gap-2">
-            <i class="bi bi-headset text-emerald fs-5"></i> Reach Out
-          </h6>
-          
-          <div class="row g-4 position-relative z-1 flex-grow-1">
-            <!-- Left Side: Head Office & Contact -->
-            <div class="col-sm-6 d-flex flex-column">
-              <div class="d-flex align-items-start gap-3 mb-4">
-                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
-                  <i class="bi bi-geo-alt-fill"></i>
-                </div>
-                <div>
-                  <strong class="d-block text-white mb-1 small fw-600">Head Office</strong>
-                  <span class="text-white text-opacity-60" style="font-size: 0.75rem; line-height: 1.5;">B#317, ARK Towers, Mayuri Nagar,<br>Miyapur, Hyd - 500049</span>
-                </div>
-              </div>
-
-              <div class="d-flex align-items-start gap-3 mt-auto">
-                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
-                  <i class="bi bi-envelope-at-fill"></i>
-                </div>
-                <div class="d-flex flex-column">
-                  <strong class="d-block text-white mb-1 small fw-600">Connect</strong>
-                  <a href="mailto:info@a4conserv.com" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem;">info&#64;a4conserv.com</a>
-                  <a href="tel:+919642437773" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all mt-1" style="font-size: 0.75rem;">+91 9642437773</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Side: Branch Office + Map -->
-            <div class="col-sm-6 d-flex flex-column h-100">
-              <div class="d-flex align-items-start gap-3 mb-3">
-                <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
-                  <i class="bi bi-buildings-fill"></i>
-                </div>
-                <div class="w-100">
-                  <strong class="d-block text-white mb-1 small fw-600">Branch Office</strong>
-                  <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="text-white text-opacity-60 d-block text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem; line-height: 1.5;">
-                    F-1, CII (Incubation Centre),<br>Utkal Univ, Vani Vihar,<br>Bhubaneswar - 751004
-                  </a>
-                </div>
-              </div>
-              
-              <!-- Ultra Premium Mini Map Embed (Clickable) -->
-              <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="map-wrapper rounded-3 overflow-hidden mt-auto position-relative shadow-lg d-block" style="height: 85px; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">
-                <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)); z-index: 2;"></div>
-                <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 3;">
-                  <div class="bg-dark bg-opacity-50 text-white px-3 py-1 rounded-pill small fw-600 border border-white border-opacity-25 d-flex align-items-center gap-2" style="backdrop-filter: blur(4px);">
-                    <i class="bi bi-geo-alt-fill text-emerald"></i> View Map
-                  </div>
-                </div>
-                <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=CII%20Centre%20for%20Innovation%20and%20Incubation%20Utkal%20University&t=&z=15&ie=UTF8&iwloc=&output=embed" style="filter: grayscale(30%) contrast(1.1) brightness(0.9); pointer-events: none; display: block;"></iframe>
-              </a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer Bottom Ultra -->
-    <div class="footer-bottom-strip mt-4 pt-4 border-top border-white border-opacity-10">
-      <div class="row align-items-center">
-        <div class="col-md-6 text-center text-md-start">
-          <p class="small text-white text-opacity-40 mb-0 fw-500">
-            &copy; 2026 <span class="text-white text-opacity-80">a4conserv.com</span>. Engineered for Global Impact.
+          <p class="footer-about-text-ultra mb-4 text-white text-opacity-60 fs-7 lh-sm" style="font-size: 0.85rem;">
+            Empowering communities through nutrition, innovation, and care. Our mission is to systematically eliminate
+            child malnutrition worldwide with science-driven solutions.
           </p>
+          <div class="footer-social-premium d-flex gap-3">
+            @if (globalSettings.settings(); as settings) {
+              <a [href]="settings?.social?.twitter || '#'" class="social-btn-ultra x-social" aria-label="Visit Twitter"><i class="bi bi-twitter-x"></i></a>
+              <a [href]="settings?.social?.instagram || '#'" class="social-btn-ultra insta" aria-label="Visit Instagram"><i class="bi bi-instagram"></i></a>
+              <a [href]="settings?.social?.linkedin || '#'" class="social-btn-ultra linkin" aria-label="Visit LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a [href]="settings?.social?.facebook || '#'" class="social-btn-ultra face" aria-label="Visit Facebook"><i class="bi bi-facebook"></i></a>
+            }
+          </div>
         </div>
-        <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-          <div class="footer-bottom-links d-flex gap-4">
-            <a href="javascript:void(0)" class="text-white text-opacity-40 small text-decoration-none">Privacy
+        <!-- Column 2: Quick Links -->
+        <div class="col-lg-2 col-md-4 col-6 gsap-footer-reveal">
+          <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 fs-6">Quick Links</h6>
+          <ul class="footer-links-list list-unstyled">
+            <li><a routerLink="/"><span class="link-dot"></span>Home</a></li>
+            <li><a routerLink="/about"><span class="link-dot"></span>Mission</a></li>
+            <li><a routerLink="/nutrition-details"><span class="link-dot"></span>Nutrition Details</a></li>
+            <li><a routerLink="/gallery"><span class="link-dot"></span>Gallery</a></li>
+            <li><a routerLink="/research/intergenerational-malnutrition"><span class="link-dot"></span>Research</a></li>
+            <li><a routerLink="/contact"><span class="link-dot"></span>Contact</a></li>
+          </ul>
+        </div>
+        <!-- Column 3: Resources -->
+        <div class="col-lg-2 col-md-4 col-6 gsap-footer-reveal">
+          <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-3 fs-6">Resources</h6>
+          <ul class="footer-links-list list-unstyled">
+            <li><a routerLink="/shop"><span class="link-dot"></span>Shop Listing</a></li>
+            <li><a routerLink="/donate"><span class="link-dot"></span>Donate Now</a></li>
+            <li><a href="#" (click)="$event.preventDefault()"><span class="link-dot"></span>Clinical Protocol</a></li>
+          <li><a href="#" (click)="$event.preventDefault()"><span class="link-dot"></span>Case Studies</a></li>
+          <li><a href="#" (click)="$event.preventDefault()"><span class="link-dot"></span>Impact Report</a></li>
+          </ul>
+        </div>
+        <!-- Column 4: Reach Out (Premium Glass Card) -->
+        <div class="col-lg-5 col-md-12 gsap-footer-reveal">
+          <div class="p-4 rounded-4 position-relative overflow-hidden h-100 d-flex flex-column" style="background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(12px);">
+            <!-- Decorative glow inside the card -->
+            <div class="position-absolute rounded-circle" style="width: 120px; height: 120px; background: rgba(16, 185, 129, 0.15); top: -30px; right: -30px; filter: blur(40px); pointer-events: none;"></div>
+            <h6 class="text-white fw-800 text-uppercase letter-spacing-1 mb-4 fs-6 position-relative z-1 d-flex align-items-center gap-2">
+              <i class="bi bi-headset text-emerald fs-5"></i> Reach Out
+            </h6>
+            <div class="row g-4 position-relative z-1 flex-grow-1">
+              <!-- Left Side: Head Office & Contact -->
+              <div class="col-sm-6 d-flex flex-column">
+                @if (globalSettings.settings(); as settings) {
+                  <div class="d-flex align-items-start gap-3 mb-4">
+                    <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                      <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div>
+                      <strong class="d-block text-white mb-1 small fw-600">Head Office</strong>
+                      <span class="text-white text-opacity-60" style="font-size: 0.75rem; line-height: 1.5;" [innerHTML]="settings?.contact?.headOffice || 'B#317, ARK Towers, Mayuri Nagar,<br>Miyapur, Hyd - 500049'"></span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-start gap-3 mt-auto">
+                    <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                      <i class="bi bi-envelope-at-fill"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                      <strong class="d-block text-white mb-1 small fw-600">Connect</strong>
+                      <a [href]="'mailto:' + (settings?.contact?.email || 'info@a4conserv.com')" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem;">{{ settings?.contact?.email || 'info@a4conserv.com' }}</a>
+                      <a [href]="'tel:' + (settings?.contact?.phone || '+919642437773')" class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all mt-1" style="font-size: 0.75rem;">{{ settings?.contact?.phone || '+91 9642437773' }}</a>
+                    </div>
+                  </div>
+                }
+              </div>
+              <!-- Right Side: Branch Office + Map -->
+              <div class="col-sm-6 d-flex flex-column h-100">
+                @if (globalSettings.settings(); as settings) {
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="bg-emerald bg-opacity-10 p-2 rounded-3 text-emerald d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; flex-shrink: 0;">
+                      <i class="bi bi-buildings-fill"></i>
+                    </div>
+                    <div class="w-100">
+                      <strong class="d-block text-white mb-1 small fw-600">Branch Office</strong>
+                      <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="text-white text-opacity-60 d-block text-decoration-none hover-emerald transition-all" style="font-size: 0.75rem; line-height: 1.5;" [innerHTML]="settings?.contact?.branchOffice || 'F-1, CII (Incubation Centre),<br>Utkal Univ, Vani Vihar,<br>Bhubaneswar - 751004'">
+                      </a>
+                    </div>
+                  </div>
+                }
+                <!-- Ultra Premium Mini Map Embed (Clickable) -->
+                <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer" class="map-wrapper rounded-3 overflow-hidden mt-auto position-relative shadow-lg d-block" style="height: 85px; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">
+                  <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3)); z-index: 2;"></div>
+                  <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 3;">
+                    <div class="bg-dark bg-opacity-50 text-white px-3 py-1 rounded-pill small fw-600 border border-white border-opacity-25 d-flex align-items-center gap-2" style="backdrop-filter: blur(4px);">
+                      <i class="bi bi-geo-alt-fill text-emerald"></i> View Map
+                    </div>
+                  </div>
+                  <div class="premium-static-map-bg"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer Bottom Ultra -->
+      <div class="footer-bottom-strip mt-4 pt-4 border-top border-white border-opacity-10">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="small text-white text-opacity-40 mb-0 fw-500">
+              &copy; 2026 <span class="text-white text-opacity-80">a4conserv.com</span>. Engineered for Global Impact.
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+            <div class="footer-bottom-links d-flex gap-4">
+              <a href="#" (click)="$event.preventDefault()" class="text-white text-opacity-40 small text-decoration-none">Privacy
               Policy</a>
-            <a href="javascript:void(0)" class="text-white text-opacity-40 small text-decoration-none">Terms of
+            <a href="#" (click)="$event.preventDefault()" class="text-white text-opacity-40 small text-decoration-none">Terms of
               Service</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
+}
 
 <!-- GLOBAL PREMIUM LIGHTBOX (HIGHEST LAYER) -->
-<div class="global-lightbox-overlay" *ngIf="lightboxData$ | async as data" (click)="closeLightbox()">
-  <div class="lightbox-blur-bg"></div>
-  <button class="lightbox-close-v6" (click)="closeLightbox()"><i class="bi bi-x-lg"></i></button>
-  
-  <button class="lightbox-nav-v6 prev" (click)="prevImage($event)" *ngIf="data.images"><i class="bi bi-chevron-left"></i></button>
-  <button class="lightbox-nav-v6 next" (click)="nextImage($event)" *ngIf="data.images"><i class="bi bi-chevron-right"></i></button>
-
-  <div class="lightbox-main-v6" (click)="$event.stopPropagation()">
-    <div class="lightbox-img-frame shadow-2xl">
-      <img [src]="data.src" [alt]="data.title" class="img-fluid-v6">
-    </div>
-    <div class="lightbox-meta-v6 glass-panel p-4 rounded-4 mt-4" *ngIf="data.title">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <span class="badge-v6-emerald mb-2 d-inline-block">{{ data.tag }}</span>
-          <h3 class="text-white fw-950 mb-1">{{ data.title }}</h3>
-          <p class="text-white text-opacity-50 mb-0"><i class="bi bi-geo-alt me-1"></i> {{ data.location }}</p>
-        </div>
-        <div class="mission-icon"><i class="bi bi-shield-check text-emerald fs-2"></i></div>
+@if (lightboxData$ | async; as data) {
+  <div class="global-lightbox-overlay" (click)="closeLightbox()">
+    <div class="lightbox-blur-bg"></div>
+    <button class="lightbox-close-v6" (click)="closeLightbox()"><i class="bi bi-x-lg"></i></button>
+    @if (data.images) {
+      <button class="lightbox-nav-v6 prev" (click)="prevImage($event)"><i class="bi bi-chevron-left"></i></button>
+    }
+    @if (data.images) {
+      <button class="lightbox-nav-v6 next" (click)="nextImage($event)"><i class="bi bi-chevron-right"></i></button>
+    }
+    <div class="lightbox-main-v6" (click)="$event.stopPropagation()">
+      <div class="lightbox-img-frame shadow-2xl">
+        <img [src]="data.src" [alt]="data.title" class="img-fluid-v6">
       </div>
+      @if (data.title) {
+        <div class="lightbox-meta-v6 glass-panel p-4 rounded-4 mt-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="badge-v6-emerald mb-2 d-inline-block">{{ data.tag }}</span>
+              <h3 class="text-white fw-950 mb-1">{{ data.title }}</h3>
+              <p class="text-white text-opacity-50 mb-0"><i class="bi bi-geo-alt me-1"></i> {{ data.location }}</p>
+            </div>
+            <div class="mission-icon"><i class="bi bi-shield-check text-emerald fs-2"></i></div>
+          </div>
+        </div>
+      }
     </div>
   </div>
-</div>
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener, PLATFORM_ID, Inject, NgZone } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { ProductService, AdminProduct } from '../../../services/product.service';
@@ -9,10 +9,10 @@ import gsap from 'gsap';
 @Component({
   selector: 'app-shop-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   template: `
     <div class="shop-premium-listing">
-      
+    
       <!-- HERO BANNER (PREMIUM DARK) -->
       <section class="shop-hero-premium position-relative overflow-hidden">
         <div class="shop-hero-mesh"></div>
@@ -22,73 +22,87 @@ import gsap from 'gsap';
               <span class="badge-premium-emerald mb-3 d-inline-block">The A4MAM Store</span>
               <h1 class="display-3 fw-900 text-white mb-3 letter-spacing-1">Scientific <span class="text-gradient-emerald">Nutrition</span></h1>
               <p class="lead text-white text-opacity-70 mx-auto" style="max-width: 600px;">
-                Directly supporting the eradication of malnutrition through premium, 
+                Directly supporting the eradication of malnutrition through premium,
                 bio-available Spirulina interventions for children and mothers.
               </p>
             </div>
           </div>
         </div>
       </section>
-
+    
       <div class="container py-5 position-relative z-2">
-        
+    
         <!-- Premium Filter Bar -->
-        <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap filter-container-glass p-2 rounded-pill mx-auto" style="max-width: fit-content;" *ngIf="!isLoading && products.length > 0">
-          <button class="btn filter-pill" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">All Products</button>
-          <button class="btn filter-pill" [class.active]="activeFilter === 'kids'" (click)="setFilter('kids')">For Kids</button>
-          <button class="btn filter-pill" [class.active]="activeFilter === 'maternal'" (click)="setFilter('maternal')">Maternal Care</button>
-          <button class="btn filter-pill" [class.active]="activeFilter === 'powder'" (click)="setFilter('powder')">Pure Powder</button>
-          <button class="btn filter-pill" [class.active]="activeFilter === 'kit'" (click)="setFilter('kit')">Complete Kits</button>
-        </div>
-
+        @if (!isLoading && products.length > 0) {
+          <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap filter-container-glass p-2 rounded-pill mx-auto" style="max-width: fit-content;">
+            <button class="btn filter-pill" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">All Products</button>
+            <button class="btn filter-pill" [class.active]="activeFilter === 'kids'" (click)="setFilter('kids')">For Kids</button>
+            <button class="btn filter-pill" [class.active]="activeFilter === 'maternal'" (click)="setFilter('maternal')">Maternal Care</button>
+            <button class="btn filter-pill" [class.active]="activeFilter === 'powder'" (click)="setFilter('powder')">Pure Powder</button>
+            <button class="btn filter-pill" [class.active]="activeFilter === 'kit'" (click)="setFilter('kit')">Complete Kits</button>
+          </div>
+        }
+    
         <!-- Loading State -->
-        <div class="text-center py-5" *ngIf="isLoading">
-          <div class="spinner-premium"></div>
-          <p class="text-white text-opacity-50 mt-4 letter-spacing-2">SCANNING INVENTORY...</p>
-        </div>
-
+        @if (isLoading) {
+          <div class="text-center py-5">
+            <div class="spinner-premium"></div>
+            <p class="text-white text-opacity-50 mt-4 letter-spacing-2">SCANNING INVENTORY...</p>
+          </div>
+        }
+    
         <!-- Empty State -->
-        <div class="text-center py-5" *ngIf="!isLoading && products.length === 0">
-          <i class="bi bi-box-seam text-emerald" style="font-size: 3rem;"></i>
-          <h3 class="text-white fw-bold mt-3">No Products Available</h3>
-          <p class="text-white text-opacity-50">Please add products from the Admin Panel.</p>
-        </div>
-
+        @if (!isLoading && products.length === 0) {
+          <div class="text-center py-5">
+            <i class="bi bi-box-seam text-emerald" style="font-size: 3rem;"></i>
+            <h3 class="text-white fw-bold mt-3">No Products Available</h3>
+            <p class="text-white text-opacity-50">Please add products from the Admin Panel.</p>
+          </div>
+        }
+    
         <!-- Premium Product Grid -->
-        <div class="row g-4 mb-5 product-grid-container" *ngIf="!isLoading && products.length > 0">
-          <div class="col-lg-4 col-md-6 tilt-wrapper" *ngFor="let product of filteredProducts; trackBy: trackByProductId">
-            <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'" (mouseenter)="onCardEnter($event)" (mousemove)="onCardMove($event)" (mouseleave)="onCardLeave($event)">
-              <div class="product-img-glass-wrap position-relative">
-                <span class="product-badge-float" *ngIf="product.status === 'Out of Stock'" style="background: #ef4444;">Out of Stock</span>
-                <span class="product-badge-float" *ngIf="product.status === 'In Stock'" style="background: linear-gradient(135deg, #10b981, #059669);">In Stock</span>
-                
-                <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid product-main-img" onerror="this.src='assets/images/logo_mam.png'">
-                <div class="img-shimmer"></div>
-              </div>
-              
-              <div class="product-body-glass p-4 d-flex flex-column flex-grow-1">
-                <h4 class="text-white fw-bold mb-2">{{ product.name }}</h4>
-                <p class="text-white text-opacity-50 small mb-4 flex-grow-1 lh-base">{{ product.description || 'Premium Spirulina product for clinical intervention.' }}</p>
-                
-                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-white border-opacity-10 mt-auto">
-                  <div class="price-wrap">
-                    <span class="text-white text-opacity-40 x-small d-block mb-1">UNIT PRICE</span>
-                    <span class="text-emerald fs-4 fw-900 letter-spacing-1">₹{{ product.price }}</span>
+        @if (!isLoading && products.length > 0) {
+          <div class="row g-4 mb-5 product-grid-container">
+            @for (product of filteredProducts; track trackByProductId($index, product)) {
+              <div class="col-lg-4 col-md-6 tilt-wrapper">
+                <div class="product-glass-card shadow-lg h-100 d-flex flex-column" [class.opacity-50]="product.status === 'Out of Stock'" (mouseenter)="onCardEnter($event)" (mousemove)="onCardMove($event)" (mouseleave)="onCardLeave($event)">
+                  <div class="product-img-glass-wrap position-relative">
+                    @if (product.status === 'Out of Stock') {
+                      <span class="product-badge-float" style="background: #ef4444;">Out of Stock</span>
+                    }
+                    @if (product.status === 'In Stock') {
+                      <span class="product-badge-float" style="background: linear-gradient(135deg, #10b981, #059669);">In Stock</span>
+                    }
+                    <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid product-main-img" onerror="this.src='assets/images/logo_mam.png'">
+                    <div class="img-shimmer"></div>
                   </div>
-                  
-                    <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium" [attr.aria-label]="'View details for ' + product.name" (click)="consoleLogProduct(product)">
-                      <i class="bi bi-eye"></i>
-                    </a>
-                    <button class="btn btn-add-premium add-to-cart-btn" (click)="addToCart($event, product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'" [attr.data-id]="product.id">
-                      <span *ngIf="!addedStates[product.id]"><i class="bi bi-cart-plus-fill me-2"></i> Add</span>
-                      <span *ngIf="addedStates[product.id]"><i class="bi bi-check-circle-fill me-2"></i> Added</span>
-                    </button>
+                  <div class="product-body-glass p-4 d-flex flex-column flex-grow-1">
+                    <h4 class="text-white fw-bold mb-2">{{ product.name }}</h4>
+                    <p class="text-white text-opacity-50 small mb-4 flex-grow-1 lh-base">{{ product.description || 'Premium Spirulina product for clinical intervention.' }}</p>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top border-white border-opacity-10 mt-auto">
+                      <div class="price-wrap">
+                        <span class="text-white text-opacity-40 x-small d-block mb-1">UNIT PRICE</span>
+                        <span class="text-emerald fs-4 fw-900 letter-spacing-1">₹{{ product.price }}</span>
+                      </div>
+                      <a [routerLink]="['/shop', product.slug || product.id]" class="btn btn-view-premium" [attr.aria-label]="'View details for ' + product.name" (click)="consoleLogProduct(product)">
+                        <i class="bi bi-eye"></i>
+                      </a>
+                      <button class="btn btn-add-premium add-to-cart-btn" (click)="addToCart($event, product)" [disabled]="product.status === 'Out of Stock'" [attr.aria-label]="'Add ' + product.name + ' to cart'" [attr.data-id]="product.id">
+                        @if (!addedStates[product.id]) {
+                          <span><i class="bi bi-cart-plus-fill me-2"></i> Add</span>
+                        }
+                        @if (addedStates[product.id]) {
+                          <span><i class="bi bi-check-circle-fill me-2"></i> Added</span>
+                        }
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
-        </div>
-
+        }
+    
         <!-- Bulk/NGO CTA Bar (PREMIUM GLASS) -->
         <div class="bulk-order-premium-bar p-5 rounded-5 mt-5 position-relative overflow-hidden">
           <div class="bulk-mesh"></div>
@@ -96,7 +110,7 @@ import gsap from 'gsap';
             <div class="col-lg-8">
               <h2 class="display-5 fw-950 text-white mb-3">Institutional & <span class="text-gradient-emerald">Bulk Supply</span></h2>
               <p class="lead text-white text-opacity-70 mb-0">
-                Are you an NGO, Hospital, or CSR initiative? We offer heavily 
+                Are you an NGO, Hospital, or CSR initiative? We offer heavily
                 subsidized rates for large-scale nutritional interventions.
               </p>
             </div>
@@ -109,7 +123,7 @@ import gsap from 'gsap';
         </div>
       </div>
     </div>
-  `,
+    `,
   styles: [`
     .shop-premium-listing { background: #0a0f1e; min-height: 100vh; }
     .shop-hero-premium { background: linear-gradient(135deg, #020617 0%, #0a1f14 100%); padding-top: 60px; }

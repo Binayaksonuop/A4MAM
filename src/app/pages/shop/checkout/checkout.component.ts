@@ -1,15 +1,16 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone, effect } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { OrderService } from '../../../services/order.service';
+import { RazorpayService } from '../../../services/razorpay.service';
 import gsap from 'gsap';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule],
   template: `
     <div class="checkout-obsidian-v6">
       <!-- Cinematic Background System -->
@@ -20,7 +21,7 @@ import gsap from 'gsap';
       </div>
       <div class="tech-grid-overlay"></div>
       <div class="bg-noise"></div>
-
+    
       <div class="container position-relative z-3 py-100">
         <div class="mb-5 reveal-v6">
           <div class="glass-chip-v6 mb-3">
@@ -29,7 +30,7 @@ import gsap from 'gsap';
           <h1 class="display-3 fw-950 text-white mb-2">Finalize Your <span class="text-gradient-mixed-v6">Mission</span></h1>
           <p class="text-white text-opacity-50 fs-5">Secure the distribution of life-saving clinical nutrition.</p>
         </div>
-
+    
         <div class="row g-5">
           <!-- Left: Multi-Step Form -->
           <div class="col-lg-7">
@@ -44,41 +45,41 @@ import gsap from 'gsap';
                   <div class="row g-4 mb-4">
                     <div class="col-md-6">
                       <div class="input-group-v6">
-                        <label>Recipient Name</label>
-                        <input type="text" name="name" [(ngModel)]="formData.name" placeholder="Enter Full Name" required>
+                        <label for="coName">Recipient Name</label>
+                        <input type="text" id="coName" name="name" [(ngModel)]="formData.name" placeholder="Enter Full Name" required autocomplete="name">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="input-group-v6">
-                        <label>Contact Coordination (Phone)</label>
-                        <input type="tel" name="phone" [(ngModel)]="formData.phone" placeholder="Enter Mobile Number" required>
+                        <label for="coPhone">Contact Coordination (Phone)</label>
+                        <input type="tel" id="coPhone" name="phone" [(ngModel)]="formData.phone" placeholder="Enter Mobile Number" required autocomplete="tel">
                       </div>
                     </div>
                   </div>
                   <div class="input-group-v6 mb-4">
-                    <label>Email Coordination</label>
-                    <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Enter Email Address" required>
+                    <label for="coEmail">Email Coordination</label>
+                    <input type="email" id="coEmail" name="email" [(ngModel)]="formData.email" placeholder="Enter Email Address" required autocomplete="email">
                   </div>
                   <div class="input-group-v6 mb-4">
-                    <label>Operational Hub (Full Address)</label>
-                    <textarea name="address" [(ngModel)]="formData.address" rows="3" placeholder="Street, Landmark, Apartment" required></textarea>
+                    <label for="coAddress">Operational Hub (Full Address)</label>
+                    <textarea id="coAddress" name="address" [(ngModel)]="formData.address" rows="3" placeholder="Street, Landmark, Apartment" required autocomplete="street-address"></textarea>
                   </div>
                   <div class="row g-4">
                     <div class="col-md-6">
                       <div class="input-group-v6">
-                        <label>City / Region</label>
-                        <input type="text" name="city" [(ngModel)]="formData.city" placeholder="Enter City" required>
+                        <label for="coCity">City / Region</label>
+                        <input type="text" id="coCity" name="city" [(ngModel)]="formData.city" placeholder="Enter City" required autocomplete="address-level2">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="input-group-v6">
-                        <label>Sector Code (Pincode)</label>
-                        <input type="text" name="pincode" [(ngModel)]="formData.pincode" placeholder="Enter Pincode" required>
+                        <label for="coPincode">Sector Code (Pincode)</label>
+                        <input type="text" id="coPincode" name="pincode" [(ngModel)]="formData.pincode" placeholder="Enter Pincode" required autocomplete="postal-code">
                       </div>
                     </div>
                   </div>
                 </div>
-
+    
                 <!-- STEP 2: PAYMENT METHOD -->
                 <div class="step-section-v6 mb-5">
                   <div class="d-flex align-items-center gap-3 mb-4">
@@ -111,78 +112,92 @@ import gsap from 'gsap';
                       </div>
                     </div>
                   </div>
-
+    
                   <!-- UPI PHASE: QR SCAN -->
-                  <div class="upi-phase-v6 p-4 mt-4" *ngIf="paymentMethod === 'upi'">
-                    <div class="row align-items-center g-4">
-                      <div class="col-md-4 text-center">
-                        <div class="qr-container-v6 p-2 bg-white rounded-3 shadow-glow-qr" (click)="toggleQrLightbox()" style="cursor: zoom-in;">
-                          <img src="assets/images/upi_qr.jpeg" alt="UPI QR" class="img-fluid">
-                          <div class="qr-hint-v6"><i class="bi bi-arrows-fullscreen"></i> Tap to Enlarge</div>
-                        </div>
-                        <div class="mt-3 x-small text-white text-opacity-90">After completing payment in your UPI app, click the button below.</div>
-                      </div>
-                      <div class="col-md-8">
-                        <h6 class="fw-900 text-white mb-2">Secure UPI Gateway</h6>
-                        <p class="text-white text-opacity-40 small mb-4">
-                          Scan the QR code with any UPI app (GPay, PhonePe, Paytm) to complete the nutritional intervention.
-                        </p>
-                        <div class="upi-id-box-v6 p-3 d-flex justify-content-between align-items-center">
-                          <div>
-                            <span class="x-small text-white text-opacity-30 d-block">UPI ID</span>
-                            <span class="fw-800 text-emerald">9642437773&#64;okbizaxis</span>
+                  @if (paymentMethod === 'upi') {
+                    <div class="upi-phase-v6 p-4 mt-4">
+                      <div class="row align-items-center g-4">
+                        <div class="col-md-4 text-center">
+                          <div class="qr-container-v6 p-2 bg-white rounded-3 shadow-glow-qr" (click)="toggleQrLightbox()" style="cursor: zoom-in;">
+                            <img src="assets/images/upi_qr.jpeg" alt="UPI QR" class="img-fluid">
+                            <div class="qr-hint-v6"><i class="bi bi-arrows-fullscreen"></i> Tap to Enlarge</div>
                           </div>
-                          <i class="bi bi-shield-lock-fill text-emerald fs-4"></i>
+                          <div class="mt-3 x-small text-white text-opacity-90">After completing payment in your UPI app, click the button below.</div>
+                        </div>
+                        <div class="col-md-8">
+                          <h6 class="fw-900 text-white mb-2">Secure UPI Gateway</h6>
+                          <p class="text-white text-opacity-40 small mb-4">
+                            Scan the QR code with any UPI app (GPay, PhonePe, Paytm) to complete the nutritional intervention.
+                          </p>
+                          <div class="upi-id-box-v6 p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                              <span class="x-small text-white text-opacity-30 d-block">UPI ID</span>
+                              <span class="fw-800 text-emerald">9642437773&#64;okbizaxis</span>
+                            </div>
+                            <i class="bi bi-shield-lock-fill text-emerald fs-4"></i>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-
+                  }
+    
                   <!-- COD INFO -->
-                  <div class="cod-info-v6 p-4 mt-4" *ngIf="paymentMethod === 'cod'">
-                    <div class="d-flex gap-3 align-items-center">
-                      <i class="bi bi-truck text-blue fs-3"></i>
-                      <div>
-                        <h6 class="fw-900 text-white mb-1">Pay at Delivery (COD)</h6>
-                        <p class="text-white text-opacity-50 small mb-0">
-                          Secure your mission today. Contribution funds will be collected by our logistics partner upon arrival at your operation hub.
-                        </p>
+                  @if (paymentMethod === 'cod') {
+                    <div class="cod-info-v6 p-4 mt-4">
+                      <div class="d-flex gap-3 align-items-center">
+                        <i class="bi bi-truck text-blue fs-3"></i>
+                        <div>
+                          <h6 class="fw-900 text-white mb-1">Pay at Delivery (COD)</h6>
+                          <p class="text-white text-opacity-50 small mb-0">
+                            Secure your mission today. Contribution funds will be collected by our logistics partner upon arrival at your operation hub.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  }
                 </div>
-
+    
                 <button type="submit" class="btn-cta-v6 w-100 py-4 fs-5 text-white fw-bold" [disabled]="isProcessing || !checkoutForm.form.valid">
-                  <span *ngIf="!isProcessing">
-                    <span *ngIf="paymentMethod === 'upi'">I HAVE COMPLETED PAYMENT <i class="bi bi-arrow-right-circle-fill ms-2 text-white"></i></span>
-                    <span *ngIf="paymentMethod === 'cod'">PLACE COD ORDER <i class="bi bi-truck ms-2 text-white"></i></span>
-                  </span>
-                  <span *ngIf="isProcessing">
-                    <span class="spinner-border spinner-border-sm me-3"></span> ALLOCATING MISSION...
-                  </span>
+                  @if (!isProcessing) {
+                    <span>
+                      @if (paymentMethod === 'upi') {
+                        <span>I HAVE COMPLETED PAYMENT <i class="bi bi-arrow-right-circle-fill ms-2 text-white"></i></span>
+                      }
+                      @if (paymentMethod === 'cod') {
+                        <span>PLACE COD ORDER <i class="bi bi-truck ms-2 text-white"></i></span>
+                      }
+                    </span>
+                  }
+                  @if (isProcessing) {
+                    <span>
+                      <span class="spinner-border spinner-border-sm me-3"></span> ALLOCATING MISSION...
+                    </span>
+                  }
                 </button>
               </form>
             </div>
           </div>
-
+    
           <!-- Right: Summary & Trust -->
           <div class="col-lg-5">
             <div class="summary-glass-card-v6 p-5 sticky-top reveal-v6" style="top: 160px;">
               <h4 class="fw-950 text-white mb-4">Order <span class="text-gradient-mixed-v6">Validation</span></h4>
               <div class="preview-list-v6 mb-4">
-                <div class="preview-item-v6 d-flex align-items-center gap-3 mb-3" *ngFor="let item of cartItems">
-                  <div class="preview-thumb-v6">
-                    <img [src]="item.image" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'">
-                    <span class="preview-qty-v6">{{ item.quantity }}</span>
+                @for (item of cartItems; track item) {
+                  <div class="preview-item-v6 d-flex align-items-center gap-3 mb-3">
+                    <div class="preview-thumb-v6">
+                      <img [src]="item.image" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'">
+                      <span class="preview-qty-v6">{{ item.quantity }}</span>
+                    </div>
+                    <div class="flex-grow-1">
+                      <div class="text-white fw-800 small">{{ item.name }}</div>
+                      <div class="text-white text-opacity-30 x-small">{{ item.option === 'Donation' ? 'Mission Contribution' : 'Clinical Grade Nutrition' }}</div>
+                    </div>
+                    <div class="text-white fw-950">₹{{ item.price * item.quantity }}</div>
                   </div>
-                  <div class="flex-grow-1">
-                    <div class="text-white fw-800 small">{{ item.name }}</div>
-                    <div class="text-white text-opacity-30 x-small">{{ item.option === 'Donation' ? 'Mission Contribution' : 'Clinical Grade Nutrition' }}</div>
-                  </div>
-                  <div class="text-white fw-950">₹{{ item.price * item.quantity }}</div>
-                </div>
+                }
               </div>
-
+    
               <div class="pt-4 border-top border-white border-opacity-10 mb-5">
                 <div class="summary-line-v6 mb-2">
                   <span class="label">Subtotal</span>
@@ -219,20 +234,22 @@ import gsap from 'gsap';
           </div>
         </div>
       </div>
-
+    
       <!-- QR LIGHTBOX OVERLAY (At root of component for max z-index) -->
-      <div class="qr-lightbox-overlay" *ngIf="isQrLightboxOpen" (click)="toggleQrLightbox()">
-        <div class="lightbox-content" (click)="$event.stopPropagation()">
-          <button class="btn-close-lightbox" (click)="toggleQrLightbox()"><i class="bi bi-x-lg"></i></button>
-          <img src="assets/images/upi_qr.jpeg" alt="UPI QR Full" class="qr-full-img">
-          <div class="lightbox-footer text-center mt-3">
-            <h5 class="text-white fw-bold mb-1">Scan & Pay</h5>
-            <p class="text-white text-opacity-50 small mb-0">A4MAM Mission Contribution</p>
+      @if (isQrLightboxOpen) {
+        <div class="qr-lightbox-overlay" (click)="toggleQrLightbox()">
+          <div class="lightbox-content" (click)="$event.stopPropagation()">
+            <button class="btn-close-lightbox" (click)="toggleQrLightbox()"><i class="bi bi-x-lg"></i></button>
+            <img src="assets/images/upi_qr.jpeg" alt="UPI QR Full" class="qr-full-img">
+            <div class="lightbox-footer text-center mt-3">
+              <h5 class="text-white fw-bold mb-1">Scan & Pay</h5>
+              <p class="text-white text-opacity-50 small mb-0">A4MAM Mission Contribution</p>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-  `,
+    `,
   styles: [`
     .checkout-obsidian-v6 {
       background: #020617;
@@ -540,11 +557,24 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
+    private razorpayService: RazorpayService,
     private router: Router,
     private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    
+    effect(() => {
+      const items = this.cartService.cartItems();
+      this.cartItems = items;
+      this.hasDonation = items.some((item: any) => item.option === 'Donation');
+      this.total = this.cartService.cartTotal();
+      
+      if (this.total === 0 && this.isBrowser) {
+        // Defer navigation to avoid Navigation inside effect warning
+        setTimeout(() => this.router.navigate(['/shop']), 0);
+      }
+    });
   }
 
   toggleQrLightbox(): void {
@@ -559,14 +589,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cartService.cartItems$.subscribe(items => {
-      this.cartItems = items;
-      this.hasDonation = items.some((item: any) => item.option === 'Donation');
-      this.total = this.cartService.getCartTotal();
-      if (this.total === 0 && this.isBrowser) {
-        this.router.navigate(['/shop']);
-      }
-    });
+    if (this.isBrowser) {
+      this.razorpayService.loadScript();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -580,12 +605,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void { }
 
-  placeOrder(): void {
+  async placeOrder() {
     if (this.isProcessing) return;
-
     this.isProcessing = true;
 
-    // Map cart items for backend
     const items = this.cartItems.map(item => ({
       productId: item.id,
       name: item.name,
@@ -599,39 +622,78 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
       phone: this.formData.phone,
       address: this.formData.address,
       city: this.formData.city,
-      state: '', // Add state if needed
+      state: '',
       pincode: this.formData.pincode,
       items: items,
       totalAmount: this.total,
       paymentMethod: this.paymentMethod.toLowerCase(),
-      paymentStatus: this.paymentMethod === 'upi' ? 'Paid' : 'Pending'
+      paymentStatus: 'Pending'
     };
 
+    if (this.paymentMethod === 'upi') {
+      try {
+        const isLoaded = await this.razorpayService.loadScript();
+        if (!isLoaded) {
+          alert('Failed to load Razorpay. Please check your connection.');
+          this.isProcessing = false;
+          return;
+        }
+
+        const options = {
+          key: 'rzp_test_YourTestKeyHere', // Replace with real key in production
+          amount: this.total * 100, // Amount is in currency subunits
+          currency: 'INR',
+          name: 'A4MAM NGO',
+          description: this.hasDonation ? 'Mission Contribution' : 'Nutritional Supplies',
+          image: 'https://a4mam.org/assets/images/logo_mam.png',
+          prefill: {
+            name: this.formData.name,
+            email: this.formData.email,
+            contact: this.formData.phone
+          },
+          theme: {
+            color: '#10b981' // Emerald theme
+          }
+        };
+
+        const response = await this.razorpayService.openCheckout(options);
+        
+        // Successful payment, proceed to place order backend call
+        orderData.paymentStatus = 'Paid';
+        orderData.paymentMethod = 'razorpay';
+        
+        this.submitOrderToBackend(orderData);
+      } catch (err) {
+        console.warn('Payment failed or cancelled', err);
+        this.isProcessing = false;
+      }
+    } else {
+      this.submitOrderToBackend(orderData);
+    }
+  }
+
+  private submitOrderToBackend(orderData: any) {
     this.orderService.placeOrder(orderData).subscribe({
       next: (response: any) => {
         if (response.success) {
-          const donationItem = this.cartItems.find((i: any) => i.option === 'Donation');
           const realOrderId = response.data.orderId;
           this.cartService.clearCart();
-
           this.router.navigate(['/order-success'], {
             queryParams: {
               orderId: realOrderId,
               amount: this.total,
-              method: this.paymentMethod,
+              method: orderData.paymentMethod,
               name: this.formData.name,
               city: this.formData.city,
               isDonation: this.hasDonation ? 'true' : 'false',
-              planName: donationItem ? donationItem.name : ''
+              date: new Date().toISOString()
             }
           });
+        } else {
+          alert('Failed to place order: ' + response.message);
+          this.isProcessing = false;
         }
-        this.isProcessing = false;
       },
-      error: (err: any) => {
-        this.isProcessing = false;
-        alert(err.error?.message || 'Failed to place mission order. Please check your connection.');
-      }
     });
   }
 }

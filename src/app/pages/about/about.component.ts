@@ -1,15 +1,15 @@
 import { Component, AfterViewInit, PLATFORM_ID, Inject, HostListener, NgZone } from '@angular/core';
-import { isPlatformBrowser, CommonModule, NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser, } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgOptimizedImage],
+  imports: [RouterModule, ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

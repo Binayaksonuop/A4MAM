@@ -1,214 +1,212 @@
 <!-- LOADING STATE -->
-<div class="product-loading-v6 d-flex align-items-center justify-content-center" *ngIf="isLoading">
-  <div class="text-center">
-    <div class="spinner-premium-v6"></div>
-    <p class="text-white text-opacity-50 mt-4 letter-spacing-2">AUTHENTICATING BIO-DATA...</p>
-  </div>
-</div>
-
-<main class="product-detail-page-v6" *ngIf="!isLoading && product">
-
-  <!-- HERO: PRODUCT SHOWCASE -->
-  <section class="product-hero-v6 position-relative overflow-hidden">
-    <div class="hero-mesh-glow-v6"></div>
-    <div class="bg-noise"></div>
-
-    <div class="container position-relative z-3">
-      <!-- Nav/Breadcrumb -->
-      <nav class="pt-2 mb-3">
-        <a routerLink="/shop" class="btn-back-v6">
-          <i class="bi bi-arrow-left me-2"></i> Back to Collection
-        </a>
-      </nav>
-
-      <div class="row align-items-center g-5 product-hero-row-v6">
-        <!-- Image Area -->
-        <div class="col-lg-6 product-hero-visual-v6">
-          <div class="product-frame-3d-v6">
-            <div class="glass-reflection-v6"></div>
-            <img [src]="product.image" [alt]="product.title" class="product-img-v6" onerror="this.src='assets/images/logo_mam.png'">
-          </div>
-        </div>
-
-        <!-- Info Area -->
-        <div class="col-lg-6 product-info-reveal-v6">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="glass-chip-v6">
-              <span class="pulse-dot-v6"></span> {{ product.badge }}
-            </div>
-            <div class="glass-chip-v6 secondary">
-              <i class="bi bi-shield-check me-2"></i> Clinical Grade
-            </div>
-          </div>
-
-          <h1 class="display-3 fw-950 text-white mb-2">{{ product.title }}</h1>
-          <p class="lead text-gradient-emerald-v6 fw-bold mb-4">{{ product.subtitle }}</p>
-
-          <div class="price-wrap-v6 mb-5">
-            <span class="currency">₹</span>
-            <span class="amount">{{ product.price }}</span>
-          </div>
-
-          <p class="description-v6 mb-5">
-            {{ product.description }}
-          </p>
-
-          <!-- Interaction Row -->
-          <div class="d-flex align-items-center gap-4">
-            <div class="qty-stepper-v6">
-              <button (click)="changeQty(-1)" [disabled]="selectedQty <= 1"><i class="bi bi-dash"></i></button>
-              <span>{{ selectedQty }}</span>
-              <button (click)="changeQty(1)"><i class="bi bi-plus"></i></button>
-            </div>
-
-            <button class="btn-cta-v6 flex-grow-1" (click)="triggerAddToCart()" [disabled]="isAdded">
-              <span *ngIf="!isAdded">SUPPORT THE MISSION — ADD TO CART</span>
-              <span *ngIf="isAdded"><i class="bi bi-check-lg me-2"></i> ADDED TO MISSION</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NUTRITIONAL SCIENCE: DATA VISUALIZATION -->
-  <section class="nutrition-section-v6 py-150">
-    <div class="container">
-      <div class="row g-5 align-items-center">
-        <div class="col-lg-5">
-          <h2 class="display-5 fw-950 text-white mb-4">Biological <span
-              class="text-gradient-emerald-v6">Precision</span></h2>
-          <p class="text-white text-opacity-60 fs-5 mb-5">
-            Unlike standard supplements, our Spirulina is engineered for maximum bioavailability, ensuring that every
-            milligram reaches the child's bloodstream.
-          </p>
-
-          <div class="row g-4 mb-5">
-            <div class="col-6" *ngFor="let benefit of product.benefits">
-              <div class="benefit-tag-v6">
-                <i class="bi bi-check2-circle text-emerald me-2"></i>
-                {{ benefit }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-7">
-          <div class="nutrition-grid-v6">
-            <!-- Protein Ring -->
-            <div class="nutrition-card-v6">
-              <div class="ring-container-v6">
-                <svg viewBox="0 0 36 36" class="circular-chart-v6 emerald">
-                  <path class="circle-bg-v6"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div class="ring-val-v6">{{ proteinDisplay }}%</div>
-              </div>
-              <div class="ring-label-v6">Protein Density</div>
-            </div>
-
-            <!-- Iron Ring -->
-            <div class="nutrition-card-v6">
-              <div class="ring-container-v6">
-                <svg viewBox="0 0 36 36" class="circular-chart-v6 blue">
-                  <path class="circle-bg-v6"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div class="ring-val-v6">{{ ironDisplay }}%</div>
-              </div>
-              <div class="ring-label-v6">Iron Synthesis</div>
-            </div>
-
-            <!-- Absorption Ring -->
-            <div class="nutrition-card-v6">
-              <div class="ring-container-v6">
-                <svg viewBox="0 0 36 36" class="circular-chart-v6 gold">
-                  <path class="circle-bg-v6"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <div class="ring-val-v6">{{ absorptionDisplay }}%</div>
-              </div>
-              <div class="ring-label-v6">Bioavailability</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISSION STORY: THE IMPACT -->
-  <section class="impact-story-section py-150">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-4 fw-950 text-white mb-3">Designed for <span class="text-gradient-emerald-v6">Humanity</span>
-        </h2>
-        <p class="text-white text-opacity-50 mx-auto" style="max-width: 600px;">Every element of the {{ product.title }}
-          has a specific role in breaking the cycle of malnutrition.</p>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-lg-4">
-          <div class="story-card-v6 h-100">
-            <div class="story-icon-v6"><i class="bi bi-lightning-charge"></i></div>
-            <h4 class="text-white fw-900 mb-3">Immediate Intervention</h4>
-            <p class="text-white text-opacity-50 small mb-0">Our pre-dosed format ensures that even the most remote
-              families can administer clinical-grade nutrition correctly every single time.</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="story-card-v6 h-100">
-            <div class="story-icon-v6 secondary"><i class="bi bi-gear-wide-connected"></i></div>
-            <h4 class="text-white fw-900 mb-3">Sustainable Recovery</h4>
-            <p class="text-white text-opacity-50 small mb-0">Not just a meal, but a biological reset. It builds the
-              child's immune reserves, preventing future relapses into severe malnutrition.</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="story-card-v6 h-100">
-            <div class="story-icon-v6 gold"><i class="bi bi-people"></i></div>
-            <h4 class="text-white fw-900 mb-3">Community Scaling</h4>
-            <p class="text-white text-opacity-50 small mb-0">By purchasing this, you're directly funding the
-              infrastructure of community-led Spirulina farms in high-need rural districts.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STICKY CTA BAR (ON SCROLL) -->
-  <div class="sticky-cta-v6 px-3 py-2">
-    <div class="container">
-      <div class="d-flex align-items-center justify-content-between">
-        <div class="d-none d-md-flex align-items-center gap-3">
-          <img [src]="product.image" class="sticky-thumb-v6" onerror="this.src='assets/images/logo_mam.png'">
-          <div>
-            <div class="text-white fw-900 small lh-1 mb-1">{{ product.title }}</div>
-            <div class="text-emerald fw-bold x-small">₹{{ product.price }}</div>
-          </div>
-        </div>
-        <button class="btn btn-cta-v6 py-2 px-5 rounded-pill" (click)="triggerAddToCart()" [disabled]="isAdded">
-          <span *ngIf="!isAdded">ADD TO CART</span>
-          <span *ngIf="isAdded"><i class="bi bi-check-lg me-2"></i> ADDED</span>
-        </button>
-      </div>
+@if (isLoading) {
+  <div class="product-loading-v6 d-flex align-items-center justify-content-center">
+    <div class="text-center">
+      <div class="spinner-premium-v6"></div>
+      <p class="text-white text-opacity-50 mt-4 letter-spacing-2">AUTHENTICATING BIO-DATA...</p>
     </div>
   </div>
+}
 
-</main>
+@if (!isLoading && product) {
+  <main class="product-detail-page-v6">
+    <!-- HERO: PRODUCT SHOWCASE -->
+    <section class="product-hero-v6 position-relative overflow-hidden">
+      <div class="hero-mesh-glow-v6"></div>
+      <div class="bg-noise"></div>
+      <div class="container position-relative z-3">
+        <!-- Nav/Breadcrumb -->
+        <nav class="pt-2 mb-3">
+          <a routerLink="/shop" class="btn-back-v6">
+            <i class="bi bi-arrow-left me-2"></i> Back to Collection
+          </a>
+        </nav>
+        <div class="row align-items-center g-5 product-hero-row-v6">
+          <!-- Image Area -->
+          <div class="col-lg-6 product-hero-visual-v6">
+            <div class="product-frame-3d-v6">
+              <div class="glass-reflection-v6"></div>
+              <img [src]="product.image" [alt]="product.title" class="product-img-v6" onerror="this.src='assets/images/logo_mam.png'">
+            </div>
+          </div>
+          <!-- Info Area -->
+          <div class="col-lg-6 product-info-reveal-v6">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="glass-chip-v6">
+                <span class="pulse-dot-v6"></span> {{ product.badge }}
+              </div>
+              <div class="glass-chip-v6 secondary">
+                <i class="bi bi-shield-check me-2"></i> Clinical Grade
+              </div>
+            </div>
+            <h1 class="display-3 fw-950 text-white mb-2">{{ product.title }}</h1>
+            <p class="lead text-gradient-emerald-v6 fw-bold mb-4">{{ product.subtitle }}</p>
+            <div class="price-wrap-v6 mb-5">
+              <span class="currency">₹</span>
+              <span class="amount">{{ product.price }}</span>
+            </div>
+            <p class="description-v6 mb-5">
+              {{ product.description }}
+            </p>
+            <!-- Interaction Row -->
+            <div class="d-flex align-items-center gap-4">
+              <div class="qty-stepper-v6">
+                <button (click)="changeQty(-1)" [disabled]="selectedQty <= 1"><i class="bi bi-dash"></i></button>
+                <span>{{ selectedQty }}</span>
+                <button (click)="changeQty(1)"><i class="bi bi-plus"></i></button>
+              </div>
+              <button class="btn-cta-v6 flex-grow-1" (click)="triggerAddToCart()" [disabled]="isAdded">
+                @if (!isAdded) {
+                  <span>SUPPORT THE MISSION — ADD TO CART</span>
+                }
+                @if (isAdded) {
+                  <span><i class="bi bi-check-lg me-2"></i> ADDED TO MISSION</span>
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- NUTRITIONAL SCIENCE: DATA VISUALIZATION -->
+    <section class="nutrition-section-v6 py-150">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5">
+            <h2 class="display-5 fw-950 text-white mb-4">Biological <span
+            class="text-gradient-emerald-v6">Precision</span></h2>
+            <p class="text-white text-opacity-60 fs-5 mb-5">
+              Unlike standard supplements, our Spirulina is engineered for maximum bioavailability, ensuring that every
+              milligram reaches the child's bloodstream.
+            </p>
+            <div class="row g-4 mb-5">
+              @for (benefit of product.benefits; track benefit) {
+                <div class="col-6">
+                  <div class="benefit-tag-v6">
+                    <i class="bi bi-check2-circle text-emerald me-2"></i>
+                    {{ benefit }}
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="nutrition-grid-v6">
+              <!-- Protein Ring -->
+              <div class="nutrition-card-v6">
+                <div class="ring-container-v6">
+                  <svg viewBox="0 0 36 36" class="circular-chart-v6 emerald">
+                    <path class="circle-bg-v6"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      </svg>
+                      <div class="ring-val-v6">{{ proteinDisplay }}%</div>
+                    </div>
+                    <div class="ring-label-v6">Protein Density</div>
+                  </div>
+                  <!-- Iron Ring -->
+                  <div class="nutrition-card-v6">
+                    <div class="ring-container-v6">
+                      <svg viewBox="0 0 36 36" class="circular-chart-v6 blue">
+                        <path class="circle-bg-v6"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                          <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                          </svg>
+                          <div class="ring-val-v6">{{ ironDisplay }}%</div>
+                        </div>
+                        <div class="ring-label-v6">Iron Synthesis</div>
+                      </div>
+                      <!-- Absorption Ring -->
+                      <div class="nutrition-card-v6">
+                        <div class="ring-container-v6">
+                          <svg viewBox="0 0 36 36" class="circular-chart-v6 gold">
+                            <path class="circle-bg-v6"
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                              <path class="circle-v6 nutrition-ring-path" stroke-dasharray="0, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                              </svg>
+                              <div class="ring-val-v6">{{ absorptionDisplay }}%</div>
+                            </div>
+                            <div class="ring-label-v6">Bioavailability</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <!-- MISSION STORY: THE IMPACT -->
+                <section class="impact-story-section py-150">
+                  <div class="container">
+                    <div class="text-center mb-5">
+                      <h2 class="display-4 fw-950 text-white mb-3">Designed for <span class="text-gradient-emerald-v6">Humanity</span>
+                    </h2>
+                    <p class="text-white text-opacity-50 mx-auto" style="max-width: 600px;">Every element of the {{ product.title }}
+                    has a specific role in breaking the cycle of malnutrition.</p>
+                  </div>
+                  <div class="row g-4">
+                    <div class="col-lg-4">
+                      <div class="story-card-v6 h-100">
+                        <div class="story-icon-v6"><i class="bi bi-lightning-charge"></i></div>
+                        <h4 class="text-white fw-900 mb-3">Immediate Intervention</h4>
+                        <p class="text-white text-opacity-50 small mb-0">Our pre-dosed format ensures that even the most remote
+                        families can administer clinical-grade nutrition correctly every single time.</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="story-card-v6 h-100">
+                        <div class="story-icon-v6 secondary"><i class="bi bi-gear-wide-connected"></i></div>
+                        <h4 class="text-white fw-900 mb-3">Sustainable Recovery</h4>
+                        <p class="text-white text-opacity-50 small mb-0">Not just a meal, but a biological reset. It builds the
+                        child's immune reserves, preventing future relapses into severe malnutrition.</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="story-card-v6 h-100">
+                        <div class="story-icon-v6 gold"><i class="bi bi-people"></i></div>
+                        <h4 class="text-white fw-900 mb-3">Community Scaling</h4>
+                        <p class="text-white text-opacity-50 small mb-0">By purchasing this, you're directly funding the
+                        infrastructure of community-led Spirulina farms in high-need rural districts.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- STICKY CTA BAR (ON SCROLL) -->
+              <div class="sticky-cta-v6 px-3 py-2">
+                <div class="container">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-none d-md-flex align-items-center gap-3">
+                      <img [src]="product.image" class="sticky-thumb-v6" onerror="this.src='assets/images/logo_mam.png'">
+                      <div>
+                        <div class="text-white fw-900 small lh-1 mb-1">{{ product.title }}</div>
+                        <div class="text-emerald fw-bold x-small">₹{{ product.price }}</div>
+                      </div>
+                    </div>
+                    <button class="btn btn-cta-v6 py-2 px-5 rounded-pill" (click)="triggerAddToCart()" [disabled]="isAdded">
+                      @if (!isAdded) {
+                        <span>ADD TO CART</span>
+                      }
+                      @if (isAdded) {
+                        <span><i class="bi bi-check-lg me-2"></i> ADDED</span>
+                      }
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </main>
+          }
 
-<!-- 404 STATE -->
-<div class="not-found-v6 d-flex align-items-center justify-content-center" *ngIf="!isLoading && !product">
-  <div class="text-center">
-    <div class="display-1 text-white text-opacity-10 mb-4">404</div>
-    <h2 class="text-white fw-950 mb-3">PRODUCT NOT FOUND</h2>
-    <p class="text-white text-opacity-50 mb-5">The nutrition kit you are seeking is either unavailable or has been
-      discontinued.</p>
-    <a routerLink="/shop" class="btn btn-cta-v6 px-5 py-3 rounded-pill">RETURN TO CATALOG</a>
-  </div>
-</div>
+          <!-- 404 STATE -->
+          @if (!isLoading && !product) {
+            <div class="not-found-v6 d-flex align-items-center justify-content-center">
+              <div class="text-center">
+                <div class="display-1 text-white text-opacity-10 mb-4">404</div>
+                <h2 class="text-white fw-950 mb-3">PRODUCT NOT FOUND</h2>
+                <p class="text-white text-opacity-50 mb-5">The nutrition kit you are seeking is either unavailable or has been
+                discontinued.</p>
+                <a routerLink="/shop" class="btn btn-cta-v6 px-5 py-3 rounded-pill">RETURN TO CATALOG</a>
+              </div>
+            </div>
+          }

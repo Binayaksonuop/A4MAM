@@ -1,70 +1,62 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface ResearchArticle {
-  id: string;
+  _id: string;
   title: string;
+  slug: string;
   category: string;
   summary: string;
+  body: string;
+  author: string;
+  publishedDate: Date;
   status: 'Draft' | 'Published';
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string;
+    ogImage?: string;
+    canonicalUrl?: string;
+  };
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResearchService {
-  private articlesSubject = new BehaviorSubject<ResearchArticle[]>([]);
-  private storageKey = 'a4mam_research_articles';
+  private apiUrl = `${environment.apiUrl}/research`;
 
-  constructor() {
-    this.loadFromStorage();
+  constructor(private http: HttpClient) {}
+
+  getArticles(): Observable<ApiResponse<ResearchArticle[]>> {
+    return this.http.get<ApiResponse<ResearchArticle[]>>(this.apiUrl);
   }
 
-  private loadFromStorage(): void {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(this.storageKey);
-      if (stored) {
-        this.articlesSubject.next(JSON.parse(stored));
-      } else {
-        // Initialize with some mock data
-        const initialData: ResearchArticle[] = [
-          { id: '1', title: 'Spirulina Impact on Severe Malnutrition', category: 'Clinical Study', summary: 'Results from 6-month trial in rural India showing 40% faster recovery rates.', status: 'Published' }
-        ];
-        this.articlesSubject.next(initialData);
-        this.saveToStorage(initialData);
-      }
-    }
+  getArticleBySlug(slug: string): Observable<ApiResponse<ResearchArticle>> {
+    return this.http.get<ApiResponse<ResearchArticle>>(`${this.apiUrl}/${slug}`);
   }
 
-  private saveToStorage(articles: ResearchArticle[]): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(this.storageKey, JSON.stringify(articles));
-    }
+  getAdminArticles(): Observable<ApiResponse<ResearchArticle[]>> {
+    return this.http.get<ApiResponse<ResearchArticle[]>>(`${environment.apiUrl}/admin/research`);
   }
 
-  getArticles(): Observable<ResearchArticle[]> {
-    return this.articlesSubject.asObservable();
+  addArticle(article: Partial<ResearchArticle>): Observable<ApiResponse<ResearchArticle>> {
+    return this.http.post<ApiResponse<ResearchArticle>>(`${environment.apiUrl}/admin/research`, article);
   }
 
-  addArticle(article: Omit<ResearchArticle, 'id'>): void {
-    const newArticle = { ...article, id: Date.now().toString() };
-    const current = this.articlesSubject.value;
-    const updated = [...current, newArticle];
-    this.articlesSubject.next(updated);
-    this.saveToStorage(updated);
+  updateArticle(id: string, updates: Partial<ResearchArticle>): Observable<ApiResponse<ResearchArticle>> {
+    return this.http.put<ApiResponse<ResearchArticle>>(`${environment.apiUrl}/admin/research/${id}`, updates);
   }
 
-  updateArticle(id: string, updates: Partial<ResearchArticle>): void {
-    const current = this.articlesSubject.value;
-    const updated = current.map(a => a.id === id ? { ...a, ...updates } : a);
-    this.articlesSubject.next(updated);
-    this.saveToStorage(updated);
-  }
-
-  deleteArticle(id: string): void {
-    const current = this.articlesSubject.value;
-    const updated = current.filter(a => a.id !== id);
-    this.articlesSubject.next(updated);
-    this.saveToStorage(updated);
+  deleteArticle(id: string): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${environment.apiUrl}/admin/research/${id}`);
   }
 }
+

@@ -16,7 +16,7 @@ import { AuthService } from '../../../services/auth.service';
         <div class="aura-orb aura-navy"></div>
       </div>
       <div class="tech-grid-overlay"></div>
-      
+    
       <div class="login-state min-vh-100 d-flex align-items-center justify-content-center position-relative z-3">
         <div class="login-glass-card p-5 rounded-5 reveal-login">
           <div class="text-center mb-5">
@@ -26,38 +26,44 @@ import { AuthService } from '../../../services/auth.service';
             <h2 class="text-white fw-950 mb-2">Mission Control</h2>
             <p class="text-white text-opacity-50 small text-uppercase letter-spacing-1">Authorized Access Only</p>
           </div>
-
+    
           <form (ngSubmit)="handleLogin()">
             <div class="form-floating-premium mb-3">
               <input type="email" class="form-control-premium" [(ngModel)]="email" name="email" placeholder="Email" required autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
               <label>Email Address</label>
             </div>
-
+    
             <div class="form-floating-premium mb-4 position-relative">
               <input [type]="showPassword ? 'text' : 'password'" class="form-control-premium pe-5" [(ngModel)]="password" name="password" placeholder="Passcode" required autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
               <label>Password</label>
-              <i class="bi eye-toggle position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" 
-                 [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" 
-                 (click)="togglePassword()"></i>
+              <i class="bi eye-toggle position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+              (click)="togglePassword()"></i>
             </div>
-
-            <div class="error-inline mb-4 text-center text-danger small fw-bold" *ngIf="loginError">
-              <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ loginError }}
-            </div>
-
+    
+            @if (loginError) {
+              <div class="error-inline mb-4 text-center text-danger small fw-bold">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ loginError }}
+              </div>
+            }
+    
             <button type="submit" class="btn-login-ultra w-100 py-3 rounded-pill" [disabled]="isLoading">
-              <span *ngIf="!isLoading">ACCESS CLINICAL CONSOLE <i class="bi bi-arrow-right-circle-fill ms-2"></i></span>
-              <span *ngIf="isLoading"><i class="bi bi-hourglass-split anim-spin me-2"></i> AUTHENTICATING...</span>
+              @if (!isLoading) {
+                <span>ACCESS CLINICAL CONSOLE <i class="bi bi-arrow-right-circle-fill ms-2"></i></span>
+              }
+              @if (isLoading) {
+                <span><i class="bi bi-hourglass-split anim-spin me-2"></i> AUTHENTICATING...</span>
+              }
             </button>
           </form>
-          
+    
           <div class="text-center mt-5">
             <span class="text-white text-opacity-20 x-small font-monospace">NODE_ID: MAM_CMS_V6</span>
           </div>
         </div>
       </div>
     </div>
-  `,
+    `,
   styles: [`
     .admin-obsidian-v6 { background: #020617; min-height: 100vh; color: #fff; overflow: hidden; position: relative; }
     .aura-container { position: absolute; inset: 0; overflow: hidden; z-index: 1; }

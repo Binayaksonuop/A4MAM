@@ -22,7 +22,13 @@ const adminSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'admin'
+    enum: ['Admin', 'Content Manager', 'Research Manager', 'Donation Manager', 'Viewer'],
+    default: 'Admin'
+  },
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive'],
+    default: 'Active'
   }
 }, { timestamps: true });
 

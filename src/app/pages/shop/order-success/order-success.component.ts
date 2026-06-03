@@ -1,12 +1,12 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import gsap from 'gsap';
 
 @Component({
   selector: 'app-order-success',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   template: `
     <div class="success-obsidian-v6">
       <!-- Cinematic Background System -->
@@ -17,42 +17,42 @@ import gsap from 'gsap';
       </div>
       <div class="tech-grid-overlay"></div>
       <div class="bg-noise"></div>
-
+    
       <div class="container position-relative z-3 py-100">
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            
+    
             <!-- CINEMATIC VALIDATION STAGE -->
-            <div class="validation-stage-v6" *ngIf="isValidating">
-              <div class="scanner-wrap mb-5" [class]="currentStepColor">
-                <div class="scanner-line"></div>
-                <div class="icon-orb-v6">
-                  <i class="bi {{ currentStepIcon }} fs-1"></i>
-                </div>
-                <div class="glow-pulse-v6"></div>
-              </div>
-              
-              <div class="text-center overflow-hidden">
-                <h2 class="fw-950 text-white mb-2 step-text-v6">{{ currentStepText }}</h2>
-                <div class="progress-container-v6 mx-auto">
-                  <div class="progress-bar-v6">
-                    <div class="progress-fill-v6" [style.width.%]="validationProgress" [class]="currentStepColor"></div>
+            @if (isValidating) {
+              <div class="validation-stage-v6">
+                <div class="scanner-wrap mb-5" [class]="currentStepColor">
+                  <div class="scanner-line"></div>
+                  <div class="icon-orb-v6">
+                    <i class="bi {{ currentStepIcon }} fs-1"></i>
                   </div>
-                  <div class="progress-glow-v6" [style.width.%]="validationProgress" [class]="currentStepColor"></div>
+                  <div class="glow-pulse-v6"></div>
                 </div>
+                <div class="text-center overflow-hidden">
+                  <h2 class="fw-950 text-white mb-2 step-text-v6">{{ currentStepText }}</h2>
+                  <div class="progress-container-v6 mx-auto">
+                    <div class="progress-bar-v6">
+                      <div class="progress-fill-v6" [style.width.%]="validationProgress" [class]="currentStepColor"></div>
+                    </div>
+                    <div class="progress-glow-v6" [style.width.%]="validationProgress" [class]="currentStepColor"></div>
+                  </div>
+                </div>
+                <div class="mt-4 d-flex justify-content-center gap-4">
+                  <div class="step-indicator-v6" [class.active]="validationProgress >= 33"></div>
+                  <div class="step-indicator-v6" [class.active]="validationProgress >= 66"></div>
+                  <div class="step-indicator-v6" [class.active]="validationProgress >= 100"></div>
+                </div>
+                <p class="text-white text-opacity-30 mt-4 x-small tracking-wider ls-2">CLINICAL GATEWAY STATUS: ACTIVE</p>
               </div>
-              
-              <div class="mt-4 d-flex justify-content-center gap-4">
-                <div class="step-indicator-v6" [class.active]="validationProgress >= 33"></div>
-                <div class="step-indicator-v6" [class.active]="validationProgress >= 66"></div>
-                <div class="step-indicator-v6" [class.active]="validationProgress >= 100"></div>
-              </div>
-              <p class="text-white text-opacity-30 mt-4 x-small tracking-wider ls-2">CLINICAL GATEWAY STATUS: ACTIVE</p>
-            </div>
-
+            }
+    
             <!-- MISSION DASHBOARD -->
             <div class="mission-card-v6 p-5 reveal-v6" [class.d-none]="isValidating">
-              
+    
               <!-- Success Pulse Icon -->
               <div class="success-pulse-v6 mb-5">
                 <div class="pulse-ring" [class.blue]="method==='cod'"></div>
@@ -60,28 +60,30 @@ import gsap from 'gsap';
                   <i class="bi" [class.bi-shield-check]="method==='upi'" [class.bi-truck]="method==='cod'"></i>
                 </div>
               </div>
-
+    
               <div class="text-center mb-5">
                 <div class="glass-chip-v6 mb-3">
-                  <span class="status-dot-v6" [class.bg-blue]="method==='cod'"></span> 
+                  <span class="status-dot-v6" [class.bg-blue]="method==='cod'"></span>
                   {{ method === 'upi' ? 'MISSION COMPLETE' : 'MISSION SCHEDULED' }}
                 </div>
                 <h1 class="display-3 fw-950 text-white mb-2">
-                  {{ method === 'upi' ? 'Contribution' : 'Mission' }} 
+                  {{ method === 'upi' ? 'Contribution' : 'Mission' }}
                   <span class="text-gradient-mixed-v6" [class.blue-v6]="method==='cod'">
                     {{ method === 'upi' ? 'Validated' : 'Reserved' }}
                   </span>
                 </h1>
-                <div *ngIf="isDonation && planName" class="mb-3">
-                  <span class="badge bg-white bg-opacity-10 text-emerald border border-success border-opacity-25 px-3 py-2 rounded-pill fs-6"><i class="bi bi-star-fill me-2 text-warning"></i>{{ planName }}</span>
-                </div>
+                @if (isDonation && planName) {
+                  <div class="mb-3">
+                    <span class="badge bg-white bg-opacity-10 text-emerald border border-success border-opacity-25 px-3 py-2 rounded-pill fs-6"><i class="bi bi-star-fill me-2 text-warning"></i>{{ planName }}</span>
+                  </div>
+                }
                 <p class="text-white text-opacity-50 fs-5 mx-auto" style="max-width: 600px;">
-                  {{ method === 'upi' ? 
-                    'Your payment has been verified. Your contribution is now part of a live nutrition intervention system.' : 
-                    'Your nutrition kit has been reserved for delivery to ' + city + '. Contribution will be completed on arrival.' }}
+                  {{ method === 'upi' ?
+                  'Your payment has been verified. Your contribution is now part of a live nutrition intervention system.' :
+                  'Your nutrition kit has been reserved for delivery to ' + city + '. Contribution will be completed on arrival.' }}
                 </p>
               </div>
-
+    
               <div class="row g-4 mb-5">
                 <!-- IMPACT STATS -->
                 <div class="col-md-4">
@@ -97,7 +99,7 @@ import gsap from 'gsap';
                     <div class="stat-label">Children Supported</div>
                   </div>
                 </div>
-
+    
                 <div class="col-md-4">
                   <div class="impact-stat-v6 p-4">
                     <div class="circular-progress-v6 mb-3">
@@ -111,7 +113,7 @@ import gsap from 'gsap';
                     <div class="stat-label">Nutrient Doses</div>
                   </div>
                 </div>
-
+    
                 <div class="col-md-4">
                   <div class="impact-stat-v6 p-4">
                     <div class="circular-progress-v6 mb-3">
@@ -126,7 +128,7 @@ import gsap from 'gsap';
                   </div>
                 </div>
               </div>
-
+    
               <!-- TRANSACTION SUMMARY -->
               <div class="fintech-summary-v6 p-4 mb-5">
                 <div class="row g-4 text-center text-md-start">
@@ -152,7 +154,7 @@ import gsap from 'gsap';
                   </div>
                 </div>
               </div>
-
+    
               <!-- CTAs -->
               <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
                 <a routerLink="/" class="btn-cta-v6 px-5 py-3">
@@ -162,19 +164,19 @@ import gsap from 'gsap';
                   VIEW IMPACT GALLERY <i class="bi bi-images ms-2"></i>
                 </a>
               </div>
-
+    
               <div class="text-center mt-5">
                 <p class="text-white text-opacity-30 x-small mb-0">
                   <i class="bi bi-shield-check-fill me-2"></i> Clinical Validation ID: {{ validationId }}
                 </p>
               </div>
-
+    
             </div>
           </div>
         </div>
       </div>
     </div>
-  `,
+    `,
   styles: [`
     .success-obsidian-v6 {
       background: #020617;

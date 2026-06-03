@@ -1,16 +1,16 @@
 import { Component, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone } from '@angular/core';
-import { isPlatformBrowser, NgOptimizedImage, CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-nutrition-details',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './nutrition-details.component.html',
   styleUrl: './nutrition-details.component.css'
 })

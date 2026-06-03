@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZon
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService, CartItem } from '../../../services/cart.service';
-import { Observable } from 'rxjs';
 import gsap from 'gsap';
 
 @Component({
@@ -33,7 +32,8 @@ import gsap from 'gsap';
           <p class="text-white text-opacity-60 fs-5 fw-500">Transforming local communities through clinical-grade nutrition.</p>
         </div>
 
-        <div class="row g-5" *ngIf="(cartItems$ | async) as items">
+        @if (cartItems(); as items) {
+          <div class="row g-5">
           
           <!-- ITEMS LIST -->
           <div class="col-lg-8" *ngIf="items.length > 0; else emptyCart">
@@ -88,7 +88,7 @@ import gsap from 'gsap';
               
               <div class="summary-line-v6 mb-3">
                 <span class="label">Nutritional Value</span>
-                <span class="val">₹{{ subtotal }}</span>
+                <span class="val">₹{{ subtotal() }}</span>
               </div>
               <div class="summary-line-v6 mb-3">
                 <span class="label">Distribution</span>
@@ -100,7 +100,7 @@ import gsap from 'gsap';
               <div class="d-flex justify-content-between align-items-end mb-5">
                 <div>
                   <span class="text-white text-opacity-40 x-small d-block mb-1">TOTAL CONTRIBUTION</span>
-                  <h2 class="fw-950 text-white mb-0">₹{{ subtotal }}</h2>
+                  <h2 class="fw-950 text-white mb-0">₹{{ subtotal() }}</h2>
                 </div>
                 <div class="text-white text-opacity-30 fw-900">INR</div>
               </div>
@@ -114,11 +114,11 @@ import gsap from 'gsap';
                   <div>
                     <h6 class="fw-900 text-white mb-2">Clinical Impact</h6>
                     <div class="impact-stat-v6 mb-2">
-                      <span class="stat-num text-emerald">{{ childrenImpact }}</span>
+                      <span class="stat-num text-emerald">{{ childrenImpact() }}</span>
                       <span class="stat-label">Children supported</span>
                     </div>
                     <div class="impact-stat-v6">
-                      <span class="stat-num text-blue">{{ doseImpact }}</span>
+                      <span class="stat-num text-blue">{{ doseImpact() }}</span>
                       <span class="stat-label">Nutritional doses</span>
                     </div>
                   </div>
@@ -152,6 +152,7 @@ import gsap from 'gsap';
           </ng-template>
 
         </div>
+        }
       </div>
     </div>
   `,
@@ -383,10 +384,12 @@ import gsap from 'gsap';
 })
 export class CartComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser: boolean;
-  cartItems$: Observable<CartItem[]>;
-  subtotal = 0;
-  childrenImpact = 0;
-  doseImpact = 0;
+  cartItems = this.cartService.cartItems;
+  subtotal = this.cartService.cartTotal;
+  
+  childrenImpact = () => Math.ceil(this.subtotal() / 110);
+  doseImpact = () => Math.ceil(this.subtotal() / 22);
+  
   Math = Math;
 
   constructor(
@@ -395,15 +398,9 @@ export class CartComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    this.cartItems$ = this.cartService.cartItems$;
   }
 
-  ngOnInit(): void {
-    this.cartItems$.subscribe(() => {
-      this.subtotal = this.cartService.getCartTotal();
-      this.updateImpact();
-    });
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
@@ -416,10 +413,7 @@ export class CartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  private updateImpact(): void {
-    this.childrenImpact = Math.ceil(this.subtotal / 110);
-    this.doseImpact = Math.ceil(this.subtotal / 22);
-  }
+
 
   updateQty(item: CartItem, delta: number): void {
     this.cartService.updateQuantity(item.id, item.quantity + delta, item.option);

@@ -1,17 +1,17 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, NgZone, ViewEncapsulation } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ResearchService, ResearchArticle } from '../../../services/research.service';
 import { Subscription } from 'rxjs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-research-article',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './research-article.component.html',
   styleUrls: ['./research-article.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -41,20 +41,26 @@ export class ResearchArticleComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscription = this.researchService.getArticles().subscribe(articles => {
-      this.publishedArticles = articles.filter(a => a.status === 'Published');
-      
-      // Re-trigger scroll triggers if DOM updates and we're in browser
-      if (this.isBrowser) {
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 100);
+    this.subscription = this.researchService.getArticles().subscribe(res => {
+      if (res.success && res.data) {
+        this.publishedArticles = res.data.filter(a => a.status === 'Published');
+        
+        // Re-trigger scroll triggers if DOM updates and we're in browser
+        if (this.isBrowser) {
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 100);
+        }
       }
     });
   }
 
   trackByArticleId(index: number, article: ResearchArticle): string {
-    return article.id;
+    return article._id;
+  }
+
+  trackByWorkflow(index: number, step: any): string {
+    return step.title;
   }
 
   ngAfterViewInit(): void {

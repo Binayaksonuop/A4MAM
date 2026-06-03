@@ -35,4 +35,13 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!req.admin || !roles.includes(req.admin.role)) {
+      return res.status(403).json({ success: false, message: `Role ${req.admin ? req.admin.role : 'Unknown'} is not authorized to access this route.` });
+    }
+    next();
+  };
+};
+
+module.exports = { protect, authorizeRoles };

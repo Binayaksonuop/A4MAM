@@ -50,38 +50,48 @@
         <button class="gallery-filter-btn" (click)="filterGallery('Research')">Research</button>
       </div>
 
-      <div class="gallery-skeleton-grid" *ngIf="!imagesLoaded">
-        <div class="skeleton-item" *ngFor="let s of [1,2,3,4,5,6]">
-          <div class="skeleton-card shimmer"></div>
+      @if (!imagesLoaded) {
+        <div class="gallery-skeleton-grid">
+          @for (s of [1,2,3,4,5,6]; track s) {
+            <div class="skeleton-item">
+              <div class="skeleton-card shimmer"></div>
+            </div>
+          }
         </div>
-      </div>
+      }
 
-      <div class="gallery-grid-masonry" *ngIf="imagesLoaded">
-        <div class="gallery-item gsap-reveal" *ngFor="let img of images" 
-          [ngClass]="img.class" (click)="openLightbox(img)">
-          <div class="gallery-card rounded-5 overflow-hidden position-relative">
-            <div class="img-overlay">
-              <div class="overlay-content p-4">
-                <span class="badge bg-emerald-subtle text-emerald mb-2">{{ img.tag }}</span>
-                <h4 class="text-white fw-bold mb-1">{{ img.title }}</h4>
-                <p class="text-white text-opacity-50 small mb-0"><i class="bi bi-geo-alt me-1"></i> {{ img.location }}
-                </p>
+      @if (imagesLoaded) {
+        <div class="gallery-grid-masonry">
+          @for (img of images; track img) {
+            <div class="gallery-item gsap-reveal"
+              [ngClass]="img.class" (click)="openLightbox(img)">
+              <div class="gallery-card rounded-5 overflow-hidden position-relative">
+                <div class="img-overlay">
+                  <div class="overlay-content p-4">
+                    <span class="badge bg-emerald-subtle text-emerald mb-2">{{ img.tag }}</span>
+                    <h4 class="text-white fw-bold mb-1">{{ img.title }}</h4>
+                    <p class="text-white text-opacity-50 small mb-0"><i class="bi bi-geo-alt me-1"></i> {{ img.location }}
+                  </p>
+                </div>
+              </div>
+              <img [src]="img.src" [alt]="img.title" class="w-100 h-100 object-fit-cover"
+                [class.img-loaded]="true" (load)="onImageLoad()"
+                onerror="this.src='assets/images/logo_mam.png'">
               </div>
             </div>
-            <img [src]="img.src" [alt]="img.title" class="w-100 h-100 object-fit-cover" 
-              [class.img-loaded]="true" (load)="onImageLoad()"
-              onerror="this.src='assets/images/logo_mam.png'">
-          </div>
+          }
         </div>
-      </div>
+      }
 
       <!-- Loading/Empty State -->
-      <div class="text-center py-5" *ngIf="!images || images.length === 0">
-        <div class="spinner-border text-emerald" role="status">
-          <span class="visually-hidden">Loading...</span>
+      @if (!images || images.length === 0) {
+        <div class="text-center py-5">
+          <div class="spinner-border text-emerald" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-white text-opacity-50 mt-3">Synchronizing digital archive...</p>
         </div>
-        <p class="text-white text-opacity-50 mt-3">Synchronizing digital archive...</p>
-      </div>
+      }
     </div>
   </section>
 
@@ -121,9 +131,9 @@
           <button class="cta-btn-gallery" routerLink="/contact">
             Partner With Us <i class="bi bi-handshake-fill ms-2 pulse
             -icon-white text-white"></i>
-          </button>
-        </div>
+        </button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </main>

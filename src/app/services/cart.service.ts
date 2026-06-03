@@ -1,5 +1,4 @@
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, PLATFORM_ID, Inject, signal, computed } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 export interface CartItem {
@@ -15,8 +14,18 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems = new BehaviorSubject<CartItem[]>([]);
-  cartItems$ = this.cartItems.asObservable();
+  // Use Angular Signals for state management
+  private cartItemsSignal = signal<CartItem[]>([]);
+  public cartItems = this.cartItemsSignal.asReadonly();
+
+  // Computed signals
+  public cartTotal = computed(() => 
+    this.cartItemsSignal().reduce((total, item) => total + (item.price * item.quantity), 0)
+  );
+
+  public cartCount = computed(() => 
+    this.cartItemsSignal().reduce((count, item) => count + item.quantity, 0)
+  );
 
   private isBrowser: boolean;
 
@@ -29,7 +38,7 @@ export class CartService {
     if (this.isBrowser) {
       localStorage.setItem('a4mam_cart', JSON.stringify(items));
     }
-    this.cartItems.next(items);
+    this.cartItemsSignal.set(items);
   }
 
   private loadCart() {
@@ -37,7 +46,7 @@ export class CartService {
       const saved = localStorage.getItem('a4mam_cart');
       if (saved) {
         try {
-          this.cartItems.next(JSON.parse(saved));
+          this.cartItemsSignal.set(JSON.parse(saved));
         } catch (e) {
           console.error('Could not parse cart', e);
         }
@@ -46,7 +55,7 @@ export class CartService {
   }
 
   addToCart(item: CartItem) {
-    const current = this.cartItems.value;
+    const current = this.cartItemsSignal();
     const existing = current.find(i => i.id === item.id && i.option === item.option);
 
     if (existing) {
@@ -58,13 +67,13 @@ export class CartService {
   }
 
   removeFromCart(id: string, option?: string) {
-    const current = this.cartItems.value;
+    const current = this.cartItemsSignal();
     const filtered = current.filter(i => !(i.id === id && i.option === option));
     this.saveCart(filtered);
   }
 
   updateQuantity(id: string, quantity: number, option?: string) {
-    const current = this.cartItems.value;
+    const current = this.cartItemsSignal();
     const item = current.find(i => i.id === id && i.option === option);
     if (item) {
       item.quantity = quantity;
@@ -81,10 +90,10 @@ export class CartService {
   }
 
   getCartTotal() {
-    return this.cartItems.value.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return this.cartTotal();
   }
 
   getCartCount() {
-    return this.cartItems.value.reduce((count, item) => count + item.quantity, 0);
+    return this.cartCount();
   }
 }

@@ -19,6 +19,17 @@ router.post('/inquiries', createInquiry);
 // ─── Gallery ───────────────────────────────────
 router.get('/gallery', getGallery);
 
+// ─── Settings ──────────────────────────────────
+router.get('/settings', async (req, res) => {
+  try {
+    const SiteSettings = require('../models/SiteSettings');
+    const settings = await SiteSettings.findOne({ status: 'Published' });
+    res.json({ success: true, data: settings || {} });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
 // ─── Payment Routes ───────────────────────────
 router.post('/payment/create-order', async (req, res) => {
   try {

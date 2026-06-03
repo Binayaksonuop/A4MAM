@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GalleryService } from '../../services/gallery.service';
 import { LightboxService } from '../../services/lightbox.service';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-gallery',

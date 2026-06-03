@@ -1,6 +1,6 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap, catchError, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError, of, throwError, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../environments/environment';
@@ -39,8 +39,10 @@ export class AuthService {
     let initialAdmin: Admin | null = null;
     
     if (this.isBrowser) {
-      const token = localStorage.getItem('a4mam_admin_token');
-      const adminData = localStorage.getItem('a4mam_admin_user');
+      // Security Improvement: Migrated from localStorage to sessionStorage
+      // Note: For true XSS protection, the backend should issue HttpOnly cookies.
+      const token = sessionStorage.getItem('a4mam_admin_token');
+      const adminData = sessionStorage.getItem('a4mam_admin_user');
       if (token && adminData) {
         initialIsLoggedIn = true;
         initialAdmin = JSON.parse(adminData);
@@ -61,9 +63,28 @@ export class AuthService {
 
   getToken(): string | null {
     if (this.isBrowser) {
-      return localStorage.getItem('a4mam_admin_token');
+      return sessionStorage.getItem('a4mam_admin_token');
     }
     return null;
+  }
+
+  verifyToken(): Observable<boolean> {
+    const token = this.getToken();
+    if (!token) {
+      this.logout();
+      return of(false);
+    }
+    
+    // Call backend to verify token cryptographically
+    return this.http.get<{success: boolean}>(`${this.apiUrl}/verify`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).pipe(
+      map(response => response.success),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      })
+    );
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
@@ -71,8 +92,8 @@ export class AuthService {
       tap(response => {
         if (response.success && response.token) {
           if (this.isBrowser) {
-            localStorage.setItem('a4mam_admin_token', response.token);
-            localStorage.setItem('a4mam_admin_user', JSON.stringify(response.admin));
+            sessionStorage.setItem('a4mam_admin_token', response.token);
+            sessionStorage.setItem('a4mam_admin_user', JSON.stringify(response.admin));
           }
           this.isLoggedInSubject.next(true);
           this.currentAdminSubject.next(response.admin);
@@ -86,8 +107,8 @@ export class AuthService {
 
   logout(): void {
     if (this.isBrowser) {
-      localStorage.removeItem('a4mam_admin_token');
-      localStorage.removeItem('a4mam_admin_user');
+      sessionStorage.removeItem('a4mam_admin_token');
+      sessionStorage.removeItem('a4mam_admin_user');
     }
     this.isLoggedInSubject.next(false);
     this.currentAdminSubject.next(null);

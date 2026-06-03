@@ -48,7 +48,13 @@ app.use('/api', limiter);
 
 // Routes
 app.use('/api', require('./routes/publicRoutes'));
+app.use('/api/pages', require('./routes/pageRoutes'));
+app.use('/api/testimonials', require('./routes/testimonialRoutes'));
+app.use('/api/success-stories', require('./routes/successStoryRoutes'));
+app.use('/api/faqs', require('./routes/faqRoutes'));
+app.use('/api/research', require('./routes/researchRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/admin/media', require('./routes/mediaRoutes'));
 
 // Root Route
 app.get('/', (req, res) => {

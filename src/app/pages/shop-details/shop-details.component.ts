@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
   HostListener
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
@@ -17,7 +17,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Title, Meta } from '@angular/platform-browser';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 interface ProductDetail {
   id: string;
@@ -39,7 +39,7 @@ interface ProductDetail {
 @Component({
   selector: 'app-shop-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './shop-details.component.html',
   styleUrls: ['./shop-details.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -58,125 +58,7 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   ironDisplay = 0;
   absorptionDisplay = 0;
 
-  products: Record<string, ProductDetail> = {
-    'child-kit': {
-      id: 'child-kit',
-      title: 'Child Nutrition Kit',
-      subtitle: '30-Day Complete Recovery Plan',
-      price: 1299,
-      image: 'assets/images/Child Nutrition Kit.jpg',
-      badge: 'Bestseller',
-      description: 'A complete 30-day nutrition plan designed to support recovery from moderate and severe malnutrition in children. Powered by Spirulina — one of the most nutrient-dense foods on earth.',
-      benefits: [
-        'Supports healthy weight gain and growth in children.',
-        'Provides Iron, Protein, and Vitamins essential for brain development.',
-        'Easy daily pre-dosed packets — no preparation needed.'
-      ],
-      includes: [
-        '30x Spirulina Chicky Bars (Protein + Iron)',
-        '1x Caregiver Progress Tracker Diary',
-        '1x Bio-fortified Multivitamin Drops'
-      ],
-      nutrition: { protein: 85, iron: 92, absorption: 95 }
-    },
-    'maternal-kit': {
-      id: 'maternal-kit',
-      title: 'Maternal Health Kit',
-      subtitle: 'Pregnancy & Lactation Support',
-      price: 1599,
-      image: 'assets/images/Maternal Health Kit.jpg',
-      badge: 'Essential',
-      description: 'A targeted nutrition kit for pregnant and lactating mothers. Fights iron-deficiency anemia and supports healthy fetal development using organic Spirulina — naturally rich in Iron, Folate, and Protein.',
-      benefits: [
-        'Helps prevent iron-deficiency anemia during pregnancy.',
-        'Supports healthy milk production for lactating mothers.',
-        'Reduces the risk of low birth weight in newborns.'
-      ],
-      includes: [
-        '60x Pure Spirulina Prenatal Capsules',
-        '1x Maternal Diet Chart (Local Cuisine)',
-        '1x Iron & Folic Acid Booster Pack'
-      ],
-      nutrition: { protein: 70, iron: 98, absorption: 90 }
-    },
-    'chicky-bars': {
-      id: 'chicky-bars',
-      title: 'Chicky Bars (Kids)',
-      subtitle: 'Spirulina Nutrition Bar for Kids',
-      price: 99,
-      image: 'assets/images/chicky_bars_new.png',
-      badge: 'Kids Favourite',
-      description: 'A tasty, easy-to-eat Spirulina bar made for growing children. Packed with protein and Iron, the Chicky Bar is the perfect daily snack to support healthy growth — with no algae smell or taste.',
-      benefits: [
-        '12g protein per bar — supports daily growth needs.',
-        'Great taste kids love — no algae smell or flavor.',
-        'Quick energy for active, growing kids.'
-      ],
-      includes: [
-        'Pack of 15 Chicky Bars'
-      ],
-      nutrition: { protein: 65, iron: 45, absorption: 95 }
-    },
-    'powder': {
-      id: 'powder',
-      title: 'Spirulina Powder',
-      subtitle: '100% Pure Organic Spirulina',
-      price: 799,
-      image: 'assets/images/spirulina_2.png',
-      badge: 'Pure',
-      description: '100% natural, sun-dried Spirulina powder with no additives. The raw superfood in its most complete form — easy to mix into smoothies, dough, or everyday recipes for the whole family.',
-      benefits: [
-        '65% complete plant protein with all essential amino acids.',
-        'Rich in Vitamin B12 and highly bioavailable Iron.',
-        'No artificial additives, colors, or preservatives.'
-      ],
-      includes: [
-        '250g Pure Spirulina Powder Jar',
-        'Measuring Spoon'
-      ],
-      nutrition: { protein: 95, iron: 88, absorption: 92 }
-    },
-    'capsules': {
-      id: 'capsules',
-      title: 'Spirulina Capsules',
-      subtitle: 'Daily Immunity & Energy Support',
-      price: 649,
-      image: 'assets/images/Spirulia Capsule.jpg',
-      badge: 'Daily Use',
-      description: 'FSSAI-certified Spirulina capsules for daily nutrition support. Ideal for adults looking to boost immunity, energy, and micronutrient intake — without changing their diet.',
-      benefits: [
-        'No preparation needed — one capsule a day.',
-        'Precise daily dose of Iron, Protein, and B-Vitamins.',
-        'Boosts immunity and reduces chronic fatigue.'
-      ],
-      includes: [
-        '90x Spirulina Capsules (500mg each)',
-        '1x Daily Dosage Reference Card'
-      ],
-      nutrition: { protein: 60, iron: 90, absorption: 95 }
-    },
-    'outreach-kit': {
-      id: 'outreach-kit',
-      title: 'Nutrition Outreach Kit',
-      subtitle: 'Institutional Intervention Supply',
-      price: 2500,
-      image: 'assets/images/outreach_kit_s.png',
-      badge: 'B2B / NGO',
-      description: 'A comprehensive nutritional response kit designed for clinical outreach. Contains fortified Spirulina supplements, high-protein energy bars, and diagnostic tracking tools for field healthcare workers.',
-      benefits: [
-        'Designed for high-impact moderate acute malnutrition (MAM) recovery.',
-        'Supports 50+ children per kit for initial intervention.',
-        'Includes field-tested diagnostic MUAC tapes and tracking logs.'
-      ],
-      includes: [
-        '100x Fortified Spirulina Sachet Units',
-        '25x High-Density Chicky Bars',
-        '10x Field Diagnostic Kits',
-        'Institutional Logistics Support'
-      ],
-      nutrition: { protein: 90, iron: 95, absorption: 98 }
-    }
-  };
+
 
   constructor(
     private route: ActivatedRoute,
@@ -214,42 +96,25 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         
         console.log('ShopDetails: Found from API:', found);
         
-        let localRichData = this.products[normalizedSlug] || this.products[rawSlug] || null;
-        
         if (found) {
-          localRichData = this.products[normalizedSlug] || this.products[found.slug || ''] || this.products['chicky-bars'];
           this.product = {
             id: found.id || found._id,
             title: found.name,
-            subtitle: localRichData?.subtitle || 'Premium Nutritional Support',
+            subtitle: found.subtitle || 'Premium Nutritional Support',
             price: found.price,
             image: found.imageUrl,
-            badge: localRichData?.badge || (found.status === 'Out of Stock' ? 'Sold Out' : 'Available'),
-            description: found.description || localRichData?.description || 'A premium nutritional intervention product.',
-            benefits: localRichData?.benefits || [
+            badge: found.badge || (found.status === 'Out of Stock' ? 'Sold Out' : 'Available'),
+            description: found.description || 'A premium nutritional intervention product.',
+            benefits: found.benefits || [
               'Provides essential micronutrients.',
               'Supports overall health and immunity.',
               'Highly bio-available formulation.'
             ],
-            includes: localRichData?.includes || ['1x Premium Package'],
-            nutrition: localRichData?.nutrition || { protein: 80, iron: 85, absorption: 90 }
+            includes: found.includes || ['1x Premium Package'],
+            nutrition: found.nutrition || { protein: 80, iron: 85, absorption: 90 }
           };
-        } else if (localRichData) {
-          console.log('ShopDetails: Using local data');
-          this.product = localRichData;
         } else {
-          // Last resort: check if slug matches any local product keys
-          const matchingKey = Object.keys(this.products).find(key => 
-            key === normalizedSlug || 
-            key.includes(normalizedSlug) || 
-            normalizedSlug.includes(key)
-          );
-          if (matchingKey) {
-            console.log('ShopDetails: Last resort match:', matchingKey);
-            this.product = this.products[matchingKey];
-          } else {
-            this.product = null;
-          }
+          this.product = null;
         }
         
         if (this.product) {

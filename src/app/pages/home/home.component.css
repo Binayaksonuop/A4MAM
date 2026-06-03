@@ -3801,19 +3801,19 @@
 }
 
 .spirulina-feature-card.protein-theme .feature-card-value {
-  color: #1e40af;
+  color: #1d4ed8;
 }
 
 .spirulina-feature-card.absorption-theme .feature-card-value {
-  color: #065f46;
+  color: #059669;
 }
 
 .spirulina-feature-card.iron-theme .feature-card-value {
-  color: #92400e;
+  color: #d97706;
 }
 
 .spirulina-feature-card.antioxidant-theme .feature-card-value {
-  color: #5b21b6;
+  color: #7c3aed;
 }
 
 .feature-card-title {
@@ -3821,13 +3821,15 @@
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 12px;
+  letter-spacing: -0.01em;
 }
 
 .feature-card-desc {
   font-size: 0.95rem;
-  color: #64748b;
-  line-height: 1.5;
+  color: #334155;
+  line-height: 1.6;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .card-bg-watermark {

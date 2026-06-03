@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
@@ -8,12 +8,12 @@ import { Subscription } from 'rxjs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-donate',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgOptimizedImage, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './donate.component.html',
   styleUrls: ['./donate.component.css']
 })

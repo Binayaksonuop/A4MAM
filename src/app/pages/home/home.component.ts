@@ -12,15 +12,19 @@ import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/comm
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import gsap from 'gsap';
+import type * as THREE from 'three';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import * as THREE from 'three';
+import { PageService, CMSPage } from '../../services/page.service';
+import { TestimonialService, Testimonial } from '../../services/testimonial.service';
+import { FaqService, FAQ } from '../../services/faq.service';
+import { Title, Meta } from '@angular/platform-browser';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, NgOptimizedImage],
+  imports: [CommonModule, RouterModule, FormsModule, NgOptimizedImage], 
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   encapsulation: ViewEncapsulation.None
@@ -41,6 +45,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private threeMouseY = 0;
   private threeResizeHandler?: () => void;
   private threeMouseHandler?: (e: MouseEvent) => void;
+
+  pageData: CMSPage | null = null;
+  testimonials: Testimonial[] = [];
+  faqsByCategory: { [category: string]: FAQ[] } = {};
+  faqCategories: string[] = [];
 
   childrenSupported = 0;
   nutritionImprovement = 0;
@@ -76,31 +85,69 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private zone: NgZone,
+    private pageService: PageService,
+    private testimonialService: TestimonialService,
+    private faqService: FaqService,
+    private titleService: Title,
+    private metaService: Meta,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.pageService.getPageBySlug('home').subscribe(res => {
+      if (res.success && res.data) {
+        this.pageData = res.data;
+        
+        // Update SEO
+        if (this.pageData.seo) {
+          if (this.pageData.seo.metaTitle) this.titleService.setTitle(this.pageData.seo.metaTitle);
+          if (this.pageData.seo.metaDescription) this.metaService.updateTag({ name: 'description', content: this.pageData.seo.metaDescription });
+        }
+
+        // Initialize GSAP after data is loaded and DOM updates
+        if (this.isBrowser) {
+          this.zone.runOutsideAngular(() => {
+            setTimeout(() => {
+              this.animateHero();
+              this.initMouseParallax();
+              this.initThreeJsSpiral();
+              this.initRevealAnimations();
+              this.initImpactAnimations();
+              this.initComparisonAnimations();
+              this.initChickyBarAnimations();
+              this.initStackedCardAnimations();
+              this.initRootCausesAnimations();
+              this.initQuoteBannerScrollAnimation();
+              ScrollTrigger.refresh();
+            }, 500);
+          });
+        }
+      }
+    });
+
+    this.testimonialService.getTestimonials().subscribe(res => {
+      if (res.success && res.data) {
+        this.testimonials = res.data;
+      }
+    });
+
+    this.faqService.getFaqs().subscribe(res => {
+      if (res.success && res.data) {
+        res.data.forEach(faq => {
+          if (!this.faqsByCategory[faq.category]) {
+            this.faqsByCategory[faq.category] = [];
+            this.faqCategories.push(faq.category);
+          }
+          this.faqsByCategory[faq.category].push(faq);
+        });
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
-    if (!this.isBrowser) return;
-
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.animateHero();
-        this.initRevealAnimations();
-        this.initImpactAnimations();
-        this.initComparisonAnimations();
-        this.initChickyBarAnimations();
-        this.initStackedCardAnimations();
-        this.initMouseParallax();
-        this.initRootCausesAnimations();
-        this.initQuoteBannerScrollAnimation();
-        this.initThreeJsSpiral();
-        ScrollTrigger.refresh();
-      }, 300);
-    });
+    // Moved to API callback
   }
 
   private initMouseParallax(): void {
@@ -230,8 +277,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   }
 
-  private initThreeJsSpiral(): void {
+  private async initThreeJsSpiral(): Promise<void> {
     if (window.innerWidth < 768) return;
+
+    const THREE = await import('three');
 
     const canvas = document.getElementById('spirulina-canvas') as HTMLCanvasElement;
     if (!canvas) return;
@@ -565,12 +614,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const impact = document.querySelector('#impact');
     if (!impact) return;
 
+    // Wait until pageData is loaded or fallback to static target
+    const targetC = this.pageData?.impactCounters?.[0]?.value || 1500;
+    const targetN = this.pageData?.impactCounters?.[1]?.value || 92;
+    const targetR = this.pageData?.impactCounters?.[2]?.value || 45;
+
     const counter = { c: 0, n: 0, r: 0 };
 
     gsap.to(counter, {
-      c: 1500,
-      n: 92,
-      r: 45,
+      c: targetC,
+      n: targetN,
+      r: targetR,
       duration: 3,
       ease: 'power2.out',
       scrollTrigger: {
@@ -579,8 +633,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         once: true
       },
       onUpdate: () => {
-        // Run zone only once every 2nd or 3rd frame, or just at the end if it's too much.
-        // For counters, we need it to be reactive, so we run it, but outsideAngular helps.
         this.zone.run(() => {
           this.childrenSupported = Math.round(counter.c);
           this.nutritionImprovement = Math.round(counter.n);
@@ -967,4 +1019,4 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tl.fromTo(glowGold, { opacity: 0 }, { opacity: 1, ease: 'none', duration: 1 }, 0);
     }
   }
-}
+}// Trigger IDE refresh

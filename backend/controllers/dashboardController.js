@@ -2,6 +2,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Inquiry = require('../models/Inquiry');
 const Gallery = require('../models/Gallery');
+const Intervention = require('../models/Intervention');
 
 // @desc    Get admin dashboard stats
 // @route   GET /api/admin/dashboard/stats
@@ -15,7 +16,10 @@ const getDashboardStats = async (req, res) => {
       pendingOrders,
       newInquiries,
       revenueResult,
-      recentOrders
+      recentOrders,
+      interventionsTotal,
+      interventionsRecovered,
+      interventionsActive
     ] = await Promise.all([
       Product.countDocuments({ status: 'Active' }),
       Order.countDocuments(),
@@ -27,7 +31,10 @@ const getDashboardStats = async (req, res) => {
         { $match: { orderStatus: { $ne: 'Cancelled' } } },
         { $group: { _id: null, total: { $sum: '$totalAmount' } } }
       ]),
-      Order.find({}).sort({ createdAt: -1 }).limit(5).select('orderId customerName totalAmount orderStatus paymentMethod createdAt')
+      Order.find({}).sort({ createdAt: -1 }).limit(5).select('orderId customerName totalAmount orderStatus paymentMethod createdAt'),
+      Intervention.countDocuments(),
+      Intervention.countDocuments({ recovered: true }),
+      Intervention.countDocuments({ status: 'Active' })
     ]);
 
     const totalRevenue = revenueResult.length > 0 ? revenueResult[0].total : 0;
@@ -48,7 +55,12 @@ const getDashboardStats = async (req, res) => {
         newInquiries,
         totalRevenue,
         recentOrders,
-        statusBreakdown
+        statusBreakdown,
+        interventions: {
+          total: interventionsTotal,
+          recovered: interventionsRecovered,
+          active: interventionsActive
+        }
       }
     });
   } catch (error) {

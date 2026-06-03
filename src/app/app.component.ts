@@ -9,10 +9,7 @@ import {
   NgZone,
   ViewEncapsulation
 } from '@angular/core';
-import {
-  CommonModule,
-  isPlatformBrowser
-} from '@angular/common';
+import { CommonModule, isPlatformBrowser, } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {
@@ -29,9 +26,10 @@ import { CartService } from './services/cart.service';
 import { LightboxService } from './services/lightbox.service';
 import { AnalyticsService } from './services/analytics.service';
 import { LoaderService } from './services/loader.service';
+import { GlobalSettingsService } from './services/global-settings.service';
 import { Observable } from 'rxjs';
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-root',
@@ -39,7 +37,8 @@ gsap.registerPlugin(ScrollTrigger);
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
@@ -56,8 +55,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isHomePage = false;
   isAdminPage = false;
   isAdminDashboard = false;
-  cartCount = 0;
   isLoading = true;
+
+  get cartCount(): number {
+    return this.cartService.cartCount();
+  }
 
   // Custom Cursor
   cursorX = -100;
@@ -111,7 +113,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private cartService: CartService,
     private lightboxService: LightboxService,
     private analyticsService: AnalyticsService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    public globalSettings: GlobalSettingsService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.lightboxData$ = this.lightboxService.lightboxData$;
@@ -124,6 +127,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     if (this.isBrowser) {
       this.analyticsService.init();
+      this.globalSettings.loadSettings();
+      gsap.registerPlugin(ScrollTrigger);
     }
     
     // Hide initial loader after delay
@@ -184,20 +189,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             }, 500);
           }
         }
-        
+
         // Hide loader after a short delay (minimum 800ms for cinematic feel)
         setTimeout(() => {
           this.isLoading = false;
         }, 1000);
       }
     });
-
-    // Subscribe to cart changes
-    this.cartService.cartItems$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.cartCount = this.cartService.getCartCount();
-      });
   }
 
   private updateMetaTags(page: string): void {

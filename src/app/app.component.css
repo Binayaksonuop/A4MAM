@@ -10063,3 +10063,30 @@ section {
 .premium-marquee-bar:hover .premium-marquee-content {
   animation-play-state: paused;
 }
+
+/* --- PREMIUM STATIC MAP BACKGROUND --- */
+.premium-static-map-bg {
+  width: 100%;
+  height: 100%;
+  background-color: #0f172a;
+  background-image: radial-gradient(rgba(16, 185, 129, 0.2) 1px, transparent 1px);
+  background-size: 12px 12px;
+  position: relative;
+  display: block;
+}
+.premium-static-map-bg::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: pulse-map 2s infinite;
+}
+@keyframes pulse-map {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}

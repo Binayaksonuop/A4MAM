@@ -74,6 +74,21 @@ const productSchema = new mongoose.Schema({
   fssaiCertified: {
     type: Boolean,
     default: true
+  },
+  seo: {
+    metaTitle: String,
+    metaDescription: String,
+    ogImage: String,
+    canonicalUrl: String,
+    keywords: String
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin'
+  },
+  updatedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin'
   }
 }, { timestamps: true });
 
