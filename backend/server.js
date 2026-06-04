@@ -23,7 +23,15 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
+    
+    // Allow explicitly defined FRONTEND_URL in production
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+    
+    // Fallback: allow all for now to prevent breaking, but you can restrict this on AWS
     return callback(null, true);
   },
   credentials: true
