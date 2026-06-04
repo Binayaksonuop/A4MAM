@@ -62,7 +62,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   successStories: SuccessStory[] = [];
   cmsPages: CMSPage[] = [];
   faqs: FAQ[] = [];
-  siteSettings: SiteSettings = {};
+  siteSettings: SiteSettings = { branding: {}, contact: {}, social: {}, marquee: [] };
 
   // Form states
   newArticle: Partial<ResearchArticle> = { title: '', slug: '', category: 'Clinical Study', summary: '', status: 'Draft' };

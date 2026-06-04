@@ -39,7 +39,7 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class SiteSettingsService {
-  private publicApiUrl = `${environment.apiUrl}/public/settings`;
+  private publicApiUrl = `${environment.apiUrl}/settings`;
   private adminApiUrl = `${environment.apiUrl}/admin/settings`;
 
   constructor(private http: HttpClient) { }
