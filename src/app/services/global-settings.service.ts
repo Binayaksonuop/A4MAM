@@ -35,13 +35,13 @@ export interface SiteSettings {
 })
 export class GlobalSettingsService {
   private apiUrl = `${environment.apiUrl}/settings`;
-  
+
   // Using Signals for state management
   public settings = signal<SiteSettings | null>(null);
   public loading = signal<boolean>(true);
   public error = signal<string | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public loadSettings() {
     this.loading.set(true);
@@ -64,7 +64,7 @@ export class GlobalSettingsService {
   private injectTrackingCodes(tracking: any) {
     // Only inject in browser environment
     if (typeof window === 'undefined') return;
-    
+
     // Inject logic can be added here if needed for GTM/GA/Pixel
   }
 }

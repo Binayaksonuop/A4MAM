@@ -48,4 +48,11 @@ const getAdminProfile = async (req, res) => {
   res.status(200).json({ success: true, admin: req.admin });
 };
 
-module.exports = { adminLogin, getAdminProfile };
+// @desc    Verify admin token
+// @route   GET /api/admin/verify
+// @access  Private
+const verifyAdminToken = async (req, res) => {
+  res.status(200).json({ success: true });
+};
+
+module.exports = { adminLogin, getAdminProfile, verifyAdminToken };

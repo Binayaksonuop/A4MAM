@@ -16,6 +16,8 @@ import {
   Router,
   NavigationEnd,
   NavigationStart,
+  NavigationCancel,
+  NavigationError,
   RouterModule
 } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -147,15 +149,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isLoading = true;
       }
       
-      if (event instanceof NavigationEnd) {
-        const url = event.urlAfterRedirects;
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        if (event instanceof NavigationError) {
+          console.error('Navigation error:', event.error);
+        }
+        const url = event instanceof NavigationEnd ? event.urlAfterRedirects : this.router.url;
         this.isHomePage =
           url === '/' || url.startsWith('/#');
 
         this.isAdminPage = url.startsWith('/admin');
         this.isAdminDashboard = url.startsWith('/admin/dashboard');
 
-        if (this.isBrowser) {
+        if (this.isBrowser && event instanceof NavigationEnd) {
           this.analyticsService.trackPageView(url);
 
           // Smooth scroll to top on route change (no fragment)

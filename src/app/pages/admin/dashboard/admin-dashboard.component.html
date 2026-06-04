@@ -21,10 +21,12 @@
       <div class="nav-item-v6" [class.active]="activeAdminPanel === 'pages'" (click)="openAdminPanel('pages')">
         <i class="bi bi-file-earmark-richtext"></i> <span>Pages CMS</span>
       </div>
-      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'testimonials'" (click)="openAdminPanel('testimonials')">
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'testimonials'"
+        (click)="openAdminPanel('testimonials')">
         <i class="bi bi-chat-quote"></i> <span>Testimonials</span>
       </div>
-      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'success-stories'" (click)="openAdminPanel('success-stories')">
+      <div class="nav-item-v6" [class.active]="activeAdminPanel === 'success-stories'"
+        (click)="openAdminPanel('success-stories')">
         <i class="bi bi-award"></i> <span>Success Stories</span>
       </div>
       <div class="nav-item-v6" [class.active]="activeAdminPanel === 'faqs'" (click)="openAdminPanel('faqs')">
@@ -69,11 +71,13 @@
 
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-cpu-fill text-emerald"></i>
-          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">SYSTEM_HEALTH: <span class="text-emerald">OPTIMAL</span></span>
+          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">SYSTEM_HEALTH: <span
+              class="text-emerald">OPTIMAL</span></span>
         </div>
         <div class="d-none d-xl-flex align-items-center gap-2 border-start border-white border-opacity-10 ps-4">
           <i class="bi bi-clock-history text-white text-opacity-30"></i>
-          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">MISSION_TIME: <span class="text-white">{{ missionTime }}</span></span>
+          <span class="text-white text-opacity-30 x-small fw-bold letter-spacing-2">MISSION_TIME: <span
+              class="text-white">{{ missionTime }}</span></span>
         </div>
       </div>
 
@@ -91,11 +95,13 @@
 
         <div class="admin-search-box d-none d-md-flex align-items-center px-3 py-2 rounded-pill">
           <i class="bi bi-search text-white text-opacity-30 me-2"></i>
-          <input type="text" id="searchTerm" name="searchTerm" placeholder="Search mission data..." class="bg-transparent border-0 text-white small" [(ngModel)]="searchTerm" autocomplete="off">
+          <input type="text" id="searchTerm" name="searchTerm" placeholder="Search mission data..."
+            class="bg-transparent border-0 text-white small" [(ngModel)]="searchTerm" autocomplete="off">
         </div>
 
         <!-- Theme Toggle -->
-        <button class="theme-toggle-btn d-flex align-items-center justify-content-center" (click)="toggleTheme()" title="Toggle Theme">
+        <button class="theme-toggle-btn d-flex align-items-center justify-content-center" (click)="toggleTheme()"
+          title="Toggle Theme">
           <i class="bi" [ngClass]="isDarkTheme ? 'bi-sun-fill' : 'bi-moon-stars-fill'"></i>
         </button>
 
@@ -113,373 +119,686 @@
 
       <!-- DASHBOARD OVERVIEW -->
       @if (activeAdminPanel === 'dashboard') {
-        <div class="section-fade-in">
-          <div class="d-flex justify-content-between align-items-end mb-5 reveal-dash">
-            <div>
-              <div class="badge-premium-emerald-outline mb-3">
-                <span class="pulse-dot-v6"></span> SECURE ADMIN MODE
-              </div>
-              <h1 class="display-5 fw-950 text-white mb-0">Clinical <span class="text-gradient-emerald">Transparency</span></h1>
-              <p class="text-white text-opacity-50 mt-2 mb-0">Real-time data visualization of A4MAM interventions.</p>
+      <div class="section-fade-in">
+        <div class="d-flex justify-content-between align-items-end mb-5 reveal-dash">
+          <div>
+            <div class="badge-premium-emerald-outline mb-3">
+              <span class="pulse-dot-v6"></span> SECURE ADMIN MODE
             </div>
-            <div class="text-white text-opacity-50 small font-monospace">LATEST SYNC: {{ today | date:'medium' }}</div>
+            <h1 class="display-5 fw-950 text-white mb-0">Clinical <span
+                class="text-gradient-emerald">Transparency</span></h1>
+            <p class="text-white text-opacity-50 mt-2 mb-0">Real-time data visualization of A4MAM interventions.</p>
           </div>
-          <!-- Top Stats Row -->
-          @if (stats) {
-            <div class="row g-4 mb-5 reveal-dash">
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass emerald p-3 h-100 text-center">
-                  <div class="stat-value counter-v6 text-emerald" [attr.data-target]="stats.childrenScreened">0</div>
-                  <div class="stat-label">Children Screened</div>
-                </div>
+          <div class="text-white text-opacity-50 small font-monospace">LATEST SYNC: {{ today | date:'medium' }}</div>
+        </div>
+        <!-- Top Stats Row -->
+        @if (stats) {
+        <div class="row g-4 mb-5 reveal-dash">
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass emerald p-3 h-100 text-center">
+              <div class="stat-value counter-v6 text-emerald" [attr.data-target]="stats.childrenScreened">0</div>
+              <div class="stat-label">Children Screened</div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass blue p-3 h-100 text-center">
+              <div class="stat-value counter-v6 text-blue" [attr.data-target]="stats.kitsDistributed">0</div>
+              <div class="stat-label">Kits Distributed</div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass amber p-3 h-100 text-center">
+              <div class="stat-value counter-v6 text-amber" [attr.data-target]="stats.activeInterventions">0</div>
+              <div class="stat-label">Active Interventions</div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass violet p-3 h-100 text-center">
+              <div class="stat-value counter-v6 text-violet d-inline-block" [attr.data-target]="stats.recoveryRate">0
+              </div><span class="text-violet fs-4 fw-bold">%</span>
+              <div class="stat-label">Recovery Rate</div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass white p-3 h-100 text-center">
+              <div class="text-white fs-4 fw-bold d-inline-block">₹</div>
+              <div class="stat-value counter-v6 text-white d-inline-block" [attr.data-target]="stats.totalDonations">0
               </div>
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass blue p-3 h-100 text-center">
-                  <div class="stat-value counter-v6 text-blue" [attr.data-target]="stats.kitsDistributed">0</div>
-                  <div class="stat-label">Kits Distributed</div>
-                </div>
+              <div class="stat-label">Total Donations</div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card-glass danger p-3 h-100 text-center">
+              <div class="stat-value counter-v6 text-danger" [attr.data-target]="stats.pendingCOD">0</div>
+              <div class="stat-label">Pending COD</div>
+            </div>
+          </div>
+        </div>
+        }
+        <div class="row g-4 reveal-dash">
+          <div class="col-lg-8">
+            <div class="panel-glass p-4 mb-4">
+              <h5 class="fw-900 text-white mb-4">Donation Stream (INR)</h5>
+              <div class="chart-mockup flex-grow-1 d-flex align-items-end gap-2 pb-2">
+                <div class="bar-v6" data-height="30%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="50%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="40%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="70%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="60%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="90%" style="height: 0%; background: #10b981;"></div>
+                <div class="bar-v6" data-height="80%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="100%" style="height: 0%; background: #10b981;"></div>
+                <div class="bar-v6" data-height="85%" style="height: 0%"></div>
+                <div class="bar-v6" data-height="65%" style="height: 0%"></div>
               </div>
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass amber p-3 h-100 text-center">
-                  <div class="stat-value counter-v6 text-amber" [attr.data-target]="stats.activeInterventions">0</div>
-                  <div class="stat-label">Active Interventions</div>
-                </div>
+            </div>
+            <div class="panel-glass p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-900 text-white mb-0">Recent Activity Log</h5>
+                <button class="btn btn-sm btn-outline-emerald" (click)="openAdminPanel('orders')">View All
+                  Orders</button>
               </div>
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass violet p-3 h-100 text-center">
-                  <div class="stat-value counter-v6 text-violet d-inline-block" [attr.data-target]="stats.recoveryRate">0</div><span class="text-violet fs-4 fw-bold">%</span>
-                  <div class="stat-label">Recovery Rate</div>
-                </div>
+              <div class="table-responsive">
+                <table class="table table-dark table-hover table-borderless align-middle activity-table-v6">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Method</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (ord of orders.slice(0,4); track ord) {
+                    <tr>
+                      <td><span class="text-white text-opacity-50 font-monospace">{{ ord.id }}</span></td>
+                      <td class="text-white fw-bold">{{ ord.type }}</td>
+                      <td>₹{{ ord.amount | number }}</td>
+                      <td><span class="badge" [class.bg-emerald-subtle]="ord.paymentMethod === 'upi'"
+                          [class.bg-blue-subtle]="ord.paymentMethod === 'cod'">{{ ord.paymentMethod.toUpperCase()
+                          }}</span></td>
+                      <td><i class="bi bi-check-circle-fill text-emerald me-1"></i> {{ ord.status }}</td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
               </div>
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass white p-3 h-100 text-center">
-                  <div class="text-white fs-4 fw-bold d-inline-block">₹</div><div class="stat-value counter-v6 text-white d-inline-block" [attr.data-target]="stats.totalDonations">0</div>
-                  <div class="stat-label">Total Donations</div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 mb-4">
+              <h5 class="fw-900 text-white mb-4">Mission Control</h5>
+              <div class="d-flex flex-column gap-3">
+                <div class="control-card-v6" (click)="openAdminPanel('images')">
+                  <div class="icon-box"><i class="bi bi-images"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">Manage Images</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-white text-opacity-30"></i>
                 </div>
-              </div>
-              <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="stat-card-glass danger p-3 h-100 text-center">
-                  <div class="stat-value counter-v6 text-danger" [attr.data-target]="stats.pendingCOD">0</div>
-                  <div class="stat-label">Pending COD</div>
+                <div class="control-card-v6" (click)="openAdminPanel('research')">
+                  <div class="icon-box"><i class="bi bi-journal-text"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">Research Articles</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+                </div>
+                <div class="control-card-v6" (click)="openAdminPanel('donations')">
+                  <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">Donation Plans</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+                </div>
+                <div class="control-card-v6" (click)="openAdminPanel('products')">
+                  <div class="icon-box"><i class="bi bi-box-seam"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">Product Management</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+                </div>
+                <div class="control-card-v6" (click)="openAdminPanel('inquiries')">
+                  <div class="icon-box"><i class="bi bi-chat-dots"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">Inquiry Management</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-white text-opacity-30"></i>
+                </div>
+                <div class="control-card-v6 opacity-50" style="cursor: not-allowed;">
+                  <div class="icon-box"><i class="bi bi-gear-fill"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-white mb-1">System Settings</div>
+                  </div>
+                  <i class="bi bi-lock-fill text-white text-opacity-50"></i>
                 </div>
               </div>
             </div>
-          }
-          <div class="row g-4 reveal-dash">
-            <div class="col-lg-8">
-              <div class="panel-glass p-4 mb-4">
-                <h5 class="fw-900 text-white mb-4">Donation Stream (INR)</h5>
-                <div class="chart-mockup flex-grow-1 d-flex align-items-end gap-2 pb-2">
-                  <div class="bar-v6" data-height="30%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="50%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="40%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="70%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="60%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="90%" style="height: 0%; background: #10b981;"></div>
-                  <div class="bar-v6" data-height="80%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="100%" style="height: 0%; background: #10b981;"></div>
-                  <div class="bar-v6" data-height="85%" style="height: 0%"></div>
-                  <div class="bar-v6" data-height="65%" style="height: 0%"></div>
+            <div class="panel-glass p-4">
+              <h5 class="fw-900 text-white mb-4">Regional Distribution</h5>
+              <div class="region-row mb-3">
+                <div class="d-flex justify-content-between text-white small fw-bold mb-1">
+                  <span>Odisha</span><span>45%</span></div>
+                <div class="progress-track">
+                  <div class="progress-fill emerald" data-width="45%" style="width: 45%"></div>
                 </div>
               </div>
-              <div class="panel-glass p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <h5 class="fw-900 text-white mb-0">Recent Activity Log</h5>
-                  <button class="btn btn-sm btn-outline-emerald" (click)="openAdminPanel('orders')">View All Orders</button>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-dark table-hover table-borderless align-middle activity-table-v6">
-                    <thead>
-                      <tr>
-                        <th>Order ID</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (ord of orders.slice(0,4); track ord) {
-                        <tr>
-                          <td><span class="text-white text-opacity-50 font-monospace">{{ ord.id }}</span></td>
-                          <td class="text-white fw-bold">{{ ord.type }}</td>
-                          <td>₹{{ ord.amount | number }}</td>
-                          <td><span class="badge" [class.bg-emerald-subtle]="ord.paymentMethod === 'upi'"
-                          [class.bg-blue-subtle]="ord.paymentMethod === 'cod'">{{ ord.paymentMethod.toUpperCase() }}</span></td>
-                          <td><i class="bi bi-check-circle-fill text-emerald me-1"></i> {{ ord.status }}</td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
+              <div class="region-row mb-3">
+                <div class="d-flex justify-content-between text-white small fw-bold mb-1">
+                  <span>Telangana</span><span>30%</span></div>
+                <div class="progress-track">
+                  <div class="progress-fill blue" data-width="30%" style="width: 30%"></div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 mb-4">
-                <h5 class="fw-900 text-white mb-4">Mission Control</h5>
-                <div class="d-flex flex-column gap-3">
-                  <div class="control-card-v6" (click)="openAdminPanel('images')">
-                    <div class="icon-box"><i class="bi bi-images"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">Manage Images</div>
-                    </div>
-                    <i class="bi bi-chevron-right text-white text-opacity-30"></i>
-                  </div>
-                  <div class="control-card-v6" (click)="openAdminPanel('research')">
-                    <div class="icon-box"><i class="bi bi-journal-text"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">Research Articles</div>
-                    </div>
-                    <i class="bi bi-chevron-right text-white text-opacity-30"></i>
-                  </div>
-                  <div class="control-card-v6" (click)="openAdminPanel('donations')">
-                    <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">Donation Plans</div>
-                    </div>
-                    <i class="bi bi-chevron-right text-white text-opacity-30"></i>
-                  </div>
-                  <div class="control-card-v6" (click)="openAdminPanel('products')">
-                    <div class="icon-box"><i class="bi bi-box-seam"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">Product Management</div>
-                    </div>
-                    <i class="bi bi-chevron-right text-white text-opacity-30"></i>
-                  </div>
-                  <div class="control-card-v6" (click)="openAdminPanel('inquiries')">
-                    <div class="icon-box"><i class="bi bi-chat-dots"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">Inquiry Management</div>
-                    </div>
-                    <i class="bi bi-chevron-right text-white text-opacity-30"></i>
-                  </div>
-                  <div class="control-card-v6 opacity-50" style="cursor: not-allowed;">
-                    <div class="icon-box"><i class="bi bi-gear-fill"></i></div>
-                    <div class="flex-grow-1">
-                      <div class="fw-bold text-white mb-1">System Settings</div>
-                    </div>
-                    <i class="bi bi-lock-fill text-white text-opacity-50"></i>
-                  </div>
+              <div class="region-row mb-3">
+                <div class="d-flex justify-content-between text-white small fw-bold mb-1">
+                  <span>Jharkhand</span><span>15%</span></div>
+                <div class="progress-track">
+                  <div class="progress-fill amber" data-width="15%" style="width: 15%"></div>
                 </div>
               </div>
-              <div class="panel-glass p-4">
-                <h5 class="fw-900 text-white mb-4">Regional Distribution</h5>
-                <div class="region-row mb-3">
-                  <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Odisha</span><span>45%</span></div>
-                  <div class="progress-track"><div class="progress-fill emerald" data-width="45%" style="width: 45%"></div></div>
-                </div>
-                <div class="region-row mb-3">
-                  <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Telangana</span><span>30%</span></div>
-                  <div class="progress-track"><div class="progress-fill blue" data-width="30%" style="width: 30%"></div></div>
-                </div>
-                <div class="region-row mb-3">
-                  <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Jharkhand</span><span>15%</span></div>
-                  <div class="progress-track"><div class="progress-fill amber" data-width="15%" style="width: 15%"></div></div>
-                </div>
-                <div class="region-row">
-                  <div class="d-flex justify-content-between text-white small fw-bold mb-1"><span>Other</span><span>10%</span></div>
-                  <div class="progress-track"><div class="progress-fill violet" data-width="10%" style="width: 10%"></div></div>
+              <div class="region-row">
+                <div class="d-flex justify-content-between text-white small fw-bold mb-1">
+                  <span>Other</span><span>10%</span></div>
+                <div class="progress-track">
+                  <div class="progress-fill violet" data-width="10%" style="width: 10%"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       }
 
       <!-- IMAGES PANEL -->
       @if (activeAdminPanel === 'images') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Image Management</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Upload New Image</h5>
-                @if (previewUrl) {
-                  <div class="upload-preview mb-3 rounded-3 overflow-hidden border border-white border-opacity-10">
-                    <img [src]="previewUrl" class="w-100 h-auto">
-                  </div>
-                }
-                <div class="form-group-v6 mb-3">
-                  <label for="imageFile" class="text-white text-opacity-50 x-small fw-bold">Image File</label>
-                  <input type="file" id="imageFile" name="imageFile" (change)="onFileSelected($event)" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="imageTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
-                  <input type="text" id="imageTitle" name="imageTitle" [(ngModel)]="newImage.title" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="imageLocation" class="text-white text-opacity-50 x-small fw-bold">Location</label>
-                  <input type="text" id="imageLocation" name="imageLocation" [(ngModel)]="newImage.location" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="imageDescription" class="text-white text-opacity-50 x-small fw-bold">Caption/Description</label>
-                  <textarea id="imageDescription" name="imageDescription" [(ngModel)]="newImage.description" class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="uploadImage()" [disabled]="!previewUrl || isUploading">
-                  {{ isUploading ? 'Saving...' : 'Save Image' }}
-                </button>
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Image Management</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Upload New Image</h5>
+              @if (previewUrl) {
+              <div class="upload-preview mb-3 rounded-3 overflow-hidden border border-white border-opacity-10">
+                <img [src]="previewUrl" class="w-100 h-auto">
               </div>
-            </div>
-            <div class="col-lg-8">
-              <div class="row g-3">
-                @for (img of galleryImages; track img) {
-                  <div class="col-md-6">
-                    <div class="panel-glass overflow-hidden position-relative" (click)="openLightbox(img)" style="cursor: pointer;">
-                      <img [src]="img.url" class="w-100" style="height: 200px; object-fit: cover;">
-                      <div class="p-3">
-                        <h6 class="text-white mb-1">{{ img.title }}</h6>
-                        <p class="text-white text-opacity-50 x-small mb-0">{{ img.location }}</p>
-                      </div>
-                      <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" (click)="$event.stopPropagation(); deleteImage(img.id)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                }
+              }
+              <div class="form-group-v6 mb-3">
+                <label for="imageFile" class="text-white text-opacity-50 x-small fw-bold">Image File</label>
+                <input type="file" id="imageFile" name="imageFile" (change)="onFileSelected($event)"
+                  class="form-control bg-dark text-white border-secondary">
               </div>
+              <div class="form-group-v6 mb-3">
+                <label for="imageTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
+                <input type="text" id="imageTitle" name="imageTitle" [(ngModel)]="newImage.title"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="imageLocation" class="text-white text-opacity-50 x-small fw-bold">Location</label>
+                <input type="text" id="imageLocation" name="imageLocation" [(ngModel)]="newImage.location"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="imageDescription"
+                  class="text-white text-opacity-50 x-small fw-bold">Caption/Description</label>
+                <textarea id="imageDescription" name="imageDescription" [(ngModel)]="newImage.description"
+                  class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="uploadImage()"
+                [disabled]="!previewUrl || isUploading">
+                {{ isUploading ? 'Saving...' : 'Save Image' }}
+              </button>
             </div>
           </div>
-        </div>
-      }
-
-      <!-- RESEARCH PANEL -->
-      @if (activeAdminPanel === 'research') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Research Articles</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Add New Article</h5>
-                <div class="form-group-v6 mb-3">
-                  <label for="articleTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
-                  <input type="text" id="articleTitle" name="articleTitle" [(ngModel)]="newArticle.title" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="articleCategory" class="text-white text-opacity-50 x-small fw-bold">Category</label>
-                  <input type="text" id="articleCategory" name="articleCategory" [(ngModel)]="newArticle.category" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="articleSlug" class="text-white text-opacity-50 x-small fw-bold">Slug</label>
-                  <input type="text" id="articleSlug" name="articleSlug" [(ngModel)]="newArticle.slug" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="articleStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
-                  <select id="articleStatus" name="articleStatus" [(ngModel)]="newArticle.status" class="form-select bg-dark text-white border-secondary">
-                    <option value="Draft">Draft</option>
-                    <option value="Published">Published</option>
-                  </select>
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="articleSummary" class="text-white text-opacity-50 x-small fw-bold">Summary</label>
-                  <textarea id="articleSummary" name="articleSummary" [(ngModel)]="newArticle.summary" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="saveArticle()">Save Article</button>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              @for (article of articles; track article._id) {
-                <div class="panel-glass p-4 mb-3">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <span class="badge bg-secondary mb-2" [class.bg-success]="article.status === 'Published'">{{ article.status }}</span>
-                      <span class="badge border border-secondary text-secondary ms-2 mb-2">{{ article.category }}</span>
-                      <h5 class="text-white fw-bold">{{ article.title }}</h5>
-                      <p class="text-white text-opacity-70 mb-0">{{ article.summary }}</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle(article._id)"><i class="bi bi-trash"></i></button>
+          <div class="col-lg-8">
+            <div class="row g-3">
+              @for (img of galleryImages; track img) {
+              <div class="col-md-6">
+                <div class="panel-glass overflow-hidden position-relative" (click)="openLightbox(img)"
+                  style="cursor: pointer;">
+                  <img [src]="img.url" class="w-100" style="height: 200px; object-fit: cover;">
+                  <div class="p-3">
+                    <h6 class="text-white mb-1">{{ img.title }}</h6>
+                    <p class="text-white text-opacity-50 x-small mb-0">{{ img.location }}</p>
                   </div>
+                  <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2"
+                    (click)="$event.stopPropagation(); deleteImage(img.id)">
+                    <i class="bi bi-trash"></i>
+                  </button>
                 </div>
+              </div>
               }
             </div>
           </div>
         </div>
+      </div>
+      }
+
+      <!-- RESEARCH PANEL -->
+      @if (activeAdminPanel === 'research') {
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Research Articles</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Add New Article</h5>
+              <div class="form-group-v6 mb-3">
+                <label for="articleTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
+                <input type="text" id="articleTitle" name="articleTitle" [(ngModel)]="newArticle.title"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="articleCategory" class="text-white text-opacity-50 x-small fw-bold">Category</label>
+                <input type="text" id="articleCategory" name="articleCategory" [(ngModel)]="newArticle.category"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="articleSlug" class="text-white text-opacity-50 x-small fw-bold">Slug</label>
+                <input type="text" id="articleSlug" name="articleSlug" [(ngModel)]="newArticle.slug"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="articleStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+                <select id="articleStatus" name="articleStatus" [(ngModel)]="newArticle.status"
+                  class="form-select bg-dark text-white border-secondary">
+                  <option value="Draft">Draft</option>
+                  <option value="Published">Published</option>
+                </select>
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="articleSummary" class="text-white text-opacity-50 x-small fw-bold">Summary</label>
+                <textarea id="articleSummary" name="articleSummary" [(ngModel)]="newArticle.summary"
+                  class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="saveArticle()">Save Article</button>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            @for (article of articles; track article._id) {
+            <div class="panel-glass p-4 mb-3">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <span class="badge bg-secondary mb-2" [class.bg-success]="article.status === 'Published'">{{
+                    article.status }}</span>
+                  <span class="badge border border-secondary text-secondary ms-2 mb-2">{{ article.category }}</span>
+                  <h5 class="text-white fw-bold">{{ article.title }}</h5>
+                  <p class="text-white text-opacity-70 mb-0">{{ article.summary }}</p>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle(article._id)"><i
+                    class="bi bi-trash"></i></button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
       }
 
       <!-- DONATIONS PANEL -->
       @if (activeAdminPanel === 'donations') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Donation Plans Management</h2>
-          <div class="row g-4">
-            @for (plan of donationPlans; track plan) {
-              <div class="col-md-6 col-lg-4">
-                <div class="panel-glass p-4 h-100 d-flex flex-column">
-                  <input type="text" [id]="'planName'+plan.id" [name]="'planName'+plan.id" aria-label="Plan Name" [(ngModel)]="plan.name" class="form-control bg-transparent text-white fw-bold fs-5 border-0 px-0 mb-2" style="box-shadow: none;">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text bg-dark text-white border-secondary">₹</span>
-                    <input type="number" [id]="'planAmount'+plan.id" [name]="'planAmount'+plan.id" aria-label="Plan Amount" [(ngModel)]="plan.amount" class="form-control bg-dark text-white border-secondary">
-                  </div>
-                  <textarea [id]="'planImpact'+plan.id" [name]="'planImpact'+plan.id" aria-label="Plan Impact Text" [(ngModel)]="plan.impactText" class="form-control bg-dark text-white border-secondary mb-3 flex-grow-1" rows="3"></textarea>
-                  <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" role="switch" [id]="'switch'+plan.id" [(ngModel)]="plan.active">
-                    <label class="form-check-label text-white" [for]="'switch'+plan.id">Active Plan</label>
-                  </div>
-                  <button class="btn btn-outline-emerald w-100 mt-auto" (click)="updatePlan(plan)">Update Plan</button>
-                </div>
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Donation Plans Management</h2>
+        <div class="row g-4">
+          @for (plan of donationPlans; track plan) {
+          <div class="col-md-6 col-lg-4">
+            <div class="panel-glass p-4 h-100 d-flex flex-column">
+              <input type="text" [id]="'planName'+plan.id" [name]="'planName'+plan.id" aria-label="Plan Name"
+                [(ngModel)]="plan.name" class="form-control bg-transparent text-white fw-bold fs-5 border-0 px-0 mb-2"
+                style="box-shadow: none;">
+              <div class="input-group mb-3">
+                <span class="input-group-text bg-dark text-white border-secondary">₹</span>
+                <input type="number" [id]="'planAmount'+plan.id" [name]="'planAmount'+plan.id" aria-label="Plan Amount"
+                  [(ngModel)]="plan.amount" class="form-control bg-dark text-white border-secondary">
               </div>
-            }
+              <textarea [id]="'planImpact'+plan.id" [name]="'planImpact'+plan.id" aria-label="Plan Impact Text"
+                [(ngModel)]="plan.impactText" class="form-control bg-dark text-white border-secondary mb-3 flex-grow-1"
+                rows="3"></textarea>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" role="switch" [id]="'switch'+plan.id"
+                  [(ngModel)]="plan.active">
+                <label class="form-check-label text-white" [for]="'switch'+plan.id">Active Plan</label>
+              </div>
+              <button class="btn btn-outline-emerald w-100 mt-auto" (click)="updatePlan(plan)">Update Plan</button>
+            </div>
           </div>
+          }
         </div>
+      </div>
       }
 
       <!-- PRODUCTS PANEL -->
       @if (activeAdminPanel === 'products') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Product Management</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Add Product</h5>
-                <div class="form-group-v6 mb-3">
-                  <label for="productName" class="text-white text-opacity-50 x-small fw-bold">Name</label>
-                  <input type="text" id="productName" name="productName" [(ngModel)]="newProduct.name" class="form-control bg-dark text-white border-secondary">
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Product Management</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Add Product</h5>
+              <div class="form-group-v6 mb-3">
+                <label for="productName" class="text-white text-opacity-50 x-small fw-bold">Name</label>
+                <input type="text" id="productName" name="productName" [(ngModel)]="newProduct.name"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="productPrice" class="text-white text-opacity-50 x-small fw-bold">Price (₹)</label>
+                <input type="number" id="productPrice" name="productPrice" [(ngModel)]="newProduct.price"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="productStock" class="text-white text-opacity-50 x-small fw-bold">Stock</label>
+                <input type="number" id="productStock" name="productStock" [(ngModel)]="newProduct.stock"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="productStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+                <select id="productStatus" name="productStatus" [(ngModel)]="newProduct.status"
+                  class="form-select bg-dark text-white border-secondary">
+                  <option value="In Stock">In Stock</option>
+                  <option value="Out of Stock">Out of Stock</option>
+                  <option value="Draft">Draft</option>
+                </select>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="saveProduct()">Save Product</button>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="table-responsive panel-glass p-0">
+              <table class="table table-dark table-hover table-borderless align-middle m-0">
+                <thead>
+                  <tr>
+                    <th class="p-4">Product</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th class="text-end p-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (prod of filteredProducts; track prod) {
+                  <tr>
+                    <td class="p-4 d-flex align-items-center gap-3">
+                      <img [src]="prod.imageUrl" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                      <span class="text-white fw-bold">{{ prod.name }}</span>
+                    </td>
+                    <td>₹{{ prod.price }}</td>
+                    <td>{{ prod.stock }}</td>
+                    <td>
+                      <span class="badge" [class.bg-success]="prod.status === 'In Stock'"
+                        [class.bg-danger]="prod.status === 'Out of Stock'"
+                        [class.bg-secondary]="prod.status === 'Draft'">{{ prod.status }}</span>
+                    </td>
+                    <td class="text-end p-4">
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(prod._id || prod.id)"><i
+                          class="bi bi-trash"></i></button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- ORDERS PANEL -->
+      @if (activeAdminPanel === 'orders') {
+      <div class="section-fade-in">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <div class="badge-premium-emerald-outline mb-2"><span class="pulse-dot-v6"></span> LIVE ORDERS</div>
+            <h2 class="fw-900 text-white mb-0">Mission Orders</h2>
+          </div>
+          <button class="btn btn-outline-emerald d-flex align-items-center gap-2" (click)="refreshDashboardData()">
+            <i class="bi bi-arrow-clockwise"></i> Sync Latest
+          </button>
+        </div>
+        <!-- Filter Tabs -->
+        <div class="order-filter-tabs mb-4">
+          <button class="order-filter-tab" [class.active]="orderFilter === 'active'" (click)="orderFilter = 'active'">
+            <i class="bi bi-lightning-charge-fill"></i> Active
+            <span class="tab-count">{{ (orders | filterByStatus:'Processing').length + (orders |
+              filterByStatus:'Confirmed').length + (orders | filterByStatus:'Shipped').length }}</span>
+          </button>
+          <button class="order-filter-tab" [class.active]="orderFilter === 'delivered'"
+            (click)="orderFilter = 'delivered'">
+            <i class="bi bi-check2-all"></i> Delivered
+            <span class="tab-count delivered">{{ (orders | filterByStatus:'Delivered').length }}</span>
+          </button>
+          <button class="order-filter-tab" [class.active]="orderFilter === 'cancelled'"
+            (click)="orderFilter = 'cancelled'">
+            <i class="bi bi-x-circle"></i> Cancelled
+            <span class="tab-count cancelled">{{ (orders | filterByStatus:'Cancelled').length }}</span>
+          </button>
+          <button class="order-filter-tab" [class.active]="orderFilter === 'all'" (click)="orderFilter = 'all'">
+            <i class="bi bi-grid-3x3-gap-fill"></i> All Orders
+            <span class="tab-count all">{{ orders.length }}</span>
+          </button>
+        </div>
+        <!-- Empty State -->
+        @if (filteredOrders.length === 0) {
+        <div class="panel-glass p-5 text-center">
+          <i class="bi bi-inbox text-white text-opacity-20" style="font-size: 4rem;"></i>
+          <p class="text-white text-opacity-40 mt-3 mb-0">No mission orders found.</p>
+        </div>
+        }
+        <!-- Order Cards -->
+        <div class="d-flex flex-column gap-3">
+          @for (ord of filteredOrders; track ord) {
+          <div class="order-card-v6 panel-glass p-4">
+            <div class="row align-items-center g-3">
+              <!-- Left: Order Info -->
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="order-avatar-v6" [class.cod]="ord.paymentMethod === 'cod'"
+                    [class.upi]="ord.paymentMethod === 'upi'">
+                    <i class="bi" [class.bi-truck]="ord.paymentMethod === 'cod'"
+                      [class.bi-phone]="ord.paymentMethod === 'upi'"></i>
+                  </div>
+                  <div>
+                    <div class="fw-900 text-white fs-6">{{ ord.customerName }}</div>
+                    <div class="text-white text-opacity-30 x-small font-monospace mt-1">{{ ord.id }}</div>
+                    <div class="text-white text-opacity-20 x-small">{{ ord.date | date:'dd MMM yyyy, hh:mm a' }}</div>
+                  </div>
                 </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="productPrice" class="text-white text-opacity-50 x-small fw-bold">Price (₹)</label>
-                  <input type="number" id="productPrice" name="productPrice" [(ngModel)]="newProduct.price" class="form-control bg-dark text-white border-secondary">
+              </div>
+              <!-- Middle: Amount & Method -->
+              <div class="col-lg-3">
+                <div class="fw-950 text-white" style="font-size: 1.5rem;">₹{{ ord.amount | number }}</div>
+                <span class="badge rounded-pill px-3 py-1 mt-1 d-inline-block"
+                  [class.order-badge-upi]="ord.paymentMethod === 'upi'"
+                  [class.order-badge-cod]="ord.paymentMethod === 'cod'">
+                  <i class="bi me-1" [class.bi-phone]="ord.paymentMethod === 'upi'"
+                    [class.bi-truck]="ord.paymentMethod === 'cod'"></i>
+                  {{ ord.paymentMethod.toUpperCase() }}
+                </span>
+              </div>
+              <!-- Status Badge -->
+              <div class="col-lg-2">
+                <span class="order-status-badge" [class.status-processing]="ord.status === 'Processing'"
+                  [class.status-confirmed]="ord.status === 'Confirmed'"
+                  [class.status-shipped]="ord.status === 'Shipped'"
+                  [class.status-delivered]="ord.status === 'Delivered'"
+                  [class.status-cancelled]="ord.status === 'Cancelled'">
+                  <span class="status-dot"></span>
+                  {{ ord.status }}
+                </span>
+              </div>
+              <!-- Action Buttons -->
+              <div class="col-lg-3">
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                  <button class="btn order-action-btn confirm" (click)="updateOrderStatus(ord.id, 'Confirmed')"
+                    [disabled]="ord.status === 'Confirmed' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                    title="Confirm Order">
+                    <i class="bi bi-check-circle-fill"></i> Confirm
+                  </button>
+                  <button class="btn order-action-btn ship" (click)="updateOrderStatus(ord.id, 'Shipped')"
+                    [disabled]="ord.status === 'Shipped' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
+                    title="Mark Shipped">
+                    <i class="bi bi-truck"></i> Ship
+                  </button>
+                  <button class="btn order-action-btn deliver" (click)="updateOrderStatus(ord.id, 'Delivered')"
+                    [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'" title="Mark Delivered">
+                    <i class="bi bi-check2-all"></i> Deliver
+                  </button>
+                  <button class="btn order-action-btn cancel" (click)="updateOrderStatus(ord.id, 'Cancelled')"
+                    [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'" title="Cancel Order">
+                    <i class="bi bi-x-circle"></i>
+                  </button>
+                  <button class="btn order-action-btn delete-order" (click)="deleteOrder(ord.mongoId, ord.customerName)"
+                    title="Delete Order Permanently">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
                 </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="productStock" class="text-white text-opacity-50 x-small fw-bold">Stock</label>
-                  <input type="number" id="productStock" name="productStock" [(ngModel)]="newProduct.stock" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="productStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
-                  <select id="productStatus" name="productStatus" [(ngModel)]="newProduct.status" class="form-select bg-dark text-white border-secondary">
-                    <option value="In Stock">In Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                    <option value="Draft">Draft</option>
-                  </select>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="saveProduct()">Save Product</button>
               </div>
             </div>
-            <div class="col-lg-8">
-              <div class="table-responsive panel-glass p-0">
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- TESTIMONIALS PANEL -->
+      @if (activeAdminPanel === 'testimonials') {
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Testimonial Management</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Add Testimonial</h5>
+              <div class="form-group-v6 mb-3">
+                <label for="testimonialName" class="text-white text-opacity-50 x-small fw-bold">Name</label>
+                <input type="text" id="testimonialName" name="testimonialName" [(ngModel)]="newTestimonial.name"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="testimonialRole" class="text-white text-opacity-50 x-small fw-bold">Role</label>
+                <input type="text" id="testimonialRole" name="testimonialRole" [(ngModel)]="newTestimonial.role"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="testimonialQuote" class="text-white text-opacity-50 x-small fw-bold">Quote</label>
+                <textarea id="testimonialQuote" name="testimonialQuote" [(ngModel)]="newTestimonial.quote"
+                  class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="testimonialStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+                <select id="testimonialStatus" name="testimonialStatus" [(ngModel)]="newTestimonial.status"
+                  class="form-select bg-dark text-white border-secondary">
+                  <option value="Draft">Draft</option>
+                  <option value="Published">Published</option>
+                </select>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="saveTestimonial()">Save Testimonial</button>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            @for (t of testimonials; track t._id) {
+            <div class="panel-glass p-4 mb-3">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <span class="badge bg-secondary mb-2" [class.bg-success]="t.status === 'Published'">{{ t.status
+                    }}</span>
+                  <h5 class="text-white fw-bold mb-0">{{ t.name }}</h5>
+                  <span class="text-emerald small">{{ t.role }}</span>
+                  <p class="text-white text-opacity-70 mt-2 mb-0"><i class="bi bi-quote me-1"></i>{{ t.quote }}</p>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteTestimonial(t._id)"><i
+                    class="bi bi-trash"></i></button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- SUCCESS STORIES PANEL -->
+      @if (activeAdminPanel === 'success-stories') {
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Success Stories</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Add Success Story</h5>
+              <div class="form-group-v6 mb-3">
+                <label for="storyTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
+                <input type="text" id="storyTitle" name="storyTitle" [(ngModel)]="newStory.title"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="storySlug" class="text-white text-opacity-50 x-small fw-bold">Slug</label>
+                <input type="text" id="storySlug" name="storySlug" [(ngModel)]="newStory.slug"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="storySummary" class="text-white text-opacity-50 x-small fw-bold">Summary</label>
+                <textarea id="storySummary" name="storySummary" [(ngModel)]="newStory.summary"
+                  class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="storyBody" class="text-white text-opacity-50 x-small fw-bold">Body</label>
+                <textarea id="storyBody" name="storyBody" [(ngModel)]="newStory.body"
+                  class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="storyStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+                <select id="storyStatus" name="storyStatus" [(ngModel)]="newStory.status"
+                  class="form-select bg-dark text-white border-secondary">
+                  <option value="Draft">Draft</option>
+                  <option value="Published">Published</option>
+                </select>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="saveStory()">Save Story</button>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            @for (story of successStories; track story._id) {
+            <div class="panel-glass p-4 mb-3">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <span class="badge bg-secondary mb-2" [class.bg-success]="story.status === 'Published'">{{
+                    story.status }}</span>
+                  <h5 class="text-white fw-bold">{{ story.title }}</h5>
+                  <p class="text-white text-opacity-70 mb-0">{{ story.summary }}</p>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteStory(story._id)"><i
+                    class="bi bi-trash"></i></button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- PAGES CMS PANEL -->
+      @if (activeAdminPanel === 'pages') {
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Pages CMS</h2>
+        <div class="row g-4">
+          <div class="col-12">
+            <div class="panel-glass p-4">
+              <div class="table-responsive">
                 <table class="table table-dark table-hover table-borderless align-middle m-0">
                   <thead>
                     <tr>
-                      <th class="p-4">Product</th>
-                      <th>Price</th>
-                      <th>Stock</th>
+                      <th>Slug</th>
+                      <th>Title (SEO)</th>
                       <th>Status</th>
-                      <th class="text-end p-4">Action</th>
+                      <th class="text-end">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @for (prod of filteredProducts; track prod) {
-                      <tr>
-                        <td class="p-4 d-flex align-items-center gap-3">
-                          <img [src]="prod.imageUrl" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
-                          <span class="text-white fw-bold">{{ prod.name }}</span>
-                        </td>
-                        <td>₹{{ prod.price }}</td>
-                        <td>{{ prod.stock }}</td>
-                        <td>
-                          <span class="badge" [class.bg-success]="prod.status === 'In Stock'" [class.bg-danger]="prod.status === 'Out of Stock'" [class.bg-secondary]="prod.status === 'Draft'">{{ prod.status }}</span>
-                        </td>
-                        <td class="text-end p-4">
-                          <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(prod._id || prod.id)"><i class="bi bi-trash"></i></button>
-                        </td>
-                      </tr>
+                    @for (page of cmsPages; track page._id) {
+                    <tr>
+                      <td class="fw-bold font-monospace text-emerald">{{ page.slug }}</td>
+                      <td>{{ page.seo?.metaTitle || 'No title set' }}</td>
+                      <td><span class="badge bg-success">{{ page.status || 'Published' }}</span></td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-outline-emerald">Edit Page</button>
+                      </td>
+                    </tr>
                     }
                   </tbody>
                 </table>
@@ -487,463 +806,241 @@
             </div>
           </div>
         </div>
-      }
-
-      <!-- ORDERS PANEL -->
-      @if (activeAdminPanel === 'orders') {
-        <div class="section-fade-in">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-              <div class="badge-premium-emerald-outline mb-2"><span class="pulse-dot-v6"></span> LIVE ORDERS</div>
-              <h2 class="fw-900 text-white mb-0">Mission Orders</h2>
-            </div>
-            <button class="btn btn-outline-emerald d-flex align-items-center gap-2" (click)="refreshDashboardData()">
-              <i class="bi bi-arrow-clockwise"></i> Sync Latest
-            </button>
-          </div>
-          <!-- Filter Tabs -->
-          <div class="order-filter-tabs mb-4">
-            <button class="order-filter-tab" [class.active]="orderFilter === 'active'" (click)="orderFilter = 'active'">
-              <i class="bi bi-lightning-charge-fill"></i> Active
-              <span class="tab-count">{{ (orders | filterByStatus:'Processing').length + (orders | filterByStatus:'Confirmed').length + (orders | filterByStatus:'Shipped').length }}</span>
-            </button>
-            <button class="order-filter-tab" [class.active]="orderFilter === 'delivered'" (click)="orderFilter = 'delivered'">
-              <i class="bi bi-check2-all"></i> Delivered
-              <span class="tab-count delivered">{{ (orders | filterByStatus:'Delivered').length }}</span>
-            </button>
-            <button class="order-filter-tab" [class.active]="orderFilter === 'cancelled'" (click)="orderFilter = 'cancelled'">
-              <i class="bi bi-x-circle"></i> Cancelled
-              <span class="tab-count cancelled">{{ (orders | filterByStatus:'Cancelled').length }}</span>
-            </button>
-            <button class="order-filter-tab" [class.active]="orderFilter === 'all'" (click)="orderFilter = 'all'">
-              <i class="bi bi-grid-3x3-gap-fill"></i> All Orders
-              <span class="tab-count all">{{ orders.length }}</span>
-            </button>
-          </div>
-          <!-- Empty State -->
-          @if (filteredOrders.length === 0) {
-            <div class="panel-glass p-5 text-center">
-              <i class="bi bi-inbox text-white text-opacity-20" style="font-size: 4rem;"></i>
-              <p class="text-white text-opacity-40 mt-3 mb-0">No mission orders found.</p>
-            </div>
-          }
-          <!-- Order Cards -->
-          <div class="d-flex flex-column gap-3">
-            @for (ord of filteredOrders; track ord) {
-              <div class="order-card-v6 panel-glass p-4">
-                <div class="row align-items-center g-3">
-                  <!-- Left: Order Info -->
-                  <div class="col-lg-4">
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="order-avatar-v6" [class.cod]="ord.paymentMethod === 'cod'" [class.upi]="ord.paymentMethod === 'upi'">
-                        <i class="bi" [class.bi-truck]="ord.paymentMethod === 'cod'" [class.bi-phone]="ord.paymentMethod === 'upi'"></i>
-                      </div>
-                      <div>
-                        <div class="fw-900 text-white fs-6">{{ ord.customerName }}</div>
-                        <div class="text-white text-opacity-30 x-small font-monospace mt-1">{{ ord.id }}</div>
-                        <div class="text-white text-opacity-20 x-small">{{ ord.date | date:'dd MMM yyyy, hh:mm a' }}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Middle: Amount & Method -->
-                  <div class="col-lg-3">
-                    <div class="fw-950 text-white" style="font-size: 1.5rem;">₹{{ ord.amount | number }}</div>
-                    <span class="badge rounded-pill px-3 py-1 mt-1 d-inline-block"
-                      [class.order-badge-upi]="ord.paymentMethod === 'upi'"
-                      [class.order-badge-cod]="ord.paymentMethod === 'cod'">
-                      <i class="bi me-1" [class.bi-phone]="ord.paymentMethod === 'upi'" [class.bi-truck]="ord.paymentMethod === 'cod'"></i>
-                      {{ ord.paymentMethod.toUpperCase() }}
-                    </span>
-                  </div>
-                  <!-- Status Badge -->
-                  <div class="col-lg-2">
-                    <span class="order-status-badge"
-                      [class.status-processing]="ord.status === 'Processing'"
-                      [class.status-confirmed]="ord.status === 'Confirmed'"
-                      [class.status-shipped]="ord.status === 'Shipped'"
-                      [class.status-delivered]="ord.status === 'Delivered'"
-                      [class.status-cancelled]="ord.status === 'Cancelled'">
-                      <span class="status-dot"></span>
-                      {{ ord.status }}
-                    </span>
-                  </div>
-                  <!-- Action Buttons -->
-                  <div class="col-lg-3">
-                    <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-                      <button class="btn order-action-btn confirm" (click)="updateOrderStatus(ord.id, 'Confirmed')"
-                        [disabled]="ord.status === 'Confirmed' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
-                        title="Confirm Order">
-                        <i class="bi bi-check-circle-fill"></i> Confirm
-                      </button>
-                      <button class="btn order-action-btn ship" (click)="updateOrderStatus(ord.id, 'Shipped')"
-                        [disabled]="ord.status === 'Shipped' || ord.status === 'Delivered' || ord.status === 'Cancelled'"
-                        title="Mark Shipped">
-                        <i class="bi bi-truck"></i> Ship
-                      </button>
-                      <button class="btn order-action-btn deliver" (click)="updateOrderStatus(ord.id, 'Delivered')"
-                        [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'"
-                        title="Mark Delivered">
-                        <i class="bi bi-check2-all"></i> Deliver
-                      </button>
-                      <button class="btn order-action-btn cancel" (click)="updateOrderStatus(ord.id, 'Cancelled')"
-                        [disabled]="ord.status === 'Delivered' || ord.status === 'Cancelled'"
-                        title="Cancel Order">
-                        <i class="bi bi-x-circle"></i>
-                      </button>
-                      <button class="btn order-action-btn delete-order" (click)="deleteOrder(ord.mongoId, ord.customerName)"
-                        title="Delete Order Permanently">
-                        <i class="bi bi-trash3-fill"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-      }
-
-      <!-- TESTIMONIALS PANEL -->
-      @if (activeAdminPanel === 'testimonials') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Testimonial Management</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Add Testimonial</h5>
-                <div class="form-group-v6 mb-3">
-                  <label for="testimonialName" class="text-white text-opacity-50 x-small fw-bold">Name</label>
-                  <input type="text" id="testimonialName" name="testimonialName" [(ngModel)]="newTestimonial.name" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="testimonialRole" class="text-white text-opacity-50 x-small fw-bold">Role</label>
-                  <input type="text" id="testimonialRole" name="testimonialRole" [(ngModel)]="newTestimonial.role" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="testimonialQuote" class="text-white text-opacity-50 x-small fw-bold">Quote</label>
-                  <textarea id="testimonialQuote" name="testimonialQuote" [(ngModel)]="newTestimonial.quote" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="testimonialStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
-                  <select id="testimonialStatus" name="testimonialStatus" [(ngModel)]="newTestimonial.status" class="form-select bg-dark text-white border-secondary">
-                    <option value="Draft">Draft</option>
-                    <option value="Published">Published</option>
-                  </select>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="saveTestimonial()">Save Testimonial</button>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              @for (t of testimonials; track t._id) {
-                <div class="panel-glass p-4 mb-3">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <span class="badge bg-secondary mb-2" [class.bg-success]="t.status === 'Published'">{{ t.status }}</span>
-                      <h5 class="text-white fw-bold mb-0">{{ t.name }}</h5>
-                      <span class="text-emerald small">{{ t.role }}</span>
-                      <p class="text-white text-opacity-70 mt-2 mb-0"><i class="bi bi-quote me-1"></i>{{ t.quote }}</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger" (click)="deleteTestimonial(t._id)"><i class="bi bi-trash"></i></button>
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-      }
-
-      <!-- SUCCESS STORIES PANEL -->
-      @if (activeAdminPanel === 'success-stories') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Success Stories</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Add Success Story</h5>
-                <div class="form-group-v6 mb-3">
-                  <label for="storyTitle" class="text-white text-opacity-50 x-small fw-bold">Title</label>
-                  <input type="text" id="storyTitle" name="storyTitle" [(ngModel)]="newStory.title" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="storySlug" class="text-white text-opacity-50 x-small fw-bold">Slug</label>
-                  <input type="text" id="storySlug" name="storySlug" [(ngModel)]="newStory.slug" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="storySummary" class="text-white text-opacity-50 x-small fw-bold">Summary</label>
-                  <textarea id="storySummary" name="storySummary" [(ngModel)]="newStory.summary" class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="storyBody" class="text-white text-opacity-50 x-small fw-bold">Body</label>
-                  <textarea id="storyBody" name="storyBody" [(ngModel)]="newStory.body" class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="storyStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
-                  <select id="storyStatus" name="storyStatus" [(ngModel)]="newStory.status" class="form-select bg-dark text-white border-secondary">
-                    <option value="Draft">Draft</option>
-                    <option value="Published">Published</option>
-                  </select>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="saveStory()">Save Story</button>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              @for (story of successStories; track story._id) {
-                <div class="panel-glass p-4 mb-3">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <span class="badge bg-secondary mb-2" [class.bg-success]="story.status === 'Published'">{{ story.status }}</span>
-                      <h5 class="text-white fw-bold">{{ story.title }}</h5>
-                      <p class="text-white text-opacity-70 mb-0">{{ story.summary }}</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger" (click)="deleteStory(story._id)"><i class="bi bi-trash"></i></button>
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-      }
-
-      <!-- PAGES CMS PANEL -->
-      @if (activeAdminPanel === 'pages') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Pages CMS</h2>
-          <div class="row g-4">
-            <div class="col-12">
-              <div class="panel-glass p-4">
-                <div class="table-responsive">
-                  <table class="table table-dark table-hover table-borderless align-middle m-0">
-                    <thead>
-                      <tr>
-                        <th>Slug</th>
-                        <th>Title (SEO)</th>
-                        <th>Status</th>
-                        <th class="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (page of cmsPages; track page._id) {
-                        <tr>
-                          <td class="fw-bold font-monospace text-emerald">{{ page.slug }}</td>
-                          <td>{{ page.seo?.metaTitle || 'No title set' }}</td>
-                          <td><span class="badge bg-success">{{ page.status || 'Published' }}</span></td>
-                          <td class="text-end">
-                            <button class="btn btn-sm btn-outline-emerald">Edit Page</button>
-                          </td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
       }
 
       <!-- FAQS PANEL -->
       @if (activeAdminPanel === 'faqs') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">FAQ Management</h2>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="panel-glass p-4 sticky-top" style="top: 20px;">
-                <h5 class="fw-bold text-white mb-3">Add FAQ</h5>
-                <div class="form-group-v6 mb-3">
-                  <label for="faqQuestion" class="text-white text-opacity-50 x-small fw-bold">Question</label>
-                  <input type="text" id="faqQuestion" name="faqQuestion" [(ngModel)]="newFaq.question" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="faqCategory" class="text-white text-opacity-50 x-small fw-bold">Category</label>
-                  <input type="text" id="faqCategory" name="faqCategory" [(ngModel)]="newFaq.category" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="faqAnswer" class="text-white text-opacity-50 x-small fw-bold">Answer (HTML)</label>
-                  <textarea id="faqAnswer" name="faqAnswer" [(ngModel)]="newFaq.answer" class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="faqOrder" class="text-white text-opacity-50 x-small fw-bold">Sort Order</label>
-                  <input type="number" id="faqOrder" name="faqOrder" [(ngModel)]="newFaq.sortOrder" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label for="faqStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
-                  <select id="faqStatus" name="faqStatus" [(ngModel)]="newFaq.status" class="form-select bg-dark text-white border-secondary">
-                    <option value="Draft">Draft</option>
-                    <option value="Published">Published</option>
-                  </select>
-                </div>
-                <button class="btn btn-premium-emerald-v6 w-100" (click)="saveFaq()">Save FAQ</button>
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">FAQ Management</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="panel-glass p-4 sticky-top" style="top: 20px;">
+              <h5 class="fw-bold text-white mb-3">Add FAQ</h5>
+              <div class="form-group-v6 mb-3">
+                <label for="faqQuestion" class="text-white text-opacity-50 x-small fw-bold">Question</label>
+                <input type="text" id="faqQuestion" name="faqQuestion" [(ngModel)]="newFaq.question"
+                  class="form-control bg-dark text-white border-secondary">
               </div>
-            </div>
-            <div class="col-lg-8">
-              @for (faq of faqs; track faq._id) {
-                <div class="panel-glass p-4 mb-3">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <span class="badge bg-secondary mb-2" [class.bg-success]="faq.status === 'Published'">{{ faq.status }}</span>
-                      <span class="badge bg-primary mb-2 ms-2">{{ faq.category }}</span>
-                      <h5 class="text-white fw-bold">{{ faq.question }}</h5>
-                      <p class="text-white text-opacity-70 mb-0" [innerHTML]="faq.answer"></p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger" (click)="deleteFaq(faq._id)"><i class="bi bi-trash"></i></button>
-                  </div>
-                </div>
-              }
+              <div class="form-group-v6 mb-3">
+                <label for="faqCategory" class="text-white text-opacity-50 x-small fw-bold">Category</label>
+                <input type="text" id="faqCategory" name="faqCategory" [(ngModel)]="newFaq.category"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="faqAnswer" class="text-white text-opacity-50 x-small fw-bold">Answer (HTML)</label>
+                <textarea id="faqAnswer" name="faqAnswer" [(ngModel)]="newFaq.answer"
+                  class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="faqOrder" class="text-white text-opacity-50 x-small fw-bold">Sort Order</label>
+                <input type="number" id="faqOrder" name="faqOrder" [(ngModel)]="newFaq.sortOrder"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label for="faqStatus" class="text-white text-opacity-50 x-small fw-bold">Status</label>
+                <select id="faqStatus" name="faqStatus" [(ngModel)]="newFaq.status"
+                  class="form-select bg-dark text-white border-secondary">
+                  <option value="Draft">Draft</option>
+                  <option value="Published">Published</option>
+                </select>
+              </div>
+              <button class="btn btn-premium-emerald-v6 w-100" (click)="saveFaq()">Save FAQ</button>
             </div>
           </div>
+          <div class="col-lg-8">
+            @for (faq of faqs; track faq._id) {
+            <div class="panel-glass p-4 mb-3">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <span class="badge bg-secondary mb-2" [class.bg-success]="faq.status === 'Published'">{{ faq.status
+                    }}</span>
+                  <span class="badge bg-primary mb-2 ms-2">{{ faq.category }}</span>
+                  <h5 class="text-white fw-bold">{{ faq.question }}</h5>
+                  <p class="text-white text-opacity-70 mb-0" [innerHTML]="faq.answer"></p>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteFaq(faq._id)"><i
+                    class="bi bi-trash"></i></button>
+              </div>
+            </div>
+            }
+          </div>
         </div>
+      </div>
       }
 
       <!-- INQUIRIES PANEL -->
       @if (activeAdminPanel === 'inquiries') {
-        <div class="section-fade-in">
-          <h2 class="fw-900 text-white mb-4">Inquiry Management</h2>
-          <div class="panel-glass p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-dark table-hover table-borderless align-middle m-0 activity-table-v6">
-                <thead>
-                  <tr>
-                    <th class="p-4">Date</th>
-                    <th>Name / Email</th>
-                    <th>Type</th>
-                    <th>Message</th>
-                    <th>Status</th>
-                    <th class="text-end p-4">Mark As</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @for (inq of filteredInquiries; track inq) {
-                    <tr>
-                      <td class="p-4 text-white text-opacity-50 small">{{ inq.date | date:'shortDate' }}</td>
-                      <td>
-                        <div class="fw-bold text-white">{{ inq.name }}</div>
-                        <div class="text-white text-opacity-50 x-small">{{ inq.email }}</div>
-                        @if (inq.organization) {
-                          <div class="text-emerald x-small fw-bold">{{ inq.organization }}</div>
-                        }
-                      </td>
-                      <td><span class="badge border border-secondary text-secondary">{{ inq.type }}</span></td>
-                      <td style="max-width: 250px;" class="text-truncate" [title]="inq.message">{{ inq.message }}</td>
-                      <td>
-                        <span class="badge" [class.bg-primary]="inq.status === 'New'" [class.bg-warning]="inq.status === 'Viewed'" [class.bg-success]="inq.status === 'Responded'">{{ inq.status }}</span>
-                      </td>
-                      <td class="text-end p-4">
-                        <div class="dropdown">
-                          <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Action
-                          </button>
-                          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'New')">New</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'Viewed')">Viewed</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" (click)="updateInquiryStatus(inq.id, 'Responded')">Responded</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
+      <div class="section-fade-in">
+        <h2 class="fw-900 text-white mb-4">Inquiry Management</h2>
+        <div class="panel-glass p-0 overflow-hidden">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover table-borderless align-middle m-0 activity-table-v6">
+              <thead>
+                <tr>
+                  <th class="p-4">Date</th>
+                  <th>Name / Email</th>
+                  <th>Type</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th class="text-end p-4">Mark As</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (inq of filteredInquiries; track inq) {
+                <tr>
+                  <td class="p-4 text-white text-opacity-50 small">{{ inq.date | date:'shortDate' }}</td>
+                  <td>
+                    <div class="fw-bold text-white">{{ inq.name }}</div>
+                    <div class="text-white text-opacity-50 x-small">{{ inq.email }}</div>
+                    @if (inq.organization) {
+                    <div class="text-emerald x-small fw-bold">{{ inq.organization }}</div>
+                    }
+                  </td>
+                  <td><span class="badge border border-secondary text-secondary">{{ inq.type }}</span></td>
+                  <td style="max-width: 250px;" class="text-truncate" [title]="inq.message">{{ inq.message }}</td>
+                  <td>
+                    <span class="badge" [class.bg-primary]="inq.status === 'New'"
+                      [class.bg-warning]="inq.status === 'Viewed'" [class.bg-success]="inq.status === 'Responded'">{{
+                      inq.status }}</span>
+                  </td>
+                  <td class="text-end p-4">
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button"
+                        data-bs-toggle="dropdown">
+                        Action
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <li><a class="dropdown-item" href="javascript:void(0)"
+                            (click)="updateInquiryStatus(inq.id, 'New')">New</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)"
+                            (click)="updateInquiryStatus(inq.id, 'Viewed')">Viewed</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)"
+                            (click)="updateInquiryStatus(inq.id, 'Responded')">Responded</a></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
       }
 
       <!-- SYSTEM SETTINGS PANEL -->
       @if (activeAdminPanel === 'settings' && siteSettings.branding) {
-        <div class="section-fade-in">
-          <div class="d-flex justify-content-between align-items-end mb-5">
-            <div>
-              <div class="badge-premium-emerald-outline mb-3">
-                <span class="pulse-dot-v6"></span> SYSTEM CONFIGURATION
-              </div>
-              <h1 class="display-5 fw-950 text-white mb-0">Mission <span class="text-gradient-emerald">Settings</span></h1>
-              <p class="text-white text-opacity-50 mt-2 mb-0">Configure branding, contact, and social links.</p>
+      <div class="section-fade-in">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+          <div>
+            <div class="badge-premium-emerald-outline mb-3">
+              <span class="pulse-dot-v6"></span> SYSTEM CONFIGURATION
             </div>
-            <button class="btn btn-premium-emerald-v6" (click)="saveSiteSettings()">Save All Settings</button>
+            <h1 class="display-5 fw-950 text-white mb-0">Mission <span class="text-gradient-emerald">Settings</span>
+            </h1>
+            <p class="text-white text-opacity-50 mt-2 mb-0">Configure branding, contact, and social links.</p>
           </div>
-          <div class="row g-4">
-            <!-- Branding Settings -->
-            <div class="col-lg-6">
-              <div class="panel-glass p-4">
-                <h5 class="fw-bold text-white mb-4"><i class="bi bi-image me-2 text-emerald"></i>Branding Settings</h5>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Logo URL</label>
-                  <input type="text" [(ngModel)]="siteSettings.branding!.logoUrl" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Favicon URL</label>
-                  <input type="text" [(ngModel)]="siteSettings.branding!.faviconUrl" class="form-control bg-dark text-white border-secondary">
-                </div>
+          <button class="btn btn-premium-emerald-v6" (click)="saveSiteSettings()">Save All Settings</button>
+        </div>
+        <div class="row g-4">
+          <!-- Branding Settings -->
+          <div class="col-lg-6">
+            <div class="panel-glass p-4">
+              <h5 class="fw-bold text-white mb-4"><i class="bi bi-image me-2 text-emerald"></i>Branding Settings</h5>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Logo URL</label>
+                <input type="text" [(ngModel)]="siteSettings.branding!.logoUrl"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Favicon URL</label>
+                <input type="text" [(ngModel)]="siteSettings.branding!.faviconUrl"
+                  class="form-control bg-dark text-white border-secondary">
               </div>
             </div>
-            <!-- Contact Settings -->
-            <div class="col-lg-6">
-              <div class="panel-glass p-4">
-                <h5 class="fw-bold text-white mb-4"><i class="bi bi-telephone me-2 text-blue"></i>Contact Information</h5>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Head Office</label>
-                  <input type="text" [(ngModel)]="siteSettings.contact!.headOffice" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Branch Office</label>
-                  <input type="text" [(ngModel)]="siteSettings.contact!.branchOffice" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Contact Email</label>
-                  <input type="email" [(ngModel)]="siteSettings.contact!.email" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Contact Phone</label>
-                  <input type="text" [(ngModel)]="siteSettings.contact!.phone" class="form-control bg-dark text-white border-secondary">
-                </div>
+          </div>
+          <!-- Contact Settings -->
+          <div class="col-lg-6">
+            <div class="panel-glass p-4">
+              <h5 class="fw-bold text-white mb-4"><i class="bi bi-telephone me-2 text-blue"></i>Contact Information</h5>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Head Office</label>
+                <input type="text" [(ngModel)]="siteSettings.contact!.headOffice"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Branch Office</label>
+                <input type="text" [(ngModel)]="siteSettings.contact!.branchOffice"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Contact Email</label>
+                <input type="email" [(ngModel)]="siteSettings.contact!.email"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Contact Phone</label>
+                <input type="text" [(ngModel)]="siteSettings.contact!.phone"
+                  class="form-control bg-dark text-white border-secondary">
               </div>
             </div>
-            <!-- Social Settings -->
-            <div class="col-lg-6">
-              <div class="panel-glass p-4">
-                <h5 class="fw-bold text-white mb-4"><i class="bi bi-share me-2 text-amber"></i>Social Links</h5>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">LinkedIn</label>
-                  <input type="text" [(ngModel)]="siteSettings.social!.linkedin" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Facebook</label>
-                  <input type="text" [(ngModel)]="siteSettings.social!.facebook" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Twitter</label>
-                  <input type="text" [(ngModel)]="siteSettings.social!.twitter" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">Instagram</label>
-                  <input type="text" [(ngModel)]="siteSettings.social!.instagram" class="form-control bg-dark text-white border-secondary">
-                </div>
-                <div class="form-group-v6 mb-3">
-                  <label class="text-white text-opacity-50 x-small fw-bold">WhatsApp</label>
-                  <input type="text" [(ngModel)]="siteSettings.social!.whatsapp" class="form-control bg-dark text-white border-secondary">
-                </div>
+          </div>
+          <!-- Social Settings -->
+          <div class="col-lg-6">
+            <div class="panel-glass p-4">
+              <h5 class="fw-bold text-white mb-4"><i class="bi bi-share me-2 text-amber"></i>Social Links</h5>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">LinkedIn</label>
+                <input type="text" [(ngModel)]="siteSettings.social!.linkedin"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Facebook</label>
+                <input type="text" [(ngModel)]="siteSettings.social!.facebook"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Twitter</label>
+                <input type="text" [(ngModel)]="siteSettings.social!.twitter"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">Instagram</label>
+                <input type="text" [(ngModel)]="siteSettings.social!.instagram"
+                  class="form-control bg-dark text-white border-secondary">
+              </div>
+              <div class="form-group-v6 mb-3">
+                <label class="text-white text-opacity-50 x-small fw-bold">WhatsApp</label>
+                <input type="text" [(ngModel)]="siteSettings.social!.whatsapp"
+                  class="form-control bg-dark text-white border-secondary">
               </div>
             </div>
-            <!-- Marquee Settings -->
-            <div class="col-lg-6">
-              <div class="panel-glass p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <h5 class="fw-bold text-white mb-0"><i class="bi bi-text-paragraph me-2 text-violet"></i>Marquee Alerts</h5>
-                  <button class="btn btn-sm btn-outline-emerald" (click)="addMarqueeItem()">Add Item</button>
-                </div>
-                @for (mq of siteSettings.marquee; track mq; let i = $index) {
-                  <div class="d-flex gap-2 mb-3 align-items-start">
-                    <div class="flex-grow-1 form-group-v6">
-                      <input type="text" [(ngModel)]="mq.text" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Text">
-                      <input type="text" [(ngModel)]="mq.icon" class="form-control bg-dark text-white border-secondary" placeholder="Icon Class (e.g. bi-star-fill)">
-                    </div>
-                    <button class="btn btn-outline-danger mt-1" (click)="removeMarqueeItem(i)"><i class="bi bi-trash"></i></button>
-                  </div>
-                }
+          </div>
+          <!-- Marquee Settings -->
+          <div class="col-lg-6">
+            <div class="panel-glass p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold text-white mb-0"><i class="bi bi-text-paragraph me-2 text-violet"></i>Marquee Alerts
+                </h5>
+                <button class="btn btn-sm btn-outline-emerald" (click)="addMarqueeItem()">Add Item</button>
               </div>
+              @for (mq of siteSettings.marquee; track mq; let i = $index) {
+              <div class="d-flex gap-2 mb-3 align-items-start">
+                <div class="flex-grow-1 form-group-v6">
+                  <input type="text" [(ngModel)]="mq.text" class="form-control bg-dark text-white border-secondary mb-2"
+                    placeholder="Text">
+                  <input type="text" [(ngModel)]="mq.icon" class="form-control bg-dark text-white border-secondary"
+                    placeholder="Icon Class (e.g. bi-star-fill)">
+                </div>
+                <button class="btn btn-outline-danger mt-1" (click)="removeMarqueeItem(i)"><i
+                    class="bi bi-trash"></i></button>
+              </div>
+              }
             </div>
           </div>
         </div>
+      </div>
       }
 
     </div>

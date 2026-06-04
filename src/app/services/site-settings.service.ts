@@ -42,7 +42,7 @@ export class SiteSettingsService {
   private publicApiUrl = `${environment.apiUrl}/public/settings`;
   private adminApiUrl = `${environment.apiUrl}/admin/settings`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getSettings(): Observable<ApiResponse<SiteSettings>> {
     return this.http.get<ApiResponse<SiteSettings>>(this.publicApiUrl);

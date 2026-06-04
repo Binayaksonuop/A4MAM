@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { adminLogin, getAdminProfile } = require('../controllers/authController');
+const { adminLogin, getAdminProfile, verifyAdminToken } = require('../controllers/authController');
 const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 const { logAction } = require('../middleware/auditLogger');
 const { getAdminProducts, createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
@@ -12,6 +12,7 @@ const { getDashboardStats } = require('../controllers/dashboardController');
 // ─── Auth ──────────────────────────────────────
 router.post('/login', adminLogin);
 router.get('/me', protect, getAdminProfile);
+router.get('/verify', protect, verifyAdminToken);
 
 // ─── Dashboard ─────────────────────────────────
 router.get('/dashboard/stats', protect, getDashboardStats);

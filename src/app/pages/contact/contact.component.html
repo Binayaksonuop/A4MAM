@@ -16,7 +16,8 @@
       <h1 class="display-4 fw-950 text-white mb-3 tracking-tighter title-glow-soft">
         Connect With <br><span class="text-gradient-emerald">Our Mission</span>
       </h1>
-      <p class="contact-hero-sub text-white text-opacity-60 fs-5 mx-auto">For partnerships, volunteer programs, and Spirulina donation inquiries — our team responds within 24 hours.</p>
+      <p class="contact-hero-sub text-white text-opacity-60 fs-5 mx-auto">For partnerships, volunteer programs, and
+        Spirulina donation inquiries — our team responds within 24 hours.</p>
       <div class="contact-trust-row d-flex justify-content-center gap-3 flex-wrap mt-3">
         <div class="contact-trust-chip"><i class="bi bi-clock me-1"></i>24hr Response</div>
         <div class="contact-trust-chip"><i class="bi bi-handshake me-1"></i>Partnership Focused</div>
@@ -36,7 +37,8 @@
 
           <!-- Premium Contact Image First (Left Side) -->
           <div class="contact-premium-image rounded-5 overflow-hidden shadow-2xl hover-scale-soft">
-            <img src="assets/images/gallery/Contact.png" alt="A4MAM Team" class="w-100 h-auto" style="object-fit: cover; max-height: 350px;">
+            <img src="assets/images/gallery/Contact.png" alt="A4MAM Team" class="w-100 h-auto"
+              style="object-fit: cover; max-height: 350px;">
           </div>
 
           <!-- Head Office -->
@@ -62,7 +64,8 @@
             <div class="d-flex flex-column gap-3 pt-4 border-top border-light-subtle">
               <div class="d-flex align-items-center gap-3 contact-link-hover">
                 <div class="icon-circle-soft"><i class="bi bi-envelope-fill text-emerald"></i></div>
-                <a href="mailto:info@a4conserv.com" class="text-white text-decoration-none fw-bold fs-6">info&#64;a4conserv.com</a>
+                <a href="mailto:info@a4conserv.com"
+                  class="text-white text-decoration-none fw-bold fs-6">info&#64;a4conserv.com</a>
               </div>
               <div class="d-flex align-items-center gap-3 contact-link-hover">
                 <div class="icon-circle-soft"><i class="bi bi-telephone-fill text-emerald"></i></div>
@@ -124,101 +127,113 @@
                 <h5 class="fw-800 text-emerald mb-0 text-uppercase letter-spacing-1">Reach Out Directly</h5>
               </div>
               <h2 class="fw-900 text-white mb-2 h2">Send us a Message</h2>
-              <p class="text-white text-opacity-60 mb-4 fs-6">We typically respond to all collaboration and support inquiries within 24 hours.</p>
+              <p class="text-white text-opacity-60 mb-4 fs-6">We typically respond to all collaboration and support
+                inquiries within 24 hours.</p>
 
               <!-- SUCCESS STATE -->
               @if (submitted) {
-                <div class="success-state-modern text-center py-4">
-                  <div class="success-icon-wrap mb-4 mx-auto">
-                    <i class="bi bi-check2-circle text-emerald display-3"></i>
-                    <div class="success-ripple-soft"></div>
-                  </div>
-                  <h3 class="h3 fw-900 text-white mb-3">Message Delivered</h3>
-                  <div class="d-inline-block px-4 py-2 rounded-pill mb-3" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);">
-                    <span class="text-white text-opacity-50 small">Reference ID:</span>
-                    <span class="text-emerald fw-900 font-monospace ms-2">{{ referenceId }}</span>
-                  </div>
-                  <p class="text-white text-opacity-80 mb-4 mx-auto fs-6" style="max-width: 450px;">
-                    Thank you for reaching out. Our partnership team has received your inquiry and will be in touch shortly.
-                  </p>
-                  <button (click)="resetForm()" class="btn btn-emerald-ultra px-4 py-2 rounded-pill fw-bold">
-                    Send Another Message <i class="bi bi-arrow-right ms-2"></i>
-                  </button>
+              <div class="success-state-modern text-center py-4">
+                <div class="success-icon-wrap mb-4 mx-auto">
+                  <i class="bi bi-check2-circle text-emerald display-3"></i>
+                  <div class="success-ripple-soft"></div>
                 </div>
+                <h3 class="h3 fw-900 text-white mb-3">Message Delivered</h3>
+                <div class="d-inline-block px-4 py-2 rounded-pill mb-3"
+                  style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);">
+                  <span class="text-white text-opacity-50 small">Reference ID:</span>
+                  <span class="text-emerald fw-900 font-monospace ms-2">{{ referenceId }}</span>
+                </div>
+                <p class="text-white text-opacity-80 mb-4 mx-auto fs-6" style="max-width: 450px;">
+                  Thank you for reaching out. Our partnership team has received your inquiry and will be in touch
+                  shortly.
+                </p>
+                <button (click)="resetForm()" class="btn btn-emerald-ultra px-4 py-2 rounded-pill fw-bold">
+                  Send Another Message <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+              </div>
               }
 
               <!-- CONTACT FORM -->
               @if (!submitted) {
-                <form (ngSubmit)="onSubmit()" #contactForm="ngForm" class="contact-form-modern" id="contactForm">
-                  <div class="row g-4">
-                    <div class="col-md-6">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-person input-icon"></i>
-                        <input type="text" name="name" class="modern-input" placeholder=" " id="nameInput" [(ngModel)]="formData.name" required #name="ngModel" autocomplete="name">
-                        <label for="nameInput">Full Name</label>
-                        <div class="input-focus-line"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-envelope input-icon"></i>
-                        <input type="email" name="email" class="modern-input" placeholder=" " id="emailInput" [(ngModel)]="formData.email" required #email="ngModel" autocomplete="email">
-                        <label for="emailInput">Email Address</label>
-                        <div class="input-focus-line"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-telephone input-icon"></i>
-                        <input type="text" name="phone" class="modern-input" placeholder=" " id="phoneInput" [(ngModel)]="formData.phone" autocomplete="tel">
-                        <label for="phoneInput">Phone Number</label>
-                        <div class="input-focus-line"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-building input-icon"></i>
-                        <input type="text" name="organization" class="modern-input" placeholder=" " id="orgInput" [(ngModel)]="formData.organization" autocomplete="organization">
-                        <label for="orgInput">Organization (Optional)</label>
-                        <div class="input-focus-line"></div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-chat-dots input-icon"></i>
-                        <input type="text" name="subject" class="modern-input" placeholder=" " id="subjectInput" [(ngModel)]="formData.subject" required autocomplete="off">
-                        <label for="subjectInput">Subject of Inquiry</label>
-                        <div class="input-focus-line"></div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-floating-modern">
-                        <i class="bi bi-pencil input-icon"></i>
-                        <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput" rows="5" [(ngModel)]="formData.message" (ngModelChange)="countChars($event)" required #message="ngModel" autocomplete="off"></textarea>
-                        <label for="messageInput">How can we collaborate?</label>
-                        <div class="input-focus-line"></div>
-                        <span class="char-counter text-white text-opacity-30 small">0 / 500</span>
-                      </div>
-                    </div>
-                    <div class="col-12 mt-5">
-                      <button type="submit" [disabled]="contactForm.invalid || isSubmitting" class="btn w-100 btn-submit-modern d-flex align-items-center justify-content-center gap-3">
-                        @if (!isSubmitting) {
-                          <span>Send Message</span>
-                        }
-                        @if (isSubmitting) {
-                          <span class="d-flex align-items-center gap-2">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Sending...
-                          </span>
-                        }
-                        @if (!isSubmitting) {
-                          <i class="bi bi-send-fill fs-5"></i>
-                        }
-                      </button>
-                      <p class="text-white text-opacity-30 text-center small mt-3"><i class="bi bi-lock-fill me-1"></i>Encrypted & Secure · We never share your information</p>
+              <form (ngSubmit)="onSubmit()" #contactForm="ngForm" class="contact-form-modern" id="contactForm">
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-person input-icon"></i>
+                      <input type="text" name="name" class="modern-input" placeholder=" " id="nameInput"
+                        [(ngModel)]="formData.name" required #name="ngModel" autocomplete="name">
+                      <label for="nameInput">Full Name</label>
+                      <div class="input-focus-line"></div>
                     </div>
                   </div>
-                </form>
+                  <div class="col-md-6">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-envelope input-icon"></i>
+                      <input type="email" name="email" class="modern-input" placeholder=" " id="emailInput"
+                        [(ngModel)]="formData.email" required #email="ngModel" autocomplete="email">
+                      <label for="emailInput">Email Address</label>
+                      <div class="input-focus-line"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-telephone input-icon"></i>
+                      <input type="text" name="phone" class="modern-input" placeholder=" " id="phoneInput"
+                        [(ngModel)]="formData.phone" autocomplete="tel">
+                      <label for="phoneInput">Phone Number</label>
+                      <div class="input-focus-line"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-building input-icon"></i>
+                      <input type="text" name="organization" class="modern-input" placeholder=" " id="orgInput"
+                        [(ngModel)]="formData.organization" autocomplete="organization">
+                      <label for="orgInput">Organization (Optional)</label>
+                      <div class="input-focus-line"></div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-chat-dots input-icon"></i>
+                      <input type="text" name="subject" class="modern-input" placeholder=" " id="subjectInput"
+                        [(ngModel)]="formData.subject" required autocomplete="off">
+                      <label for="subjectInput">Subject of Inquiry</label>
+                      <div class="input-focus-line"></div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating-modern">
+                      <i class="bi bi-pencil input-icon"></i>
+                      <textarea name="message" class="modern-input modern-textarea" placeholder=" " id="messageInput"
+                        rows="5" [(ngModel)]="formData.message" (ngModelChange)="countChars($event)" required
+                        #message="ngModel" autocomplete="off"></textarea>
+                      <label for="messageInput">How can we collaborate?</label>
+                      <div class="input-focus-line"></div>
+                      <span class="char-counter text-white text-opacity-30 small">0 / 500</span>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-5">
+                    <button type="submit" [disabled]="contactForm.invalid || isSubmitting"
+                      class="btn w-100 btn-submit-modern d-flex align-items-center justify-content-center gap-3">
+                      @if (!isSubmitting) {
+                      <span>Send Message</span>
+                      }
+                      @if (isSubmitting) {
+                      <span class="d-flex align-items-center gap-2">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Sending...
+                      </span>
+                      }
+                      @if (!isSubmitting) {
+                      <i class="bi bi-send-fill fs-5"></i>
+                      }
+                    </button>
+                    <p class="text-white text-opacity-30 text-center small mt-3"><i
+                        class="bi bi-lock-fill me-1"></i>Encrypted & Secure · We never share your information</p>
+                  </div>
+                </div>
+              </form>
               }
             </div>
           </div>
@@ -240,7 +255,8 @@
             <div class="cp-step-num">01</div>
             <div class="cp-step-icon mb-3"><i class="bi bi-envelope-open-fill"></i></div>
             <h6 class="text-white fw-800 mb-2">We Receive</h6>
-            <p class="text-white text-opacity-50 x-small mb-0">Your message reaches our partnership team instantly with a system-generated reference ID.</p>
+            <p class="text-white text-opacity-50 x-small mb-0">Your message reaches our partnership team instantly with
+              a system-generated reference ID.</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
@@ -248,7 +264,8 @@
             <div class="cp-step-num">02</div>
             <div class="cp-step-icon mb-3"><i class="bi bi-person-check-fill"></i></div>
             <h6 class="text-white fw-800 mb-2">Team Reviews</h6>
-            <p class="text-white text-opacity-50 x-small mb-0">Our mission team evaluates your inquiry for partnership, donation, or volunteer opportunity.</p>
+            <p class="text-white text-opacity-50 x-small mb-0">Our mission team evaluates your inquiry for partnership,
+              donation, or volunteer opportunity.</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
@@ -256,7 +273,8 @@
             <div class="cp-step-num">03</div>
             <div class="cp-step-icon mb-3"><i class="bi bi-telephone-fill"></i></div>
             <h6 class="text-white fw-800 mb-2">We Connect</h6>
-            <p class="text-white text-opacity-50 x-small mb-0">Within 24 hours, a designated mission coordinator reaches out via your preferred channel.</p>
+            <p class="text-white text-opacity-50 x-small mb-0">Within 24 hours, a designated mission coordinator reaches
+              out via your preferred channel.</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 process-step-card scroll-reveal-contact">
@@ -264,7 +282,8 @@
             <div class="cp-step-num">04</div>
             <div class="cp-step-icon mb-3"><i class="bi bi-heart-pulse-fill"></i></div>
             <h6 class="text-white fw-800 mb-2">Mission Begins</h6>
-            <p class="text-white text-opacity-50 x-small mb-0">Together, we define how your support translates into measurable nutrition impact.</p>
+            <p class="text-white text-opacity-50 x-small mb-0">Together, we define how your support translates into
+              measurable nutrition impact.</p>
           </div>
         </div>
       </div>

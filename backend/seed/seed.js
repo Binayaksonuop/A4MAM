@@ -15,7 +15,7 @@ const seedData = async () => {
       name: process.env.ADMIN_NAME || 'Admin User',
       email: process.env.ADMIN_EMAIL || 'admin@a4mam.com',
       password: process.env.ADMIN_PASSWORD || 'Admin@2026',
-      role: 'admin'
+      role: 'Admin'
     });
     console.log('✅ Admin user created');
 
