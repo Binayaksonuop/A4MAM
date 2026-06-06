@@ -5,29 +5,29 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 export interface SiteSettings {
-  branding: {
-    logoUrl: string;
-    faviconUrl: string;
+  branding?: {
+    logoUrl?: string;
+    faviconUrl?: string;
   };
-  tracking: {
-    googleAnalyticsId: string;
-    googleTagManagerId: string;
-    facebookPixelId: string;
+  tracking?: {
+    googleAnalyticsId?: string;
+    googleTagManagerId?: string;
+    facebookPixelId?: string;
   };
-  contact: {
-    headOffice: string;
-    branchOffice: string;
-    email: string;
-    phone: string;
+  contact?: {
+    headOffice?: string;
+    branchOffice?: string;
+    email?: string;
+    phone?: string;
   };
-  social: {
-    linkedin: string;
-    facebook: string;
-    twitter: string;
-    instagram: string;
-    whatsapp: string;
+  social?: {
+    linkedin?: string;
+    facebook?: string;
+    twitter?: string;
+    instagram?: string;
+    whatsapp?: string;
   };
-  marquee: Array<{ text: string; icon: string }>;
+  marquee?: Array<{ text: string; icon: string }>;
 }
 
 @Injectable({

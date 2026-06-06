@@ -232,13 +232,13 @@
         </p>
         <div class="footer-social-premium d-flex gap-3">
           @if (globalSettings.settings(); as settings) {
-          <a [href]="settings?.social?.twitter || '#'" class="social-btn-ultra x-social" aria-label="Visit Twitter"><i
+          <a [href]="settings.social?.twitter || '#'" class="social-btn-ultra x-social" aria-label="Visit Twitter"><i
               class="bi bi-twitter-x"></i></a>
-          <a [href]="settings?.social?.instagram || '#'" class="social-btn-ultra insta" aria-label="Visit Instagram"><i
+          <a [href]="settings.social?.instagram || '#'" class="social-btn-ultra insta" aria-label="Visit Instagram"><i
               class="bi bi-instagram"></i></a>
-          <a [href]="settings?.social?.linkedin || '#'" class="social-btn-ultra linkin" aria-label="Visit LinkedIn"><i
+          <a [href]="settings.social?.linkedin || '#'" class="social-btn-ultra linkin" aria-label="Visit LinkedIn"><i
               class="bi bi-linkedin"></i></a>
-          <a [href]="settings?.social?.facebook || '#'" class="social-btn-ultra face" aria-label="Visit Facebook"><i
+          <a [href]="settings.social?.facebook || '#'" class="social-btn-ultra face" aria-label="Visit Facebook"><i
               class="bi bi-facebook"></i></a>
           }
         </div>
@@ -291,7 +291,7 @@
                 <div>
                   <strong class="d-block text-white mb-1 small fw-600">Head Office</strong>
                   <span class="text-white text-opacity-60" style="font-size: 0.75rem; line-height: 1.5;"
-                    [innerHTML]="settings?.contact?.headOffice || 'B#317, ARK Towers, Mayuri Nagar,<br>Miyapur, Hyd - 500049'"></span>
+                    [innerHTML]="settings.contact?.headOffice || 'B#317, ARK Towers, Mayuri Nagar,<br>Miyapur, Hyd - 500049'"></span>
                 </div>
               </div>
               <div class="d-flex align-items-start gap-3 mt-auto">
@@ -302,12 +302,12 @@
                 </div>
                 <div class="d-flex flex-column">
                   <strong class="d-block text-white mb-1 small fw-600">Connect</strong>
-                  <a [href]="'mailto:' + (settings?.contact?.email || 'info@a4conserv.com')"
+                  <a [href]="'mailto:' + (settings.contact?.email || 'info@a4conserv.com')"
                     class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all"
-                    style="font-size: 0.75rem;">{{ settings?.contact?.email || 'info@a4conserv.com' }}</a>
-                  <a [href]="'tel:' + (settings?.contact?.phone || '+919642437773')"
+                    style="font-size: 0.75rem;">{{ settings.contact?.email || 'info@a4conserv.com' }}</a>
+                  <a [href]="'tel:' + (settings.contact?.phone || '+919642437773')"
                     class="text-white text-opacity-60 text-decoration-none hover-emerald transition-all mt-1"
-                    style="font-size: 0.75rem;">{{ settings?.contact?.phone || '+91 9642437773' }}</a>
+                    style="font-size: 0.75rem;">{{ settings.contact?.phone || '+91 9642437773' }}</a>
                 </div>
               </div>
               }
@@ -326,7 +326,7 @@
                   <a href="https://maps.app.goo.gl/3Lrk3DroStWwzkqU7" target="_blank" rel="noopener noreferrer"
                     class="text-white text-opacity-60 d-block text-decoration-none hover-emerald transition-all"
                     style="font-size: 0.75rem; line-height: 1.5;"
-                    [innerHTML]="settings?.contact?.branchOffice || 'F-1, CII (Incubation Centre),<br>Utkal Univ, Vani Vihar,<br>Bhubaneswar - 751004'">
+                    [innerHTML]="settings.contact?.branchOffice || 'F-1, CII (Incubation Centre),<br>Utkal Univ, Vani Vihar,<br>Bhubaneswar - 751004'">
                   </a>
                 </div>
               </div>
