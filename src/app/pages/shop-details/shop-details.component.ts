@@ -78,8 +78,6 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       const normalizedSlug = rawSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       this.isLoading = true;
       
-      console.log('ShopDetails: Looking for slug:', rawSlug, 'normalized:', normalizedSlug);
-      
       this.productService.getProducts().subscribe(products => {
         let found: any = null;
         
@@ -93,8 +91,6 @@ export class ShopDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
                    p._id === rawSlug;
           });
         }
-        
-        console.log('ShopDetails: Found from API:', found);
         
         if (found) {
           this.product = {

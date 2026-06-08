@@ -96,11 +96,9 @@ export class ProductService {
 
   getProducts(isAdmin: boolean = false): Observable<AdminProduct[]> {
     const apiUrl = isAdmin ? this.adminApiUrl : this.publicApiUrl;
-    console.log('ProductService: Fetching from:', apiUrl, '(admin:', isAdmin, ')');
     
     return this.http.get<BackendResponse>(apiUrl).pipe(
       map(response => {
-        console.log('ProductService: Raw API response:', response);
         if (response.success && response.data && response.data.length > 0) {
           const mapped = response.data.map(item => ({
             id: item._id,
@@ -114,7 +112,6 @@ export class ProductService {
             category: item.category,
             slug: item.slug
           }));
-          console.log('ProductService: Mapped products:', mapped);
           this.productsSubject.next(mapped);
           return mapped;
         }

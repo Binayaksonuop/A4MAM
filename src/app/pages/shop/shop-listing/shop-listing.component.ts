@@ -241,7 +241,6 @@ export class ShopListingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.subscription = this.productService.getProducts().subscribe(prods => {
-      console.log('ShopListing: Received products:', prods);
       
       if (prods && prods.length > 0) {
         this.products = prods.filter(p => p.status !== 'Draft');
@@ -365,7 +364,6 @@ export class ShopListingComponent implements OnInit, OnDestroy {
   }
 
   consoleLogProduct(product: AdminProduct): void {
-    console.log('ShopListing: Clicked product:', product);
   }
   
   addToCart(event: Event, product: AdminProduct): void {
